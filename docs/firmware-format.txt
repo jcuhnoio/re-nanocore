@@ -1,0 +1,72 @@
+NanoCore LUM0 / FMUC — inspected firmware1.12
+
+Identity
+File727278bytes, SHA256
+1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964.
+Signed core727149bytes, SHA256
+abee99ebe2fe6859e81e5c664c1bf322b95ed9206c8231f8a30ad7b49d324b31.
+Host library: macOS ToneCommand1.3.3 liblivtra.dylib, SHA256
+bf75e63a11ecb277d80252a510546c5961afb448d3a7e869ac692bf5ae964326.
+Offsets below refer to file bytes; integers are little endian.
+
+LUM0 core
+0x00  4 bytes  LUM0
+0x04  u8       container version2
+0x05  u8       flags0x83
+0x06  u16      product_id0x1301
+0x08  u32      unnamed field,0 on this route
+0x0c  u32      stored payload length727040
+0x10  u32      fw_version0x00011208, distinct from display version
+0x14  16bytes  opaque field; nonce/IV is an unproven hypothesis
+0x24  u8       display-version byte length n (4 here, host limit32)
+0x25  n bytes  UTF8 display version, "1.12"
+37+n          opaque payload
+37+n+payload  4-byte trailer (43ed09af for1.12), semantic role unknown
+...+4         64-byte Ed25519 signature
+
+core_length = 37 + n + payload_length + 68.
+The core signature covers every core byte before its final64 bytes. The header
+parser/verifier are at library+0xbf890 and+0xbfa18; package loader at+0xc025c.
+Recovered public verification key:
+e672050bbb537ca3f6992ddea28b3d61b7445809790c4c270292294375216763.
+This is not a private signing key or a decryption key.
+
+Flags interpretation recovered from native dataflow:
+  route_present = bool(flags & 0x80)
+  host_route_id = (flags >> 1) & 0x3f when present
+Bit0 is required after signature verification; its semantic name is unknown.
+Do not interpret the flags as a known cipher/signature-mode selector.
+
+FMUC routing contract (offset727149, length129 for1.12)
++0    4 bytes  FMUC
++4    u8       version1
++5    u8       protocol1
++6    u16      contract length
++8    u32      target1 (NanoCore)
++12   u16      runtime VID33c3
++14   u16      runtime PID1301
++16   u16      DFU VID33c3
++18   u16      DFU PID6678
++20   u32      core length
++24   u8       target-name byte length m
++25   m bytes  target name (nanocore,8bytes)
++25+m 32bytes  SHA256 of the complete signed core
++57+m 64bytes  Ed25519 signature
+
+contract_length = 121 + m.
+Footer signature message = ASCII "LIVTRA-FMU-CONTRACT-V1" + NUL + footer
+bytes preceding the final64-byte signature. The footer uses the same public
+verification key. The inspected host strips this routing contract for transfer.
+
+Observed boundary
+Actual native execution against fake USB emitted exactly firmware[0:727149].
+The payload was not decoded on that host path. One payload-bit modification
+failed before USB transfers. The device's verification/decode behavior remains
+unobserved; this host experiment cannot locate a decoder inside physical silicon.
+
+Tool scope
+The included uploader enforces the contemporary NanoCore structure/identity,
+reports the footer digest match, and preserves the original inner signature.
+It deliberately does not validate publisher signatures or require the digest
+to match. Its inspect command is structural inspection, not authentication.
+Legacy1.04 product0/route metadata is unsupported by this uploader.

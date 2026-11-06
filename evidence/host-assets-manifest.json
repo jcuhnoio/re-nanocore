@@ -1,0 +1,4733 @@
+{
+  "pack_sha256": "48df119e7ba1d48a81dc3b55efe79061d878080b008b05889676c221edbd8c15",
+  "version": 1,
+  "decoded_count": 472,
+  "all_lengths_crcs_verified": true,
+  "all_ids_verified": true,
+  "total_decoded_bytes": 7503815,
+  "id_formula": "SHA256(secret || UTF8(path))",
+  "mask_formula": "SHA256(secret || 0x01 || UTF8(path))",
+  "decode": "zlib_decompress(ciphertext XOR repeating32 mask)",
+  "entries": [
+    {
+      "entry": 0,
+      "name": "assets/drum_machine/factory_presets.json",
+      "offset": 22668,
+      "stored_length": 1483,
+      "length": 80396,
+      "crc32": 236794130,
+      "sha256": "ca1b01ead0c1a0a32f64aa3d4a8135e9bf9b08cf26d45e41a7d1eecf76fe6955",
+      "id_verified": true
+    },
+    {
+      "entry": 1,
+      "name": "assets/drum_machine/kits/factory/clap.wav",
+      "offset": 24151,
+      "stored_length": 35398,
+      "length": 52964,
+      "crc32": 1720265025,
+      "sha256": "d59ff11e0a7d26e1b839d54e6e69e92bc9b99d9ef155bca7ee1ed38c7da48a5a",
+      "id_verified": true
+    },
+    {
+      "entry": 2,
+      "name": "assets/drum_machine/kits/factory/closed_hat.wav",
+      "offset": 59549,
+      "stored_length": 11684,
+      "length": 17684,
+      "crc32": 767047828,
+      "sha256": "9c3c86ead784fcc349b59a32bab9a2a4a0ce6f3259a386e9d99fa553f3d22582",
+      "id_verified": true
+    },
+    {
+      "entry": 3,
+      "name": "assets/drum_machine/kits/factory/kick.wav",
+      "offset": 71233,
+      "stored_length": 42971,
+      "length": 84716,
+      "crc32": 1259766629,
+      "sha256": "92b7ca6e9fd055f33603d3fad196348cf7f813f5a634cf04c6a0808e87707645",
+      "id_verified": true
+    },
+    {
+      "entry": 4,
+      "name": "assets/drum_machine/kits/factory/open_hat.wav",
+      "offset": 114204,
+      "stored_length": 44093,
+      "length": 74132,
+      "crc32": 2662343430,
+      "sha256": "9a6df06d70b581600a863e2cac344f93905956f02b8a288ef4d3c4a4cfccfcdb",
+      "id_verified": true
+    },
+    {
+      "entry": 5,
+      "name": "assets/drum_machine/kits/factory/rim.wav",
+      "offset": 158297,
+      "stored_length": 19230,
+      "length": 24740,
+      "crc32": 624368015,
+      "sha256": "2e41d88b1f90a1e5db1f21777b208f207dc1eb84cfd20f9389ffa38628e82dbf",
+      "id_verified": true
+    },
+    {
+      "entry": 6,
+      "name": "assets/drum_machine/kits/factory/shaker.wav",
+      "offset": 177527,
+      "stored_length": 18104,
+      "length": 24740,
+      "crc32": 2156529165,
+      "sha256": "72c38c6be3dc4a36fd15f2dae3d7db299e50abf02bfb65a56ebe1146598fae63",
+      "id_verified": true
+    },
+    {
+      "entry": 7,
+      "name": "assets/drum_machine/kits/factory/snare.wav",
+      "offset": 195631,
+      "stored_length": 38314,
+      "length": 52964,
+      "crc32": 3960352383,
+      "sha256": "f521ed6669fca8b0a72b12126ea3d5e1c46fa6f65a691c40854c7da78a356405",
+      "id_verified": true
+    },
+    {
+      "entry": 8,
+      "name": "assets/drum_machine/kits/factory/tom.wav",
+      "offset": 233945,
+      "stored_length": 42165,
+      "length": 74132,
+      "crc32": 785170942,
+      "sha256": "6e48c6e2455368c1a1f3a121c3780754a83b41e4757375842b70eb8efabcc3b1",
+      "id_verified": true
+    },
+    {
+      "entry": 9,
+      "name": "assets/drum_machine/kits/guyuan/bell.wav",
+      "offset": 276110,
+      "stored_length": 256207,
+      "length": 369968,
+      "crc32": 816177094,
+      "sha256": "d6bc16a7f2b8aa6dfd9774cda6a91deb500cf6560cc22d4b0e415a1647cdfdf6",
+      "id_verified": true
+    },
+    {
+      "entry": 10,
+      "name": "assets/drum_machine/kits/guyuan/clap.wav",
+      "offset": 532317,
+      "stored_length": 42331,
+      "length": 64388,
+      "crc32": 3733246934,
+      "sha256": "30556e14b35c77633b81350fa0f090cec815464d6cb0e435113755b891754760",
+      "id_verified": true
+    },
+    {
+      "entry": 11,
+      "name": "assets/drum_machine/kits/guyuan/cowbell.wav",
+      "offset": 574648,
+      "stored_length": 14464,
+      "length": 27578,
+      "crc32": 450592026,
+      "sha256": "50ef5884bd17612abe8e37b0288c9f7b5d996bc22f2a7f809b4e761ef22bdde2",
+      "id_verified": true
+    },
+    {
+      "entry": 12,
+      "name": "assets/drum_machine/kits/guyuan/crash.wav",
+      "offset": 589112,
+      "stored_length": 203056,
+      "length": 286702,
+      "crc32": 3837136647,
+      "sha256": "9b62887bbca722b82f89f6e1a902810a4304ba5e6240d34aee7d23a35583a5b9",
+      "id_verified": true
+    },
+    {
+      "entry": 13,
+      "name": "assets/drum_machine/kits/guyuan/hihat_closed.wav",
+      "offset": 792168,
+      "stored_length": 19545,
+      "length": 33854,
+      "crc32": 3807726464,
+      "sha256": "4d1279c499a8818fad62a4f87d8e45fdff2774618535ac6df8fe9ff9497b866b",
+      "id_verified": true
+    },
+    {
+      "entry": 14,
+      "name": "assets/drum_machine/kits/guyuan/hihat_half_open.wav",
+      "offset": 811713,
+      "stored_length": 27223,
+      "length": 39014,
+      "crc32": 2600345836,
+      "sha256": "f34ec5f46500b9a9b6eccb574372f1efab4b1c9d23b90ecf1919ae6f32c29eff",
+      "id_verified": true
+    },
+    {
+      "entry": 15,
+      "name": "assets/drum_machine/kits/guyuan/hihat_open.wav",
+      "offset": 838936,
+      "stored_length": 192888,
+      "length": 294376,
+      "crc32": 577180590,
+      "sha256": "0346d870d3ca9405a2b5e7c1d01f0cd2ac9b3ccab2a4a2c9226e5698dbd4b7d9",
+      "id_verified": true
+    },
+    {
+      "entry": 16,
+      "name": "assets/drum_machine/kits/guyuan/hihat_pedal.wav",
+      "offset": 1031824,
+      "stored_length": 24022,
+      "length": 39060,
+      "crc32": 1181809053,
+      "sha256": "7081ff227d61a94da95ea2e9e5c9f91a60e2d20cc584263aed3a1b84a9fb7c9f",
+      "id_verified": true
+    },
+    {
+      "entry": 17,
+      "name": "assets/drum_machine/kits/guyuan/kick.wav",
+      "offset": 1055846,
+      "stored_length": 17161,
+      "length": 27364,
+      "crc32": 773720537,
+      "sha256": "16f4f9ce81b58ab90241a663b201e0792ff8c4fe17a22ce3bde2a3d84b0de2d2",
+      "id_verified": true
+    },
+    {
+      "entry": 18,
+      "name": "assets/drum_machine/kits/guyuan/ride.wav",
+      "offset": 1073007,
+      "stored_length": 202534,
+      "length": 291040,
+      "crc32": 3876496294,
+      "sha256": "b6f1a8a0c46333eb8f73933a52772808a91266d18ed9530beb42fa9814e34552",
+      "id_verified": true
+    },
+    {
+      "entry": 19,
+      "name": "assets/drum_machine/kits/guyuan/side_stick.wav",
+      "offset": 1275541,
+      "stored_length": 43449,
+      "length": 86134,
+      "crc32": 402508829,
+      "sha256": "de8968f1a307bb545b312e64d790a0c14d228015b07b28e8e12b203b66107130",
+      "id_verified": true
+    },
+    {
+      "entry": 20,
+      "name": "assets/drum_machine/kits/guyuan/snare.wav",
+      "offset": 1318990,
+      "stored_length": 54219,
+      "length": 95406,
+      "crc32": 1771972791,
+      "sha256": "bbeef88a35a7a609def946c30d730d9ead1c30391cae7fa3cf7606446d30a456",
+      "id_verified": true
+    },
+    {
+      "entry": 21,
+      "name": "assets/drum_machine/kits/guyuan/snare_center.wav",
+      "offset": 1373209,
+      "stored_length": 72101,
+      "length": 182824,
+      "crc32": 210106007,
+      "sha256": "2699ce7b8030da6f5a9d54540b4147add21f606ee222b28c0f8fbbe7be81d4bf",
+      "id_verified": true
+    },
+    {
+      "entry": 22,
+      "name": "assets/drum_machine/kits/guyuan/tom_hi.wav",
+      "offset": 1445310,
+      "stored_length": 60611,
+      "length": 96536,
+      "crc32": 2379179922,
+      "sha256": "8a0fbf62f3ec317cf6d72a40944db585f5c6367236f477d0981678a4cacae3ae",
+      "id_verified": true
+    },
+    {
+      "entry": 23,
+      "name": "assets/drum_machine/kits/guyuan/tom_low.wav",
+      "offset": 1505921,
+      "stored_length": 60888,
+      "length": 116674,
+      "crc32": 3594281099,
+      "sha256": "9a7e81cae6fad3bca836a2398b1028a9667526617997c5cf5ff69d26a043fd1b",
+      "id_verified": true
+    },
+    {
+      "entry": 24,
+      "name": "assets/drum_machine/kits/guyuan/tom_mid.wav",
+      "offset": 1566809,
+      "stored_length": 53235,
+      "length": 93280,
+      "crc32": 2471692768,
+      "sha256": "1b9d79c830d959104b4b6cbd2eb3d89525a5f9522225009253308609c2d2322c",
+      "id_verified": true
+    },
+    {
+      "entry": 25,
+      "name": "assets/drum_machine/midi/factory_01_straight_rock.mid",
+      "offset": 1620044,
+      "stored_length": 94,
+      "length": 295,
+      "crc32": 2279353398,
+      "sha256": "2a17d72b6c12bc3d116139435bf25498ae6387b3df53fa72c6ed7f5a7a35f6e8",
+      "id_verified": true
+    },
+    {
+      "entry": 26,
+      "name": "assets/drum_machine/midi/factory_02_half_time.mid",
+      "offset": 1620138,
+      "stored_length": 110,
+      "length": 271,
+      "crc32": 1101409020,
+      "sha256": "61e429f36d0ebd06451cdde72cf01df951d157286a85a80af83b6c567d6f0c07",
+      "id_verified": true
+    },
+    {
+      "entry": 27,
+      "name": "assets/drum_machine/midi/factory_03_funk_push.mid",
+      "offset": 1620248,
+      "stored_length": 123,
+      "length": 306,
+      "crc32": 1779980705,
+      "sha256": "580b0a9d3070e499f39ab35392746eca985513de815003505206fdb90cee25da",
+      "id_verified": true
+    },
+    {
+      "entry": 28,
+      "name": "assets/drum_machine/midi/factory_04_shuffle.mid",
+      "offset": 1620371,
+      "stored_length": 100,
+      "length": 273,
+      "crc32": 2002231085,
+      "sha256": "3f66193bded4544f019e2bc677920d03e210a9122be28c299024b2344281916e",
+      "id_verified": true
+    },
+    {
+      "entry": 29,
+      "name": "assets/drum_machine/midi/factory_05_six_eight_pulse.mid",
+      "offset": 1620471,
+      "stored_length": 104,
+      "length": 253,
+      "crc32": 1131344872,
+      "sha256": "aa0ce5863e72d9eb2241f6cb4012f614db8b594a561dc2a8796d23a5e23d6302",
+      "id_verified": true
+    },
+    {
+      "entry": 30,
+      "name": "assets/drum_machine/midi/groove_01_beat2_100.mid",
+      "offset": 1620575,
+      "stored_length": 123,
+      "length": 350,
+      "crc32": 1236118182,
+      "sha256": "900062a2f650a0cd3150f751a08b125cfe3060b508d033bcbee57fcd45674198",
+      "id_verified": true
+    },
+    {
+      "entry": 31,
+      "name": "assets/drum_machine/midi/groove_02_beat8_100.mid",
+      "offset": 1620698,
+      "stored_length": 113,
+      "length": 265,
+      "crc32": 546609506,
+      "sha256": "8b1379973581aea291227b523d8d46f295936096da054ef9a34c487827315bbb",
+      "id_verified": true
+    },
+    {
+      "entry": 32,
+      "name": "assets/drum_machine/midi/groove_03_beat16_100.mid",
+      "offset": 1620811,
+      "stored_length": 113,
+      "length": 386,
+      "crc32": 1544150878,
+      "sha256": "d9bfc6da2a392f82b2e4784fdf930ba743b19f4f935c454bc8e95f403800b4b5",
+      "id_verified": true
+    },
+    {
+      "entry": 33,
+      "name": "assets/drum_machine/midi/groove_04_beat3_4_120.mid",
+      "offset": 1620924,
+      "stored_length": 92,
+      "length": 196,
+      "crc32": 2324274074,
+      "sha256": "cc484c0f7fbbff6d833f7428a12865c2a0291a24db71047403f5e6962ee487f9",
+      "id_verified": true
+    },
+    {
+      "entry": 34,
+      "name": "assets/drum_machine/midi/groove_05_slipbeat_100.mid",
+      "offset": 1621016,
+      "stored_length": 193,
+      "length": 310,
+      "crc32": 745954788,
+      "sha256": "291484da60969e9dbd0b1dae00dc0655e00cbfcc2867f367565ea5eac7003a01",
+      "id_verified": true
+    },
+    {
+      "entry": 35,
+      "name": "assets/drum_machine/midi/groove_06_halfbeat_100.mid",
+      "offset": 1621209,
+      "stored_length": 122,
+      "length": 266,
+      "crc32": 1240750644,
+      "sha256": "741994e8f82d7c3e149d2f18c44f7da0d9d2bf0b727943a033767e862087121b",
+      "id_verified": true
+    },
+    {
+      "entry": 36,
+      "name": "assets/drum_machine/midi/groove_07_jungle_100.mid",
+      "offset": 1621331,
+      "stored_length": 130,
+      "length": 298,
+      "crc32": 2402914940,
+      "sha256": "f8231c93a0e26e2faa57b6b307a55f12d8f8eb830219869e3b6ee60cc179fcc8",
+      "id_verified": true
+    },
+    {
+      "entry": 37,
+      "name": "assets/drum_machine/midi/groove_08_shake_100.mid",
+      "offset": 1621461,
+      "stored_length": 157,
+      "length": 313,
+      "crc32": 3326047175,
+      "sha256": "1e0e3f6884a2e3873abdb050ebd9a829d2354eba9fed4bac044713c18923efc4",
+      "id_verified": true
+    },
+    {
+      "entry": 38,
+      "name": "assets/drum_machine/midi/groove_09_surfbeat_100.mid",
+      "offset": 1621618,
+      "stored_length": 106,
+      "length": 261,
+      "crc32": 1962795897,
+      "sha256": "39c5a105126a7c0386249b35a795090ef5f5c13c38b6814038d8b18243475580",
+      "id_verified": true
+    },
+    {
+      "entry": 39,
+      "name": "assets/drum_machine/midi/groove_10_hardrock_100.mid",
+      "offset": 1621724,
+      "stored_length": 112,
+      "length": 345,
+      "crc32": 3843379053,
+      "sha256": "ff3dba20ad0f051d98afbc590d638793e9f62072ebf57f30608f0195834eeb14",
+      "id_verified": true
+    },
+    {
+      "entry": 40,
+      "name": "assets/drum_machine/midi/groove_11_metal_120.mid",
+      "offset": 1621836,
+      "stored_length": 145,
+      "length": 256,
+      "crc32": 2615555467,
+      "sha256": "7ec6e11b94fa9625ec1fe07e34874eb28f514744137030d261f90f8a6a5f30a2",
+      "id_verified": true
+    },
+    {
+      "entry": 41,
+      "name": "assets/drum_machine/midi/groove_12_punk_150.mid",
+      "offset": 1621981,
+      "stored_length": 116,
+      "length": 207,
+      "crc32": 1430624127,
+      "sha256": "aef9eb6c87835a1bd8da97bf74a2e192e2b120a81956086962c8f850a5025fc9",
+      "id_verified": true
+    },
+    {
+      "entry": 42,
+      "name": "assets/drum_machine/midi/groove_13_rock_100.mid",
+      "offset": 1622097,
+      "stored_length": 153,
+      "length": 420,
+      "crc32": 1002706631,
+      "sha256": "56dfb8e81d6fbf918ca90a8a70f62afb565178c9db42b236dd18f3ecb0a2a7c5",
+      "id_verified": true
+    },
+    {
+      "entry": 43,
+      "name": "assets/drum_machine/midi/groove_14_funk_100.mid",
+      "offset": 1622250,
+      "stored_length": 111,
+      "length": 343,
+      "crc32": 2826785582,
+      "sha256": "f5b0621cfa4a7bab1fbff8a62f8630c7496b59f835bf0d81a2e97ddf5413e06b",
+      "id_verified": true
+    },
+    {
+      "entry": 44,
+      "name": "assets/drum_machine/midi/groove_15_rnb_100.mid",
+      "offset": 1622361,
+      "stored_length": 106,
+      "length": 425,
+      "crc32": 1107298926,
+      "sha256": "42ba63b5f42db6e50cd664a5cc007406f591a0fd055204b52f5c93dab59ba71d",
+      "id_verified": true
+    },
+    {
+      "entry": 45,
+      "name": "assets/drum_machine/midi/groove_16_layback_75.mid",
+      "offset": 1622467,
+      "stored_length": 104,
+      "length": 305,
+      "crc32": 1151792082,
+      "sha256": "1980bcefa64ea132da76532fad50021a5234b5e0faf20365aa8e69f715e0bdab",
+      "id_verified": true
+    },
+    {
+      "entry": 46,
+      "name": "assets/drum_machine/midi/groove_17_bluesrock_120.mid",
+      "offset": 1622571,
+      "stored_length": 133,
+      "length": 299,
+      "crc32": 51673524,
+      "sha256": "4f807389dd1b979f746fa643f9d848fdf59e33144bcb730a2bd601c18aef632b",
+      "id_verified": true
+    },
+    {
+      "entry": 47,
+      "name": "assets/drum_machine/midi/groove_18_shuffle_100.mid",
+      "offset": 1622704,
+      "stored_length": 98,
+      "length": 257,
+      "crc32": 2580064330,
+      "sha256": "45878538ed8bac09b18f342bcdd4973f73990452b2989713fcc5e3284a94aa86",
+      "id_verified": true
+    },
+    {
+      "entry": 48,
+      "name": "assets/drum_machine/midi/groove_19_blues12_8_80.mid",
+      "offset": 1622802,
+      "stored_length": 105,
+      "length": 332,
+      "crc32": 1653644138,
+      "sha256": "2df0ca2ed4a729b7b36c7019addc9c1b737bb3bad6746524279c31848b49a986",
+      "id_verified": true
+    },
+    {
+      "entry": 49,
+      "name": "assets/drum_machine/midi/groove_20_jazz_100.mid",
+      "offset": 1622907,
+      "stored_length": 91,
+      "length": 195,
+      "crc32": 169982153,
+      "sha256": "b457f98f5911c651abb48fb281551dc6a0b9dfc72cbb3397786da350101472e2",
+      "id_verified": true
+    },
+    {
+      "entry": 50,
+      "name": "assets/drum_machine/midi/groove_21_jazz2feel_100.mid",
+      "offset": 1622998,
+      "stored_length": 95,
+      "length": 146,
+      "crc32": 3828274320,
+      "sha256": "357de721154ec9464f0db65731ef011cb3e9cb01a9a260c98f68c06fcda6bd03",
+      "id_verified": true
+    },
+    {
+      "entry": 51,
+      "name": "assets/drum_machine/midi/groove_22_bossanv23_100.mid",
+      "offset": 1623093,
+      "stored_length": 115,
+      "length": 283,
+      "crc32": 4240526409,
+      "sha256": "6c477a1b366e7244cb54445dc660beb8e8fc46a6d4c8ec6ffd7ced9a83ef75a3",
+      "id_verified": true
+    },
+    {
+      "entry": 52,
+      "name": "assets/drum_machine/midi/groove_23_bossanv32_100.mid",
+      "offset": 1623208,
+      "stored_length": 114,
+      "length": 281,
+      "crc32": 409613955,
+      "sha256": "75167fd1da983c178519ba1b6941ab7fa69264e44d7bcbbaaa1d9c36b05e7259",
+      "id_verified": true
+    },
+    {
+      "entry": 53,
+      "name": "assets/drum_machine/midi/groove_24_mambo_120.mid",
+      "offset": 1623322,
+      "stored_length": 158,
+      "length": 241,
+      "crc32": 494102009,
+      "sha256": "eeafc69027be15ed61a79f2504dc35fa6be0fd47f00a972df83d64ba4006056b",
+      "id_verified": true
+    },
+    {
+      "entry": 54,
+      "name": "assets/drum_machine/midi/groove_25_samba_100.mid",
+      "offset": 1623480,
+      "stored_length": 92,
+      "length": 439,
+      "crc32": 1343626136,
+      "sha256": "cef885b7882690e7652b5e3ed8115f8626d2bb874f76bf3f20000c10f9ff49c0",
+      "id_verified": true
+    },
+    {
+      "entry": 55,
+      "name": "assets/drum_machine/midi/groove_26_sambakick_100.mid",
+      "offset": 1623572,
+      "stored_length": 90,
+      "length": 274,
+      "crc32": 1308010211,
+      "sha256": "18db6c807b1fe4b48afac1134c8c8483d83c2cda5b4ac777cd4d7c1c0ba934b6",
+      "id_verified": true
+    },
+    {
+      "entry": 56,
+      "name": "assets/drum_machine/midi/groove_27_rumba_120.mid",
+      "offset": 1623662,
+      "stored_length": 136,
+      "length": 294,
+      "crc32": 1020051722,
+      "sha256": "22ffc98e3d6ac8f69e7125e1f46b83ca13da1f3bedd7c18ff5afad38bd4ada32",
+      "id_verified": true
+    },
+    {
+      "entry": 57,
+      "name": "assets/drum_machine/midi/groove_28_songo_200.mid",
+      "offset": 1623798,
+      "stored_length": 99,
+      "length": 190,
+      "crc32": 2420848897,
+      "sha256": "792b942785cf6c4da8eaec9ae8e68bc9822c1229a359cac3b578d6abf1b84b1a",
+      "id_verified": true
+    },
+    {
+      "entry": 58,
+      "name": "assets/drum_machine/midi/groove_29_tango_120.mid",
+      "offset": 1623897,
+      "stored_length": 121,
+      "length": 286,
+      "crc32": 431971552,
+      "sha256": "9cd5ad3e2e08d5338b60353c8cb478202035e9b0a96763de9ecd44a68c8dd384",
+      "id_verified": true
+    },
+    {
+      "entry": 59,
+      "name": "assets/drum_machine/midi/groove_30_chacha_120.mid",
+      "offset": 1624018,
+      "stored_length": 126,
+      "length": 222,
+      "crc32": 1982928093,
+      "sha256": "1af478644277cd9147715f540c5c3e5b6d51319e6acedd0850836d712ff5719d",
+      "id_verified": true
+    },
+    {
+      "entry": 60,
+      "name": "assets/drum_machine/midi/groove_31_reggae_70.mid",
+      "offset": 1624144,
+      "stored_length": 96,
+      "length": 392,
+      "crc32": 1617063137,
+      "sha256": "384bfd76f53ee4d1b313b0b4a1d994901009c1faa07567f9a39779a788bad46c",
+      "id_verified": true
+    },
+    {
+      "entry": 61,
+      "name": "assets/drum_machine/midi/groove_32_ska_150.mid",
+      "offset": 1624240,
+      "stored_length": 116,
+      "length": 358,
+      "crc32": 242093875,
+      "sha256": "43984d1014feb8fb72f102d1c091541b3c80e637c9d523de7057a0db5b93ffe0",
+      "id_verified": true
+    },
+    {
+      "entry": 62,
+      "name": "assets/drum_machine/midi/groove_33_soca_100.mid",
+      "offset": 1624356,
+      "stored_length": 103,
+      "length": 299,
+      "crc32": 497798019,
+      "sha256": "dc35071fc63ad3f12ae1f8a7af722712d4722606d44cf8ed5cfb2fd1dc67d21a",
+      "id_verified": true
+    },
+    {
+      "entry": 63,
+      "name": "assets/drum_machine/midi/groove_34_disco_100.mid",
+      "offset": 1624459,
+      "stored_length": 91,
+      "length": 216,
+      "crc32": 435734644,
+      "sha256": "ad6c41b47a61f2d5f7d057b608f1d79f006e3d770545e6e01621e841712aba4a",
+      "id_verified": true
+    },
+    {
+      "entry": 64,
+      "name": "assets/drum_machine/midi/groove_35_hiphop_85.mid",
+      "offset": 1624550,
+      "stored_length": 123,
+      "length": 440,
+      "crc32": 3724397236,
+      "sha256": "3d4f16bac598122506508ab5563899bbf121370c28814750c0a321b3fac1590f",
+      "id_verified": true
+    },
+    {
+      "entry": 65,
+      "name": "assets/i18n/device_cn.json",
+      "offset": 1624673,
+      "stored_length": 575,
+      "length": 1237,
+      "crc32": 3650289087,
+      "sha256": "9032c8e502588f6c808b288b01c443ab61f5a70db1d2a5da3199acc6b06bb404",
+      "id_verified": true
+    },
+    {
+      "entry": 66,
+      "name": "assets/i18n/strings_en.json",
+      "offset": 1625248,
+      "stored_length": 2475,
+      "length": 6835,
+      "crc32": 1890662113,
+      "sha256": "6948f8c683db51474ce9a94cf540c1afe69c6a0f62601dce0d97da7fb04559f7",
+      "id_verified": true
+    },
+    {
+      "entry": 67,
+      "name": "assets/i18n/strings_zh_cn.json",
+      "offset": 1627723,
+      "stored_length": 2649,
+      "length": 7011,
+      "crc32": 2436851998,
+      "sha256": "cb905cb3fb472aebdbaca18411879e3a92a3638687ed79aca12003b539fa99ff",
+      "id_verified": true
+    },
+    {
+      "entry": 68,
+      "name": "assets/md400/P01_NANOCORE_MIDI.presets",
+      "offset": 1630372,
+      "stored_length": 405,
+      "length": 2458,
+      "crc32": 1447963209,
+      "sha256": "b8acda5a3082ad36591160c874f230886eaf60a3a0825c43fe50275dc975dea1",
+      "id_verified": true
+    },
+    {
+      "entry": 69,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page01.presets",
+      "offset": 1630777,
+      "stored_length": 370,
+      "length": 3058,
+      "crc32": 161410161,
+      "sha256": "f22154c9acf72c62a2bdcfff02d9201389a1c17b1b8135ca048a72947816b20f",
+      "id_verified": true
+    },
+    {
+      "entry": 70,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page02.presets",
+      "offset": 1631147,
+      "stored_length": 389,
+      "length": 3063,
+      "crc32": 2774624618,
+      "sha256": "930cd796dc55bcbee6577c36edfc829742690a9a1563c2d859920dffe249804c",
+      "id_verified": true
+    },
+    {
+      "entry": 71,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page03.presets",
+      "offset": 1631536,
+      "stored_length": 385,
+      "length": 3063,
+      "crc32": 4186112694,
+      "sha256": "cfa5fae16f582226bde30bf7bb4d9f971b8b975bd7e512d79bc2ddc639768c1f",
+      "id_verified": true
+    },
+    {
+      "entry": 72,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page04.presets",
+      "offset": 1631921,
+      "stored_length": 382,
+      "length": 3065,
+      "crc32": 222167413,
+      "sha256": "aa876a58377f9dcd9b37ef355073afcb802e7d3416ab70ff1ca5a5efea79e6c9",
+      "id_verified": true
+    },
+    {
+      "entry": 73,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page05.presets",
+      "offset": 1632303,
+      "stored_length": 386,
+      "length": 3068,
+      "crc32": 3506461937,
+      "sha256": "4af0248a04370a781738432fc7cc262c6016765b6ec83fcfcab4eba13acf79db",
+      "id_verified": true
+    },
+    {
+      "entry": 74,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page06.presets",
+      "offset": 1632689,
+      "stored_length": 384,
+      "length": 3070,
+      "crc32": 3358237810,
+      "sha256": "1f0b1587fe710c7fcfb2bb28def1f169cf4c14e1ef541750b8c37ba9207f9434",
+      "id_verified": true
+    },
+    {
+      "entry": 75,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page07.presets",
+      "offset": 1633073,
+      "stored_length": 386,
+      "length": 3068,
+      "crc32": 2429470839,
+      "sha256": "c16107eb37b6f2e93271c1cd57d7b62739b10120471dbff802010c8cb24bf6bc",
+      "id_verified": true
+    },
+    {
+      "entry": 76,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page08.presets",
+      "offset": 1633459,
+      "stored_length": 385,
+      "length": 3069,
+      "crc32": 913011040,
+      "sha256": "c34eeb1032493df106a89a902eb81df1cf8b07dc79ff24206bba90367f9b2dfa",
+      "id_verified": true
+    },
+    {
+      "entry": 77,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page09.presets",
+      "offset": 1633844,
+      "stored_length": 384,
+      "length": 3065,
+      "crc32": 3784045556,
+      "sha256": "84bc1184840ceaf673babc964e2f625ac31d1d53025b0f2a48724fb4fd3b89a7",
+      "id_verified": true
+    },
+    {
+      "entry": 78,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page10.presets",
+      "offset": 1634228,
+      "stored_length": 387,
+      "length": 3081,
+      "crc32": 4274905266,
+      "sha256": "693ccaef8bb5be3283f96fb107c020e75ec63257f8813100de081f0d92153c09",
+      "id_verified": true
+    },
+    {
+      "entry": 79,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page11.presets",
+      "offset": 1634615,
+      "stored_length": 355,
+      "length": 3073,
+      "crc32": 3283234928,
+      "sha256": "9209de2d5ba6cb806d90bfbbe7c5e385a891130c2b21790d24c33dc5677c5d16",
+      "id_verified": true
+    },
+    {
+      "entry": 80,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page12.presets",
+      "offset": 1634970,
+      "stored_length": 357,
+      "length": 3073,
+      "crc32": 2698827743,
+      "sha256": "3ec7c711c664420da8b2ca8fdd6636332d16864426b4026186c2303b9b99620c",
+      "id_verified": true
+    },
+    {
+      "entry": 81,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page13.presets",
+      "offset": 1635327,
+      "stored_length": 360,
+      "length": 3073,
+      "crc32": 1611609742,
+      "sha256": "cccd6ab86227ce8101d73f019fc90b46893febcf1ecc25965163b661654378bc",
+      "id_verified": true
+    },
+    {
+      "entry": 82,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page14.presets",
+      "offset": 1635687,
+      "stored_length": 358,
+      "length": 3073,
+      "crc32": 3135500017,
+      "sha256": "bbf88fc59c5250822efcf18fc9f4330fb61bcb87eba9587c244c5bd04674980e",
+      "id_verified": true
+    },
+    {
+      "entry": 83,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page15.presets",
+      "offset": 1636045,
+      "stored_length": 361,
+      "length": 3073,
+      "crc32": 3003657435,
+      "sha256": "bd48931f6835525e3a1a255a7a123502e537e45adcaf59e4fab50bb51516a3c8",
+      "id_verified": true
+    },
+    {
+      "entry": 84,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page16.presets",
+      "offset": 1636406,
+      "stored_length": 354,
+      "length": 3073,
+      "crc32": 4017173395,
+      "sha256": "43adccc510a0caebde5f9a5614c755b227749fed42f5c98bb8ab58751d00a565",
+      "id_verified": true
+    },
+    {
+      "entry": 85,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page17.presets",
+      "offset": 1636760,
+      "stored_length": 360,
+      "length": 3057,
+      "crc32": 136290171,
+      "sha256": "61770e687f4f72df247f5f4d3d72e3a7e8d3207f11912a3dfccdc1836be96940",
+      "id_verified": true
+    },
+    {
+      "entry": 86,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page18.presets",
+      "offset": 1637120,
+      "stored_length": 362,
+      "length": 3057,
+      "crc32": 2143752900,
+      "sha256": "45932692cb7fd54217e50840adf1329541947d36a0cd2113e0276ef5af182869",
+      "id_verified": true
+    },
+    {
+      "entry": 87,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page19.presets",
+      "offset": 1637482,
+      "stored_length": 361,
+      "length": 3057,
+      "crc32": 2885399549,
+      "sha256": "6dda00a20364be5bcd522d73c8b47b8eb0a89d833413ee44bfe436b2aa8fe364",
+      "id_verified": true
+    },
+    {
+      "entry": 88,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page20.presets",
+      "offset": 1637843,
+      "stored_length": 364,
+      "length": 3057,
+      "crc32": 1264094155,
+      "sha256": "81ab327ebdb153a6d34b9f74bdcf57335dd74aedfd43b3c6b4fc57acffbad918",
+      "id_verified": true
+    },
+    {
+      "entry": 89,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page21.presets",
+      "offset": 1638207,
+      "stored_length": 358,
+      "length": 3057,
+      "crc32": 1593179794,
+      "sha256": "31d820136119e93ea19c11846624c0c912e9ed1ea91bc605b564fdf098ef491e",
+      "id_verified": true
+    },
+    {
+      "entry": 90,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page22.presets",
+      "offset": 1638565,
+      "stored_length": 362,
+      "length": 3057,
+      "crc32": 2549686229,
+      "sha256": "bf774a8bc2a3a4b9296cef3d580c1ed916004313f444f1eae03f79152a13eec8",
+      "id_verified": true
+    },
+    {
+      "entry": 91,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page23.presets",
+      "offset": 1638927,
+      "stored_length": 363,
+      "length": 3057,
+      "crc32": 2614454205,
+      "sha256": "941eaece5b58ad42effb0a8836b478b8552de9167dd04adb9ca98961fee521a1",
+      "id_verified": true
+    },
+    {
+      "entry": 92,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page24.presets",
+      "offset": 1639290,
+      "stored_length": 362,
+      "length": 3057,
+      "crc32": 3034389178,
+      "sha256": "0efa0000e2c249df565bb502e7e852aa565f6e55b615bb3255e54933a7577d12",
+      "id_verified": true
+    },
+    {
+      "entry": 93,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page25.presets",
+      "offset": 1639652,
+      "stored_length": 365,
+      "length": 3057,
+      "crc32": 2366582071,
+      "sha256": "e317deba200cee0d2dec90c02643b1ec62848d7f8db9832030dd09e722cd5dc8",
+      "id_verified": true
+    },
+    {
+      "entry": 94,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page26.presets",
+      "offset": 1640017,
+      "stored_length": 359,
+      "length": 3065,
+      "crc32": 2927169761,
+      "sha256": "ab3372bcb69237ae9a9c2ab2cd671de833f6319b285002838a48001f1e042fed",
+      "id_verified": true
+    },
+    {
+      "entry": 95,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page27.presets",
+      "offset": 1640376,
+      "stored_length": 362,
+      "length": 3065,
+      "crc32": 2958301535,
+      "sha256": "d04bfca30ba437417b91fca3c044939f5983a738c40ed673a5760a0441d5b263",
+      "id_verified": true
+    },
+    {
+      "entry": 96,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page28.presets",
+      "offset": 1640738,
+      "stored_length": 364,
+      "length": 3065,
+      "crc32": 2462641592,
+      "sha256": "16830330724a312ef385657ae305c3ff0e194745553e9b37925efd6ac25012a3",
+      "id_verified": true
+    },
+    {
+      "entry": 97,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page29.presets",
+      "offset": 1641102,
+      "stored_length": 362,
+      "length": 3065,
+      "crc32": 1882315342,
+      "sha256": "4a6d383aae33eed0a6d4ad08cec883d1f02c2648b98b5a8f1ebc0cd67c158714",
+      "id_verified": true
+    },
+    {
+      "entry": 98,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page30.presets",
+      "offset": 1641464,
+      "stored_length": 364,
+      "length": 3065,
+      "crc32": 3632498528,
+      "sha256": "5d490b21c3447653921674b04917b6a808153cd2d18b214cf1c7df8fd91ff301",
+      "id_verified": true
+    },
+    {
+      "entry": 99,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page31.presets",
+      "offset": 1641828,
+      "stored_length": 357,
+      "length": 3065,
+      "crc32": 3120266856,
+      "sha256": "44ee3662c2a99ccdaa63b43a1f1491ac14425653f09310a30a985b5e31019d36",
+      "id_verified": true
+    },
+    {
+      "entry": 100,
+      "name": "assets/md400/P01_NANOCORE_PEDAL_Page32.presets",
+      "offset": 1642185,
+      "stored_length": 362,
+      "length": 3065,
+      "crc32": 2055036816,
+      "sha256": "d348151aef230f70361a4991b6729cd357e978e4c7b6b4378eecb7fc584c67ed",
+      "id_verified": true
+    },
+    {
+      "entry": 101,
+      "name": "assets/md400/P02_MOSAIC_MIDI.presets",
+      "offset": 1642547,
+      "stored_length": 405,
+      "length": 2456,
+      "crc32": 561364029,
+      "sha256": "1c1c33243f1b3909c9e8469a7298a66ed9a263144d28c3a5e7fe7c9461ba8f7d",
+      "id_verified": true
+    },
+    {
+      "entry": 102,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page01.presets",
+      "offset": 1642952,
+      "stored_length": 365,
+      "length": 3049,
+      "crc32": 2879588336,
+      "sha256": "0ea8e32e98f38a62fd9d8b3d2b69da64d1ba298c80ef4387f1d0d2bb71ced3ed",
+      "id_verified": true
+    },
+    {
+      "entry": 103,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page02.presets",
+      "offset": 1643317,
+      "stored_length": 375,
+      "length": 3055,
+      "crc32": 1686335294,
+      "sha256": "9f8b9d3ae273616ebb23ad08281eeba4d39067ff06c0ce726ef3b30fd8b662ea",
+      "id_verified": true
+    },
+    {
+      "entry": 104,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page03.presets",
+      "offset": 1643692,
+      "stored_length": 376,
+      "length": 3047,
+      "crc32": 340524544,
+      "sha256": "1f8e4516ad53c351b93cc46e5805af28246b11d9bed69bcad32a704801f7f1a3",
+      "id_verified": true
+    },
+    {
+      "entry": 105,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page04.presets",
+      "offset": 1644068,
+      "stored_length": 381,
+      "length": 3059,
+      "crc32": 2374138954,
+      "sha256": "801264dd48ed88b6b2306f3a9ed35764ef652a3247f8c5a6dca9c065f4a77943",
+      "id_verified": true
+    },
+    {
+      "entry": 106,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page05.presets",
+      "offset": 1644449,
+      "stored_length": 379,
+      "length": 3061,
+      "crc32": 2760150679,
+      "sha256": "fa2dab207d7c8a70c7c7ca49565b8dea96b0d9e6a18ff5d7a06a3724fa9131bb",
+      "id_verified": true
+    },
+    {
+      "entry": 107,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page06.presets",
+      "offset": 1644828,
+      "stored_length": 382,
+      "length": 3063,
+      "crc32": 1345830036,
+      "sha256": "3a717c5ef4dd3e1054d93a31e9bf7c03d038c325e0dcb5df2fb50f25b26c690b",
+      "id_verified": true
+    },
+    {
+      "entry": 108,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page07.presets",
+      "offset": 1645210,
+      "stored_length": 376,
+      "length": 3050,
+      "crc32": 3722236719,
+      "sha256": "8dc696b020ccf3525a9903b8e7489cdd9dc6c722196425b5b2ee526f0bf9c82e",
+      "id_verified": true
+    },
+    {
+      "entry": 109,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page08.presets",
+      "offset": 1645586,
+      "stored_length": 380,
+      "length": 3059,
+      "crc32": 1282381102,
+      "sha256": "4b7bc04d3fa24ce4794db9c1e86572d1520845aa4ee4b0d1f3486a5d7cf35f2e",
+      "id_verified": true
+    },
+    {
+      "entry": 110,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page09.presets",
+      "offset": 1645966,
+      "stored_length": 381,
+      "length": 3061,
+      "crc32": 2667877382,
+      "sha256": "fe21fbd0d1c5387b993a1bf9c62cdfc90cc45ee2aab0826026aac9301860acef",
+      "id_verified": true
+    },
+    {
+      "entry": 111,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page10.presets",
+      "offset": 1646347,
+      "stored_length": 382,
+      "length": 3070,
+      "crc32": 729337152,
+      "sha256": "6e5c8d710c4c3b715b9d3c2252e547a9bf8cd68dc13aba9b3921e2d022f9dfe3",
+      "id_verified": true
+    },
+    {
+      "entry": 112,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page11.presets",
+      "offset": 1646729,
+      "stored_length": 381,
+      "length": 3071,
+      "crc32": 1692767301,
+      "sha256": "3e1d4b0edb29e3c0a9c10a3ee66e20668cdeec5b99a9e9a39162c0f3453fe93a",
+      "id_verified": true
+    },
+    {
+      "entry": 113,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page12.presets",
+      "offset": 1647110,
+      "stored_length": 381,
+      "length": 3070,
+      "crc32": 470294759,
+      "sha256": "b6f8bed149ce71f57b9db25078e5e3b354517dc83c0f28179a50275ce634efe7",
+      "id_verified": true
+    },
+    {
+      "entry": 114,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page13.presets",
+      "offset": 1647491,
+      "stored_length": 383,
+      "length": 3070,
+      "crc32": 3809324029,
+      "sha256": "5492b1fb5cad2d1b54ff65354b3dc4cdf61b1ea431ae421b67a7f10b7bddcbb2",
+      "id_verified": true
+    },
+    {
+      "entry": 115,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page14.presets",
+      "offset": 1647874,
+      "stored_length": 374,
+      "length": 3073,
+      "crc32": 3162843245,
+      "sha256": "41c350a9a1b00eb514837f3175c4ac70f272a00d687381ed39d13f7be9044c25",
+      "id_verified": true
+    },
+    {
+      "entry": 116,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page15.presets",
+      "offset": 1648248,
+      "stored_length": 382,
+      "length": 3073,
+      "crc32": 424535438,
+      "sha256": "a8429ab0ac36c02a531881a4499b60eadb941ccd46a378a345559c3b604b37e0",
+      "id_verified": true
+    },
+    {
+      "entry": 117,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page16.presets",
+      "offset": 1648630,
+      "stored_length": 382,
+      "length": 3069,
+      "crc32": 2793073179,
+      "sha256": "af5d9aa8db6d658dd50ff0e79bce3090b51bb6724e4805bc0bb35d5c65467630",
+      "id_verified": true
+    },
+    {
+      "entry": 118,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page17.presets",
+      "offset": 1649012,
+      "stored_length": 364,
+      "length": 3067,
+      "crc32": 911702955,
+      "sha256": "02a3b5ce1fefd1f42d1db1b3423bac3713920b46c6d62ebaac8df1969b3b6ba4",
+      "id_verified": true
+    },
+    {
+      "entry": 119,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page18.presets",
+      "offset": 1649376,
+      "stored_length": 362,
+      "length": 3067,
+      "crc32": 925300769,
+      "sha256": "1e9412197858a9641b6aac4bb67631a1a3816c5709a43fc911f921eb4ccef8e1",
+      "id_verified": true
+    },
+    {
+      "entry": 120,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page19.presets",
+      "offset": 1649738,
+      "stored_length": 363,
+      "length": 3067,
+      "crc32": 2829658772,
+      "sha256": "f867332bf57ede7a86037daeb2b4bca610ac0f5b946888a5b33480e354d628ce",
+      "id_verified": true
+    },
+    {
+      "entry": 121,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page20.presets",
+      "offset": 1650101,
+      "stored_length": 365,
+      "length": 3067,
+      "crc32": 3040690018,
+      "sha256": "bbc78bd727b88f09daf1aa6f9af4a3e41a7a73f74097db4fec1ae9142dec398b",
+      "id_verified": true
+    },
+    {
+      "entry": 122,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page21.presets",
+      "offset": 1650466,
+      "stored_length": 359,
+      "length": 3067,
+      "crc32": 625985000,
+      "sha256": "a429022f6c5778110cd593f985bfe682446902fc226e438d1c7309af5c181654",
+      "id_verified": true
+    },
+    {
+      "entry": 123,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page22.presets",
+      "offset": 1650825,
+      "stored_length": 360,
+      "length": 3067,
+      "crc32": 1839388839,
+      "sha256": "509bfee7b261843e4525d5513fcf76f896dc455bae2e9805661827d70d2c14ce",
+      "id_verified": true
+    },
+    {
+      "entry": 124,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page23.presets",
+      "offset": 1651185,
+      "stored_length": 364,
+      "length": 3067,
+      "crc32": 1113413319,
+      "sha256": "bd7bb8e182a22388890d968bd64d9e24203628fd6808f67a17b054eb2d3967a7",
+      "id_verified": true
+    },
+    {
+      "entry": 125,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page24.presets",
+      "offset": 1651549,
+      "stored_length": 362,
+      "length": 3067,
+      "crc32": 1738697421,
+      "sha256": "6f887920e07e46194daa0f3802052ccc68b4df928aa60e232dbc3e5ed358fa9f",
+      "id_verified": true
+    },
+    {
+      "entry": 126,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page25.presets",
+      "offset": 1651911,
+      "stored_length": 362,
+      "length": 3067,
+      "crc32": 4253616258,
+      "sha256": "7b89b917f93a2626011505e9f1dcd950e209a59a509208827cf14bb69aaa1389",
+      "id_verified": true
+    },
+    {
+      "entry": 127,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page26.presets",
+      "offset": 1652273,
+      "stored_length": 364,
+      "length": 3055,
+      "crc32": 4046959240,
+      "sha256": "fca4e0747a39705a6518854a142aa485b130c76c0e39ad308948f05ff04183df",
+      "id_verified": true
+    },
+    {
+      "entry": 128,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page27.presets",
+      "offset": 1652637,
+      "stored_length": 366,
+      "length": 3055,
+      "crc32": 1318947529,
+      "sha256": "e58eddeb14b20f4e8806a0eb43ba5dedc5f1625f55bf8e322d1018a5c629b7fa",
+      "id_verified": true
+    },
+    {
+      "entry": 129,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page28.presets",
+      "offset": 1653003,
+      "stored_length": 363,
+      "length": 3055,
+      "crc32": 1689547120,
+      "sha256": "589bbc799e450670965d698fc7421b5b91b7ed69478383164fc4a22fcc7dde97",
+      "id_verified": true
+    },
+    {
+      "entry": 130,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page29.presets",
+      "offset": 1653366,
+      "stored_length": 366,
+      "length": 3055,
+      "crc32": 2024814691,
+      "sha256": "bb94e492a844312ee44c6600fc3d51705cc993b8f0173ba33b19fd56d18f69d8",
+      "id_verified": true
+    },
+    {
+      "entry": 131,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page30.presets",
+      "offset": 1653732,
+      "stored_length": 367,
+      "length": 3055,
+      "crc32": 3892664383,
+      "sha256": "eaea5c8bcd5d8f5187300934f8265cb25da6f1b113e6209e397de33b13f97f62",
+      "id_verified": true
+    },
+    {
+      "entry": 132,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page31.presets",
+      "offset": 1654099,
+      "stored_length": 362,
+      "length": 3055,
+      "crc32": 2654007828,
+      "sha256": "333167a894af92bc038bb3cea02e1d4976a32fe8007187b9a92648d0e842d9e3",
+      "id_verified": true
+    },
+    {
+      "entry": 133,
+      "name": "assets/md400/P02_MOSAIC_PEDAL_Page32.presets",
+      "offset": 1654461,
+      "stored_length": 365,
+      "length": 3055,
+      "crc32": 3346183718,
+      "sha256": "e87faa964fd4fab79e0437e2cd69ebd80c35fcd5a716b7c3b75078fc957e4a8a",
+      "id_verified": true
+    },
+    {
+      "entry": 134,
+      "name": "assets/md400/P03_VELRIX_MIDI.presets",
+      "offset": 1654826,
+      "stored_length": 400,
+      "length": 2438,
+      "crc32": 1759177580,
+      "sha256": "bc99dc4790b3f3b35ed9ac66cd04c6d313fe240c336d506de9cff37ab0f7d00b",
+      "id_verified": true
+    },
+    {
+      "entry": 135,
+      "name": "assets/md400/P03_VELRIX_PEDAL_Page01.presets",
+      "offset": 1655226,
+      "stored_length": 360,
+      "length": 3041,
+      "crc32": 51610034,
+      "sha256": "9264808564c830f9888fd85c12a17cb6fa93063effe6aa64ed13102ab0c5468c",
+      "id_verified": true
+    },
+    {
+      "entry": 136,
+      "name": "assets/md400/P03_VELRIX_PEDAL_Page02.presets",
+      "offset": 1655586,
+      "stored_length": 369,
+      "length": 3041,
+      "crc32": 3024235833,
+      "sha256": "72ba9753fe8859e911adb230dc35bd30a2e5da3965e92fea1649ac06b626afb5",
+      "id_verified": true
+    },
+    {
+      "entry": 137,
+      "name": "assets/md400/P03_VELRIX_PEDAL_Page03.presets",
+      "offset": 1655955,
+      "stored_length": 370,
+      "length": 3041,
+      "crc32": 2873489554,
+      "sha256": "9a0f9cee9c405b19b40359f54ba9685259552106304f2510c62bfd7e4a912192",
+      "id_verified": true
+    },
+    {
+      "entry": 138,
+      "name": "assets/md400/P03_VELRIX_PEDAL_Page04.presets",
+      "offset": 1656325,
+      "stored_length": 366,
+      "length": 3040,
+      "crc32": 989868408,
+      "sha256": "14fe28069571e2255e0bb2643445c0edfb08246eb94abf361e85f5714775c117",
+      "id_verified": true
+    },
+    {
+      "entry": 139,
+      "name": "assets/md400/P03_VELRIX_PEDAL_Page05.presets",
+      "offset": 1656691,
+      "stored_length": 371,
+      "length": 3040,
+      "crc32": 491475654,
+      "sha256": "48d0f66412c411063bcec278c3efba1c55112635e365227046adce2206545e32",
+      "id_verified": true
+    },
+    {
+      "entry": 140,
+      "name": "assets/md400/P03_VELRIX_PEDAL_Page06.presets",
+      "offset": 1657062,
+      "stored_length": 374,
+      "length": 3040,
+      "crc32": 178668757,
+      "sha256": "6af116d3770452c285557fc5646050a5c540dda7e439a21925e9dd7161586a48",
+      "id_verified": true
+    },
+    {
+      "entry": 141,
+      "name": "assets/md400/P04_AETHER_MIDI.presets",
+      "offset": 1657436,
+      "stored_length": 426,
+      "length": 2451,
+      "crc32": 3139002012,
+      "sha256": "89e4f20a4be480235b9cb707fe99c82e0840062c992d2e294d79ff1a3e477f99",
+      "id_verified": true
+    },
+    {
+      "entry": 142,
+      "name": "assets/md400/P04_AETHER_PEDAL_Page01.presets",
+      "offset": 1657862,
+      "stored_length": 374,
+      "length": 3039,
+      "crc32": 3115840017,
+      "sha256": "ba657747343a709afc6e43f464e4fa09fe8db17d0f6ad7fb5ddd82da60ba0b91",
+      "id_verified": true
+    },
+    {
+      "entry": 143,
+      "name": "assets/md400/P04_AETHER_PEDAL_Page02.presets",
+      "offset": 1658236,
+      "stored_length": 391,
+      "length": 3046,
+      "crc32": 2910499271,
+      "sha256": "0e74b907815a11263698574e5769ac6ddd3293fc44938b56978f82143a0f5ed4",
+      "id_verified": true
+    },
+    {
+      "entry": 144,
+      "name": "assets/md400/P04_AETHER_PEDAL_Page03.presets",
+      "offset": 1658627,
+      "stored_length": 386,
+      "length": 3044,
+      "crc32": 2991661427,
+      "sha256": "096f4b3680b80f795cad3664f9b61a3ecdd3041c5a88a466d9009ed7cf8ca9b9",
+      "id_verified": true
+    },
+    {
+      "entry": 145,
+      "name": "assets/md400/P04_AETHER_PEDAL_Page04.presets",
+      "offset": 1659013,
+      "stored_length": 387,
+      "length": 3049,
+      "crc32": 1982989570,
+      "sha256": "f452f90941dd6718275c8fa060c98818cd0be73a898bc18a7a80905e84a80f57",
+      "id_verified": true
+    },
+    {
+      "entry": 146,
+      "name": "assets/md400/P05_CORVEN_MIDI.presets",
+      "offset": 1659400,
+      "stored_length": 426,
+      "length": 2463,
+      "crc32": 698260038,
+      "sha256": "0d596fb4df669ff8cdbb3999cfe424c6ef1c86a2e3e581dc6d059040d58a7fb0",
+      "id_verified": true
+    },
+    {
+      "entry": 147,
+      "name": "assets/md400/P05_CORVEN_PEDAL_Page01.presets",
+      "offset": 1659826,
+      "stored_length": 380,
+      "length": 3048,
+      "crc32": 2340530123,
+      "sha256": "b9aee9a7cd7e3c8210e97d4a30a9e042a5a0d6541ae51d393241134501b6184c",
+      "id_verified": true
+    },
+    {
+      "entry": 148,
+      "name": "assets/md400/P05_CORVEN_PEDAL_Page02.presets",
+      "offset": 1660206,
+      "stored_length": 394,
+      "length": 3059,
+      "crc32": 3686225673,
+      "sha256": "b6668b99a4391b140ecf4a119b642d904ef75b53cddfe826a9f085ea085f155f",
+      "id_verified": true
+    },
+    {
+      "entry": 149,
+      "name": "assets/md400/P06_ZENITH_MIDI.presets",
+      "offset": 1660600,
+      "stored_length": 411,
+      "length": 2455,
+      "crc32": 2761840581,
+      "sha256": "bf753772abb624f9479408065ee87424d98c8da701d684fef12f949ef58be2bc",
+      "id_verified": true
+    },
+    {
+      "entry": 150,
+      "name": "assets/md400/P06_ZENITH_PEDAL_Page01.presets",
+      "offset": 1661011,
+      "stored_length": 383,
+      "length": 3053,
+      "crc32": 1152504992,
+      "sha256": "22794aa74173ebae4503849817236f6096565e32c178620b2e193764d22438ff",
+      "id_verified": true
+    },
+    {
+      "entry": 151,
+      "name": "assets/md400/factory_catalog.json",
+      "offset": 1661394,
+      "stored_length": 4802,
+      "length": 29336,
+      "crc32": 1289170491,
+      "sha256": "c47f141d55fd9feccde2b89998add0939e576d872cf8c46f32022aa7adec6fbc",
+      "id_verified": true
+    },
+    {
+      "entry": 152,
+      "name": "assets/nanocore/default_theme/assets/amp.png",
+      "offset": 1666196,
+      "stored_length": 3237,
+      "length": 3226,
+      "crc32": 1647627896,
+      "sha256": "e4e1219f60aa9ecdf66de32c9725665d30813a7dc3eab5b9de8a52965c4f2007",
+      "id_verified": true
+    },
+    {
+      "entry": 153,
+      "name": "assets/nanocore/default_theme/assets/battery_full.png",
+      "offset": 1669433,
+      "stored_length": 1417,
+      "length": 1406,
+      "crc32": 1027409296,
+      "sha256": "5cca73936fc9e52257a04cdb7bb98c58df1632f67fe8cf24e9c7c9624c0a97f1",
+      "id_verified": true
+    },
+    {
+      "entry": 154,
+      "name": "assets/nanocore/default_theme/assets/battery_low.png",
+      "offset": 1670850,
+      "stored_length": 1130,
+      "length": 1119,
+      "crc32": 366639526,
+      "sha256": "c1de4bf1b6519774487d19f902c613f154330cb74532f7aecf67309f43877af5",
+      "id_verified": true
+    },
+    {
+      "entry": 155,
+      "name": "assets/nanocore/default_theme/assets/battery_mid.png",
+      "offset": 1671980,
+      "stored_length": 1308,
+      "length": 1297,
+      "crc32": 3384468425,
+      "sha256": "155b87b532ed732e45478929eed423c44c25fbc1be86d7539128b78d72c2955a",
+      "id_verified": true
+    },
+    {
+      "entry": 156,
+      "name": "assets/nanocore/default_theme/assets/bg_chain.png",
+      "offset": 1673288,
+      "stored_length": 22839,
+      "length": 22823,
+      "crc32": 2851430430,
+      "sha256": "48a4008d9860aec20fe41ba14fb8904a56f1a5d25db4624f94af65e7eea30577",
+      "id_verified": true
+    },
+    {
+      "entry": 157,
+      "name": "assets/nanocore/default_theme/assets/bg_main.png",
+      "offset": 1696127,
+      "stored_length": 22839,
+      "length": 22823,
+      "crc32": 2851430430,
+      "sha256": "48a4008d9860aec20fe41ba14fb8904a56f1a5d25db4624f94af65e7eea30577",
+      "id_verified": true
+    },
+    {
+      "entry": 158,
+      "name": "assets/nanocore/default_theme/assets/bg_params.png",
+      "offset": 1718966,
+      "stored_length": 22839,
+      "length": 22823,
+      "crc32": 2851430430,
+      "sha256": "48a4008d9860aec20fe41ba14fb8904a56f1a5d25db4624f94af65e7eea30577",
+      "id_verified": true
+    },
+    {
+      "entry": 159,
+      "name": "assets/nanocore/default_theme/assets/bg_settings.png",
+      "offset": 1741805,
+      "stored_length": 22839,
+      "length": 22823,
+      "crc32": 2851430430,
+      "sha256": "48a4008d9860aec20fe41ba14fb8904a56f1a5d25db4624f94af65e7eea30577",
+      "id_verified": true
+    },
+    {
+      "entry": 160,
+      "name": "assets/nanocore/default_theme/assets/bg_tuner.png",
+      "offset": 1764644,
+      "stored_length": 22839,
+      "length": 22823,
+      "crc32": 2851430430,
+      "sha256": "48a4008d9860aec20fe41ba14fb8904a56f1a5d25db4624f94af65e7eea30577",
+      "id_verified": true
+    },
+    {
+      "entry": 161,
+      "name": "assets/nanocore/default_theme/assets/cab.png",
+      "offset": 1787483,
+      "stored_length": 2639,
+      "length": 2628,
+      "crc32": 109828194,
+      "sha256": "700e017cc8b43b8d6203894a38defb0b3fec9fa8ec761423609f1db0eb162209",
+      "id_verified": true
+    },
+    {
+      "entry": 162,
+      "name": "assets/nanocore/default_theme/assets/chain.png",
+      "offset": 1790122,
+      "stored_length": 1836,
+      "length": 1825,
+      "crc32": 138246347,
+      "sha256": "e26797068e865b8026cb4a6fbd935e02f6da70c63f9887027be5cfff2c38be0b",
+      "id_verified": true
+    },
+    {
+      "entry": 163,
+      "name": "assets/nanocore/default_theme/assets/delay.png",
+      "offset": 1791958,
+      "stored_length": 2679,
+      "length": 2668,
+      "crc32": 981355085,
+      "sha256": "8366edc7c50255b9d9f7a0d0bbbe28e11f78fe19a512dd30b2afddb79be67d1b",
+      "id_verified": true
+    },
+    {
+      "entry": 164,
+      "name": "assets/nanocore/default_theme/assets/eq.png",
+      "offset": 1794637,
+      "stored_length": 2948,
+      "length": 2937,
+      "crc32": 1726717355,
+      "sha256": "523903ad21f48d50664fc614c73aeb99e91cd2db957c7c82bb47b8e3375b3237",
+      "id_verified": true
+    },
+    {
+      "entry": 165,
+      "name": "assets/nanocore/default_theme/assets/fx1.png",
+      "offset": 1797585,
+      "stored_length": 3263,
+      "length": 3252,
+      "crc32": 1355794102,
+      "sha256": "57e87a3d2578e0af4e58e219f6371e1f9320a4aec20e395177224138cc0913c7",
+      "id_verified": true
+    },
+    {
+      "entry": 166,
+      "name": "assets/nanocore/default_theme/assets/fx2.png",
+      "offset": 1800848,
+      "stored_length": 2910,
+      "length": 2899,
+      "crc32": 3037559769,
+      "sha256": "7da38256e4e2f96fa79be83dded7e04a944be3ee10eb3fe70d5fe234d9279850",
+      "id_verified": true
+    },
+    {
+      "entry": 167,
+      "name": "assets/nanocore/default_theme/assets/knob.png",
+      "offset": 1803758,
+      "stored_length": 1912,
+      "length": 1901,
+      "crc32": 3315113819,
+      "sha256": "cd3c991790ccee6a0630d59545ed296acba3e2d96b8034b2b7eadce2219e69c6",
+      "id_verified": true
+    },
+    {
+      "entry": 168,
+      "name": "assets/nanocore/default_theme/assets/master_knob.png",
+      "offset": 1805670,
+      "stored_length": 1912,
+      "length": 1901,
+      "crc32": 3315113819,
+      "sha256": "cd3c991790ccee6a0630d59545ed296acba3e2d96b8034b2b7eadce2219e69c6",
+      "id_verified": true
+    },
+    {
+      "entry": 169,
+      "name": "assets/nanocore/default_theme/assets/mod.png",
+      "offset": 1807582,
+      "stored_length": 3092,
+      "length": 3081,
+      "crc32": 2252934965,
+      "sha256": "2d861a8e4e39a526c79d1d51d1afd1ec99b34cf70830ae1d7a0b1779bff93b78",
+      "id_verified": true
+    },
+    {
+      "entry": 170,
+      "name": "assets/nanocore/default_theme/assets/off.png",
+      "offset": 1810674,
+      "stored_length": 1035,
+      "length": 1024,
+      "crc32": 3798602790,
+      "sha256": "abea5e561e003e93aacdde7492c5a07022dee6efb1d96d67e0ba296186345b54",
+      "id_verified": true
+    },
+    {
+      "entry": 171,
+      "name": "assets/nanocore/default_theme/assets/on.png",
+      "offset": 1811709,
+      "stored_length": 896,
+      "length": 885,
+      "crc32": 246141753,
+      "sha256": "bba8401b459c6d804ef3b6be53915e7c6c954544bbcdc46818e5077cbbbb7160",
+      "id_verified": true
+    },
+    {
+      "entry": 172,
+      "name": "assets/nanocore/default_theme/assets/preset_knob.png",
+      "offset": 1812605,
+      "stored_length": 1912,
+      "length": 1901,
+      "crc32": 3315113819,
+      "sha256": "cd3c991790ccee6a0630d59545ed296acba3e2d96b8034b2b7eadce2219e69c6",
+      "id_verified": true
+    },
+    {
+      "entry": 173,
+      "name": "assets/nanocore/default_theme/assets/reverb.png",
+      "offset": 1814517,
+      "stored_length": 2790,
+      "length": 2779,
+      "crc32": 3855838539,
+      "sha256": "7f743ac3eb8fd79d5f374af3133b7fe84af125166ec8affaddcc3bffdc7bdbdf",
+      "id_verified": true
+    },
+    {
+      "entry": 174,
+      "name": "assets/nanocore/default_theme/assets/saved_flag.png",
+      "offset": 1817307,
+      "stored_length": 5612,
+      "length": 5638,
+      "crc32": 2531186757,
+      "sha256": "33177295ecb54abd9927562a4face8f33c940de8311094d0a2ccbb4b37455bf0",
+      "id_verified": true
+    },
+    {
+      "entry": 175,
+      "name": "assets/nanocore/default_theme/assets/settings.png",
+      "offset": 1822919,
+      "stored_length": 2012,
+      "length": 2001,
+      "crc32": 1092777818,
+      "sha256": "c35d5c2133c1048f41448a3d287ed8eab2c50b2ddd7822990af52e84726272e8",
+      "id_verified": true
+    },
+    {
+      "entry": 176,
+      "name": "assets/nanocore/default_theme/assets/tuner.png",
+      "offset": 1824931,
+      "stored_length": 1864,
+      "length": 1853,
+      "crc32": 4069822921,
+      "sha256": "d6d0d0a174dc4c3efd4fad7a9d54d372bcb0299eec5734a5abe1a538db66be2e",
+      "id_verified": true
+    },
+    {
+      "entry": 177,
+      "name": "assets/nanocore/default_theme/assets/tuner_slot1.png",
+      "offset": 1826795,
+      "stored_length": 3088,
+      "length": 3108,
+      "crc32": 2604802394,
+      "sha256": "336acf791da876e64eb53b360b1bf4dc06516b1989dda9bcc674622f079a95b2",
+      "id_verified": true
+    },
+    {
+      "entry": 178,
+      "name": "assets/nanocore/default_theme/assets/tuner_slot2.png",
+      "offset": 1829883,
+      "stored_length": 552,
+      "length": 541,
+      "crc32": 2625924124,
+      "sha256": "954a10874db5f54ff10f4dc8f6ba6a1c75ac64037a7bb408e82ef1595ac22955",
+      "id_verified": true
+    },
+    {
+      "entry": 179,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_0.png",
+      "offset": 1830435,
+      "stored_length": 1198,
+      "length": 1187,
+      "crc32": 841719197,
+      "sha256": "e50aec1d2973ceb670df169e4654a1e67942dcdcf43e59b54b3e36c59729ea51",
+      "id_verified": true
+    },
+    {
+      "entry": 180,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_1.png",
+      "offset": 1831633,
+      "stored_length": 1203,
+      "length": 1192,
+      "crc32": 1878667937,
+      "sha256": "33cd1d504f96b6313e4ad56300dff8431835a5714341a0cda94acc5bcb389f5d",
+      "id_verified": true
+    },
+    {
+      "entry": 181,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_2.png",
+      "offset": 1832836,
+      "stored_length": 1467,
+      "length": 1456,
+      "crc32": 933500335,
+      "sha256": "d0854d4657cf76f9ae4f0384456a549e3dc226bf282f2f6a59398f99c17c62f4",
+      "id_verified": true
+    },
+    {
+      "entry": 182,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_3.png",
+      "offset": 1834303,
+      "stored_length": 1466,
+      "length": 1455,
+      "crc32": 2520153692,
+      "sha256": "7872e4e8f922c595ca41023049181c7293179b883ffce571156ac607389765e9",
+      "id_verified": true
+    },
+    {
+      "entry": 183,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_4.png",
+      "offset": 1835769,
+      "stored_length": 1504,
+      "length": 1493,
+      "crc32": 347639848,
+      "sha256": "4ef369467e5093ea03ebd570a9f88fcab6e7f430bf35bb467ca7952bcefca004",
+      "id_verified": true
+    },
+    {
+      "entry": 184,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_5.png",
+      "offset": 1837273,
+      "stored_length": 1524,
+      "length": 1513,
+      "crc32": 3983697517,
+      "sha256": "b0df96a9e2515b4e3fd7e2e0430325b2f62794b3302748ae296a616c4aec88ba",
+      "id_verified": true
+    },
+    {
+      "entry": 185,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_6.png",
+      "offset": 1838797,
+      "stored_length": 1498,
+      "length": 1487,
+      "crc32": 358556274,
+      "sha256": "1dfea01621af0173f47257cbe3addb47b235851db835a1bddf8230c5cbd8c509",
+      "id_verified": true
+    },
+    {
+      "entry": 186,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_7.png",
+      "offset": 1840295,
+      "stored_length": 1509,
+      "length": 1498,
+      "crc32": 1071329432,
+      "sha256": "ecc165e28b9fb08831be619edd4ef017182bbca607b1f70275690bedd3a8bc37",
+      "id_verified": true
+    },
+    {
+      "entry": 187,
+      "name": "assets/nanocore/default_theme/assets/volume_meter_8.png",
+      "offset": 1841804,
+      "stored_length": 1770,
+      "length": 1759,
+      "crc32": 3825344182,
+      "sha256": "4f6796f2ff61bdf7eb8ac69abe4b8415f86e9be37377675300c3a72ed59b0b3d",
+      "id_verified": true
+    },
+    {
+      "entry": 188,
+      "name": "assets/nanocore/default_theme/assets/wireless.png",
+      "offset": 1843574,
+      "stored_length": 1340,
+      "length": 1329,
+      "crc32": 3907288875,
+      "sha256": "ea281232fe36eb9e62a287284efd41d1c20ff28b6042fb49e9c43a20b5d3732d",
+      "id_verified": true
+    },
+    {
+      "entry": 189,
+      "name": "assets/nanocore/default_theme/default.uia1",
+      "offset": 1844914,
+      "stored_length": 89851,
+      "length": 123706,
+      "crc32": 3786736981,
+      "sha256": "4fa085a8e44801c672dbd60010b061920aab474db2db7c5c28953393033af1f8",
+      "id_verified": true
+    },
+    {
+      "entry": 190,
+      "name": "assets/nanocore/default_theme/fonts/Doto-UISet3-DotsBlack.ttf",
+      "offset": 1934765,
+      "stored_length": 10487,
+      "length": 173872,
+      "crc32": 3514193481,
+      "sha256": "89d71714517ac35b962103bbc53dc9b737ca8561a42e3ac28c4e37d2068c8f08",
+      "id_verified": true
+    },
+    {
+      "entry": 191,
+      "name": "assets/nanocore/default_theme/manifest.json",
+      "offset": 1945252,
+      "stored_length": 2108,
+      "length": 13230,
+      "crc32": 322318999,
+      "sha256": "f26518d62a3cdd4d788ef15aaf4669899f80776237210f841fce4ead02196ec0",
+      "id_verified": true
+    },
+    {
+      "entry": 192,
+      "name": "assets/nanocore/factory_presets/amp/00.ead",
+      "offset": 1947360,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2883889049,
+      "sha256": "ae80bd7a9d4bcf8fa1fcd83b4e4abd3f1c5d6800b916b60998573631fbf2681d",
+      "id_verified": true
+    },
+    {
+      "entry": 193,
+      "name": "assets/nanocore/factory_presets/amp/01.ead",
+      "offset": 1959673,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1067898736,
+      "sha256": "86b552663474584fbfff450e81b45b28319c056880eab6572870fd82203b78ee",
+      "id_verified": true
+    },
+    {
+      "entry": 194,
+      "name": "assets/nanocore/factory_presets/amp/02.ead",
+      "offset": 1971986,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2460780963,
+      "sha256": "4036d6989e3065ee774b1a623be864f0783123528ee0665aa3ff856dad4438ee",
+      "id_verified": true
+    },
+    {
+      "entry": 195,
+      "name": "assets/nanocore/factory_presets/amp/03.ead",
+      "offset": 1984299,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1430320124,
+      "sha256": "157e9572c1bf3a049155653a5c12a6ccd34c45544a6858443e992fbaf596a2c4",
+      "id_verified": true
+    },
+    {
+      "entry": 196,
+      "name": "assets/nanocore/factory_presets/amp/04.ead",
+      "offset": 1996612,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 4196205294,
+      "sha256": "f993d7ac4a3c2131fe32a099e20571e5baf24709be904b4f42149f9217b47d6b",
+      "id_verified": true
+    },
+    {
+      "entry": 197,
+      "name": "assets/nanocore/factory_presets/amp/05.ead",
+      "offset": 2008925,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2995915486,
+      "sha256": "f74f0872b75a663ce7cf2708e052734d745e7c1552d7aee462cb246739d49c6a",
+      "id_verified": true
+    },
+    {
+      "entry": 198,
+      "name": "assets/nanocore/factory_presets/amp/06.ead",
+      "offset": 2021238,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2308009596,
+      "sha256": "ad6bf884be56e54b561c6befb03bc232c979539b533314d3a4e34339fcf6a247",
+      "id_verified": true
+    },
+    {
+      "entry": 199,
+      "name": "assets/nanocore/factory_presets/amp/07.ead",
+      "offset": 2033551,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 705688831,
+      "sha256": "9ce97779fd40d683d2eb37daba572c83d1203867e080f40c14a06da16f7a7cbb",
+      "id_verified": true
+    },
+    {
+      "entry": 200,
+      "name": "assets/nanocore/factory_presets/amp/08.ead",
+      "offset": 2045864,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1463644401,
+      "sha256": "2ef37fdd66ef59c2a0c41d4bf2ab075fcab1a401958000a25cc39de465a0b0c4",
+      "id_verified": true
+    },
+    {
+      "entry": 201,
+      "name": "assets/nanocore/factory_presets/amp/09.ead",
+      "offset": 2058177,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1103251909,
+      "sha256": "ab8443267306844f43b39702d66119707a5e8943bec54bcf02b7f5ea9538a3cd",
+      "id_verified": true
+    },
+    {
+      "entry": 202,
+      "name": "assets/nanocore/factory_presets/amp/10.ead",
+      "offset": 2070490,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3235860060,
+      "sha256": "592cd011922d9862d3d86868b519bec45274048597b26e97bf60a0d3504565b7",
+      "id_verified": true
+    },
+    {
+      "entry": 203,
+      "name": "assets/nanocore/factory_presets/amp/11.ead",
+      "offset": 2082803,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3507788195,
+      "sha256": "eb6617ecfa27c1a42fc3419d23e4744ff297c2387041d8e296f18f7d17421629",
+      "id_verified": true
+    },
+    {
+      "entry": 204,
+      "name": "assets/nanocore/factory_presets/amp/12.ead",
+      "offset": 2095116,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 4062861553,
+      "sha256": "20445b1a959f27c82a786ae77b714327ecc7155ae69f63c1b92a5c9bf4414ae5",
+      "id_verified": true
+    },
+    {
+      "entry": 205,
+      "name": "assets/nanocore/factory_presets/amp/13.ead",
+      "offset": 2107429,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3059761656,
+      "sha256": "9a839d37adcd55fe34eda1827398410e7ab2246fe751a3315c5f8b3a2ae1fdea",
+      "id_verified": true
+    },
+    {
+      "entry": 206,
+      "name": "assets/nanocore/factory_presets/amp/14.ead",
+      "offset": 2119742,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3868426519,
+      "sha256": "b8036787ae46498c8e2e798c1928a220dd14d1bffed918a6fa152731200c1a5a",
+      "id_verified": true
+    },
+    {
+      "entry": 207,
+      "name": "assets/nanocore/factory_presets/amp/15.ead",
+      "offset": 2132055,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2349275351,
+      "sha256": "732cf245874fc97a29d96330d02e57e7df02a46769101624a96c2a1a1ed9d394",
+      "id_verified": true
+    },
+    {
+      "entry": 208,
+      "name": "assets/nanocore/factory_presets/amp/16.ead",
+      "offset": 2144368,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2823127716,
+      "sha256": "bbbad5daf0689310f059956a1b6e8c8886c9118cd08248549bcad72dc068007c",
+      "id_verified": true
+    },
+    {
+      "entry": 209,
+      "name": "assets/nanocore/factory_presets/amp/17.ead",
+      "offset": 2156681,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2735154371,
+      "sha256": "ceac27ee96dd22514774079b5ec360916ec4435da23aadbaacb38806d1e464f2",
+      "id_verified": true
+    },
+    {
+      "entry": 210,
+      "name": "assets/nanocore/factory_presets/amp/18.ead",
+      "offset": 2168994,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3199602530,
+      "sha256": "ca88987f93790d4b5e6838db4bcf4b8768a3a4e189435ff91c12b5b6a338ccb5",
+      "id_verified": true
+    },
+    {
+      "entry": 211,
+      "name": "assets/nanocore/factory_presets/amp/19.ead",
+      "offset": 2181307,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1807636939,
+      "sha256": "f02392f16a554e257ca5ab603eb9de00dab757c31768e3f6f9a1a7b997f38f7d",
+      "id_verified": true
+    },
+    {
+      "entry": 212,
+      "name": "assets/nanocore/factory_presets/amp/20.ead",
+      "offset": 2193620,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3818995454,
+      "sha256": "e2ea6ec9110c8ceee840ee51f268d6b662c3a395c0b324ce680a6e93d674b41f",
+      "id_verified": true
+    },
+    {
+      "entry": 213,
+      "name": "assets/nanocore/factory_presets/amp/21.ead",
+      "offset": 2205933,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2253277552,
+      "sha256": "20ac8981dfd326fe3db84582ff9bd27db28324181c0877e73ceca1a2b3908242",
+      "id_verified": true
+    },
+    {
+      "entry": 214,
+      "name": "assets/nanocore/factory_presets/amp/22.ead",
+      "offset": 2218246,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3880588918,
+      "sha256": "96f659778e335fb4f963d68e2ca03dbde0fce45be8f3151676a6c0c803bdfedb",
+      "id_verified": true
+    },
+    {
+      "entry": 215,
+      "name": "assets/nanocore/factory_presets/amp/23.ead",
+      "offset": 2230559,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1372484194,
+      "sha256": "d6861885e97510f6fbd2e1beaa223122a8e31848f3388cfa4cbdbfa90766270f",
+      "id_verified": true
+    },
+    {
+      "entry": 216,
+      "name": "assets/nanocore/factory_presets/amp/24.ead",
+      "offset": 2242872,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3041222117,
+      "sha256": "ec2dc393b9fe29b917520caea03f0bd0f7f43d3466f416e2e4814ab3ec4afe92",
+      "id_verified": true
+    },
+    {
+      "entry": 217,
+      "name": "assets/nanocore/factory_presets/amp/25.ead",
+      "offset": 2255185,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1377207362,
+      "sha256": "be28f06b9578b089b13fdcd697be75389493353566e7cd4f83fcc6a112a8e23c",
+      "id_verified": true
+    },
+    {
+      "entry": 218,
+      "name": "assets/nanocore/factory_presets/amp/26.ead",
+      "offset": 2267498,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 297121992,
+      "sha256": "2e794ab02913ab8d80d2e664bc5e6ab9daffed8d48b57a3d662457932ec7fb11",
+      "id_verified": true
+    },
+    {
+      "entry": 219,
+      "name": "assets/nanocore/factory_presets/amp/27.ead",
+      "offset": 2279811,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3805809944,
+      "sha256": "240347ef97bd14ef7765cccf36554f8f4758498740507a27f4ecf15703632224",
+      "id_verified": true
+    },
+    {
+      "entry": 220,
+      "name": "assets/nanocore/factory_presets/amp/28.ead",
+      "offset": 2292124,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 4081660015,
+      "sha256": "73aa4da3835dbecddbad10a4104cce650692c7d017ec28112073ae961187e472",
+      "id_verified": true
+    },
+    {
+      "entry": 221,
+      "name": "assets/nanocore/factory_presets/amp/29.ead",
+      "offset": 2304437,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1032856631,
+      "sha256": "e5756a8dcc072bb1b2c14bb650599ccb894b701b4deb8338dd22e9ab9948a819",
+      "id_verified": true
+    },
+    {
+      "entry": 222,
+      "name": "assets/nanocore/factory_presets/amp/30.ead",
+      "offset": 2316750,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3488473103,
+      "sha256": "8fff8bb541ced47f549738fde7860753c2fae888da0ca2d4c07bad4390961ded",
+      "id_verified": true
+    },
+    {
+      "entry": 223,
+      "name": "assets/nanocore/factory_presets/amp/31.ead",
+      "offset": 2329063,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2816920442,
+      "sha256": "0b4fb2e56b1db5dc691c6d2996b412d383e020748c56b203325de3a2d3cbe759",
+      "id_verified": true
+    },
+    {
+      "entry": 224,
+      "name": "assets/nanocore/factory_presets/amp/32.ead",
+      "offset": 2341376,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1121985606,
+      "sha256": "b0285a60f7f60a99a5ecb4537d16796f9b1a01e5146aa675c4b4ac3d67458d33",
+      "id_verified": true
+    },
+    {
+      "entry": 225,
+      "name": "assets/nanocore/factory_presets/amp/33.ead",
+      "offset": 2353689,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 2085945610,
+      "sha256": "a7a8156ee4eacf1157476d227d4a258517673505552bb03e980d8f30846ce772",
+      "id_verified": true
+    },
+    {
+      "entry": 226,
+      "name": "assets/nanocore/factory_presets/amp/34.ead",
+      "offset": 2366002,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1719580297,
+      "sha256": "e4f1da88c8336b7f51f5594dbf3fdf3260363c74cf2ba562e76c2326495c3353",
+      "id_verified": true
+    },
+    {
+      "entry": 227,
+      "name": "assets/nanocore/factory_presets/amp/35.ead",
+      "offset": 2378315,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 1055122592,
+      "sha256": "e8425f42fef9b6e5690fa31aabe11ccf926e5c30a26fe3e40e43a800908f8288",
+      "id_verified": true
+    },
+    {
+      "entry": 228,
+      "name": "assets/nanocore/factory_presets/amp/36.ead",
+      "offset": 2390628,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 855411392,
+      "sha256": "074d9a5aff344f3b260f8bcf580144eb99d1ad7041a1dfef0da916428f7999f3",
+      "id_verified": true
+    },
+    {
+      "entry": 229,
+      "name": "assets/nanocore/factory_presets/amp/37.ead",
+      "offset": 2402941,
+      "stored_length": 12313,
+      "length": 12302,
+      "crc32": 3291532564,
+      "sha256": "1d6111de9c1175a6914ecde79f6096a24340aa9c840875cdc180136064637d3d",
+      "id_verified": true
+    },
+    {
+      "entry": 230,
+      "name": "assets/nanocore/factory_presets/factory_presets.json",
+      "offset": 2415254,
+      "stored_length": 13268,
+      "length": 275562,
+      "crc32": 2014536442,
+      "sha256": "4fac090cc8796d6a721b5370e7791cc71ace638471fbe93576a8e3b888b15f40",
+      "id_verified": true
+    },
+    {
+      "entry": 231,
+      "name": "assets/nanocore/factory_presets/ir/00.bin",
+      "offset": 2428522,
+      "stored_length": 3603,
+      "length": 4096,
+      "crc32": 3669048126,
+      "sha256": "405beb280ce1c793c0f40f01703da8b6b88faaec153bc737b68168f7c701018c",
+      "id_verified": true
+    },
+    {
+      "entry": 232,
+      "name": "assets/nanocore/factory_presets/ir/01.bin",
+      "offset": 2432125,
+      "stored_length": 3883,
+      "length": 4096,
+      "crc32": 2314093349,
+      "sha256": "4c213dccae0cb46c8a38bee071b0c63849d67ffec585ada8bb927dbdeaa26f42",
+      "id_verified": true
+    },
+    {
+      "entry": 233,
+      "name": "assets/nanocore/factory_presets/ir/02.bin",
+      "offset": 2436008,
+      "stored_length": 3864,
+      "length": 4096,
+      "crc32": 1785848145,
+      "sha256": "78fd195da6512239ba78e6dc212a4e981734d84ea2ba950ef5b5247e6453d5a4",
+      "id_verified": true
+    },
+    {
+      "entry": 234,
+      "name": "assets/nanocore/factory_presets/ir/03.bin",
+      "offset": 2439872,
+      "stored_length": 3911,
+      "length": 4096,
+      "crc32": 495440862,
+      "sha256": "6624de89d9477a40a4a923bdeaae2254ed39bf50f827356c60df6baa7ed575ef",
+      "id_verified": true
+    },
+    {
+      "entry": 235,
+      "name": "assets/nanocore/factory_presets/ir/04.bin",
+      "offset": 2443783,
+      "stored_length": 3395,
+      "length": 4096,
+      "crc32": 427454397,
+      "sha256": "6fc4cf6996ee3141dac803bba5784718f0f7e166ad87910edc4e9cfe4e71166e",
+      "id_verified": true
+    },
+    {
+      "entry": 236,
+      "name": "assets/nanocore/factory_presets/ir/05.bin",
+      "offset": 2447178,
+      "stored_length": 3843,
+      "length": 4096,
+      "crc32": 3987728053,
+      "sha256": "b54b0441f35be49140198ff008d880ac7bb3606637aad1256168757245c1d5b7",
+      "id_verified": true
+    },
+    {
+      "entry": 237,
+      "name": "assets/nanocore/factory_presets/ir/06.bin",
+      "offset": 2451021,
+      "stored_length": 3882,
+      "length": 4096,
+      "crc32": 1457897831,
+      "sha256": "e5ddc937d26a669c456c53abbf9292ec23da93eaaee5b2928598d2cbe104cbd2",
+      "id_verified": true
+    },
+    {
+      "entry": 238,
+      "name": "assets/nanocore/factory_presets/ir/07.bin",
+      "offset": 2454903,
+      "stored_length": 3096,
+      "length": 4096,
+      "crc32": 3207569225,
+      "sha256": "1f6317b40a2078cb8a6a3d5c02c9ccb9af1339f604374d64d69b2ada111e3a9d",
+      "id_verified": true
+    },
+    {
+      "entry": 239,
+      "name": "assets/nanocore/factory_presets/ir/08.bin",
+      "offset": 2457999,
+      "stored_length": 3821,
+      "length": 4096,
+      "crc32": 579696284,
+      "sha256": "71e2d1a0a8eda1a79a1f0f233534ed0bbdb5e737eee09d78ce1641fa8a3b657e",
+      "id_verified": true
+    },
+    {
+      "entry": 240,
+      "name": "assets/nanocore/factory_presets/ir/09.bin",
+      "offset": 2461820,
+      "stored_length": 3870,
+      "length": 4096,
+      "crc32": 1155150923,
+      "sha256": "477f4b659bb59faa729e9a37ca13482df43d6031a51a444a6880e1a592242f48",
+      "id_verified": true
+    },
+    {
+      "entry": 241,
+      "name": "assets/nanocore/factory_presets/ir/10.bin",
+      "offset": 2465690,
+      "stored_length": 3890,
+      "length": 4096,
+      "crc32": 2229255039,
+      "sha256": "8f2866c0f2bb4f67142e6568002a5455b6ef878833e606c7050f22287319f430",
+      "id_verified": true
+    },
+    {
+      "entry": 242,
+      "name": "assets/nanocore/factory_presets/ir/11.bin",
+      "offset": 2469580,
+      "stored_length": 2596,
+      "length": 2780,
+      "crc32": 3496437025,
+      "sha256": "a586b5f2092a9f2fa33ff83b7b512aeaa63395597bf528e8a0c329b335e637f7",
+      "id_verified": true
+    },
+    {
+      "entry": 243,
+      "name": "assets/nanocore/factory_presets/ir/12.bin",
+      "offset": 2472176,
+      "stored_length": 3802,
+      "length": 4096,
+      "crc32": 1884606146,
+      "sha256": "9812c3368d7572996cc0eab08ac542086c74e3f3f26c8dbaae27f5c10cc52324",
+      "id_verified": true
+    },
+    {
+      "entry": 244,
+      "name": "assets/nanocore/factory_presets/ir/13.bin",
+      "offset": 2475978,
+      "stored_length": 3881,
+      "length": 4096,
+      "crc32": 3849827229,
+      "sha256": "1fd8740a706409ef2eee6b0c27d2ec722c7147710bafb9226cd6a3c09b09684f",
+      "id_verified": true
+    },
+    {
+      "entry": 245,
+      "name": "assets/nanocore/factory_presets/ir/14.bin",
+      "offset": 2479859,
+      "stored_length": 3070,
+      "length": 4096,
+      "crc32": 1688230527,
+      "sha256": "dad65a7ca515980245d5baa89fcb4f9c68ecb2dbbcdae37111415473f5ab7711",
+      "id_verified": true
+    },
+    {
+      "entry": 246,
+      "name": "assets/nanocore/factory_presets/ir/15.bin",
+      "offset": 2482929,
+      "stored_length": 3594,
+      "length": 3764,
+      "crc32": 11547137,
+      "sha256": "7acde2f669527c3ee84db54e67728876842e9fd4947616e3ea2e5032af5ccbd8",
+      "id_verified": true
+    },
+    {
+      "entry": 247,
+      "name": "assets/nanocore/factory_presets/ir/16.bin",
+      "offset": 2486523,
+      "stored_length": 3870,
+      "length": 4096,
+      "crc32": 801193537,
+      "sha256": "355f6e88966d79e07a6366997af83d1a1098a31a27dcffaf307b5cd79e353e30",
+      "id_verified": true
+    },
+    {
+      "entry": 248,
+      "name": "assets/nanocore/factory_presets/ir/17.bin",
+      "offset": 2490393,
+      "stored_length": 3889,
+      "length": 4096,
+      "crc32": 1282069616,
+      "sha256": "e700678c3a211989246f987fade25eb01dc8dcfb4df37347222d6c53e9c8aab3",
+      "id_verified": true
+    },
+    {
+      "entry": 249,
+      "name": "assets/nanocore/factory_presets/ir/18.bin",
+      "offset": 2494282,
+      "stored_length": 3894,
+      "length": 4096,
+      "crc32": 914113371,
+      "sha256": "8d841fa0f83d3dd4b005886d9c944bb86c466dfec4b792bc358deeeb0e6f53a3",
+      "id_verified": true
+    },
+    {
+      "entry": 250,
+      "name": "assets/nanocore/factory_presets/ir/19.bin",
+      "offset": 2498176,
+      "stored_length": 3901,
+      "length": 4096,
+      "crc32": 4211689749,
+      "sha256": "24d539fcfd24a4d15ea6c9b6e668003aba5ddabeb2f9d01f90481220dcf686ae",
+      "id_verified": true
+    },
+    {
+      "entry": 251,
+      "name": "assets/nanocore/factory_presets/ir/20.bin",
+      "offset": 2502077,
+      "stored_length": 3892,
+      "length": 4096,
+      "crc32": 4175333279,
+      "sha256": "610f44ee1a6707540d9fd3b826e2e973f854265e75eaf4ef7961735f43adbf41",
+      "id_verified": true
+    },
+    {
+      "entry": 252,
+      "name": "assets/nanocore/factory_presets/ir/21.bin",
+      "offset": 2505969,
+      "stored_length": 3883,
+      "length": 4096,
+      "crc32": 1815440592,
+      "sha256": "9608834bc11b6674b0e3f4f5e76472a9a788f73072367e9a374df4f4d42e9588",
+      "id_verified": true
+    },
+    {
+      "entry": 253,
+      "name": "assets/nanocore/factory_presets/ir/22.bin",
+      "offset": 2509852,
+      "stored_length": 3917,
+      "length": 4096,
+      "crc32": 1498668118,
+      "sha256": "a2237af62db037695e5785378e41b583dca67bd11b25e451c695c83397088d7e",
+      "id_verified": true
+    },
+    {
+      "entry": 254,
+      "name": "assets/nanocore/factory_presets/ir/23.bin",
+      "offset": 2513769,
+      "stored_length": 3874,
+      "length": 4096,
+      "crc32": 2983859886,
+      "sha256": "530abf62088987a277d1957260b6f0a968263e5e78f2ec84e19a93ab8980090a",
+      "id_verified": true
+    },
+    {
+      "entry": 255,
+      "name": "assets/nanocore/factory_presets/ir/24.bin",
+      "offset": 2517643,
+      "stored_length": 3872,
+      "length": 4096,
+      "crc32": 3760194811,
+      "sha256": "45dda917cdc829548e74ca7691f7a3a27a714a48a19f6faa96484fdcfff01de0",
+      "id_verified": true
+    },
+    {
+      "entry": 256,
+      "name": "assets/nanocore/factory_presets/ir/25.bin",
+      "offset": 2521515,
+      "stored_length": 3892,
+      "length": 4096,
+      "crc32": 3223657454,
+      "sha256": "5c6b9878961c04b55f6fd0d833b20d2810d7f79a70dbf75941e365f302c24f78",
+      "id_verified": true
+    },
+    {
+      "entry": 257,
+      "name": "assets/nanocore/factory_presets/ir/26.bin",
+      "offset": 2525407,
+      "stored_length": 3869,
+      "length": 4096,
+      "crc32": 2455333328,
+      "sha256": "4f4d296a67e98cddbe0a76b57361d5615da7033cdb80605159a5d1d08d35092b",
+      "id_verified": true
+    },
+    {
+      "entry": 258,
+      "name": "assets/nanocore/factory_presets/ir/27.bin",
+      "offset": 2529276,
+      "stored_length": 3860,
+      "length": 4096,
+      "crc32": 3708781408,
+      "sha256": "ce26ab8028642c1a4c30c3d44a9dd6603948023dc7fc8fe9f5dab68d3fe3703f",
+      "id_verified": true
+    },
+    {
+      "entry": 259,
+      "name": "assets/nanocore/factory_presets/ir/28.bin",
+      "offset": 2533136,
+      "stored_length": 3879,
+      "length": 4096,
+      "crc32": 3095321110,
+      "sha256": "1835644068723073f1ee083e5696b912455d6161a5735c24e17c1d2be6717376",
+      "id_verified": true
+    },
+    {
+      "entry": 260,
+      "name": "assets/nanocore/factory_presets/ir/29.bin",
+      "offset": 2537015,
+      "stored_length": 3882,
+      "length": 4096,
+      "crc32": 2840418192,
+      "sha256": "d80e593c7a7e7454118cd00a5742157ac996178d7702b47853b081a9417fa00b",
+      "id_verified": true
+    },
+    {
+      "entry": 261,
+      "name": "assets/nanocore/factory_presets/resonam/amp/00.ead",
+      "offset": 2540897,
+      "stored_length": 11106,
+      "length": 12242,
+      "crc32": 1415421432,
+      "sha256": "3b6629729640e7f43b4053ec2cae4098c25c3930ea29a3ed51c732e0ff943b7c",
+      "id_verified": true
+    },
+    {
+      "entry": 262,
+      "name": "assets/nanocore/factory_presets/resonam/amp/01.ead",
+      "offset": 2552003,
+      "stored_length": 11128,
+      "length": 12242,
+      "crc32": 2100634527,
+      "sha256": "ce85117533c61d99b87aca880668708a7b0696f68a85c3656c4bce21fb0c5350",
+      "id_verified": true
+    },
+    {
+      "entry": 263,
+      "name": "assets/nanocore/factory_presets/resonam/amp/02.ead",
+      "offset": 2563131,
+      "stored_length": 11147,
+      "length": 12242,
+      "crc32": 1184895775,
+      "sha256": "a6ad064e060372bdef1a31b7d2f435ac780b8983fa402731b04da45103f4a290",
+      "id_verified": true
+    },
+    {
+      "entry": 264,
+      "name": "assets/nanocore/factory_presets/resonam/amp/03.ead",
+      "offset": 2574278,
+      "stored_length": 11130,
+      "length": 12242,
+      "crc32": 1501310201,
+      "sha256": "fead8a168cfcdecee02c798e2f510b61d3ee47585d6bdb615bc9201b6e8efb13",
+      "id_verified": true
+    },
+    {
+      "entry": 265,
+      "name": "assets/nanocore/factory_presets/resonam/amp/04.ead",
+      "offset": 2585408,
+      "stored_length": 11148,
+      "length": 12242,
+      "crc32": 127028923,
+      "sha256": "f3bbf69e9be78c28b1f6f066b93e7ec6c0df5ad170d4106c22d26f74d4d052da",
+      "id_verified": true
+    },
+    {
+      "entry": 266,
+      "name": "assets/nanocore/factory_presets/resonam/amp/05.ead",
+      "offset": 2596556,
+      "stored_length": 11131,
+      "length": 12242,
+      "crc32": 3727225286,
+      "sha256": "488be859640ed56dd1fab74a684a5a1e9a28348e879fca1f2ae169c734433ad8",
+      "id_verified": true
+    },
+    {
+      "entry": 267,
+      "name": "assets/nanocore/factory_presets/resonam/amp/06.ead",
+      "offset": 2607687,
+      "stored_length": 11153,
+      "length": 12242,
+      "crc32": 2598607196,
+      "sha256": "0bd0b76803b34b3fdc4f164481fadaaf6a5779df2d7d7242a5aaf22cc6252c1c",
+      "id_verified": true
+    },
+    {
+      "entry": 268,
+      "name": "assets/nanocore/factory_presets/resonam/amp/07.ead",
+      "offset": 2618840,
+      "stored_length": 11116,
+      "length": 12242,
+      "crc32": 1617155397,
+      "sha256": "9fbf1ed51d3e6da4170c54d8d478e0d9e052d6814a4b3fc0df16cefd80e31ff9",
+      "id_verified": true
+    },
+    {
+      "entry": 269,
+      "name": "assets/nanocore/factory_presets/resonam/amp/08.ead",
+      "offset": 2629956,
+      "stored_length": 11127,
+      "length": 12242,
+      "crc32": 2800855287,
+      "sha256": "c63716f6103524c5e2173c2122873ec8cf900b70c53bbde0f4a46de062be1899",
+      "id_verified": true
+    },
+    {
+      "entry": 270,
+      "name": "assets/nanocore/factory_presets/resonam/amp/09.ead",
+      "offset": 2641083,
+      "stored_length": 11098,
+      "length": 12242,
+      "crc32": 1329377602,
+      "sha256": "a92b88702e83fac0ff133244da37aa0b61a045f4700847908d0293d820747c10",
+      "id_verified": true
+    },
+    {
+      "entry": 271,
+      "name": "assets/nanocore/factory_presets/resonam/amp/10.ead",
+      "offset": 2652181,
+      "stored_length": 11127,
+      "length": 12242,
+      "crc32": 1245056826,
+      "sha256": "b7fff7889598374023e7c05d4767cefd05c0bcb1dfd094bd3ad5658bcaedee87",
+      "id_verified": true
+    },
+    {
+      "entry": 272,
+      "name": "assets/nanocore/factory_presets/resonam/amp/11.ead",
+      "offset": 2663308,
+      "stored_length": 11132,
+      "length": 12242,
+      "crc32": 1192758995,
+      "sha256": "178df635150cf81676b33d1133d5dbe96d81b84625d173cbf9d5fb044499f64d",
+      "id_verified": true
+    },
+    {
+      "entry": 273,
+      "name": "assets/nanocore/factory_presets/resonam/amp/12.ead",
+      "offset": 2674440,
+      "stored_length": 11126,
+      "length": 12242,
+      "crc32": 4217283653,
+      "sha256": "712372b05658d50060f170d79cd93f3b71f10611d6e051bdaabab516b0a564f4",
+      "id_verified": true
+    },
+    {
+      "entry": 274,
+      "name": "assets/nanocore/factory_presets/resonam/amp/13.ead",
+      "offset": 2685566,
+      "stored_length": 11141,
+      "length": 12242,
+      "crc32": 3200692790,
+      "sha256": "84a68cadf605d158921619bd9701ecf7e2b3929fce1bdc014e12debd5f40a5bd",
+      "id_verified": true
+    },
+    {
+      "entry": 275,
+      "name": "assets/nanocore/factory_presets/resonam/amp/14.ead",
+      "offset": 2696707,
+      "stored_length": 11133,
+      "length": 12242,
+      "crc32": 3101609060,
+      "sha256": "9acd93adaecb07b34a0b9a6303f6adda8ad83f65e6aa4bd50ff503364934c396",
+      "id_verified": true
+    },
+    {
+      "entry": 276,
+      "name": "assets/nanocore/factory_presets/resonam/amp/15.ead",
+      "offset": 2707840,
+      "stored_length": 11117,
+      "length": 12242,
+      "crc32": 95596374,
+      "sha256": "f4e4c96c10f1bd6df61f3473ac299312a7c10cb37fb9bddfd961ce69d40dc887",
+      "id_verified": true
+    },
+    {
+      "entry": 277,
+      "name": "assets/nanocore/factory_presets/resonam/amp/16.ead",
+      "offset": 2718957,
+      "stored_length": 11096,
+      "length": 12242,
+      "crc32": 3692856554,
+      "sha256": "0a78caf432006275349301656d36731222db6683a497909b0f73052071356def",
+      "id_verified": true
+    },
+    {
+      "entry": 278,
+      "name": "assets/nanocore/factory_presets/resonam/amp/17.ead",
+      "offset": 2730053,
+      "stored_length": 11121,
+      "length": 12242,
+      "crc32": 1969772355,
+      "sha256": "0d0b9c803d66168a66157c88ffaa5fae5fcc9b354bd5ae7fa13da14904e6bbb3",
+      "id_verified": true
+    },
+    {
+      "entry": 279,
+      "name": "assets/nanocore/factory_presets/resonam/amp/18.ead",
+      "offset": 2741174,
+      "stored_length": 11135,
+      "length": 12242,
+      "crc32": 2126708695,
+      "sha256": "e54989c5bbb331c759102dddc52b7136938816cace12f9b1be845b4cc9362afb",
+      "id_verified": true
+    },
+    {
+      "entry": 280,
+      "name": "assets/nanocore/factory_presets/resonam/amp/19.ead",
+      "offset": 2752309,
+      "stored_length": 11135,
+      "length": 12242,
+      "crc32": 2787640391,
+      "sha256": "1c4da76177d6de788d8bda6da063920039f7c390981c0dff33306ce546018d85",
+      "id_verified": true
+    },
+    {
+      "entry": 281,
+      "name": "assets/nanocore/factory_presets/resonam/amp/20.ead",
+      "offset": 2763444,
+      "stored_length": 11112,
+      "length": 12242,
+      "crc32": 3533674745,
+      "sha256": "50829a6939b8b66be59570af5d8a698f3d22037d8513038ef8dd4fd8543d3633",
+      "id_verified": true
+    },
+    {
+      "entry": 282,
+      "name": "assets/nanocore/factory_presets/resonam/amp/21.ead",
+      "offset": 2774556,
+      "stored_length": 11136,
+      "length": 12242,
+      "crc32": 3781231755,
+      "sha256": "372a39b901c871e9727329cab5af635768087463bf971a950b6f61542eeb1dda",
+      "id_verified": true
+    },
+    {
+      "entry": 283,
+      "name": "assets/nanocore/factory_presets/resonam/amp/22.ead",
+      "offset": 2785692,
+      "stored_length": 11138,
+      "length": 12242,
+      "crc32": 78393746,
+      "sha256": "7858a4a188fbd924c6ff46a596cefb99e471febb11f7bd0eadeeb3defa65dcfa",
+      "id_verified": true
+    },
+    {
+      "entry": 284,
+      "name": "assets/nanocore/factory_presets/resonam/amp/23.ead",
+      "offset": 2796830,
+      "stored_length": 11133,
+      "length": 12242,
+      "crc32": 3886004741,
+      "sha256": "729bea323aea70f6542f0e5cfa9ea074d861863228c91b67b8e654e60a2055bc",
+      "id_verified": true
+    },
+    {
+      "entry": 285,
+      "name": "assets/nanocore/factory_presets/resonam/amp/24.ead",
+      "offset": 2807963,
+      "stored_length": 11156,
+      "length": 12242,
+      "crc32": 2027614886,
+      "sha256": "a07af3ddc3cd1e836d67471f3c282c7aa02273f2a4027f77f834c1ef6fb73381",
+      "id_verified": true
+    },
+    {
+      "entry": 286,
+      "name": "assets/nanocore/factory_presets/resonam/amp/25.ead",
+      "offset": 2819119,
+      "stored_length": 11112,
+      "length": 12242,
+      "crc32": 3818623330,
+      "sha256": "fcc4e5efc42062b6fa8527149ac34941096c6ed26613551d5b67d7ffd9682a06",
+      "id_verified": true
+    },
+    {
+      "entry": 287,
+      "name": "assets/nanocore/factory_presets/resonam/amp/26.ead",
+      "offset": 2830231,
+      "stored_length": 11132,
+      "length": 12242,
+      "crc32": 1287538639,
+      "sha256": "29b0574d723dc6707538bbf58322d46bef9b91890951b7c46ad76b3955543d44",
+      "id_verified": true
+    },
+    {
+      "entry": 288,
+      "name": "assets/nanocore/factory_presets/resonam/amp/27.ead",
+      "offset": 2841363,
+      "stored_length": 11135,
+      "length": 12242,
+      "crc32": 1937475808,
+      "sha256": "2e5bf1731ac5c53925b872df45685fdab7b5b8a848e9070500877be31dc07a3b",
+      "id_verified": true
+    },
+    {
+      "entry": 289,
+      "name": "assets/nanocore/factory_presets/resonam/amp/28.ead",
+      "offset": 2852498,
+      "stored_length": 11115,
+      "length": 12242,
+      "crc32": 4126394469,
+      "sha256": "5798c9d2ee09552c5cc5609531385af6b01ffd0fb898b48976687be78e90bffb",
+      "id_verified": true
+    },
+    {
+      "entry": 290,
+      "name": "assets/nanocore/factory_presets/resonam/amp/29.ead",
+      "offset": 2863613,
+      "stored_length": 11149,
+      "length": 12242,
+      "crc32": 825653926,
+      "sha256": "51000d9fc453dd9aae132be67af865c53320523585bca2607b27bda2c9013a2a",
+      "id_verified": true
+    },
+    {
+      "entry": 291,
+      "name": "assets/nanocore/factory_presets/resonam/amp/50.na2l",
+      "offset": 2874762,
+      "stored_length": 7076,
+      "length": 7516,
+      "crc32": 2476205432,
+      "sha256": "7d4834ee5e9c637216fb3a2f69738a33d45a4fec2cdbb81ccd4b98ccdba7b2fc",
+      "id_verified": true
+    },
+    {
+      "entry": 292,
+      "name": "assets/nanocore/factory_presets/resonam/amp/51.na2l",
+      "offset": 2881838,
+      "stored_length": 7099,
+      "length": 7516,
+      "crc32": 4163016337,
+      "sha256": "abadb85967db7f165d05ecfcccdbd03ac27c323f2b6c59791c4d8b440230dd48",
+      "id_verified": true
+    },
+    {
+      "entry": 293,
+      "name": "assets/nanocore/factory_presets/resonam/amp/52.na2l",
+      "offset": 2888937,
+      "stored_length": 7050,
+      "length": 7516,
+      "crc32": 3324789150,
+      "sha256": "df036ab2801c2c743c8056c7aec226a1c111f929bfe350bd3cdabfc30298f53d",
+      "id_verified": true
+    },
+    {
+      "entry": 294,
+      "name": "assets/nanocore/factory_presets/resonam/amp/53.na2l",
+      "offset": 2895987,
+      "stored_length": 7120,
+      "length": 7516,
+      "crc32": 1641104477,
+      "sha256": "a4194329b238949e031fe9d17c52b8c3de1e520cf373f9fafe3520203c38be6d",
+      "id_verified": true
+    },
+    {
+      "entry": 295,
+      "name": "assets/nanocore/factory_presets/resonam/amp/54.na2l",
+      "offset": 2903107,
+      "stored_length": 7061,
+      "length": 7516,
+      "crc32": 1084843892,
+      "sha256": "17d9901c6056942fd96577f0577c570f1f1cf1f84e91efc07075a3f94453f6c0",
+      "id_verified": true
+    },
+    {
+      "entry": 296,
+      "name": "assets/nanocore/factory_presets/resonam/amp/55.na2l",
+      "offset": 2910168,
+      "stored_length": 7083,
+      "length": 7516,
+      "crc32": 3254148683,
+      "sha256": "a46fb7565e9bb58c5198f8f361d3417fc9a99626257217cd1dc2f83423db7192",
+      "id_verified": true
+    },
+    {
+      "entry": 297,
+      "name": "assets/nanocore/factory_presets/resonam/amp/56.na2l",
+      "offset": 2917251,
+      "stored_length": 7119,
+      "length": 7516,
+      "crc32": 593467774,
+      "sha256": "fc4939d02f99776a27fb867d6196e0bf9e5538baa2f149b9d5c79ff3057fdbab",
+      "id_verified": true
+    },
+    {
+      "entry": 298,
+      "name": "assets/nanocore/factory_presets/resonam/amp/57.na2l",
+      "offset": 2924370,
+      "stored_length": 7093,
+      "length": 7516,
+      "crc32": 1507430937,
+      "sha256": "5f186f2303cca0aa130e6b44bbf08a433e021c5382aa9a6c862fc1a0f1e66c0f",
+      "id_verified": true
+    },
+    {
+      "entry": 299,
+      "name": "assets/nanocore/factory_presets/resonam/amp/58.na2l",
+      "offset": 2931463,
+      "stored_length": 7107,
+      "length": 7516,
+      "crc32": 3145093635,
+      "sha256": "76d9343b354012fdd6410e78dec4d3cbfcebca9a8eaa32688619b369e10d8561",
+      "id_verified": true
+    },
+    {
+      "entry": 300,
+      "name": "assets/nanocore/factory_presets/resonam/amp/59.na2l",
+      "offset": 2938570,
+      "stored_length": 7105,
+      "length": 7516,
+      "crc32": 2072767384,
+      "sha256": "efaf98665a9b88520422637fd2805ceb76558aa5f3bf8d3d7130bf12a784fcc8",
+      "id_verified": true
+    },
+    {
+      "entry": 301,
+      "name": "assets/nanocore/factory_presets/resonam/amp/60.na2l",
+      "offset": 2945675,
+      "stored_length": 7108,
+      "length": 7516,
+      "crc32": 2728616763,
+      "sha256": "97a9a0fb290ba90ece26f97eccca3a7f6fb4b92e8d4297653b6b1215dc2e3b8b",
+      "id_verified": true
+    },
+    {
+      "entry": 302,
+      "name": "assets/nanocore/factory_presets/resonam/amp/61.na2l",
+      "offset": 2952783,
+      "stored_length": 7093,
+      "length": 7516,
+      "crc32": 2121200653,
+      "sha256": "5408d9294f7fcc96b8c49f03a2adbe357def8e9519eec1d8fc3cfea81900083f",
+      "id_verified": true
+    },
+    {
+      "entry": 303,
+      "name": "assets/nanocore/factory_presets/resonam/amp/62.na2l",
+      "offset": 2959876,
+      "stored_length": 7077,
+      "length": 7516,
+      "crc32": 2535290549,
+      "sha256": "7e5440c02175a86b7a93c6f435ee91f7cb92897b3ce6d83af75535f19800c98f",
+      "id_verified": true
+    },
+    {
+      "entry": 304,
+      "name": "assets/nanocore/factory_presets/resonam/amp/63.na2l",
+      "offset": 2966953,
+      "stored_length": 7111,
+      "length": 7516,
+      "crc32": 3631651728,
+      "sha256": "3cf48ba6f86c6c78f54f97e9c8fa913579a7682ec95c7b46253d587a56dcea91",
+      "id_verified": true
+    },
+    {
+      "entry": 305,
+      "name": "assets/nanocore/factory_presets/resonam/amp/64.na2l",
+      "offset": 2974064,
+      "stored_length": 7111,
+      "length": 7516,
+      "crc32": 2050202838,
+      "sha256": "23ed3c31d52644fc2058ccfcbb58a6c66ab56ccb93956e77e9abc666bb5739df",
+      "id_verified": true
+    },
+    {
+      "entry": 306,
+      "name": "assets/nanocore/factory_presets/resonam/amp/65.na2l",
+      "offset": 2981175,
+      "stored_length": 7036,
+      "length": 7516,
+      "crc32": 2956009057,
+      "sha256": "624bf6a0da73d9ab3d4b33309000eb7d01a729883516552942e9748f1dec816d",
+      "id_verified": true
+    },
+    {
+      "entry": 307,
+      "name": "assets/nanocore/factory_presets/resonam/amp/66.na2l",
+      "offset": 2988211,
+      "stored_length": 7086,
+      "length": 7516,
+      "crc32": 3642385362,
+      "sha256": "a243ce9bc5f44d67d94841c8e1f401d7ded07df1bdf5c4cfdf9b2331430420ff",
+      "id_verified": true
+    },
+    {
+      "entry": 308,
+      "name": "assets/nanocore/factory_presets/resonam/amp/67.na2l",
+      "offset": 2995297,
+      "stored_length": 7079,
+      "length": 7516,
+      "crc32": 2752845839,
+      "sha256": "10fb084789380147dd5d705ed4a32ffd95e7c497b6343547a5d872175e4fdd02",
+      "id_verified": true
+    },
+    {
+      "entry": 309,
+      "name": "assets/nanocore/factory_presets/resonam/amp/68.na2l",
+      "offset": 3002376,
+      "stored_length": 7119,
+      "length": 7516,
+      "crc32": 2981152408,
+      "sha256": "7c7e9ae92bb8c1ce6b87fa332063dad13602a2120d7247936e72f3061e0ee98f",
+      "id_verified": true
+    },
+    {
+      "entry": 310,
+      "name": "assets/nanocore/factory_presets/resonam/amp/69.na2l",
+      "offset": 3009495,
+      "stored_length": 7074,
+      "length": 7516,
+      "crc32": 4135624211,
+      "sha256": "2de6d89a2926400fa1854aff7c9a29f2ba79817d9a5b8a096239b63e609b6b2c",
+      "id_verified": true
+    },
+    {
+      "entry": 311,
+      "name": "assets/nanocore/factory_presets/resonam/amp/70.na2l",
+      "offset": 3016569,
+      "stored_length": 7090,
+      "length": 7516,
+      "crc32": 1502647339,
+      "sha256": "682c448008bdb5cd46e84e8b1745c151464caea18b4ffdd7adc3c256701dae8a",
+      "id_verified": true
+    },
+    {
+      "entry": 312,
+      "name": "assets/nanocore/factory_presets/resonam/amp/71.na2l",
+      "offset": 3023659,
+      "stored_length": 7081,
+      "length": 7516,
+      "crc32": 3653390716,
+      "sha256": "1bfedc0e671768596f344151b01a54459508dd1a2a883aa00857f5d78e249c82",
+      "id_verified": true
+    },
+    {
+      "entry": 313,
+      "name": "assets/nanocore/factory_presets/resonam/amp/72.na2l",
+      "offset": 3030740,
+      "stored_length": 7081,
+      "length": 7516,
+      "crc32": 3198633172,
+      "sha256": "95bc7445f79975df344b3ed2a5bac178ea745ce1f3dc6d355b2fe00bde1dc8f1",
+      "id_verified": true
+    },
+    {
+      "entry": 314,
+      "name": "assets/nanocore/factory_presets/resonam/amp/73.na2l",
+      "offset": 3037821,
+      "stored_length": 7086,
+      "length": 7516,
+      "crc32": 3979712209,
+      "sha256": "d3260563d6651ef38a5d0de40f09760f6445e0673097f25def90929150bcb280",
+      "id_verified": true
+    },
+    {
+      "entry": 315,
+      "name": "assets/nanocore/factory_presets/resonam/amp/74.na2l",
+      "offset": 3044907,
+      "stored_length": 7112,
+      "length": 7516,
+      "crc32": 1602210104,
+      "sha256": "35c48ca7f84c5da3c179454ecba3b32366602140c44adf8da77e1e1463a74aaf",
+      "id_verified": true
+    },
+    {
+      "entry": 316,
+      "name": "assets/nanocore/factory_presets/resonam/amp/75.na2l",
+      "offset": 3052019,
+      "stored_length": 7080,
+      "length": 7516,
+      "crc32": 1379345731,
+      "sha256": "c7cf2a5a45892b24b8e56673ce50749d06cf07000730c2cbb775803fb3e6edae",
+      "id_verified": true
+    },
+    {
+      "entry": 317,
+      "name": "assets/nanocore/factory_presets/resonam/amp/76.na2l",
+      "offset": 3059099,
+      "stored_length": 7080,
+      "length": 7516,
+      "crc32": 3557087616,
+      "sha256": "f5888b18809d52e6cf6209d8b253c1980c6d3f3bfe09cdc224eb5ce5bc1cee7e",
+      "id_verified": true
+    },
+    {
+      "entry": 318,
+      "name": "assets/nanocore/factory_presets/resonam/amp/77.na2l",
+      "offset": 3066179,
+      "stored_length": 7091,
+      "length": 7516,
+      "crc32": 3694683315,
+      "sha256": "65f311b06b4797d17e828bfb7b629d2df9873b4a788b315003c9d0199eecdcc4",
+      "id_verified": true
+    },
+    {
+      "entry": 319,
+      "name": "assets/nanocore/factory_presets/resonam/amp/78.na2l",
+      "offset": 3073270,
+      "stored_length": 7091,
+      "length": 7516,
+      "crc32": 1540437151,
+      "sha256": "81627385e33c93d82ce88bb72ccc876284d23f3642e8fd272cc9bc9492b2daa3",
+      "id_verified": true
+    },
+    {
+      "entry": 320,
+      "name": "assets/nanocore/factory_presets/resonam/amp/79.na2l",
+      "offset": 3080361,
+      "stored_length": 7116,
+      "length": 7516,
+      "crc32": 4037405218,
+      "sha256": "b8ac73f70e74d524293cb646007ad660049b0a5e8bd0b3feb67cffb813b99b60",
+      "id_verified": true
+    },
+    {
+      "entry": 321,
+      "name": "assets/nanocore/factory_presets/resonam/factory_presets.json",
+      "offset": 3087477,
+      "stored_length": 19239,
+      "length": 95268,
+      "crc32": 2406871630,
+      "sha256": "78fbccc3bbbe00de7f73b7d43af7d3a2c309120d00902cba7aa4392b49ea4824",
+      "id_verified": true
+    },
+    {
+      "entry": 322,
+      "name": "assets/nanocore/factory_presets/resonam/ir/00.bin",
+      "offset": 3106716,
+      "stored_length": 3557,
+      "length": 4096,
+      "crc32": 3589310860,
+      "sha256": "5adb2d7dcfc1223de0dbf5b0c43460d8f16b26dad67915bc862940a930bd6c1f",
+      "id_verified": true
+    },
+    {
+      "entry": 323,
+      "name": "assets/nanocore/factory_presets/resonam/ir/01.bin",
+      "offset": 3110273,
+      "stored_length": 3523,
+      "length": 4096,
+      "crc32": 139791840,
+      "sha256": "14a88befa17f4ee19ad2dde6adc1ec88d310620093f4ec739acfc782f9eb3624",
+      "id_verified": true
+    },
+    {
+      "entry": 324,
+      "name": "assets/nanocore/factory_presets/resonam/ir/02.bin",
+      "offset": 3113796,
+      "stored_length": 3536,
+      "length": 4096,
+      "crc32": 1343518585,
+      "sha256": "6f82296db2eb435e03d441dcb8544b78e6af62bc7932524b606c228d233b3a56",
+      "id_verified": true
+    },
+    {
+      "entry": 325,
+      "name": "assets/nanocore/factory_presets/resonam/ir/03.bin",
+      "offset": 3117332,
+      "stored_length": 3514,
+      "length": 4096,
+      "crc32": 1285925628,
+      "sha256": "c0bf05e05f0281b41f4b98938551cd89e47fbec9dcce0381a8831ad9397b625d",
+      "id_verified": true
+    },
+    {
+      "entry": 326,
+      "name": "assets/nanocore/factory_presets/resonam/ir/04.bin",
+      "offset": 3120846,
+      "stored_length": 3595,
+      "length": 4096,
+      "crc32": 2919210246,
+      "sha256": "7f26927b5b78238299e00d39459ebf39d998efd1407336c7a704311dd5e1c421",
+      "id_verified": true
+    },
+    {
+      "entry": 327,
+      "name": "assets/nanocore/factory_presets/resonam/ir/05.bin",
+      "offset": 3124441,
+      "stored_length": 3570,
+      "length": 4096,
+      "crc32": 1566858704,
+      "sha256": "332cacf21c7033e9b30044e40a954476237918f1f00d670078f05005ad0088d5",
+      "id_verified": true
+    },
+    {
+      "entry": 328,
+      "name": "assets/nanocore/factory_presets/resonam/ir/06.bin",
+      "offset": 3128011,
+      "stored_length": 3612,
+      "length": 4096,
+      "crc32": 1733742710,
+      "sha256": "157fe3b14b46727a5d2bd4f55e991bc1f1f8a21840d2fd8107fca0fe38f0fd7a",
+      "id_verified": true
+    },
+    {
+      "entry": 329,
+      "name": "assets/nanocore/factory_presets/resonam/ir/07.bin",
+      "offset": 3131623,
+      "stored_length": 3580,
+      "length": 4096,
+      "crc32": 83771051,
+      "sha256": "f38f97d71716b73b2b383aec3c322baf0e45335801dc108bac774723052e560f",
+      "id_verified": true
+    },
+    {
+      "entry": 330,
+      "name": "assets/nanocore/factory_presets/resonam/ir/08.bin",
+      "offset": 3135203,
+      "stored_length": 3512,
+      "length": 4096,
+      "crc32": 78487336,
+      "sha256": "e0461d7d8918a018d26f397208c751a6d2d218483d8de6a63658cf1e66ec51c8",
+      "id_verified": true
+    },
+    {
+      "entry": 331,
+      "name": "assets/nanocore/factory_presets/resonam/ir/09.bin",
+      "offset": 3138715,
+      "stored_length": 3539,
+      "length": 4096,
+      "crc32": 2740416731,
+      "sha256": "6b1aab65d54941e68b5c41fb0dd7d8099a002d2401ce410e44e1927492e79064",
+      "id_verified": true
+    },
+    {
+      "entry": 332,
+      "name": "assets/nanocore/factory_presets/resonam/ir/10.bin",
+      "offset": 3142254,
+      "stored_length": 3563,
+      "length": 4096,
+      "crc32": 3380442790,
+      "sha256": "ace6383e2da24cfcc55d35a2319aeb98d1011cb7b7289558d64bb53c5a5a790d",
+      "id_verified": true
+    },
+    {
+      "entry": 333,
+      "name": "assets/nanocore/factory_presets/resonam/ir/11.bin",
+      "offset": 3145817,
+      "stored_length": 3530,
+      "length": 4096,
+      "crc32": 1199256127,
+      "sha256": "8cd93ef17328022a414fd7c003455f7999b28fcd9d7dfa1d54f68d4df96ef2f8",
+      "id_verified": true
+    },
+    {
+      "entry": 334,
+      "name": "assets/nanocore/factory_presets/resonam/ir/12.bin",
+      "offset": 3149347,
+      "stored_length": 3609,
+      "length": 4096,
+      "crc32": 2235325564,
+      "sha256": "f137073c52376294afd64e0ec54cee7f2f51a23f1b0fc3d154185dda44f6010f",
+      "id_verified": true
+    },
+    {
+      "entry": 335,
+      "name": "assets/nanocore/factory_presets/resonam/ir/13.bin",
+      "offset": 3152956,
+      "stored_length": 3591,
+      "length": 4096,
+      "crc32": 618024913,
+      "sha256": "e6a8861651ad275a3e9b8e12cc6a1c0e747702c9597b3b4b08eabb88f32ad95d",
+      "id_verified": true
+    },
+    {
+      "entry": 336,
+      "name": "assets/nanocore/factory_presets/resonam/ir/14.bin",
+      "offset": 3156547,
+      "stored_length": 3537,
+      "length": 4096,
+      "crc32": 2297552573,
+      "sha256": "542d7969822ad7e46bd8fab39c569417b63c87a49c370e871e0db9d4e1b93a0d",
+      "id_verified": true
+    },
+    {
+      "entry": 337,
+      "name": "assets/nanocore/factory_presets/resonam/ir/15.bin",
+      "offset": 3160084,
+      "stored_length": 3541,
+      "length": 4096,
+      "crc32": 3296789702,
+      "sha256": "f911eb7cc2e0da0cd50b6912a287e55c7a155a323d5f3d40158c91b7a6daf053",
+      "id_verified": true
+    },
+    {
+      "entry": 338,
+      "name": "assets/nanocore/factory_presets/resonam/ir/16.bin",
+      "offset": 3163625,
+      "stored_length": 3617,
+      "length": 4096,
+      "crc32": 1860911224,
+      "sha256": "b2657dd09875079354045e5b90a877144c7d6ff05733274805bb8919281afe93",
+      "id_verified": true
+    },
+    {
+      "entry": 339,
+      "name": "assets/nanocore/factory_presets/resonam/ir/17.bin",
+      "offset": 3167242,
+      "stored_length": 3604,
+      "length": 4096,
+      "crc32": 4220991997,
+      "sha256": "e324e36ecb4ce7154ac28175d3b08e74a032ae91f2de6cdd2d0f36bfec643c20",
+      "id_verified": true
+    },
+    {
+      "entry": 340,
+      "name": "assets/nanocore/factory_presets/resonam/ir/18.bin",
+      "offset": 3170846,
+      "stored_length": 3553,
+      "length": 4096,
+      "crc32": 2228581704,
+      "sha256": "ef4dece15740e90fce08531327ac935fe72bd8ea62ba20e1e8287d3bf780c479",
+      "id_verified": true
+    },
+    {
+      "entry": 341,
+      "name": "assets/nanocore/factory_presets/resonam/ir/19.bin",
+      "offset": 3174399,
+      "stored_length": 3576,
+      "length": 4096,
+      "crc32": 2648347872,
+      "sha256": "ce5ba4cefe2f5e437b7f904e330af28c2e113ed44529c87b4b59d7da14feac0d",
+      "id_verified": true
+    },
+    {
+      "entry": 342,
+      "name": "assets/nanocore/factory_presets/resonam/ir/20.bin",
+      "offset": 3177975,
+      "stored_length": 3583,
+      "length": 4096,
+      "crc32": 870352734,
+      "sha256": "02e00b4d4f6a34b9b10a2dea1bd28fb09238bc0ea668b3ce1c1a36407724c0d5",
+      "id_verified": true
+    },
+    {
+      "entry": 343,
+      "name": "assets/nanocore/factory_presets/resonam/ir/21.bin",
+      "offset": 3181558,
+      "stored_length": 3579,
+      "length": 4096,
+      "crc32": 560840373,
+      "sha256": "61052cfb8a5e97aa34bee87b21b70f2e2775fe7748bddbe98c598671bff712a3",
+      "id_verified": true
+    },
+    {
+      "entry": 344,
+      "name": "assets/nanocore/factory_presets/resonam/ir/22.bin",
+      "offset": 3185137,
+      "stored_length": 133,
+      "length": 4096,
+      "crc32": 1336152950,
+      "sha256": "67f7bdb59c34786acd2702836850b331a703f941014347fabb4d5b224fb2bc3d",
+      "id_verified": true
+    },
+    {
+      "entry": 345,
+      "name": "assets/nanocore/factory_presets/resonam/ir/23.bin",
+      "offset": 3185270,
+      "stored_length": 145,
+      "length": 4096,
+      "crc32": 1098293795,
+      "sha256": "4155f1ed5f967c41fd4cd79e9284aec09c48606768815f6eed2b8497af44659a",
+      "id_verified": true
+    },
+    {
+      "entry": 346,
+      "name": "assets/nanocore/factory_presets/resonam/ir/24.bin",
+      "offset": 3185415,
+      "stored_length": 3590,
+      "length": 4096,
+      "crc32": 3234314301,
+      "sha256": "859f5eb7c44c447d8aa6b881abec8943b9447a136a195dd57ec1b898380ff60a",
+      "id_verified": true
+    },
+    {
+      "entry": 347,
+      "name": "assets/nanocore/factory_presets/resonam/ir/25.bin",
+      "offset": 3189005,
+      "stored_length": 3279,
+      "length": 4096,
+      "crc32": 1110747608,
+      "sha256": "e0265ee1936224719b1503cbc193cbfd730d6767a90c37fa3218fd1cbdc9de6f",
+      "id_verified": true
+    },
+    {
+      "entry": 348,
+      "name": "assets/nanocore/factory_presets/resonam/ir/26.bin",
+      "offset": 3192284,
+      "stored_length": 3469,
+      "length": 4096,
+      "crc32": 1939978071,
+      "sha256": "6d8704a62c8aa966187d0fa1f92ad1a046b246ab5b970c4c0c670c8a7da66ea4",
+      "id_verified": true
+    },
+    {
+      "entry": 349,
+      "name": "assets/nanocore/factory_presets/resonam/ir/27.bin",
+      "offset": 3195753,
+      "stored_length": 3540,
+      "length": 4096,
+      "crc32": 4265791167,
+      "sha256": "9f6dc8a2b927618f31741d0004ec19d93942a34ac716fe071bb3cc76687d937b",
+      "id_verified": true
+    },
+    {
+      "entry": 350,
+      "name": "assets/nanocore/factory_presets/resonam/ir/28.bin",
+      "offset": 3199293,
+      "stored_length": 3428,
+      "length": 4096,
+      "crc32": 3473742170,
+      "sha256": "9858f844bdb54b2bae4c88b84789da50bd54af7476325f80a277e9d20961fff3",
+      "id_verified": true
+    },
+    {
+      "entry": 351,
+      "name": "assets/nanocore/factory_presets/resonam/ir/29.bin",
+      "offset": 3202721,
+      "stored_length": 3445,
+      "length": 4096,
+      "crc32": 3473437128,
+      "sha256": "9807dc483cb702e436751ad4496dd6d480ebc7bfeb61c1a834a465afc8dc4d23",
+      "id_verified": true
+    },
+    {
+      "entry": 352,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/amp.png",
+      "offset": 3206166,
+      "stored_length": 5232,
+      "length": 5221,
+      "crc32": 3083486055,
+      "sha256": "8a45c2dcc930dec818ffc5b9a5d7e2bb72d6b15ee108b47fb7fa2d05be36070a",
+      "id_verified": true
+    },
+    {
+      "entry": 353,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/battery_full.png",
+      "offset": 3211398,
+      "stored_length": 1924,
+      "length": 1913,
+      "crc32": 720671738,
+      "sha256": "0f13c5841a0f70e60d1d9e51574d066bbee161ed7d939640e2b5ff12eccf150f",
+      "id_verified": true
+    },
+    {
+      "entry": 354,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/battery_low.png",
+      "offset": 3213322,
+      "stored_length": 1888,
+      "length": 1877,
+      "crc32": 13434963,
+      "sha256": "8b54e49890fa9067535e56797abf5e621bc66a3b716a24a68305784e943e281f",
+      "id_verified": true
+    },
+    {
+      "entry": 355,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/battery_mid.png",
+      "offset": 3215210,
+      "stored_length": 1905,
+      "length": 1894,
+      "crc32": 3322024931,
+      "sha256": "89880efc52cc56761985172ba714a8afa7188e558120fdd14b813addf58da4c0",
+      "id_verified": true
+    },
+    {
+      "entry": 356,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/bg_chain.png",
+      "offset": 3217115,
+      "stored_length": 35596,
+      "length": 35583,
+      "crc32": 656904172,
+      "sha256": "2c43465c49e93f4b845670dc31317495b5254eef8a5faba2e4a47ae18d548b58",
+      "id_verified": true
+    },
+    {
+      "entry": 357,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/bg_main.png",
+      "offset": 3252711,
+      "stored_length": 42619,
+      "length": 42612,
+      "crc32": 3369204966,
+      "sha256": "5544385e5156dc1657fe774207483d0cd4a4c2e1198e354e9c4e0b4dfd118964",
+      "id_verified": true
+    },
+    {
+      "entry": 358,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/bg_params.png",
+      "offset": 3295330,
+      "stored_length": 35596,
+      "length": 35583,
+      "crc32": 656904172,
+      "sha256": "2c43465c49e93f4b845670dc31317495b5254eef8a5faba2e4a47ae18d548b58",
+      "id_verified": true
+    },
+    {
+      "entry": 359,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/bg_settings.png",
+      "offset": 3330926,
+      "stored_length": 35596,
+      "length": 35583,
+      "crc32": 656904172,
+      "sha256": "2c43465c49e93f4b845670dc31317495b5254eef8a5faba2e4a47ae18d548b58",
+      "id_verified": true
+    },
+    {
+      "entry": 360,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/bg_tuner.png",
+      "offset": 3366522,
+      "stored_length": 35596,
+      "length": 35583,
+      "crc32": 656904172,
+      "sha256": "2c43465c49e93f4b845670dc31317495b5254eef8a5faba2e4a47ae18d548b58",
+      "id_verified": true
+    },
+    {
+      "entry": 361,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/cab.png",
+      "offset": 3402118,
+      "stored_length": 4732,
+      "length": 4721,
+      "crc32": 2665039962,
+      "sha256": "25bda0bbe272b252d37a761e187c3b4275ca67e27593b5b9cc005c2d238ef510",
+      "id_verified": true
+    },
+    {
+      "entry": 362,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/chain.png",
+      "offset": 3406850,
+      "stored_length": 3614,
+      "length": 3603,
+      "crc32": 3015191002,
+      "sha256": "4610abe9e290a97619ba7f885f712071b63fda77fca2a4da2a0bda4bd2fd32a8",
+      "id_verified": true
+    },
+    {
+      "entry": 363,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/delay.png",
+      "offset": 3410464,
+      "stored_length": 4674,
+      "length": 4663,
+      "crc32": 1042246598,
+      "sha256": "b15b8f6850ba128307c209a4aa0ba4bd3b22294b7676a9ce5dd2baf04c5e21bc",
+      "id_verified": true
+    },
+    {
+      "entry": 364,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/eq.png",
+      "offset": 3415138,
+      "stored_length": 5967,
+      "length": 5956,
+      "crc32": 626045396,
+      "sha256": "1dbced1f150c43e9c1f2e13b50e8797416932217c868f2e83a7386a0cedba144",
+      "id_verified": true
+    },
+    {
+      "entry": 365,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/fx1.png",
+      "offset": 3421105,
+      "stored_length": 4552,
+      "length": 4541,
+      "crc32": 2533196597,
+      "sha256": "24a1afec4bdd31cc9597da564cb06ac47ee1db02e7251e22ed3307f7a2059275",
+      "id_verified": true
+    },
+    {
+      "entry": 366,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/fx2.png",
+      "offset": 3425657,
+      "stored_length": 4092,
+      "length": 4081,
+      "crc32": 1683632477,
+      "sha256": "1d36081c7971a5ece309e238b6c6f65d4014c1caa09a75b6848cc406366fcad6",
+      "id_verified": true
+    },
+    {
+      "entry": 367,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/knob.png",
+      "offset": 3429749,
+      "stored_length": 3834,
+      "length": 3823,
+      "crc32": 2816127919,
+      "sha256": "6baa481f2b39cb955cfc246788823c888d66a4d82d85946b380f465eef26b26f",
+      "id_verified": true
+    },
+    {
+      "entry": 368,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/master_knob.png",
+      "offset": 3433583,
+      "stored_length": 3996,
+      "length": 3985,
+      "crc32": 2926045267,
+      "sha256": "427d8e1c19a870cc78f1fd64d43a12833fcad256cc59764e46e1b3685c2d5433",
+      "id_verified": true
+    },
+    {
+      "entry": 369,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/mod.png",
+      "offset": 3437579,
+      "stored_length": 4473,
+      "length": 4462,
+      "crc32": 2629997429,
+      "sha256": "3d97580903536c2ede452c527c476b0c6a3010e2e433e8d950fbebb98956cfa4",
+      "id_verified": true
+    },
+    {
+      "entry": 370,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/off.png",
+      "offset": 3442052,
+      "stored_length": 2015,
+      "length": 2004,
+      "crc32": 1069654932,
+      "sha256": "6c75e77658176b7faa0e9f816c9751d2af384259683fdd908e86eac26029ad01",
+      "id_verified": true
+    },
+    {
+      "entry": 371,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/on.png",
+      "offset": 3444067,
+      "stored_length": 2184,
+      "length": 2173,
+      "crc32": 3742601362,
+      "sha256": "4368abc69c0f601a1346debc33fb73fe27f6c65f5c99443c7cc50149c481497b",
+      "id_verified": true
+    },
+    {
+      "entry": 372,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/preset_knob.png",
+      "offset": 3446251,
+      "stored_length": 3985,
+      "length": 3974,
+      "crc32": 2090035050,
+      "sha256": "b6e5eb49661fa0c30a6105ac4c7f6331d8b7a1ecbbe7415dd689ec505609fe36",
+      "id_verified": true
+    },
+    {
+      "entry": 373,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/reverb.png",
+      "offset": 3450236,
+      "stored_length": 4876,
+      "length": 4865,
+      "crc32": 2887989494,
+      "sha256": "dfa26fe74e7546170cac970d32f77555e18ecf06fe5fb2d64f793e546d5486a4",
+      "id_verified": true
+    },
+    {
+      "entry": 374,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/saved_flag.png",
+      "offset": 3455112,
+      "stored_length": 51860,
+      "length": 51853,
+      "crc32": 608542614,
+      "sha256": "13ebf0dc51b982e16f405792b53ee2ec253b9fa80a1418dae2c26ba4ddf00277",
+      "id_verified": true
+    },
+    {
+      "entry": 375,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/settings.png",
+      "offset": 3506972,
+      "stored_length": 3701,
+      "length": 3690,
+      "crc32": 2213922717,
+      "sha256": "392a13481bba9a058199517018384053247f5db2fa22a9b0f29957deb8cfa670",
+      "id_verified": true
+    },
+    {
+      "entry": 376,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/tuner.png",
+      "offset": 3510673,
+      "stored_length": 3980,
+      "length": 3969,
+      "crc32": 3281314229,
+      "sha256": "29853297749039f11149c8705d4cb349572c7bffc3565474a0b04b518929f85d",
+      "id_verified": true
+    },
+    {
+      "entry": 377,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/tuner_slot1.png",
+      "offset": 3514653,
+      "stored_length": 23947,
+      "length": 23931,
+      "crc32": 4062510594,
+      "sha256": "10e36ee4b442876eb1c35458af777b3842f01340f23b159cf6c5c6b812739d4d",
+      "id_verified": true
+    },
+    {
+      "entry": 378,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/tuner_slot2.png",
+      "offset": 3538600,
+      "stored_length": 3201,
+      "length": 3190,
+      "crc32": 358801318,
+      "sha256": "d9caa28279d4dd17189f9223af55a93b0a829947c903f4fdce8229f511b54387",
+      "id_verified": true
+    },
+    {
+      "entry": 379,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_0.png",
+      "offset": 3541801,
+      "stored_length": 3555,
+      "length": 3544,
+      "crc32": 4100962809,
+      "sha256": "900b924711704539f7e960125cf50ccad5938fb0192d132d450dfdf7d7ed0914",
+      "id_verified": true
+    },
+    {
+      "entry": 380,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_1.png",
+      "offset": 3545356,
+      "stored_length": 3573,
+      "length": 3562,
+      "crc32": 1964782859,
+      "sha256": "f226a341047014cb3d81970fe9b2db4c7f7aedf01409010244097c7f260602b0",
+      "id_verified": true
+    },
+    {
+      "entry": 381,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_2.png",
+      "offset": 3548929,
+      "stored_length": 3583,
+      "length": 3572,
+      "crc32": 3290011794,
+      "sha256": "04142faa616150273dbdb1f6894638aadf2dc441aae139453fe93af2ec7be9c6",
+      "id_verified": true
+    },
+    {
+      "entry": 382,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_3.png",
+      "offset": 3552512,
+      "stored_length": 3612,
+      "length": 3601,
+      "crc32": 2554372864,
+      "sha256": "45ba28c82fd0c076fc8288adfbaf3a33fb02ecf586c60805a5496ca6dcf791ce",
+      "id_verified": true
+    },
+    {
+      "entry": 383,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_4.png",
+      "offset": 3556124,
+      "stored_length": 3625,
+      "length": 3614,
+      "crc32": 990863213,
+      "sha256": "9d8be49241185a73dab856403db2ebe9b1f5c4d040f1eb009be1e2e4babc4aee",
+      "id_verified": true
+    },
+    {
+      "entry": 384,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_5.png",
+      "offset": 3559749,
+      "stored_length": 3644,
+      "length": 3633,
+      "crc32": 979869570,
+      "sha256": "395dcf62b4b52405b9799a4458e693b2b1ea8fa4759f1ef99aefe2d5cd97fd0b",
+      "id_verified": true
+    },
+    {
+      "entry": 385,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_6.png",
+      "offset": 3563393,
+      "stored_length": 3658,
+      "length": 3647,
+      "crc32": 2996115467,
+      "sha256": "720e0994fa4aa0261733a6ffd36af0fab103ba1615ce68489bbe6ecd78de8a28",
+      "id_verified": true
+    },
+    {
+      "entry": 386,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_7.png",
+      "offset": 3567051,
+      "stored_length": 3658,
+      "length": 3647,
+      "crc32": 1897878474,
+      "sha256": "801b19e9c4218df0fcf8f5dbc9a254504c88dca4c1b981d2e907438ed9e07b6a",
+      "id_verified": true
+    },
+    {
+      "entry": 387,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/volume_meter_8.png",
+      "offset": 3570709,
+      "stored_length": 3659,
+      "length": 3648,
+      "crc32": 3758254366,
+      "sha256": "e1decaa7b4743af1f2cbd7893268e475ac15315b3e3c302f584109ab1e2dc690",
+      "id_verified": true
+    },
+    {
+      "entry": 388,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/assets/wireless.png",
+      "offset": 3574368,
+      "stored_length": 2783,
+      "length": 2772,
+      "crc32": 970634386,
+      "sha256": "99900fc611f022c21179527e958fb24db7f2294df4c188b25af27bf5cc5b4f89",
+      "id_verified": true
+    },
+    {
+      "entry": 389,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/default.uia1",
+      "offset": 3577151,
+      "stored_length": 152624,
+      "length": 226308,
+      "crc32": 2823065944,
+      "sha256": "4d5d2b5a028bc0bf26a7c6e31acb82cb07ecfe220e1e7376c60707bd01d3c559",
+      "id_verified": true
+    },
+    {
+      "entry": 390,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/fonts/SpaceGrotesk-Medium.ttf",
+      "offset": 3729775,
+      "stored_length": 43080,
+      "length": 86612,
+      "crc32": 3798884700,
+      "sha256": "d8135bce6603398f3d0cdb478a018d7fa869b0168d037a9408cad23e030bfa7a",
+      "id_verified": true
+    },
+    {
+      "entry": 391,
+      "name": "assets/nanocore/theme_templates/ui_asset-10/manifest.json",
+      "offset": 3772855,
+      "stored_length": 1716,
+      "length": 12058,
+      "crc32": 2916839185,
+      "sha256": "660367cea163a30a2f1cd50bd273167d5dc59619c65c1fe6a4f2b31293ff7c64",
+      "id_verified": true
+    },
+    {
+      "entry": 392,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/amp.png",
+      "offset": 3774571,
+      "stored_length": 3814,
+      "length": 3803,
+      "crc32": 3634643248,
+      "sha256": "65e0fd8afd16f799a30befe22c8f240414ae765df412f861443e104b9de43cac",
+      "id_verified": true
+    },
+    {
+      "entry": 393,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/battery_full.png",
+      "offset": 3778385,
+      "stored_length": 252,
+      "length": 246,
+      "crc32": 2475536023,
+      "sha256": "9f0bde200747dfdf8b06b53c6857558a31cbf1834e666a89527e5c6e9cf2e459",
+      "id_verified": true
+    },
+    {
+      "entry": 394,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/battery_low.png",
+      "offset": 3778637,
+      "stored_length": 239,
+      "length": 234,
+      "crc32": 1270191034,
+      "sha256": "62d93fcc1c21ed34f3c4c138e5634f79d017b7dec61eea6630880a2026f73673",
+      "id_verified": true
+    },
+    {
+      "entry": 395,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/battery_mid.png",
+      "offset": 3778876,
+      "stored_length": 254,
+      "length": 248,
+      "crc32": 1050962558,
+      "sha256": "0eb9dae0962151c4995b6479b8c66546084be9823e1cd0d04ee846566dc2a130",
+      "id_verified": true
+    },
+    {
+      "entry": 396,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/bg_chain.png",
+      "offset": 3779130,
+      "stored_length": 62537,
+      "length": 62511,
+      "crc32": 1624788958,
+      "sha256": "f3dd5971901e7561c9d2df3dc1ae6541f805dd5e10325b1ab6e77a2f3726dc66",
+      "id_verified": true
+    },
+    {
+      "entry": 397,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/bg_main.png",
+      "offset": 3841667,
+      "stored_length": 62603,
+      "length": 62577,
+      "crc32": 1047906987,
+      "sha256": "a5397972d9c72b8a91a315f508f538c1f5af597b7180ce58f399d09db292bd22",
+      "id_verified": true
+    },
+    {
+      "entry": 398,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/bg_params.png",
+      "offset": 3904270,
+      "stored_length": 62539,
+      "length": 62513,
+      "crc32": 563133894,
+      "sha256": "49fda4185077e9992c82c935e17512f3ce77e340257a73f3457d1f11b8480e4d",
+      "id_verified": true
+    },
+    {
+      "entry": 399,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/bg_settings.png",
+      "offset": 3966809,
+      "stored_length": 62382,
+      "length": 62356,
+      "crc32": 1877695733,
+      "sha256": "514b3974f5a7ab2db5808b8f99bd0f9af5e85c1fd7ea37420122e992ad59e235",
+      "id_verified": true
+    },
+    {
+      "entry": 400,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/bg_tuner.png",
+      "offset": 4029191,
+      "stored_length": 63502,
+      "length": 63476,
+      "crc32": 707765786,
+      "sha256": "78be8c6de39f89a840e084a2c13549e857fda2750e6d4627c5b984b7f12cdfca",
+      "id_verified": true
+    },
+    {
+      "entry": 401,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/cab.png",
+      "offset": 4092693,
+      "stored_length": 4430,
+      "length": 4419,
+      "crc32": 2402918879,
+      "sha256": "e03b6558e62c977b94f39771c28bfc36bee7adae826cc030e9ab3f3b09111c59",
+      "id_verified": true
+    },
+    {
+      "entry": 402,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/chain.png",
+      "offset": 4097123,
+      "stored_length": 209,
+      "length": 208,
+      "crc32": 4058589057,
+      "sha256": "75f87dc424cc9b2fe7e5a2cb498260fd5d96410345f11ac889af5505fe5adab0",
+      "id_verified": true
+    },
+    {
+      "entry": 403,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/delay.png",
+      "offset": 4097332,
+      "stored_length": 3272,
+      "length": 3261,
+      "crc32": 1646596606,
+      "sha256": "16c02d37689e6c66fe109eaf0536ddeca84af46fe1e71198d8f968f678e06acd",
+      "id_verified": true
+    },
+    {
+      "entry": 404,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/eq.png",
+      "offset": 4100604,
+      "stored_length": 3341,
+      "length": 3330,
+      "crc32": 2370510900,
+      "sha256": "af4228c25feb99a18f5699fa822d18f0ebdd924f5653ebb9485cf3a0f82601b5",
+      "id_verified": true
+    },
+    {
+      "entry": 405,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/fx1.png",
+      "offset": 4103945,
+      "stored_length": 3336,
+      "length": 3325,
+      "crc32": 4057609882,
+      "sha256": "6d164b03236ed14bc18dc08a025eb7347351bcdce77b84a14ec9f3c8fe77373d",
+      "id_verified": true
+    },
+    {
+      "entry": 406,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/fx2.png",
+      "offset": 4107281,
+      "stored_length": 3206,
+      "length": 3195,
+      "crc32": 4272456486,
+      "sha256": "a0180d21e68f1273775a6bb02a2a29dc95ad18bb2996cc7b76332d9eb595ac25",
+      "id_verified": true
+    },
+    {
+      "entry": 407,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/knob.png",
+      "offset": 4110487,
+      "stored_length": 263,
+      "length": 254,
+      "crc32": 1650983788,
+      "sha256": "d2f8e5cbc3dc65bfb8ce683ca23626169b48ecee778fabf9290f35e9d2178323",
+      "id_verified": true
+    },
+    {
+      "entry": 408,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/master_knob.png",
+      "offset": 4110750,
+      "stored_length": 2912,
+      "length": 2901,
+      "crc32": 3700713766,
+      "sha256": "00de1311e47e82a8d8602959ec43a22e9d85b9944a7011ef72116d2c7328520f",
+      "id_verified": true
+    },
+    {
+      "entry": 409,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/mod.png",
+      "offset": 4113662,
+      "stored_length": 3389,
+      "length": 3378,
+      "crc32": 294661488,
+      "sha256": "629d455117c509d9c0a284d344779efa7ee7278568ba1398a98a058a9c0b5095",
+      "id_verified": true
+    },
+    {
+      "entry": 410,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/off.png",
+      "offset": 4117051,
+      "stored_length": 205,
+      "length": 198,
+      "crc32": 2702232999,
+      "sha256": "b0bfd06058539bfb78e071ffaa4086691ca8c41e324a893b90c0cffa56ca66b6",
+      "id_verified": true
+    },
+    {
+      "entry": 411,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/on.png",
+      "offset": 4117256,
+      "stored_length": 197,
+      "length": 190,
+      "crc32": 2236710600,
+      "sha256": "884a1e735a639b079e9fa1f3b090d723ea3aeeb50caf74578029648de4493ba0",
+      "id_verified": true
+    },
+    {
+      "entry": 412,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/preset_knob.png",
+      "offset": 4117453,
+      "stored_length": 2965,
+      "length": 2954,
+      "crc32": 2009964307,
+      "sha256": "c35dafcb7c745172e5b6b7259a2905cb165ff4216217f9d668759f6ae4edc66a",
+      "id_verified": true
+    },
+    {
+      "entry": 413,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/reverb.png",
+      "offset": 4120418,
+      "stored_length": 3503,
+      "length": 3492,
+      "crc32": 655753094,
+      "sha256": "fdd6d5806dfb2682805fc4fea0b17a6b9613a61a3d628fdc0b02160c38a3ce5d",
+      "id_verified": true
+    },
+    {
+      "entry": 414,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/saved_flag.png",
+      "offset": 4123921,
+      "stored_length": 675,
+      "length": 767,
+      "crc32": 509078533,
+      "sha256": "dc884fbebf8cd30fc1a0a6e1158242ce16a3b1657f7ca86cf8f53283436d3c60",
+      "id_verified": true
+    },
+    {
+      "entry": 415,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/settings.png",
+      "offset": 4124596,
+      "stored_length": 325,
+      "length": 314,
+      "crc32": 4075836813,
+      "sha256": "7b42bf599f45798446f2581db97feb23138f1e691320fed4b93dd783bb2e5b62",
+      "id_verified": true
+    },
+    {
+      "entry": 416,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/tuner.png",
+      "offset": 4124921,
+      "stored_length": 235,
+      "length": 227,
+      "crc32": 2580515541,
+      "sha256": "91af7f941d36654b4fc72c8b770ed373d0ab66bf4e29781fa90ed503ba970c17",
+      "id_verified": true
+    },
+    {
+      "entry": 417,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/tuner_slot1.png",
+      "offset": 4125156,
+      "stored_length": 434,
+      "length": 452,
+      "crc32": 2332963789,
+      "sha256": "5fd71a143e7ee01902c08b6dc68b385f1c04a3ff537425a84df85060187c59d0",
+      "id_verified": true
+    },
+    {
+      "entry": 418,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/tuner_slot2.png",
+      "offset": 4125590,
+      "stored_length": 295,
+      "length": 284,
+      "crc32": 1407797370,
+      "sha256": "a6cde9c699f1fd11a2be420fb675f3fa75ea5302d9548d7d83a9a5854f6d4156",
+      "id_verified": true
+    },
+    {
+      "entry": 419,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_0.png",
+      "offset": 4125885,
+      "stored_length": 224,
+      "length": 216,
+      "crc32": 3768460816,
+      "sha256": "8fdfdb50ad2cc08d68c9b9c6a59cef39dfd9c8fa67e6ec26464beb8978478cb1",
+      "id_verified": true
+    },
+    {
+      "entry": 420,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_1.png",
+      "offset": 4126109,
+      "stored_length": 247,
+      "length": 236,
+      "crc32": 3212256944,
+      "sha256": "7cc572ed2e52b2ff53b9cb2c6c37c42492e8dccef91da06222cd7cb93eb7bbe8",
+      "id_verified": true
+    },
+    {
+      "entry": 421,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_2.png",
+      "offset": 4126356,
+      "stored_length": 247,
+      "length": 238,
+      "crc32": 1510636985,
+      "sha256": "94ab83c4a939d59d99117f1c912ba7aa94be5425badd5b36f70bb548fa234404",
+      "id_verified": true
+    },
+    {
+      "entry": 422,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_3.png",
+      "offset": 4126603,
+      "stored_length": 246,
+      "length": 238,
+      "crc32": 3053695718,
+      "sha256": "dba60834c07ac975c2fade62fee86ca87819b2f1d42f69136a0514a3396ab741",
+      "id_verified": true
+    },
+    {
+      "entry": 423,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_4.png",
+      "offset": 4126849,
+      "stored_length": 246,
+      "length": 239,
+      "crc32": 384726527,
+      "sha256": "b3ddea24545b02a8f59ea3d7dde38596852176273aa0e026bccee271b5a87ed5",
+      "id_verified": true
+    },
+    {
+      "entry": 424,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_5.png",
+      "offset": 4127095,
+      "stored_length": 246,
+      "length": 238,
+      "crc32": 3970956815,
+      "sha256": "c278ee67525f9fa5f9019e22e2c580d2a4d72fb21c66261719059f4bcf373cb6",
+      "id_verified": true
+    },
+    {
+      "entry": 425,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_6.png",
+      "offset": 4127341,
+      "stored_length": 268,
+      "length": 259,
+      "crc32": 552755520,
+      "sha256": "2831ec8d6e560fc1a0ecfad55e48180ee5596c4ca6c3d5591cb4edd52d11659b",
+      "id_verified": true
+    },
+    {
+      "entry": 426,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_7.png",
+      "offset": 4127609,
+      "stored_length": 264,
+      "length": 256,
+      "crc32": 3275874829,
+      "sha256": "c62cc12f927b88cbf8001660455e1eb2455b6187b8521ad7f8f77ed2957869cf",
+      "id_verified": true
+    },
+    {
+      "entry": 427,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/volume_meter_8.png",
+      "offset": 4127873,
+      "stored_length": 243,
+      "length": 234,
+      "crc32": 3922040921,
+      "sha256": "08461eaa4bd876660caf8f20225635cea02b19a2d9bf68c1224c17a8ae9e6148",
+      "id_verified": true
+    },
+    {
+      "entry": 428,
+      "name": "assets/nanocore/theme_templates/ui_set14/assets/wireless.png",
+      "offset": 4128116,
+      "stored_length": 2684,
+      "length": 2673,
+      "crc32": 2035883064,
+      "sha256": "8036fb2d5c7afc7c89980b7c07078ebb71f882330e617310f612058490a0e821",
+      "id_verified": true
+    },
+    {
+      "entry": 429,
+      "name": "assets/nanocore/theme_templates/ui_set14/default.uia1",
+      "offset": 4130800,
+      "stored_length": 136775,
+      "length": 254992,
+      "crc32": 3014344252,
+      "sha256": "05c480519efe9bc31f9520ab2a566bf9a8198f3ad0c46ba2deedd43b9165a44f",
+      "id_verified": true
+    },
+    {
+      "entry": 430,
+      "name": "assets/nanocore/theme_templates/ui_set14/fonts/SpaceGrotesk-Medium.ttf",
+      "offset": 4267575,
+      "stored_length": 43080,
+      "length": 86612,
+      "crc32": 3798884700,
+      "sha256": "d8135bce6603398f3d0cdb478a018d7fa869b0168d037a9408cad23e030bfa7a",
+      "id_verified": true
+    },
+    {
+      "entry": 431,
+      "name": "assets/nanocore/theme_templates/ui_set14/manifest.json",
+      "offset": 4310655,
+      "stored_length": 1578,
+      "length": 11776,
+      "crc32": 4093297234,
+      "sha256": "0d5eecd0f5faacfb519afb708185c83b2180e48b647211cd24a9b7ee55b9f7ac",
+      "id_verified": true
+    },
+    {
+      "entry": 432,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/amp.png",
+      "offset": 4312233,
+      "stored_length": 4989,
+      "length": 4978,
+      "crc32": 1251714182,
+      "sha256": "64a2565bd49d5299ea42560c40ac83d255c21db38637040f80cbb7879ff3a32a",
+      "id_verified": true
+    },
+    {
+      "entry": 433,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/battery_full.png",
+      "offset": 4317222,
+      "stored_length": 1906,
+      "length": 1895,
+      "crc32": 3579383816,
+      "sha256": "c0e3d935fb633208a948f28d4cb4f37e0a28bd3e96366291f91d75d48b0065c4",
+      "id_verified": true
+    },
+    {
+      "entry": 434,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/battery_low.png",
+      "offset": 4319128,
+      "stored_length": 1754,
+      "length": 1743,
+      "crc32": 1673993504,
+      "sha256": "011e1bdfd330a9197b39787828fcb08d80bec10bdd6c391e9282374ecab7b359",
+      "id_verified": true
+    },
+    {
+      "entry": 435,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/battery_mid.png",
+      "offset": 4320882,
+      "stored_length": 1842,
+      "length": 1831,
+      "crc32": 2354262733,
+      "sha256": "27eb99ea83f93192a8c10d7b07de2f0f111d873f570a26c0dcc06dd41fb72ed6",
+      "id_verified": true
+    },
+    {
+      "entry": 436,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/bg_chain.png",
+      "offset": 4322724,
+      "stored_length": 98142,
+      "length": 98106,
+      "crc32": 2582343414,
+      "sha256": "af9c07578df270f41b61d092989f17570f961d2f1650e80262e7017cb1318924",
+      "id_verified": true
+    },
+    {
+      "entry": 437,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/bg_main.png",
+      "offset": 4420866,
+      "stored_length": 99027,
+      "length": 98986,
+      "crc32": 3109848874,
+      "sha256": "88d4caa7a7d03e78d06c001f6821c4b11d10190709530d83804379b2232f3adf",
+      "id_verified": true
+    },
+    {
+      "entry": 438,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/bg_params.png",
+      "offset": 4519893,
+      "stored_length": 98142,
+      "length": 98106,
+      "crc32": 2582343414,
+      "sha256": "af9c07578df270f41b61d092989f17570f961d2f1650e80262e7017cb1318924",
+      "id_verified": true
+    },
+    {
+      "entry": 439,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/bg_settings.png",
+      "offset": 4618035,
+      "stored_length": 98142,
+      "length": 98106,
+      "crc32": 2582343414,
+      "sha256": "af9c07578df270f41b61d092989f17570f961d2f1650e80262e7017cb1318924",
+      "id_verified": true
+    },
+    {
+      "entry": 440,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/bg_tuner.png",
+      "offset": 4716177,
+      "stored_length": 98142,
+      "length": 98106,
+      "crc32": 2582343414,
+      "sha256": "af9c07578df270f41b61d092989f17570f961d2f1650e80262e7017cb1318924",
+      "id_verified": true
+    },
+    {
+      "entry": 441,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/cab.png",
+      "offset": 4814319,
+      "stored_length": 5319,
+      "length": 5308,
+      "crc32": 1319005666,
+      "sha256": "a91795180c275721b2717dd7dc9c4e964b0fc5708c97c18a5e88d0770f55670e",
+      "id_verified": true
+    },
+    {
+      "entry": 442,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/chain.png",
+      "offset": 4819638,
+      "stored_length": 3503,
+      "length": 3492,
+      "crc32": 3237375173,
+      "sha256": "34eb4aff7b9f7a176ff168862d21eb065e5f64af53230e02951bffeddf494599",
+      "id_verified": true
+    },
+    {
+      "entry": 443,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/delay.png",
+      "offset": 4823141,
+      "stored_length": 4257,
+      "length": 4246,
+      "crc32": 3084667762,
+      "sha256": "c728263f46cd25f27d11453f7fb471691a0b22ef9e4290db00a01aa4c5c94232",
+      "id_verified": true
+    },
+    {
+      "entry": 444,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/eq.png",
+      "offset": 4827398,
+      "stored_length": 4296,
+      "length": 4285,
+      "crc32": 2842870148,
+      "sha256": "3d712b7f43a4804966a16c283be4afb48c4496f5ebcc9ebec8d3bebb581df6cd",
+      "id_verified": true
+    },
+    {
+      "entry": 445,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/fx1.png",
+      "offset": 4831694,
+      "stored_length": 4312,
+      "length": 4301,
+      "crc32": 1293934618,
+      "sha256": "8f0918927047427cc68e8808c9bb27b6a549a6d0c9324665cc922e5aabe14fcc",
+      "id_verified": true
+    },
+    {
+      "entry": 446,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/fx2.png",
+      "offset": 4836006,
+      "stored_length": 4968,
+      "length": 4957,
+      "crc32": 4263206106,
+      "sha256": "cad79fee4c78f7c5b8a75ef754e8934c7725b4a342197b31aa6f1f0906921237",
+      "id_verified": true
+    },
+    {
+      "entry": 447,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/knob.png",
+      "offset": 4840974,
+      "stored_length": 3115,
+      "length": 3104,
+      "crc32": 455094162,
+      "sha256": "7fdc83d596022e756958ef28a05e76dd9f289ff106a009d4176b425947929ce1",
+      "id_verified": true
+    },
+    {
+      "entry": 448,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/master_knob.png",
+      "offset": 4844089,
+      "stored_length": 3116,
+      "length": 3105,
+      "crc32": 2886317096,
+      "sha256": "72f30cc995b1dc0dde736ef70dc0f2b38e2c249644c0e93cfeb858f493ac68ad",
+      "id_verified": true
+    },
+    {
+      "entry": 449,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/mod.png",
+      "offset": 4847205,
+      "stored_length": 4404,
+      "length": 4393,
+      "crc32": 140046315,
+      "sha256": "65a31c912e10f6b96af27539ed2414479f562b23f45adf1fc835fcd815779d8c",
+      "id_verified": true
+    },
+    {
+      "entry": 450,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/off.png",
+      "offset": 4851609,
+      "stored_length": 2150,
+      "length": 2139,
+      "crc32": 2452059762,
+      "sha256": "a9121c1e34aae664c327b1b54e9bac26c7bb9c85fc49f67c6d7d170f09f9cced",
+      "id_verified": true
+    },
+    {
+      "entry": 451,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/on.png",
+      "offset": 4853759,
+      "stored_length": 2225,
+      "length": 2214,
+      "crc32": 1361886843,
+      "sha256": "e9b23a02fdb2cf325b3e74e79e59f88478c10362d2b1502ba5d2128152e1ccea",
+      "id_verified": true
+    },
+    {
+      "entry": 452,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/preset_knob.png",
+      "offset": 4855984,
+      "stored_length": 3113,
+      "length": 3102,
+      "crc32": 1950767273,
+      "sha256": "071118f7c2f7adda368a75cda616d1709848415c59fb7d6ea89d64f75b903e65",
+      "id_verified": true
+    },
+    {
+      "entry": 453,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/reverb.png",
+      "offset": 4859097,
+      "stored_length": 4522,
+      "length": 4511,
+      "crc32": 604744464,
+      "sha256": "dcf97f360c0883f21921d0f07a3d0c50f6558708af3b31e31df6ae10b8720808",
+      "id_verified": true
+    },
+    {
+      "entry": 454,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/saved_flag.png",
+      "offset": 4863619,
+      "stored_length": 6615,
+      "length": 6757,
+      "crc32": 2906901372,
+      "sha256": "76b3102f17d1598698e236bf3931a0427261df69bb685f0de123200833f24927",
+      "id_verified": true
+    },
+    {
+      "entry": 455,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/settings.png",
+      "offset": 4870234,
+      "stored_length": 3525,
+      "length": 3514,
+      "crc32": 2487350318,
+      "sha256": "ee0c7dfc865027bf29ddb14367e959dc09cdf8924e1ba1454b8603808ea417e0",
+      "id_verified": true
+    },
+    {
+      "entry": 456,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/tuner.png",
+      "offset": 4873759,
+      "stored_length": 3864,
+      "length": 3853,
+      "crc32": 2115480413,
+      "sha256": "4a2fcadef6f4be117aa799766d104010c6d11c48acb6cde15e2f9c5cc051e5d3",
+      "id_verified": true
+    },
+    {
+      "entry": 457,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/tuner_slot1.png",
+      "offset": 4877623,
+      "stored_length": 30689,
+      "length": 30673,
+      "crc32": 479477113,
+      "sha256": "1adb56b10867715075b8b2de69735b65c95139bba60a7a3b93d155bb10944c8d",
+      "id_verified": true
+    },
+    {
+      "entry": 458,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/tuner_slot2.png",
+      "offset": 4908312,
+      "stored_length": 2608,
+      "length": 2597,
+      "crc32": 1530885367,
+      "sha256": "60ca27628be3965bc3f0019f75d0611a7b64f0e8656f8b0a344517a4897717d1",
+      "id_verified": true
+    },
+    {
+      "entry": 459,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_0.png",
+      "offset": 4910920,
+      "stored_length": 2442,
+      "length": 2431,
+      "crc32": 3446303517,
+      "sha256": "48ec1ce119a3e0a18e2caf035cd6863b7898ded6a30eb4353fa199734ddecfff",
+      "id_verified": true
+    },
+    {
+      "entry": 460,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_1.png",
+      "offset": 4913362,
+      "stored_length": 2496,
+      "length": 2485,
+      "crc32": 2341966697,
+      "sha256": "80f7eff34689fae6ad327563e029227e5800d97ef262e775b5d8e221e59e9739",
+      "id_verified": true
+    },
+    {
+      "entry": 461,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_2.png",
+      "offset": 4915858,
+      "stored_length": 2548,
+      "length": 2537,
+      "crc32": 3995451895,
+      "sha256": "bc86bfb12717b2d5db5b8c7b03cfb5af5e5cc4020f49c026ba06cad67d8da58f",
+      "id_verified": true
+    },
+    {
+      "entry": 462,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_3.png",
+      "offset": 4918406,
+      "stored_length": 2597,
+      "length": 2586,
+      "crc32": 3230300189,
+      "sha256": "ba5b894b4df3de97d4e1e841f991abf8ee337a786f42a707ee829efc02f84b15",
+      "id_verified": true
+    },
+    {
+      "entry": 463,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_4.png",
+      "offset": 4921003,
+      "stored_length": 2647,
+      "length": 2636,
+      "crc32": 2553635079,
+      "sha256": "c9e78cdfd03dc8a4944830a477743ef8e36ecdc7875fc9e28e329ae338e8ee73",
+      "id_verified": true
+    },
+    {
+      "entry": 464,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_5.png",
+      "offset": 4923650,
+      "stored_length": 2706,
+      "length": 2695,
+      "crc32": 4199169620,
+      "sha256": "4e193d25aeaf6b8395e66b82c44407ac936b1d85128a40ef361d24e24a5cc0b7",
+      "id_verified": true
+    },
+    {
+      "entry": 465,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_6.png",
+      "offset": 4926356,
+      "stored_length": 2753,
+      "length": 2742,
+      "crc32": 1086013181,
+      "sha256": "ead565f28c79092b9b9ea70ed4df8a082fbd6a01f66400380844e0ecec8e86e5",
+      "id_verified": true
+    },
+    {
+      "entry": 466,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_7.png",
+      "offset": 4929109,
+      "stored_length": 2802,
+      "length": 2791,
+      "crc32": 246007768,
+      "sha256": "27ad455a0d1278344d80440407a5a214ac7091284eb924c05b47675e9e748254",
+      "id_verified": true
+    },
+    {
+      "entry": 467,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/volume_meter_8.png",
+      "offset": 4931911,
+      "stored_length": 2817,
+      "length": 2806,
+      "crc32": 1354447472,
+      "sha256": "d65f78188d0d91bff79b14f6e93f8b3abda8dd2a0e11d829043120a3e21196f1",
+      "id_verified": true
+    },
+    {
+      "entry": 468,
+      "name": "assets/nanocore/theme_templates/ui_set4/assets/wireless.png",
+      "offset": 4934728,
+      "stored_length": 2722,
+      "length": 2711,
+      "crc32": 1809370194,
+      "sha256": "1bba69a6d70175f292e36796eb61724687513e33446c2172205b2763376e41b8",
+      "id_verified": true
+    },
+    {
+      "entry": 469,
+      "name": "assets/nanocore/theme_templates/ui_set4/default.uia1",
+      "offset": 4937450,
+      "stored_length": 191433,
+      "length": 274037,
+      "crc32": 3852253288,
+      "sha256": "47b353e1376a5d75963ce1d9eec5f5073bca910f660285c2ec9df07efd13338e",
+      "id_verified": true
+    },
+    {
+      "entry": 470,
+      "name": "assets/nanocore/theme_templates/ui_set4/fonts/SpaceGrotesk-Medium.ttf",
+      "offset": 5128883,
+      "stored_length": 43080,
+      "length": 86612,
+      "crc32": 3798884700,
+      "sha256": "d8135bce6603398f3d0cdb478a018d7fa869b0168d037a9408cad23e030bfa7a",
+      "id_verified": true
+    },
+    {
+      "entry": 471,
+      "name": "assets/nanocore/theme_templates/ui_set4/manifest.json",
+      "offset": 5171963,
+      "stored_length": 1592,
+      "length": 11908,
+      "crc32": 3327110890,
+      "sha256": "24d3a710a8a87b112fbf6470565d97a3bbbcd760058eef087ef808883b1ab96c",
+      "id_verified": true
+    }
+  ]
+}

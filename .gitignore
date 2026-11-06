@@ -1,0 +1,25 @@
+# Curated research repository: keep the surrounding artifact workspace local.
+/*
+!/.gitignore
+!/README.rst
+!/docs/
+/docs/*
+!/docs/*.txt
+!/evidence/
+/evidence/*
+!/evidence/*.json
+!/tools/
+/tools/*
+!/tools/nanocore_dfu/
+/tools/nanocore_dfu/*
+!/tools/nanocore_dfu/uploader.py
+!/tools/nanocore_dfu/test_uploader.py
+!/tools/nanocore_dfu/README.txt
+!/tools/host_pack/
+/tools/host_pack/*
+!/tools/host_pack/decode_host_pack.py
+!/.github/
+/.github/*
+!/.github/workflows/
+/.github/workflows/*
+!/.github/workflows/tests.yml

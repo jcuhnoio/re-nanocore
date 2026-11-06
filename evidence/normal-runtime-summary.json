@@ -1,0 +1,43 @@
+{
+  "target_execution": true,
+  "physical_device": false,
+  "fixture_only": true,
+  "successful_api_calls": 71,
+  "preset_backups": 64,
+  "preset_chunk_reads": 128,
+  "preset_chunk_offsets": [
+    0,
+    200
+  ],
+  "synthetic_preset_bytes": 206,
+  "unknown_tlv190bytes_preserved": true,
+  "detach_sysex": "f0 7d 44 46 55 01 f7",
+  "captured_signed_core_bytes": 727149,
+  "core_sha256": "abee99ebe2fe6859e81e5c664c1bf322b95ed9206c8231f8a30ad7b49d324b31",
+  "core_matches_fmu_prefix": true,
+  "api_to_wire_opcodes": {
+    "4": [
+      "0x30"
+    ],
+    "27": [
+      "0x65"
+    ],
+    "40": [
+      "0x63"
+    ],
+    "39": [
+      "0x68"
+    ],
+    "20": [
+      "0x40",
+      "0x63"
+    ],
+    "21": [
+      "0x41",
+      "0x63"
+    ]
+  },
+  "child_absent": true,
+  "original_library_unchanged": true,
+  "remote_worker_used": false
+}

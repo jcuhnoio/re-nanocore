@@ -1,0 +1,89 @@
+Research status — 2026-11-06
+
+Objective
+Implement Uni-Vibe and POG-style processing and eventually deploy it to a
+Livtra NanoCore. No pedal was available during these experiments.
+
+Established
+1. Seven NanoCore firmware releases were recovered: 1.04,1.05,1.06,1.07,1.10,
+   1.11,1.12. URLs and hashes are in evidence/firmware-sources.json. The examined
+   payloads remain opaque; older releases did not expose a plaintext executable.
+2. The macOS1.3.3 updater sends the signed LUM0 core unchanged, excluding the
+   FMUC routing footer. Native execution against fake USB corroborates static
+   tracing. Older macOS1.2.6 and examined Windows1.2.7/1.3.4 paths support the
+   same host-passthrough conclusion; Android dispatch coverage is incomplete.
+3. Normal native API execution against fake CoreMIDI/USB succeeded for device
+   enumeration, settings, effect state, preset listing and 64 synthetic preset
+   backups. It also performed normal-to-DFU transition and firmware upload.
+4. The independent uploader reproduces 579 supported vendor control requests.
+   The original local run compared outgoing bytes exactly. The committed
+   fixture retains request metadata and SHA256s instead of vendor payloads.
+5. All472 host.dat resources decoded (7,503,815bytes), with each entry's opaque
+   ID, length and CRC checked. This includes factory presets, amp/IR data and
+   theme metadata, not a recovered NanoCore DSP implementation.
+
+Important boundaries
+A one-bit modification at firmware offset41 was rejected by the original host
+before USB transfer. The independent uploader deliberately omits publisher
+signature enforcement, so it can transmit a structurally valid modified core.
+Neither experiment reveals whether the pedal's bootloader will accept it.
+
+High entropy and an opaque16-byte header field do not identify a cipher. The
+flags byte's high bit is host-route metadata, not proof of encryption. No
+validated NanoCore plaintext, CPU architecture, audio callback ABI, memory
+budget, peripheral wiring or device-side verification policy was recovered.
+
+No arbitrary-address NanoCore flash reader or RAM loader was established by
+bounded API exploration. Asset/preset reads and other products' diagnostics
+must not be treated as general NanoCore memory access.
+
+Other-device loader lead
+The 23040-byte loader embedded in macOS md400_uboot_update exactly matches the
+official Jieli AC632N/bd19 loader (also mirrored in jl-uboot-tool):
+https://github.com/Jieli-Tech/fw-AC63_GP_MCU/blob/53fd6bc15600a4c06aa9932b1f1b7b66a2d54c29/sdk/bsp/AC632N/tools/bd19loader.bin
+https://github.com/kagaimiq/jl-uboot-tool/blob/adb3f18889e88ac512ce0a3c4d8cc3d3cb30696a/data/loaderblobs/usb/bd19loader.bin
+Input SHA256 faa1b519a3ff1b082f11ccafac8c73d31150161ac972ef9f1934002bcbb8df4f.
+Per512-byte MengLi descrambling, independently checked using CRC16 polynomial
+0x1021, yields SHA256
+f86f652a86d43adeb7bf751735133b5ae0d18da46b58b5e253bb16ea4b3cd6bf.
+Decoded diagnostics include norflash, run loader ok and usbloader. This is an
+MD400/Jieli artifact; no NanoCore compatibility or LUM0 decoder follows from it.
+The bd19 toolchain is Jieli q32s/PI32; "UBOOT" here does not establish Linux,
+Das U-Boot or ARM. The loader binary is not included in this repository.
+
+Recovery search
+The public Livtra downloads page and linked catalog scripts, EROK download
+catalogs, vendor-linked LIVTRA-Audio GitHub account and targeted indexed
+searches yielded no new NanoCore bootloader/recovery artifact in this pass.
+Sources: https://www.livtramusic.com/downloads
+         https://erokmusic.com/download
+         https://github.com/LIVTRA-Audio
+This is a bounded search, not proof no such artifact exists. Factory-content
+restore release notes refer to presets/AMP/IR and are not bootloader proof.
+
+PID6679 is labeled Mosaic by general enumeration and appears in a conditional
+NanoCore compatibility path. The real updater rejected a lone simulated6679
+device before DFU writes. An observation hook confirmed its decision branch
+at library+0xb516c: runtimeCount=0, exactDfuCount=0, compatDfuCount=1. No NDF1
+metadata or alternate payload emerged. Other legacy transitions remain open.
+
+Most useful next evidence
+- Physical USB descriptors, actual startup/readiness and read-only preset data.
+- Hardware identity, board/peripheral information and recovery behavior.
+- A NanoCore bootloader or decoder implementation exposing plaintext processing.
+- Device-side image acceptance policy before attempting custom deployment.
+
+Reconstruction scope
+The recovered preset/theme formats support independent editors and backups.
+The uploader removes dependence on ToneCommand's host validation for transfer,
+but custom firmware and effect injection both still need a device execution
+route. Neither approach is yet proven deployable. Desktop DSP prototypes can
+be developed independently, but would not settle these device questions.
+
+Local workspace boundary
+Full raw captures and exploratory findings remain in the original workspace.
+They are deliberately not mirrored here. Committed hashes and compact traces
+preserve the key result identities without distributing vendor binaries.
+All owned probe processes were stopped; the original native library remained
+unchanged. The remote worker was unreachable during the final pass and no
+remote job/workspace was created. Lightweight extraction ran locally.

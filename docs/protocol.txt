@@ -1,0 +1,101 @@
+NanoCore host protocol — observed against synthetic peripherals
+
+Evidence identity
+Unmodified macOS ToneCommand1.3.3 liblivtra.dylib, SHA256
+bf75e63a11ecb277d80252a510546c5961afb448d3a7e869ac692bf5ae964326.
+Native ABI: char *a2(uint32_t operation, const char *json); free with a0(ptr).
+Frida17.25.2 replaced selected CoreMIDI/libusb boundaries in an owned sandboxed
+host. Real package parsing, signature checking, routing and serialization ran.
+No physical MIDI/USB device or firmware code ran. A native field mock:false
+only indicates the native non-mock path, not a physical device.
+
+Normal identity and framing
+USB VID:PID33c3:1301; synthetic CoreMIDI display name "Nanocore Midi" and
+USBVendorProduct0x33c31301. The native paths check both USB and MIDI identity.
+
+Request = F0 7D 4E 43 70 PACK(inner) F7
+inner = version02, sequenceLE16, opcodeLE16, payloadLengthLE16, payload.
+Response discriminator71, inner =02,seqLE16,opLE16,statusU8,lenLE16,payload.
+PACK takes groups of up to7 bytes, emits a high-bit bitmap then their low7 bits.
+No checksum/encryption was observed at this framing layer. This corroborates
+the public JimCommanD description: https://github.com/3rud1te/JimCommanD .
+Replies in this fixture were delivered synchronously; real timing, concurrency
+and notification handling remain unvalidated.
+
+Selected API mapping
+Arguments include {k:"nanocore"} unless noted. API IDs are decimal, device
+commands hexadecimal; they are different namespaces.
+16 {}       enumeration -> dfu:false,kind:nanocore,midi:true,runtime_pid:4865
+4           0x30 AMP summary,0x36 slot-info fallback; not generic connect
+9           0x50 IR summary,0x56 fallback; populated fixture incomplete
+20          0x63 snapshot then0x40 preset-name pages
+21 {s:slot} 0x63 snapshot then0x41 preset chunks
+27          0x65 global settings
+39          0x68 route state
+40          0x63 eight-slot current-effect snapshot
+153         0x46 with payloadFF -> readiness
+17 {p:path} firmware update, including normal-to-DFU transition when needed
+Readiness status3 returns {data:{ready:true},success:true}; status6 maps to
+false in the static branch; status0 is an error for this particular request.
+Do not assume status semantics are universal across commands.
+
+Preset reads
+Command0x40 request[first,count], observed eight pages [0,8]..[56,8].
+Response[first,count,records...], record[slot,validFlag,name8]. Native validates
+first/count/record length/slot. The fixture returned64 synthetic names.
+
+Command0x41 request[slotU8,offsetLE16,maxLengthU8], maxLength200.
+Response[slotU8,offsetLE16,totalLengthLE16,chunkBytes]. Native requires matching
+slot/offset, total1..1024, stable total, bounded chunks and forward progress.
+All64 synthetic206-byte records required offsets0 and200. General preset TLVs
+are[tagU8,lengthU8,payload]; unknown fields survive in extraTlvs. Do not impose
+neighboring products' chain-order schemas on NanoCore without evidence.
+Read construction/validation: library+0x13625c..0x13642c, parser+0x136650.
+Preset-name listing: +0x134c80..0x135258. Compact run summary is committed at
+evidence/normal-runtime-summary.json. Its presets are entirely synthetic.
+
+Enter firmware-update mode
+The native updater emits F0 7D 44 46 55 01 F7 over MIDI. This is a separate
+legacy DFU frame, not the NC70/71 request/response protocol above. Sender
+library+0xb10b8 is called by updater coroutine+0xb39ec at+0xb3aa0.
+The fake peripheral then changes identity to33c3:6678; native code detects it
+and completes the upload. Real detach/re-enumeration timing remains untested.
+The included independent uploader requires DFU mode already; it does not yet
+implement normal MIDI detach or reconnect.
+
+Observed DFU sequence for1.12
+One classFE/subclass01/protocol02 interface; test interface0, alternate0.
+1. Open/claim, GETSTATE(0xa1/5), obtain DFU idle2.
+2. Vendor metadata(0x21/0xf0,value0) sends LE32 core length727149.
+3. Twelve DNLOAD(0x21/1,value0) erase commands41||LE32(offset):
+   offsets0,0x10000,...,0xb0000; GETSTATUS after each.
+4. DNLOAD value0 address command21||LE32(0).
+5. DNLOAD blocks2..179:177 full4096-byte packets and one2157-byte packet.
+6. Zero-length DNLOAD value179; final GETSTATUS and close.
+Optional vendor progress(0xa1/0xf1,length18) reads occur throughout; zero-filled
+progress was tolerated. One unsupported optional USB language-descriptor read
+was also tolerated in the canonical capture and is excluded from the fixture.
+
+GETSTATUS(0xa1/3,length6) response: status,pollTimeoutLE24,state,iString.
+The emulator acknowledges data with state5 and finalization with state8.
+Final packet number is floor(core_length/4096)+2. Thus a short final data block
+shares its number with the empty final packet; an exact multiple does not.
+Erase requests are host protocol evidence, not a proven physical flash map.
+
+Payload boundary and tests
+Captured core727149bytes exactly equaled firmware1.12's signed LUM0 prefix;
+129-byte FMUC footer omitted. No host decoding was observed.
+evidence/vendor-dfu-trace.json retains579 supported requests, incoming status
+fixtures and outgoing SHA256s, with no firmware bytes. It was reduced from the
+native capture, not generated by the independent uploader. The source event
+log's hash is retained. Hardware-free tests use a synthetic same-size package
+for ordering/control commands; the optional real-image test checks every
+outgoing packet hash as well as the complete file/core hashes.
+
+Unresolved
+No physical USB configuration, driver ownership, nonzero alternate setting,
+boot acceptance, audio behavior or flash readback was validated. The standalone
+backend refuses ambiguous selection and targets only33c3:6678 by bus/address.
+The tested API surface did not establish arbitrary NanoCore memory access or a
+RAM loader. Other-product storage APIs explicitly reject NanoCore. Asset reads
+and the unrelated MD400 RAM loader do not establish those capabilities.

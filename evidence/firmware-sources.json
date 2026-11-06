@@ -1,0 +1,68 @@
+{
+  "note": "Previously retrieved and hashed; vendor availability can change. No firmware payloads included.",
+  "versions": [
+    {
+      "requested_version": "1.04",
+      "url": "https://openparcelbox.com/firmware/nanocore-1.04.fmu",
+      "size": 643181,
+      "sha256": "dd7b70f59824c5ded2cecaa4f124f212132a91d378409857bfe4b0baafd7c9d7",
+      "display_version": "1.04",
+      "flags": 1,
+      "payload_length": 643072
+    },
+    {
+      "requested_version": "1.05",
+      "url": "https://openparcelbox.com/firmware/nanocore-1.05.fmu",
+      "size": 637166,
+      "sha256": "ce60609d771380522ad8dfabca48c76046b9e9a5d225bc3d2c5e380668c2a19f",
+      "display_version": "1.05",
+      "flags": 131,
+      "payload_length": 636928
+    },
+    {
+      "requested_version": "1.06",
+      "url": "https://openparcelbox.com/firmware/nanocore-1.06.fmu",
+      "size": 649454,
+      "sha256": "27696dc4a8027220060dd1ffce6fad128946e4a54bc3fd1fb938d7256d4f2acd",
+      "display_version": "1.06",
+      "flags": 131,
+      "payload_length": 649216
+    },
+    {
+      "requested_version": "1.07",
+      "url": "https://openparcelbox.com/firmware/nanocore-1.07.fmu",
+      "size": 649454,
+      "sha256": "08c0ff14d5dfd84cf0ac5bce68c8cf45e0e771986f61f58c0fab47f5f5a5147f",
+      "display_version": "1.07",
+      "flags": 131,
+      "payload_length": 649216
+    },
+    {
+      "requested_version": "1.10",
+      "url": "https://openparcelbox.com/firmware/nanocore-1.10.fmu",
+      "size": 667886,
+      "sha256": "c69e30b384d7c67a54c2b618a82bb3150b92fb7f2c1fd6c447e296547514770c",
+      "display_version": "1.10",
+      "flags": 131,
+      "payload_length": 667648
+    },
+    {
+      "requested_version": "1.11",
+      "url": "https://openparcelbox.com/firmware/nanocore-1.11.fmu",
+      "size": 688366,
+      "sha256": "07cbb169bec3a792931c83bde6da2664f58ad5156d5e26fa4daacac373060195",
+      "display_version": "1.11",
+      "flags": 131,
+      "payload_length": 688128
+    },
+    {
+      "requested_version": "1.12",
+      "url": "https://openparcelbox.com/firmware/nanocore-1.12.fmu",
+      "size": 727278,
+      "sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+      "display_version": "1.12",
+      "flags": 131,
+      "payload_length": 727040
+    }
+  ]
+}

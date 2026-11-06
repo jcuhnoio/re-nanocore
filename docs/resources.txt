@@ -1,0 +1,69 @@
+Complete ToneCommand AHPK resource recovery
+
+Input: macOS ToneCommand1.3.3 Contents/Resources/runtime/host.dat
+SHA25648df119e7ba1d48a81dc3b55efe79061d878080b008b05889676c221edbd8c15.
+All472 entries recovered,7,503,815 plaintext bytes. Every ID, decoded length
+and CRC32 verified. evidence/host-assets-manifest.json records names, offsets,
+lengths, CRCs and decoded hashes; no decoded vendor content is committed.
+
+Reproduce (standard-library Python; no application/device execution)
+python3 tools/host_pack/decode_host_pack.py --pack /path/to/host.dat --manifest /path/to/AssetManifest.json --output /path/to/new-output
+
+For the inspected macOS bundle, the manifest is:
+ToneCommand.app/Contents/Frameworks/App.framework/Versions/A/Resources/flutter_assets/AssetManifest.json
+The script requires a new output directory. It excludes engine.dat and the
+CupertinoIcons font from this manifest, sorts the remaining asset paths, then
+verifies each path-derived ID against the corresponding archive entry. It is
+written for this observed AHPK version/layout, not arbitrary unknown archives.
+Use normal Python mode: assertions enforce the observed validation checks.
+
+Format
+Header: magic AHPK[4],version:u32LE=1,count:u32LE=472.
+Each48-byte record:
+  opaque_id[32],offset:u32LE,stored_length:u32LE,original_length:u32LE,crc32:u32LE.
+For full UTF8 asset path P and32-byte shared resource secret S:
+  opaque_id = SHA256(S || UTF8(P))
+  mask = SHA256(S || 0x01 || UTF8(P))
+  plaintext = zlib_decompress(ciphertext XOR repeating32(mask))
+S =7a3f91c0e2b64d18a90f55c4d1e87b23c6a04f9e8d2751b0c3e6a8d4f1920b57.
+This is a shipped app resource-obfuscation secret. No relationship to NanoCore
+firmware encryption or private signing material has been established.
+
+How the formula was recovered
+A separate ad-hoc-signed clone of the supplied app ran with network/device/
+helper execution blocked and native device API responses replaced by synthetic
+fixtures. The original app was unchanged. Selecting the synthetic NanoCore in
+the GUI triggered the actual Dart asset loader. An observer at
+FlutterMacOS+0x883948 captured2475 bytes passed to Filter_Process; zlib decoding
+yielded6835-byte strings_en.json, matching entry66 length+CRC.
+Decoded SHA2566948f8c683db51474ce9a94cf540c1afe69c6a0f62601dce0d97da7fb04559f7.
+
+The backtrace led to App+0x1c2ce0 and+0x1c2df0. Static tracing showed the
+global byte array, byte1 and UTF8 path entering SHA256, then repeating XOR at
++0x1c2f58. A passive read of the Dart global typed-data payload recovered S.
+In this specific AOT build: *( *(x26+0x60) + 0x1600 ), data at tagged pointer
++0x17. These offsets are build-specific; they are not an external API.
+The resulting mask matched the captured entry66 independently, followed by
+all472 decoded CRC/length checks and472 path-derived ID checks.
+
+Recovered inventory
+148PNG,83presets,68EAD,60IR-bin,40MIDI,30NA2L,24WAV,11JSON,4UIA1,4TTF.
+Useful metadata includes:
+- assets/nanocore/factory_presets/factory_presets.json: schema
+  amber.nanocore.factory-presets v1;38AMP/30IR assets;40NanoCore and48Mosaic
+  preset records. The records include effectId/variant, normalized parameter
+  arrays, enabled flags, chain order, AMP/IR slots and preset volume.
+- assets/nanocore/factory_presets/resonam/factory_presets.json: separate
+  Resona Box production metadata,60AMP/30IR assets.
+- Default theme and three templates:320x240 layouts, images, fonts and styles.
+- English/Chinese translations: UI labels and effect parameter names.
+
+Parameter examples are not complete DSP implementations or necessarily full
+parameter-range definitions. Asset counts and preset-record counts differ
+because multiple records can live in one file.
+
+All decoded bytes were searched for LUM0,FMUC,NDF1,bootloader,univibe,uni-vibe
+and pog. No meaningful hits appeared; the only pog match was random short
+binary content in one NA2L asset. No firmware/bootloader/CPU/protocol filename
+appeared. Unknown executable formats are not excluded by this bounded search.
+The result supports independent preset/theme tooling, not new effect execution.
