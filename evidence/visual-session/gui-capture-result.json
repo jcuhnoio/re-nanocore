@@ -1,0 +1,81 @@
+{
+  "session": "screenshots-01",
+  "captured_app": "ToneCommand 1.3.3 owned instrumented clone",
+  "physical_device": false,
+  "gui_native_a2_replaced": true,
+  "response_source": "Synthetic JSON responses previously returned by the real native library with fake USB/MIDI; readiness from separate confirmed native probe",
+  "fixtures_file": "gui-api-fixtures.json",
+  "fixtures_sha256": "18941a6fa088cec5bb716268ae33fbc86723c7d36700ea877d02f55a36958db9",
+  "sandbox_applied": true,
+  "native_device_guard_installed": true,
+  "intercepted_api_call_counts": {
+    "4": 1,
+    "9": 1,
+    "16": 484,
+    "20": 1,
+    "21": 1,
+    "24": 1,
+    "38": 1,
+    "39": 78,
+    "40": 1,
+    "100": 1,
+    "106": 1,
+    "124": 1,
+    "153": 1
+  },
+  "matched_runtime_asset_captures": [
+    {
+      "compressed_bytes": 2475,
+      "asset": "assets/i18n/strings_en.json",
+      "decoded_bytes": 6835,
+      "decoded_sha256": "6948f8c683db51474ce9a94cf540c1afe69c6a0f62601dce0d97da7fb04559f7"
+    }
+  ],
+  "raw_event_log_sha256": "b9b61eb3cf9b6d5163545207f9978674824e0f80575aef37e76d3c4f85870b00",
+  "probe_script_sha256": "4e1b340281c8ad6951b678027e50437dce9de49e5eeb3167806df3a672ca93c1",
+  "owned_process_cleanup_verified": true,
+  "screenshots": [
+    {
+      "file": "screenshots/01-simulated-device.jpg",
+      "sha256": "60aca3b0e4fd73955a603dddb53f22a404f229741cd7cdf060eb803d75f265be",
+      "bytes": 15816,
+      "width": 800,
+      "height": 632,
+      "captured_utc": "2026-11-06T04:40:52.541621+00:00",
+      "source": "CUA App.getScreenshot; original JPEG bytes saved directly, no image edits"
+    },
+    {
+      "file": "screenshots/02-editor-response.jpg",
+      "sha256": "54590427f9ec626283a39d32a48a9ca2b81755d71beeeb6d301d52ac8b676b63",
+      "bytes": 50714,
+      "width": 800,
+      "height": 632,
+      "captured_utc": "2026-11-06T04:41:01.920248+00:00",
+      "source": "CUA App.getScreenshot; original JPEG bytes saved directly, no image edits"
+    },
+    {
+      "file": "screenshots/03-modulation-panel.jpg",
+      "sha256": "1939133e15f0dc525987208b908ae3c3b1e7c2fe1897cdb0ab10e8e72ae29983",
+      "bytes": 53043,
+      "width": 800,
+      "height": 632,
+      "captured_utc": "2026-11-06T04:42:15.665189+00:00",
+      "source": "CUA App.getScreenshot; original JPEG bytes saved directly, no image edits"
+    },
+    {
+      "file": "screenshots/04-synthetic-presets.jpg",
+      "sha256": "cd95d2b6351d55862fa143686aaaaae9518f676716d57a9dea8d9f035021dd41",
+      "bytes": 55960,
+      "width": 800,
+      "height": 632,
+      "captured_utc": "2026-11-06T04:42:35.279480+00:00",
+      "source": "CUA App.getScreenshot; original JPEG bytes saved directly, no image edits"
+    }
+  ],
+  "limitations": [
+    "GUI pictures demonstrate rendering and interaction with direct native API response fixtures, not execution of the real updater in that GUI run.",
+    "See native-runtime-result.json for independent actual native execution with simulated peripheral IO.",
+    "The fixed preset-read response is SIM-0063 even at P01; this is a simplified fixture, not a claimed slot mapping.",
+    "No image proves hardware firmware acceptance, audio DSP or executable decryption."
+  ]
+}

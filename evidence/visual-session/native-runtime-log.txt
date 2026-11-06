@@ -1,0 +1,28 @@
+NANOCORE — AUTHENTIC NATIVE RUNTIME TRACE
+Session: 2026-11-06T04:40:30.779870+00:00
+
+Actual vendor native library executed; a2 responses were NOT replaced.
+USB/MIDI device IO was simulated. Physical device: FALSE.
+This receipt is separate from GUI API-response fixtures.
+
+PASS  API  16  enumeration
+PASS  API  27  global settings
+PASS  API  40  effect snapshot
+PASS  API  20  preset list
+PASS  API  21  one preset backup
+PASS  API 153  readiness
+PASS  API  17  runtime detach and DFU upload
+
+Results: 7/7 native API calls succeeded
+Wire: 15 MIDI requests; 15 simulated replies
+Backup: 64 names; 1 preset; 2 chunks; 190 unknown TLV bytes retained
+Transition: 1 MIDI detach; 178 DFU firmware blocks
+Signed core: 727,149 bytes; exact equality with original firmware prefix
+SHA-256: abee99ebe2fe6859e81e5c664c1bf322b95ed9206c8231f8a30ad7b49d324b31
+Executable decrypted: FALSE
+
+PASS  Owned native process exited and cleanup verified
+PASS  Original library unchanged
+Remote worker: not used (light local run)
+
+LIMIT: simulated acknowledgments do not prove hardware acceptance or boot.

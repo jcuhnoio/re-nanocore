@@ -10,6 +10,20 @@ of modified firmware remain unresolved. The uploader is simulator-tested;
 successful host transfers do not establish that a device will install or boot
 the image.
 
+See it running
+--------------
+
+`Open the screenshot gallery <docs/evidence-gallery.rst>`_ for device selection,
+the live editor, modulation controls and synthetic preset names, plus a fresh
+native-emulation result. These are actual app screenshots. The GUI uses
+recorded synthetic API responses; the separate native run executes the real
+updater against simulated USB/MIDI.
+
+.. image:: evidence/screenshots/03-modulation-panel.jpg
+   :alt: Actual ToneCommand modulation screen with synthetic NanoCore data
+   :width: 800
+   :target: docs/evidence-gallery.rst
+
 What is here
 ------------
 

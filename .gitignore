@@ -5,9 +5,17 @@
 !/docs/
 /docs/*
 !/docs/*.txt
+!/docs/evidence-gallery.rst
 !/evidence/
 /evidence/*
 !/evidence/*.json
+!/evidence/screenshots/
+/evidence/screenshots/*
+!/evidence/screenshots/*.jpg
+!/evidence/visual-session/
+/evidence/visual-session/*
+!/evidence/visual-session/*.json
+!/evidence/visual-session/*.txt
 !/tools/
 /tools/*
 !/tools/nanocore_dfu/

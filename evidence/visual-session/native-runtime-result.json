@@ -1,0 +1,77 @@
+{
+  "session": "visual-session-20261106T044030Z",
+  "started_utc": "2026-11-06T04:40:30.779870+00:00",
+  "evidence_type": "actual native-library execution with simulated peripheral IO",
+  "target_execution": true,
+  "physical_device": false,
+  "device_responses": "synthetic fixtures",
+  "gui_api_return_fixture": false,
+  "native_api_a2_replaced": false,
+  "library_sha256": "bf75e63a11ecb277d80252a510546c5961afb448d3a7e869ac692bf5ae964326",
+  "api_results": [
+    {
+      "opcode": 16,
+      "operation": "enumeration",
+      "success": true
+    },
+    {
+      "opcode": 27,
+      "operation": "global settings",
+      "success": true
+    },
+    {
+      "opcode": 40,
+      "operation": "effect snapshot",
+      "success": true
+    },
+    {
+      "opcode": 20,
+      "operation": "preset list",
+      "success": true
+    },
+    {
+      "opcode": 21,
+      "operation": "one preset backup",
+      "success": true
+    },
+    {
+      "opcode": 153,
+      "operation": "readiness",
+      "success": true
+    },
+    {
+      "opcode": 17,
+      "operation": "runtime detach and DFU upload",
+      "success": true
+    }
+  ],
+  "counts": {
+    "api_calls": 7,
+    "successful_api_results": 7,
+    "midi_requests": 15,
+    "midi_response_frames": 15,
+    "midi_detach_commands": 1,
+    "usb_control_calls": 579,
+    "firmware_data_blocks": 178,
+    "preset_names": 64,
+    "preset_backups": 1,
+    "preset_chunk_reads": 2
+  },
+  "readiness_reported": true,
+  "preset_unknown_tlv_bytes_preserved": 190,
+  "signed_core": {
+    "bytes": 727149,
+    "sha256": "abee99ebe2fe6859e81e5c664c1bf322b95ed9206c8231f8a30ad7b49d324b31",
+    "equals_original_fmu_prefix": true,
+    "executable_decrypted": false
+  },
+  "original_library_unchanged": true,
+  "owned_process_cleanup_verified": true,
+  "remote_worker_used": false,
+  "raw_event_log_sha256": "94e57c21b9deb7908c792e2bc46f81426d9ddea74c6bf480d91d272be6d08749",
+  "limitations": [
+    "No physical device was connected or flashed.",
+    "Synthetic replies validate host behavior, not hardware acceptance or boot.",
+    "This is separate from GUI screenshots that use direct API response fixtures."
+  ]
+}
