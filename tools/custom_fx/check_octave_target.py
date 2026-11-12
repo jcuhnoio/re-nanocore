@@ -114,7 +114,10 @@ def run(path,blocks=32,fixture="two-tone"):
  sizecount=call('core_size');instance_size=u.reg_read(r.UC_RISCV_REG_A0)
  init=call('core_init',[state],48000.)
  window_symbol=next((v for k,v in s.items() if 'synthesisTable' in k),None)
- window=bytes(u.mem_read(window_symbol if window_symbol else state,4096))
+ window_bytes=4096
+ if 'core_window_bytes' in s:
+  call('core_window_bytes');window_bytes=u.reg_read(r.UC_RISCV_REG_A0)
+ window=bytes(u.mem_read(window_symbol if window_symbol else state,window_bytes))
  window_sha=hashlib.sha256(window).hexdigest()
  # Standard full4voice shared-swell configuration from baseline benchmark.
  values=[.4,.5,.5,.5,.5,650.,6500.,0.,-9.]

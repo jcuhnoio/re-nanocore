@@ -150,3 +150,18 @@ remained responsive. This is not a sustained test or an audition pass.
 The exact working UniVibe 1.12 OS was restored with full readback verification.
 Normal runtime ready/preset reads passed, and the active preset matched the
 pre-test snapshot. No manual power cycle was required.
+
+Smaller 1024/512 window, hop 128
+------------------------------
+The runtime initially timed out before any writes; updater entry succeeded and
+live OS preflight matched the working UniVibe backup. Full candidate readback
+verified, then all eleven controls were read back while OCTAVE was disabled.
+After enabling, four calls/256 frames were attempted. Fault1 latched at 673 us
+against 580.25 us reserved. Full-chain maximum was 1423.5 us against 1451 us;
+no native deadline overruns were recorded. Subsequent snapshots showed bypass,
+not sustained octave processing. Runtime ready/preset reads and updater entry
+worked. See evidence/octave-small-window-1.12.json. No audition approval.
+
+The exact known-working UniVibe 1.12 image was restored and verified over the
+full OS partition. Normal runtime ready and preset reads passed after reboot;
+no manual power cycle was needed.

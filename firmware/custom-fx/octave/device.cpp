@@ -4,7 +4,11 @@
 #include <cstdint>
 #include <cstddef>
 
+#ifdef NC_OCTAVE_SMALL_FFT
+using Core = octave_shared_optimized::Core<1024,512,false,true,128>;
+#else
 using Core = octave_shared_optimized::Core<2048,1024,false,true>;
+#endif
 using Parameters = octave_shared_optimized::Parameters;
 extern "C" {
 struct OctaveStats {

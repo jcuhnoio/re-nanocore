@@ -196,6 +196,12 @@ A selective assembly experiment adds fused multiply-add/subtract and specialized
 FFT butterflies, reducing average emulated instructions another 4.1–4.6% with
 small measured numerical differences. It remains opt-in and has not been flashed;
 see `fused-FFT experiment <evidence/octave-fused-fft-experiment.json>`_.
+A 1024/512 experiment with hop held at 128 roughly halves the emulated workload,
+preserving all controls. Its guarded physical test records zero native overruns,
+but octave work still reaches 673 us against 580.25 us reserved and latches bypass
+after four calls. This is not an audition pass; see
+`smaller-window evidence <evidence/octave-small-window-1.12.json>`_.
+Working UniVibe 1.12 was restored with full verification and normal runtime reads.
 The accepted Octave Studio checkout remains unchanged.
 
 Current result

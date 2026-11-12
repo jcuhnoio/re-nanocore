@@ -5,8 +5,13 @@
 #include <cstring>
 #include <cmath>
 #include <algorithm>
+#ifdef NC_OCTAVE_SMALL_FFT
+using Direct=octave_shared_optimized::Core<1024,512,false,false,128>;
+using Sliced=octave_shared_optimized::Core<1024,512,false,true,128>;
+#else
 using Direct=octave_shared_optimized::Core<2048,1024>;
 using Sliced=octave_shared_optimized::Core<2048,1024,false,true>;
+#endif
 using P=octave_shared_optimized::Parameters;
 int main() {
     constexpr int count=16384, delay=Sliced::latencySamples-Direct::latencySamples;

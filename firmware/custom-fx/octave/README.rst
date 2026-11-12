@@ -254,3 +254,46 @@ The DSP implementation is C++14 with C-compatible firmware entry points. Native
 C-style firmware hooks and small assembly routines share the target ABI. The
 core needs no exceptions, RTTI or audio-time allocation; rewriting its control
 and scheduling code in C would not itself reduce the executed instruction cost.
+
+1024/512 with an explicit 128-sample hop
+---------------------------------------
+
+``--fft-window 1024`` selects ``Core<1024,512,false,true,128>`` in the device
+and scheduled probe. The default remains 2048/1024. Hop is now an explicit
+optional template argument, with the previous Synthesis/8 default retained.
+Window overlap normalization derives from that hop: the smaller candidate uses
+four overlaps, not eight. The 128-sample scheduling delay is unchanged; nominal
+dry delay becomes 640 samples (14.51 ms at 44.1 kHz), excluding hardware latency.
+
+This experiment uses exact arithmetic, without the optional fused FFT changes.
+All eleven controls, four voices and always-smoothed dry attack remain. Core
+state is 37,184 bytes (37,248 with device metadata); the existing 65,536-byte ring
+reservations remain in place. Changing the transform affects sound, especially
+low notes/chords; numerical correctness is not an audition verdict.
+
+The scheduled sanitizer suite passes 96 cases, 1,572,864 delayed bitwise samples,
+128 reset offsets and 128 control transitions. An independent comparison to the
+retained original algorithm, configured for 1024/512 and with only its hop
+changed to 128, passes 1,048,576 samples bit-for-bit. Native adapter, UI and guard
+checks pass. The default full-size host reference comparison still passes.
+Mean and peak emulated instruction workloads are approximately halved relative
+to the previous exact paired-FFT 2048/1024 build.
+
+Reproduction::
+
+  python3 tools/custom_fx/build_octave_probe.py --output analysis/NEW-SMALL-PROBE --fft-window 1024
+  python3 tools/custom_fx/build_octave_device.py --output analysis/NEW-SMALL-DEVICE --fft-window 1024
+  c++ -std=c++14 -O2 -ffp-contract=off -fno-math-errno -DNC_OCTAVE_SMALL_FFT -fsanitize=address,undefined tools/custom_fx/check_octave_scheduled.cpp -o /tmp/octave-small
+  /tmp/octave-small
+
+Physical testing still trips the unchanged octave budget: four calls/256 frames
+were attempted before fault1 latched, with octave maximum 673 us versus 580.25 us
+reserved. Native full-chain maximum was 1423.5 us against 1451 us, with zero
+recorded overruns. These few calls are not a sustained timing pass. Runtime and
+updater remained responsive. Work must be distributed more evenly before audition;
+this experiment does not justify relaxing the guard. See
+``evidence/octave-small-window-1.12.json`` for offline and physical evidence.
+
+The exact known-working UniVibe 1.12 image was restored and verified over the
+full OS partition. Normal runtime ready and preset reads passed after reboot;
+no manual power cycle was needed.

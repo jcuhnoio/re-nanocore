@@ -9,7 +9,7 @@
 
 namespace octave_shared_optimized {
 // Framework-free, mono, caller-owned DSP. No allocation, threads, file I/O or exceptions.
-// Symmetric Hann analysis; short synthesis has eight overlaps and dual normalization.
+// Symmetric Hann analysis; short synthesis uses hop-dependent dual normalization.
 // Nominal dry latency is Synthesis (+ one hop when scheduled); measure wet onset separately.
 // At most 256 spectral peaks are tracked. Band-wise swell is always integrated.
 struct Parameters {
@@ -19,11 +19,12 @@ struct Parameters {
     float sensitivity = 50, thresholdDb = -60, retriggerMs = 120, retriggerDepth = 75;
 };
 
-template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeSliced = false> class Core {
+template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeSliced = false, int Hop = Synthesis / 8> class Core {
     static_assert(N >= 256 && (N & (N - 1)) == 0, "FFT length must be a power of two >=256");
     static_assert(Synthesis >= 64 && Synthesis <= N && (Synthesis & (Synthesis - 1)) == 0,
                   "Synthesis size must be a power of two between 64 and N");
-    static constexpr int B = N / 2 + 1, H = Synthesis / 8, Mask = N - 1;
+    static constexpr int B = N / 2 + 1, H = Hop, Mask = N - 1;
+    static_assert(H >= 4 && H <= Synthesis && N % H == 0 && Synthesis % H == 0 && H % 4 == 0, "invalid FFT hop");
     static constexpr int Centre = N / 2;
     static constexpr int WorkDelay = TimeSliced ? H : 0;
     static constexpr int Overlap = TimeSliced ? 2 * Synthesis : Synthesis;
@@ -613,8 +614,8 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
         }
     }
 };
-template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::CosTable Core<N, S, Stable, Sliced>::cosTable;
-template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::SynthesisTable Core<N, S, Stable, Sliced>::synthesisTable;
-template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::FullCosTable Core<N, S, Stable, Sliced>::fullCosTable;
-template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::ReverseTable Core<N, S, Stable, Sliced>::reverseTable;
+template <int N, int S, bool Stable, bool Sliced, int Hop> constexpr typename Core<N, S, Stable, Sliced, Hop>::CosTable Core<N, S, Stable, Sliced, Hop>::cosTable;
+template <int N, int S, bool Stable, bool Sliced, int Hop> constexpr typename Core<N, S, Stable, Sliced, Hop>::SynthesisTable Core<N, S, Stable, Sliced, Hop>::synthesisTable;
+template <int N, int S, bool Stable, bool Sliced, int Hop> constexpr typename Core<N, S, Stable, Sliced, Hop>::FullCosTable Core<N, S, Stable, Sliced, Hop>::fullCosTable;
+template <int N, int S, bool Stable, bool Sliced, int Hop> constexpr typename Core<N, S, Stable, Sliced, Hop>::ReverseTable Core<N, S, Stable, Sliced, Hop>::reverseTable;
 } // namespace octave_shared_optimized
