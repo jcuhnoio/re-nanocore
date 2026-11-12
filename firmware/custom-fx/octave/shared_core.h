@@ -92,6 +92,8 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
     // Freeze frame controls while a scheduled frame is in flight. Audio-rate
     // filtering/level smoothing still follows the live parameters.
     int framePosition = 0, framePeakCount = 0;
+    float birthPhase[MaxPeaks]{};
+    int birthPhaseCount = 0;
     int matchedPeak[StableBirths ? MaxPeaks : 1]{};
     float frameCurrent[5]{}, frameTarget[5]{};
     Parameters frameParameters;
@@ -293,7 +295,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
             f.s2 = 0;
         return v2;
     }
-    void analyseFrame() {
+    void captureFrame() {
         framePosition = position;
         frameParameters = parameters;
         for (int i = 0; i < 5; ++i) { frameCurrent[i] = current[i]; frameTarget[i] = target[i]; }
@@ -304,6 +306,8 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
             float x = input[(position + i) & Mask] * analysisWindow(i);
             (centred & 1 ? imag[centred / 2] : real[centred / 2]) = x;
         }
+    }
+    void analyseCapturedFrame() {
         realFft(false);
         float maximumMagnitude = 0;
         for (int k = 0; k < B; ++k) {
@@ -370,6 +374,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
             }
         }
         framePeakCount = peakCount;
+        birthPhaseCount = 0;
     }
     void synthesizeDry() {
         if (frameParameters.attackMs >= .1f && frameCurrent[0] > 1e-7f) {
@@ -392,7 +397,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
             imag[i] = 0;
         }
     }
-    void synthesizeVoices(int firstVoice, int endVoice) {
+    void synthesizeVoices(int firstVoice, int endVoice, int firstPeak = 0, int endPeak = MaxPeaks) {
         const int peakCount = framePeakCount;
         const auto &peaks = peakBins[peakBank];
         const auto &previousPeaks = peakBins[1 - peakBank];
@@ -407,7 +412,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 ratio *= 1 + z + .5f * z * z;
             }
             int previousOwner = 0;
-            for (int p = 0; p < peakCount; ++p) {
+            for (int p = firstPeak; p < peakCount && p < endPeak; ++p) {
                 const int peak = peaks[p];
                 const int first = p == 0 ? 1 : (peaks[p - 1] + peak) / 2 + 1;
                 const int last = p + 1 == peakCount ? B - 2 : (peak + peaks[p + 1]) / 2;
@@ -420,8 +425,16 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 const int match = StableBirths ? matchedPeak[p] : (previousPeakCount ? previousOwner : -1);
                 float previousRotation = match >= 0 ? synthesisPhase[1 - peakBank][voice][match] : 0;
                 float rotation = wrap(previousRotation + delta * H);
-                if ((StableBirths && match < 0) || (!StableBirths && Synthesis != N && previousPeakCount == 0))
-                    rotation = wrap((ratio - 1) * std::atan2(mappedFrequency[peak], mappedMagnitude[peak]));
+                if ((StableBirths && match < 0) || (!StableBirths && Synthesis != N && previousPeakCount == 0)) {
+                    // Every voice visits births in the same ascending peak order.
+                    // Cache the shared starting phase; each voice still applies
+                    // its own ratio and keeps the original rounding order.
+                    if (p >= birthPhaseCount) {
+                        birthPhase[p] = std::atan2(mappedFrequency[peak], mappedMagnitude[peak]);
+                        birthPhaseCount = p + 1;
+                    }
+                    rotation = wrap((ratio - 1) * birthPhase[p]);
+                }
                 synthesisPhase[peakBank][voice][p] = rotation;
                 if (frequency[p] * ratio <= 0 || frequency[p] * ratio >= Pi)
                     continue;
@@ -470,6 +483,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
         const float nextLfo = wrap(lfo + Tau * (.2f + frameParameters.detuneCents * .025f) * H / sampleRate);
         if (TimeSliced) pendingLfo = nextLfo; else lfo = nextLfo;
     }
+    void analyseFrame() { captureFrame(); analyseCapturedFrame(); }
     void analyseAndSynthesize() {
         analyseFrame();
         synthesizeDry();
@@ -482,6 +496,26 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
     // its first output sample is consumed. This is an offline experiment, not
     // a preemptible task or a measured hardware deadline guarantee.
     void scheduledStep() {
+        if (N == 1024 && Synthesis == 512 && H == 128) {
+            // Capture at 0; analysis16, dry32, first quarter of -2 at48;
+            // remaining -2 at72, -1 at80, +1 at88, +2 at96, wet112.
+            // Previous-frame phase data stays immutable through all voice jobs.
+            switch (workStage) {
+            case 1: analyseCapturedFrame(); break;
+            case 2: synthesizeDry(); clearSynthesis(); break;
+            case 3: synthesizeVoices(0, 1, 0, framePeakCount / 4); break;
+            case 4: synthesizeVoices(0, 1, framePeakCount / 4); break;
+            case 5: synthesizeVoices(1, 2); break;
+            case 6: synthesizeVoices(2, 3); break;
+            case 7: synthesizeVoices(3, 4); break;
+            case 8: finishFrame(); break;
+            }
+            ++workStage;
+            if (workStage == 9) workStage = 0;
+            workCountdown = !workStage ? 0 : (workStage == 4 ? 24 :
+                (workStage >= 5 && workStage <= 7 ? 8 : 16));
+            return;
+        }
         if (workStage == 1) {
             synthesizeDry(); clearSynthesis();
         } else if (workStage == 2) {
@@ -554,7 +588,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
         for (int k = 0; k < B; ++k) {
             real[k] = imag[k] = mappedMagnitude[k] = mappedFrequency[k] = 0;
         }
-        previousPeakCount = peakBank = 0;
+        previousPeakCount = peakBank = birthPhaseCount = 0;
         for (auto &bank : synthesisPhase)
             for (auto &voice : bank)
                 for (auto &phase : voice)
@@ -608,7 +642,11 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 hop = 0;
                 if (TimeSliced) {
                     lfo = pendingLfo;
-                    analyseFrame(); workStage = 1; workCountdown = H / 4;
+                    if (N == 1024 && Synthesis == 512 && H == 128) {
+                        captureFrame(); workStage = 1; workCountdown = H / 8;
+                    } else {
+                        analyseFrame(); workStage = 1; workCountdown = H / 4;
+                    }
                 } else analyseAndSynthesize();
             }
         }

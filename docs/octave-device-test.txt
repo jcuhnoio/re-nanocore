@@ -165,3 +165,19 @@ worked. See evidence/octave-small-window-1.12.json. No audition approval.
 The exact known-working UniVibe 1.12 image was restored and verified over the
 full OS partition. Normal runtime ready and preset reads passed after reboot;
 no manual power cycle was needed.
+
+Smaller-core scheduling and shared birth-phase experiments
+---------------------------------------------------------
+Two revisions were flashed with exact full readback. Both preserved all eleven
+controls and passed offline audio/native integration checks. The first split
+schedule reached 630.25 us, and the second (quarter -2 split plus shared initial
+phase cache) reached 635.75 us, against 580.25 us reserved. Each latched fault1
+after three calls/192 frames. Full-chain maxima were 1363 and 1243.5 us against
+1451 us, with zero native overruns. These short uncontrolled-input tests do not
+establish sustained performance. The 40% engineering reservation was unchanged.
+An offline dry-last schedule passed parity but worsened peak instructions and
+was not flashed. Further work should measure individual jobs on the device.
+See evidence/octave-balanced-small-1.12.json for hashes, telemetry and restoration.
+
+The exact working UniVibe 1.12 OS was restored with full readback verification;
+normal runtime ready and preset reads passed without a manual power cycle.

@@ -202,6 +202,10 @@ but octave work still reaches 673 us against 580.25 us reserved and latches bypa
 after four calls. This is not an audition pass; see
 `smaller-window evidence <evidence/octave-small-window-1.12.json>`_.
 Working UniVibe 1.12 was restored with full verification and normal runtime reads.
+Further scheduling tests split the voices and cache their shared initial phase.
+Two guarded probes reached 630.25 and 635.75 us against 580.25 us reserved, with
+zero native overruns but bypass after three calls. They still do not pass;
+see `schedule measurements <evidence/octave-balanced-small-1.12.json>`_.
 The accepted Octave Studio checkout remains unchanged.
 
 Current result

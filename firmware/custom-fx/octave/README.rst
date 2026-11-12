@@ -297,3 +297,61 @@ this experiment does not justify relaxing the guard. See
 The exact known-working UniVibe 1.12 image was restored and verified over the
 full OS partition. Normal runtime ready and preset reads passed after reboot;
 no manual power cycle was needed.
+
+Redistributing the smaller-window work
+-------------------------------------
+
+The 1024/512/hop128 scheduler now captures the frame at the hop boundary, then
+runs analysis at +16 samples, dry inverse at +32, the first quarter of the -2 voice's peaks at
++48, the remaining -2 peaks at +72, -1 at +80, +1 at +88, +2 at +96 and wet
+inverse at +112. The full-size core retains its previous four-job schedule.
+Peak and voice accumulation order is preserved. The -2 second half reconstructs
+the previous-peak ownership cursor without changing phase history. The 128-sample scheduling delay does not change.
+
+A simple shift of the four large jobs was rejected after increasing peak work.
+The first split-voice revision reduced mean emulated instructions by 4.35% (two-tone) and
+3.62% (noise). Noise peak falls 4.36%; tone peak rises 0.33%, so this is not a
+universal peak-work improvement. Both target fixtures retain 4,096 bit-identical
+samples against the previous smaller-window build. The 96-case sanitizer suite,
+128 reset offsets, 128 control-event checks, native adapter/UI/guard tests and
+the default full-size host comparison pass.
+
+The instruction harness accepts an optional final block-size argument (1, 4, 8,
+16, 32 or 64) to inspect individual work intervals. These synthetic blocks are
+not device interrupts; the physical callback deadline still governs acceptance.
+Constant-parameter parity is separate from control-event timing: spectral frame
+controls are captured at the boundary, while the existing swell coefficients
+can be updated before deferred analysis. See
+``evidence/octave-balanced-small-1.12.json`` for measurements and device outcome.
+
+The second revision caches the shared starting phase for newly initialized peaks,
+so multiple voices do not repeat the same atan2. A per-frame cursor invalidates
+the cache without clearing the array on each hop. Voice-specific ratio scaling,
+wrapping and accumulation order remain unchanged. State grows by 1,028 bytes to
+38,212 bytes for the scheduled core and 38,276 bytes with device metadata, within
+the existing 65,536-byte allocations. Full-size and smaller-window independent
+reference corpora each retain 1,048,576 bit-identical samples; scheduled reset,
+control-event and native adapter/guard checks also pass.
+
+The first physical revision reached 630.25 us versus 580.25 us reserved and
+latched fault1 after three calls. Full-chain maximum was 1363 us versus 1451 us,
+with zero native overruns. This was not a sustained timing pass. The second
+revision moves fewer -2 peaks into that heavily loaded callback and reuses the
+starting-phase calculation; its physical outcome is retained in the evidence.
+
+The second physical revision still latched after three calls/192 frames: maximum
+635.75 us against 580.25 us reserved, with full-chain maximum 1243.5 us against
+1451 us and zero native overruns. These are short, uncontrolled-input probes;
+the different chain maxima do not establish a general speedup. The 40% octave
+allowance is our engineering reservation, not the full hardware deadline. It
+was not changed. No sustained pass or audition approval is claimed.
+
+A third offline experiment moved dry synthesis after wet synthesis using the
+saved spectrum. Its audio parity passed, but target peak work worsened, so it
+was rejected without flashing. The retained code uses the second revision.
+Further work should measure individual DSP jobs on hardware before attempting
+more schedule changes. Both physical probes remained responsive to runtime
+queries and USB updater entry.
+
+The exact working UniVibe 1.12 OS was restored with full readback verification;
+normal runtime ready and preset reads passed without a manual power cycle.
