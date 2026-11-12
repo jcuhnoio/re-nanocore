@@ -180,8 +180,13 @@ chain recorded one missed deadline (1.81 ms against 1.45 ms). The new latch then
 bypassed octave processing, and MIDI, telemetry and USB updater entry remained
 responsive. The exact working UniVibe image was restored without a manual power
 cycle. See `guarded device result <evidence/octave-guarded-device-1.12.json>`_.
-Next work is further average-cost reduction and finer division of spectral jobs
-before another full-chain audition. The public installer is unchanged.
+A further offline FFT pass preserves bit-identical output while reducing mean
+executed instructions another 13.3–14.6% and maximum 64-frame work 10.1–11.4%
+on the retained noise/tone fixtures. Two finer schedules were rejected because
+they increased peak work. All four voices, attack and processed dry remain.
+See `paired-FFT evidence <evidence/octave-paired-fft-optimization.json>`_.
+This version has not been flashed; more cost reduction and physical timing
+validation are needed before another full-chain audition. The public installer is unchanged.
 The accepted Octave Studio checkout remains unchanged.
 
 Current result

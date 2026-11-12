@@ -171,3 +171,25 @@ The overload latch works in this test, but real-time performance still fails.
 No public installer change was made. More average-cost reduction and finer
 spectral job scheduling are required. Physical page navigation and preset
 save/recall remain unverified; the test did not save a modified preset.
+
+Paired FFT stages after the guarded timing failure
+-------------------------------------------------
+
+Adjacent radix-2 stages now keep intermediate results in registers, retaining
+floating-point operation order. The four-job schedule and 61,760-byte core are
+unchanged. Against the previous scheduled build, mean executed instructions fall
+14.6% for two-tone and 13.3% for noise; maximum 64-frame instructions fall 11.4%
+and 10.1%. All 4,096 RV32 output samples per fixture match the previous build
+bit-for-bit. These instruction counts are not hardware timing measurements.
+
+The host reference comparison retains 1,048,576 bitwise samples, and the
+sanitized scheduling test retains 1,572,864 delayed bitwise samples. Reset tests
+now cover every sample offset in a complete hop (128 cases), alongside the 128
+control-transition events. All four voices and always-smoothed dry attack remain.
+
+Two experimental 30-job schedules were tested and rejected: despite matching
+audio, they raised maximum callback instruction counts. The retained candidate
+uses the simpler four-job schedule. See
+``evidence/octave-paired-fft-optimization.json`` for accepted and rejected results.
+No firmware was flashed in this pass. The previous hardware failure is still
+unresolved; the pedal remains on the restored working UniVibe 1.12 image.

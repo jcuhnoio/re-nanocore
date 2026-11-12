@@ -128,3 +128,11 @@ The known-working UniVibe image was restored and fully verified. Updater entry
 worked without a physical power cycle; normal ready/preset reads passed after
 rollback. See evidence/octave-full-controls-integration.json and
 evidence/octave-guarded-device-1.12.json. The public installer is unchanged.
+
+Paired-FFT offline follow-up
+---------------------------
+Retained exact-arithmetic stage pairing lowers mean executed instructions by
+13.3–14.6% and peak 64-frame work by 10.1–11.4% on the retained fixtures. Two
+finer schedules increased peak work and were excluded. No device operations
+were performed. The overload latch remains in place; this is not evidence that
+the hardware deadline now passes. See evidence/octave-paired-fft-optimization.json.

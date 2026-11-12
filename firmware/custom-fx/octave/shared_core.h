@@ -154,6 +154,36 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
         }
         if (Length < M) fftStage<(Length < M ? Length * 2 : Length)>(inverse);
     }
+    // Fuse two radix-2 stages in registers. This keeps the original sequence
+    // of floating operations but avoids storing/reloading the intermediate
+    // stage. No fused floating-point multiply-add or fast-math is required.
+    template <int Length> void pairedFftStages(bool inverse) {
+        constexpr int M = N / 2;
+        if (Length * 2 > M) { fftStage<Length>(inverse); return; }
+        constexpr int half = Length / 2, step = N / Length;
+        for (int j = 0; j < half; ++j) {
+            const int k = j * step, k2 = j * (step / 2), k3 = (j + half) * (step / 2);
+            const float sign = inverse ? 1.f : -1.f;
+            const float w0r=fastCosineAt(k), w0i=sign*fastCosineAt(N/4-k);
+            const float w1r=fastCosineAt(k2), w1i=sign*fastCosineAt(N/4-k2);
+            const float w2r=fastCosineAt(k3), w2i=sign*fastCosineAt(N/4-k3);
+            for (int start=0; start<M; start+=Length*2) {
+                const int a=start+j, b=a+half, c=a+Length, d=c+half;
+                const float r0=real[a], i0=imag[a], r2=real[c], i2=imag[c];
+                const float t0r=w0r*real[b]-w0i*imag[b], t0i=w0r*imag[b]+w0i*real[b];
+                const float t1r=w0r*real[d]-w0i*imag[d], t1i=w0r*imag[d]+w0i*real[d];
+                const float p0r=r0+t0r, p0i=i0+t0i, p1r=r0-t0r, p1i=i0-t0i;
+                const float p2r=r2+t1r, p2i=i2+t1i, p3r=r2-t1r, p3i=i2-t1i;
+                const float u0r=w1r*p2r-w1i*p2i, u0i=w1r*p2i+w1i*p2r;
+                const float u1r=w2r*p3r-w2i*p3i, u1i=w2r*p3i+w2i*p3r;
+                real[a]=p0r+u0r; imag[a]=p0i+u0i;
+                real[c]=p0r-u0r; imag[c]=p0i-u0i;
+                real[b]=p1r+u1r; imag[b]=p1i+u1i;
+                real[d]=p1r-u1r; imag[d]=p1i-u1i;
+            }
+        }
+        if (Length*2 < M) pairedFftStages<(Length*2<M ? Length*4 : Length)>(inverse);
+    }
     void complexFft(bool inverse) {
         constexpr int M = N / 2;
         for (int i = 1; i < M; ++i) {
@@ -167,7 +197,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 imag[j] = t;
             }
         }
-        fftStage<2>(inverse);
+        pairedFftStages<2>(inverse);
         if (inverse)
             for (int i = 0; i < M; ++i) {
                 real[i] /= M;

@@ -40,7 +40,7 @@ int main() {
         compared+=count;++cases;
     }
     // Reset during each pending job must cancel it and clear delayed tails.
-    for (int offset : {128,160,192,224}) {
+    for (int offset = 128; offset < 256; ++offset) {
         Sliced used,fresh;used.prepare(44100);fresh.prepare(44100);
         P p;p.attackMs=650;p.dryFx=3;p.detuneCents=7;
         used.setParameters(p);fresh.setParameters(p);used.reset();fresh.reset();
@@ -64,5 +64,5 @@ int main() {
         for(int i=0;i<257;++i)if(!std::isfinite(a[i])||!std::isfinite(b[i]))return 4;
         if(std::memcmp(a.data(),b.data(),a.size()*sizeof(float)))return 5;
     }
-    std::printf("{\"pending_job_resets\":4,\"control_transition_events\":128,\"cases\":%d,\"bitwise_delayed_samples\":%zu,\"added_latency_samples\":%d,\"max_error\":%g,\"direct_bytes\":%zu,\"scheduled_bytes\":%zu}\n",cases,compared,delay,worst,sizeof(Direct),sizeof(Sliced));
+    std::printf("{\"pending_job_resets\":128,\"control_transition_events\":128,\"cases\":%d,\"bitwise_delayed_samples\":%zu,\"added_latency_samples\":%d,\"max_error\":%g,\"direct_bytes\":%zu,\"scheduled_bytes\":%zu}\n",cases,compared,delay,worst,sizeof(Direct),sizeof(Sliced));
 }
