@@ -1,0 +1,27 @@
+{
+  "elf_sha256": "1b52c9b91f163bb9374d652dc645e1bb5f82153c434437736af8c04729d03954",
+  "ui_source_sha256": "33e99cd19ce3e932d58329d198ea4529f95306aa2ce0a08a1b3359e2a1cdcf99",
+  "source_maps": {
+    "effect_name": "0x40025d92",
+    "parameter_labels": "0x4002607e",
+    "parameter_count": "0x40026e8a",
+    "format": "0x40027192",
+    "enum": "0x4001b3b2",
+    "defaults": "0x4006c932",
+    "amp_read": "0x4008f8ac",
+    "timer_hz": "0x4003fe7c",
+    "timer_ticks": "0x40040028",
+    "heap_free": "0x3004c228"
+  },
+  "count_cases": 760,
+  "labels": 9,
+  "defaults": 156,
+  "format": 12,
+  "enum": 912,
+  "effect_name": 3,
+  "telemetry": 5,
+  "native_non_target_unchanged": true,
+  "stack_and_callee_saved_preserved": true,
+  "physical_operations": false,
+  "limits": "memset/strcmp/printf and MMIO timer boundaries emulated; no hardware timing established"
+}

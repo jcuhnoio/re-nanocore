@@ -1,0 +1,79 @@
+Experimental Octave Studio port — NanoCore 1.12
+================================================
+
+The local audition build replaces FX2/PITCH (subtype 8) with OCTAVE.
+UniVibe is retained. No second effect is removed. This is an experimental
+physical-device build, separate from the public UniVibe web installer.
+
+Controls
+--------
+DRY: original dry-path amount, default 65%.
+SWELL: 0–2000 ms spectral swell, default 0%; 100% means 2000 ms.
+LEVEL: 0–2 output multiplier, default 50% (unity).
+
+The first audition fixes the four voice amounts to the prototype's blend:
+-2 octaves .05, -1 octave .30, +1 octave .65, +2 octaves .35.
+Cutoff is 6500 Hz, internal output gain -9 dB, detune zero, dry FX zero.
+Stereo input is averaged to mono and the result duplicated to stereo outputs.
+
+Placement and memory
+--------------------
+The complete linked implementation is appended to the loaded FIT segment at
+0x400a4540. Its initialized data and zeroed BSS are included in the loaded image.
+The heap descriptor's start moves to 0x400aabc0, reserving 26,240 bytes before
+heap initialization. Both existing 8,192-byte pitch ring allocations expand to
+57,344 bytes; each contains a 53,476-byte adapter/core instance. Native allocation
+failure checks remain. Audio processing performs no allocation.
+
+The packager checks exact supported firmware segment hashes, exact hook bytes,
+ELF identity, both FIT segment hashes, OS size, and the protected final partial
+erase sector. It preserves the existing UniVibe patch. Placement evidence is in
+../evidence/octave-code-placement.json. Static heap span is not live free memory.
+
+Build and validate from the repository root
+------------------------------------------
+python3 tools/custom_fx/build_octave_device.py --output analysis/NEW-OCTAVE-BUILD
+python3 tools/custom_fx/prepare_octave_image.py --backup FULL-OS-BACKUP.bin --build analysis/NEW-OCTAVE-BUILD --output analysis/NEW-OCTAVE-IMAGE
+python3 tools/custom_fx/check_octave_ui.py analysis/NEW-OCTAVE-BUILD analysis/NEW-OCTAVE-UI.json
+python3 -m unittest discover -s tools/custom_fx -p 'test_*.py'
+
+Cross-build requires the retained vendor toolchain and Docker. Emulation needs
+Unicorn. A physical full OS backup is required: do not substitute an encrypted
+FMU package. Image preparation does not access USB. Full vendor/device images
+remain local rather than being committed to this repository.
+
+Runtime telemetry
+-----------------
+python3 tools/custom_fx/read_octave_telemetry.py --output analysis/NEW-TELEMETRY.jsonl --count 3 --interval 1
+
+This macOS CoreMIDI tool sends only the bounded OCT? diagnostic request. The
+experimental firmware returns 128 bytes of timing, heap and initialization
+counters. Normal AMP-read requests still follow the native handler. Counters
+are approximate snapshots, not a synchronized profiling trace. Timer frequency
+is read from firmware; timer ticks must not be interpreted as CPU cycles.
+
+Recovery
+--------
+Retain the exact preflash full OS backup and its SHA256. The deployment must
+fresh-read and match the expected current image, write only changed full erase
+sectors, then verify the complete OS before manifestation/reboot. raw_dfu.py's
+restore command accepts that backup and an explicit expected-current hash.
+The public UniVibe installer does not recognize this experimental extended image;
+use the retained direct-DFU backup for rollback.
+
+First physical result (2026-11-12)
+----------------------------------
+The full 868,352-byte OS readback exactly matches the prepared image. The pedal
+rebooted and reported ready; both octave instances initialized at 44.1 kHz.
+Live CC41=8 and CC21=127 selected/enabled OCTAVE without saving the preset.
+The controls read back as .65, 0, .5. About 1.4 MB heap remains free.
+
+An 8.04-second active window recorded 3,704 audio calls and 3,704 increments of
+the native over-budget counter. Mean chain time was 1.989 ms against 1.451 ms;
+octave mean was 1.322 ms and its maximum since boot was 2.965 ms. This fails the
+real-time requirement. No controlled input or loopback audio was captured, and
+listening confirmation remains separate. See evidence/octave-device-1.12.json.
+
+The next optimization needs both lower average cost and lower per-hop peaks.
+Additional code space or removing an unused effect will not solve CPU load.
+Preserve this build and measurement as the physical baseline for comparisons.

@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-12",
+  "evidence_type": "exact1.12 initialized-data and vendor-disassembly analysis",
+  "physical_tested": false,
+  "source_payload_sha256": "17ce4dc1fb0e58f3966ddb30349cd79122cad3b5a54e6e3bd69e8466b48bfe40",
+  "startup_gp": "0x3004c604",
+  "startup_gp_instructions": {
+    "address": "0x40000004",
+    "bytes_hex": "97c104f093810160",
+    "assembly": [
+      "auipc gp,0xf004c",
+      "addi gp,gp,1536"
+    ],
+    "resolved_value": "0x3004c604"
+  },
+  "seg1": {
+    "load": "0x40000000",
+    "size": 673088,
+    "end": "0x400a4540"
+  },
+  "heap_descriptor": {
+    "address": "0x3004c1f4",
+    "file_offset": "0xc9f4",
+    "bytes_hex": "0100000074c0094040450a4000004040",
+    "words": [
+      "0x1",
+      "0x4009c074",
+      "0x400a4540",
+      "0x40400000"
+    ],
+    "id": 1,
+    "name_pointer": "0x4009c074",
+    "name": "heap_cma",
+    "start": "0x400a4540",
+    "end": "0x40400000"
+  },
+  "allocator_init": {
+    "address": "0x4003f004",
+    "behavior": "Reads start at gp-0x408, rounds up4; reads end gp-0x404, rounds down4; calls40005694(heap_control,name,start,end-start).",
+    "rea_evidence_id": "ev_ece6183111f1cc1045074f8edeabe4e434d6b9c841a6ff685108d675d217d41e"
+  },
+  "allocator_use": {
+    "address": "0x4003f036",
+    "behavior": "Checks heapid at gp-0x410, mutexguards calls40005754 on heapcontrol gp-0x400",
+    "rea_evidence_id": "ev_3b90f42e7d7f91d5a80d2bf5f840ec1d93ff4b782cbd409289c33b8139b9310c",
+    "zeroing_audio_allocation_wrapper": "0x40008e9a"
+  },
+  "placement": {
+    "payload_link_base": "0x400a4540",
+    "reserve_method": "Extend FITseg1 through flattened allocated ELF sections incldata/BSSzero; bump initializedheapstartword3004c1fc to64-byte-alignednewend before heapinitialization",
+    "no_donor_effect_required_for_code": true,
+    "protected_final_sector": "OSrelative0xd0000..0xd4000 unchanged",
+    "max_extended_seg1_end": "0x400c3000"
+  },
+  "limits": [
+    "Static allocator ownership analysis is not live free-heap measurement",
+    "No hardware execution of appended code yet",
+    "Bootability and all hook/ABI paths need independent checks",
+    "Remaining heap span is not largest free allocation after system initialization"
+  ]
+}

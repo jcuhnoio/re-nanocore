@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "firmware_version": "1.12",
+  "elf_sha256": "1b52c9b91f163bb9374d652dc645e1bb5f82153c434437736af8c04729d03954",
+  "deployment": {
+    "input_sha256": "d9cb9a7252f51a72580b8e0fb51b5a0e88dc8e93f9441e5d81078864fcfbd634",
+    "output_sha256": "fab5355ed642825e2891365bd52b61a4956dd82bf59be8539eca5693346fb02d",
+    "bytes": 868352,
+    "erased_os_relative_sectors": [
+      0,
+      65536,
+      131072,
+      196608,
+      458752,
+      524288,
+      589824,
+      655360,
+      720896
+    ],
+    "exact_match": true,
+    "manifestation_status": "000000000800"
+  },
+  "runtime_ready": true,
+  "fx2_enabled_subtype": 8,
+  "controls": [
+    0.65,
+    0,
+    0.5
+  ],
+  "sample_rate": 44100,
+  "timer_hz": 4000000,
+  "octave_init_count": 2,
+  "state_bytes": 53476,
+  "heap_free_bytes": 1404116,
+  "window_seconds": 8.041593074798584,
+  "audio_calls_delta": 3704,
+  "audio_over_budget_delta": 3704,
+  "audio_budget_us": 1451.0,
+  "audio_mean_us": 1988.9482316414685,
+  "octave_mean_us": 1322.207343412527,
+  "audio_max_us_since_boot": 3723.5,
+  "octave_max_us_since_boot": 2964.75,
+  "realtime_pass": false,
+  "listening_confirmed": false,
+  "limits": [
+    "Single current preset, no controlled input signal or audio capture",
+    "Counters are unsynchronized snapshots",
+    "Peak measurements include initialization/control transitions",
+    "Physical boot and full readback pass; real-time processing budget fails"
+  ]
+}

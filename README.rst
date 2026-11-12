@@ -141,19 +141,27 @@ instructions in the retained short fixture. Host regression compares over one
 million samples bit-for-bit; target emulation also matches the original output
 and window coefficients exactly. Instruction counts are not physical CPU timing.
 
-This is **not an installable patch yet**. The likely stock target is FX2/PITCH,
-subtype 8. Its 12,622-byte implementation is smaller than the candidate's complete
-25,060-byte text/constants build with standalone math routines. Its existing
-state/ring allocations are also too small. Free heap, code placement, library
-initialization, controls and peak full-chain timing need validation before a
-physical test. Removing another effect can supply audited code space, but does
-not automatically free safe RAM: family allocations and reset paths are shared.
+An experimental **1.12 device build has now been flashed and fully read back**.
+It boots, initializes both octave instances, and exposes **OCTAVE in FX2** in
+place of PITCH (subtype 8), with DRY/SWELL/LEVEL controls. UniVibe remains; no
+second effect was removed. The implementation extends the loaded segment and
+reserves its memory before heap initialization, with larger dedicated pitch
+allocations. About 1.4 MB of heap remains free on the tested preset.
 
-`Feasibility findings <docs/octave-nanocore-feasibility.txt>`_,
-`buildable candidate and reproduction <firmware/custom-fx/octave/README.rst>`_,
-and `target/host evidence <evidence/octave-target-execution.json>`_ retain the
-measurements and next steps. The accepted Octave Studio checkout and the pedal's
-working UniVibe firmware were left unchanged.
+**The first physical build fails the real-time budget.** With OCTAVE enabled,
+the measured chain averages 1.99 ms against a 1.45 ms budget; the octave alone
+averages 1.32 ms and peaks at 2.96 ms. These are physical timer measurements,
+not instruction estimates. Audio quality is awaiting listening feedback.
+This experiment is not offered by the public UniVibe installer. The exact
+preflash backup is retained locally for direct-DFU rollback.
+
+`Device test and reproduction <docs/octave-device-test.txt>`_,
+`physical measurements <evidence/octave-device-1.12.json>`_,
+`feasibility findings <docs/octave-nanocore-feasibility.txt>`_, and
+`buildable candidate <firmware/custom-fx/octave/README.rst>`_ document the work.
+Next work is reducing average DSP cost and spreading spectral work across audio
+blocks, then measuring again under controlled input and varied full chains.
+The accepted Octave Studio checkout remains unchanged.
 
 Current result
 --------------
@@ -435,7 +443,7 @@ What remains
 * Exact processor/codec/radio identities and codec register configuration.
   G730 is consistent with our ISA evidence, but chip SKU and NAU88L21 identity
   have not been independently established on this board.
-* Integrating and physically profiling the optimized Octave Studio candidate.
+* Reducing Octave Studio CPU cost and peaks after the first physical 1.12 test exceeded the audio budget.
 
 `Research status <docs/research-status.txt>`_ preserves the dated earlier findings;
 statements of old limitations there are historical when superseded above.

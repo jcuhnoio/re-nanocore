@@ -1,0 +1,8 @@
+{
+  "elf_sha256": "1b52c9b91f163bb9374d652dc645e1bb5f82153c434437736af8c04729d03954",
+  "inplace_mono": true,
+  "nonfinite_controls": true,
+  "range_clamps": true,
+  "null_ring_rejected": true,
+  "unsupported_rate_rejected": true
+}

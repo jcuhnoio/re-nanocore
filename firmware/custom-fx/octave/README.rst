@@ -1,10 +1,12 @@
 Shared 2048/1024 NanoCore candidate
 =================================
 
-This is an optimized, buildable DSP candidate, not an installable firmware patch.
+This is an optimized, buildable DSP core with an experimental NanoCore 1.12 adapter.
 It preserves the Octave Studio Shared 2048/1024 algorithm and its four octave
 voices, spectral swell, detune and dry paths. The accepted nested Octave Studio
-checkout is unchanged. No pedal firmware was modified by this investigation.
+checkout is unchanged. The first physical build boots and processes audio, but exceeds the real-time
+budget. It is not ready for the public installer; see
+``docs/octave-device-test.txt`` and ``evidence/octave-device-1.12.json``.
 
 ``shared_core.h`` is allocation-free C++14 with caller-owned state. The original
 MIT reference and its Swell dependency are retained under ``reference/`` for
@@ -51,3 +53,21 @@ The cross-build needs the retained vendor Xuantie toolchain under
 address only. Neither the build tool nor these files access USB. See
 ``docs/octave-nanocore-feasibility.txt`` and ``evidence/octave-target-execution.json``
 for the target instruction-emulation evidence and remaining integration work.
+
+Device integration
+------------------
+
+``device.cpp`` adapts native FX2/PITCH initialization, reset and processing.
+``device_ui.S`` supplies three controls without changing shared delay paths.
+``telemetry.cpp`` exposes a bounded read-only diagnostic. The device build tool
+uses actual placement at 0x400a4540; the package tool reserves appended code/data
+before heap initialization instead of overwriting the smaller PITCH cluster.
+
+Build the retained original host reference for the integration comparison::
+
+  clang++ -std=c++14 -O2 -ffp-contract=off -fno-exceptions -fno-rtti -DNC_OCTAVE_BASELINE -dynamiclib tools/custom_fx/octave_probe.cpp -o analysis/octave-reference.dylib
+  python3 tools/custom_fx/check_octave_device.py DEVICE.elf analysis/octave-reference.dylib DECODED-1.12.bin analysis/device-check.json
+
+The native wrapper test covers 4,096 samples, initialization/reset, canaries,
+register preservation, bypass and the non-PITCH trampoline. Its timer is stubbed;
+only the separately retained physical telemetry measures real processing time.

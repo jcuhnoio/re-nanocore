@@ -1,0 +1,26 @@
+{
+  "elf_sha256": "1b52c9b91f163bb9374d652dc645e1bb5f82153c434437736af8c04729d03954",
+  "state_bytes": 53476,
+  "ring_allocation_bytes": 57344,
+  "native_fx2_initializer_and_reset": true,
+  "native_other_subtype_trampoline": true,
+  "disabled_stereo_bypass": true,
+  "inplace_stereo_and_mono": true,
+  "callee_saved_registers_and_canaries": true,
+  "compared_samples": 4096,
+  "max_host_reference_error": 0.0,
+  "timer_stub_stats": [
+    64,
+    4096,
+    100,
+    6400,
+    0,
+    100,
+    1
+  ],
+  "limits": [
+    "Timer boundary stubbed; no physical cycles measured",
+    "Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute",
+    "No hardware operations"
+  ]
+}
