@@ -21,3 +21,7 @@ jobs:
       - run: cc -std=c11 -Wall -Wextra -Werror -fsyntax-only firmware/versions/1.12/effects/catalog.c
       - run: python -m unittest discover -s tools/custom_fx -p 'test_*.py' -v
       - run: make -C firmware/custom-fx test
+      - name: Compare optimized octave core against retained reference
+        run: |
+          c++ -std=c++14 -O2 -ffp-contract=off -fno-exceptions -fno-rtti -fno-math-errno tools/custom_fx/check_octave_host.cpp -o /tmp/check-octave
+          /tmp/check-octave

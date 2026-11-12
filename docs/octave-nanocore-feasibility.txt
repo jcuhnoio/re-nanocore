@@ -1,0 +1,108 @@
+Octave Studio Shared2048/1024 on NanoCore1.12 — 2026-11-12
+========================================================
+
+Conclusion
+----------
+A portable optimized core is now built and checked against the auditioned sound.
+A hardware port is plausible, but RAM ownership and real-time CPU headroom remain
+unproven. This is a larger integration than the existing bounded UniVibe patch.
+No firmware was flashed or device state changed during this investigation.
+
+Which prototype and stock effect
+-------------------------------
+The liked UI option is Shared2048/1024 (analysis2048, synthesis1024), choice0 in
+Octave Studio src/PrototypeEffect.cpp. The accepted core is
+experiments/SharedSwellCore.h, not the JUCE wrapper or its twelve engine objects.
+Only one mono core is needed per active processing instance. Hop=128 samples;
+nominal dry delay=1024 samples,21.33ms at48kHz or23.22ms at44.1kHz. Recorded host
+wet impulse E90 is about30.88ms at48kHz; hardware end-to-end latency is unmeasured.
+
+The recovered1.12 selector catalog identifies the likely replacement as
+FX2/PITCH, subtype8. There is no exposed selector literally named Octaver in that
+catalog. Octave Organ is unrelated metadata without an established chain callback.
+Stock PITCH has three parameters (coarse/fine/mix); multivoice controls need new
+metadata and mappings. Its surrounding wrapper averages stereo input to mono,
+processes chunks<=64frames and mixes dry/wet; the new core already handles its
+own delayed dry mix, so blindly retaining that wrapper would mix dry twice.
+
+Resource evidence
+-----------------
+PITCH processor40079bdc is2262bytes. Seven contiguous native pitch routines span
+40077364..4007a4b2 (12622bytes), but reclaiming that whole region needs an audit of
+all incoming references and rewritten init/set/reset paths. It is not a verified
+code cave. Stock initialization uses3480bytes pitch substate inside a3656-byte
+FX2 context and an8192-byte external ring. Engine initialization allocates two
+such contexts/rings. Replacing only the ring with a53444-byte core would add
+45252bytes per context (~90.5KB total), assuming the existing context remains.
+Live free heap and fragmentation are not measured.
+
+The optimized core requires53444bytes per instance (original61728). Read-only
+constants are shared but still need mapped memory. Fully linked standalone
+-O2 probe:25060bytes text/constants,1072initialized library-data bytes and4BSS.
+The original -Os standalone probe:19048text,1072data,4BSS. The table movement and
+speed-focused compilation trade increased code/constants for smaller state and
+fewer executed instructions. Object-only sizes exclude required math routines.
+Do not interpret the smaller object size as the complete firmware footprint.
+
+Native processing defaults to44.1kHz and internally slices work to<=64frames.
+64frames represent1.451ms of audio at that rate. The actual DMA buffering and
+whole callback deadline remain unproven: these internal slices are not proof of
+64-frame interrupts. An FFT hop executes as a burst every128samples; average
+host CPU utilization is insufficient. Measure target cycles, stack high-water
+and deadline misses with amp/cab/reverb and the expected concurrent chain active.
+
+Sacrificing another effect
+-------------------------
+A separately audited donor algorithm could supply extra executable space.
+Deleting a menu item does not itself reclaim state or CPU. MOD's103148-byte
+context contains shared substates, and subtype switching reinitializes multiple
+algorithms; borrowing its apparently unused region could corrupt the FFT state.
+Reverb initializes/clears its478312-byte context too. Any RAM donation needs an
+allocation/lifetime/reset redesign. Prefer a measured dedicated heap allocation
+before choosing an effect to remove.
+
+Stock1.12 payload727040 versus OS partition868352 leaves141312bytes of arithmetic
+headroom,124928before the protected final partial erase sector. Those bytes are
+not established free executable/mapped RAM. Extending FIT segments requires new
+layout/load validation; the existing fixed-size patcher deliberately cannot do it.
+Another option is verified reuse of firmware math functions rather than linking
+a second standalone libm. Neither option is yet implemented.
+
+Optimizations and evidence
+--------------------------
+Retained candidate:firmware/custom-fx/octave/shared_core.h. Accepted Octave Studio
+source remains unchanged. Dead global onset work was removed (spectral swell
+preserved), independent FFT loops reordered to hoist twiddles, wet OLA ring
+shortened, synthesis window made immutable/shared, and hardware sqrt enabled.
+No changes to FFT size, hop, number of voices, phase accuracy or peak cap.
+Host regression passes1,048,576samples bit-for-bit, including four rates, random
+blocking, in-place processing, resets and parameter/swell transitions. Measured
+host median improvement is about9% swelloff and12% with650ms swell; host timings
+are not MCU timing predictions.
+
+Target instruction emulation executes the linked math implementation, not math
+stubs. Exact integer semantics for encountered vendor instructions are emulated.
+Reference and optimized outputs and synthesis-window coefficients are compared;
+counts are instructions, not cycles. See evidence/octave-target-execution.json.
+The fixture is short and is not an exhaustive worst-case/noise/denormal test.
+
+Next engineering gates
+----------------------
+1. Confirm the user's intended stock UI slot corresponds to recoveredFX2/PITCH.
+2. Instrument free heap/largest allocation, actual sample rate/buffering and
+   available cycle budget while retaining a recoverable known firmware image.
+3. Choose storage: dedicated state, audited code placement, initialized library
+   data or verified native math reuse; wire init/reset/process and voice controls.
+4. Measure worst-case FFT bursts under the full chain. If needed, spread FFT work
+   over processing slices before reducing quality or changing the auditioned sound.
+5. Compare physical audio/latency and exercise effect/preset switching and restore.
+
+Source evidence
+---------------
+firmware/versions/1.12/audio/engine.c allocations near1154/1169/1231 and initializer
+call1291; slicing333 and rate338. FX2 processing:
+firmware/versions/1.12/effects/processors/fx2/4006b1c4_nc_fx2_pitch_wah_process.c.
+Vendor disassembly of pitch_init was checked directly: its Ghidra export falsely
+collapses initialization to return-1 and must not be used as that behavioral claim.
+REA retained evidence: pitch process ev_d67a565667b617b696640ba9b44fb6588c5b5cfc3e62760e5d70a80b9b46dc4a;
+pitch init ev_305bb0e2a8a652262e0993722c6274c62e78ea256e897b8fc6c375755ded02db.

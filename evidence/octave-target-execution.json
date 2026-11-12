@@ -1,0 +1,300 @@
+{
+  "date": "2026-11-12",
+  "evidence_type": "RV32 instruction emulation of linked candidate probes",
+  "flashable": false,
+  "physical_device_executed": false,
+  "units": "Executed instructions, NOT CPU cycles",
+  "profile": "Shared 2048 analysis /1024 synthesis /128 hop; mono",
+  "source_sha256": {
+    "octave-studio/experiments/SharedSwellCore.h": "07d53e96fbf3bab3af32984370a699333eb97f6895bb1f788538cf57ff411325",
+    "firmware/custom-fx/octave/shared_core.h": "b6f30c4cf4a7fc55b6ffd836a3eed681f673113b69e731e2b847900b91bcc2fb",
+    "analysis/octave-feasibility-prototype-agent/probe.cpp": "7498f0facb4f845af362ed4ee3098d0187697e6a016db9251870271abe6856a4",
+    "analysis/octave-platform-probe/optimized.cpp": "a7276da2dddf138eaec2d322e5683e23c18eeca47885d8108e36cb03eca05d60",
+    "analysis/octave-platform-probe/rom.cpp": "60d50bdf678172f2f9059df0dfee2da67f813ac1ed694b93f9f35c0a378bd569",
+    "tools/custom_fx/check_octave_target.py": "e761ce5994e1302e1eeaeac52cbf4856ca8c69c0a9029c7d9488234ee606db84"
+  },
+  "fixture": {
+    "sample_rate": 48000,
+    "frames": 2048,
+    "call_frames": 64,
+    "input": "0.2*sin(sampleIndex*0.04) +0.1*sin(sampleIndex*0.071), rounded tofloat32",
+    "dry": 0.4,
+    "octave_voice_gains": [
+      0.5,
+      0.5,
+      0.5,
+      0.5
+    ],
+    "swell_ms": 650,
+    "cutoff_hz": 6500,
+    "detune_cents": 0,
+    "output_db": -9,
+    "dry_fx": 0,
+    "resonance": 0
+  },
+  "variants": {
+    "baseline": {
+      "elf": "analysis/octave-platform-probe/baseline.elf",
+      "elf_sha256": "c5300c3cd12f0e719465a3161d6942240cc00011b75a8748f089076add0482c3",
+      "instance_bytes": 61728,
+      "init_instructions": 443402,
+      "control_instructions": 1057,
+      "reset_instructions": 38031,
+      "mean_instructions_per_block": 1081280.34375,
+      "max_instructions_per_block": 2167321,
+      "max_abs_output": 0.0135184396058321,
+      "vendor_emulation": {
+        "addsl": 959930,
+        "lwia": 100,
+        "swia": 100,
+        "extu": 32771,
+        "mvnez": 32800,
+        "lrhu": 224
+      },
+      "max_observed_stack_bytes": 512,
+      "sample_bytes_identical_to_baseline": true,
+      "output_sha256": "f5dff8be9d5b75113bb36d7a3a2ae41d3aa66514dfbeec50b2d288917aa12353",
+      "raw_report_local": "analysis/octave-feasibility-prototype-agent/baseline-rv32-counts.json"
+    },
+    "optimized-Os": {
+      "elf": "analysis/octave-platform-probe/optimized-Os.elf",
+      "elf_sha256": "cad135ef77ba5aa1f74eae31b9dc3343d68851e3c11b3712c6482f270a0f8820",
+      "instance_bytes": 57540,
+      "init_instructions": 440793,
+      "control_instructions": 527,
+      "reset_instructions": 38020,
+      "mean_instructions_per_block": 675458.9375,
+      "max_instructions_per_block": 1357400,
+      "max_abs_output": 0.0135184396058321,
+      "vendor_emulation": {
+        "addsl": 548186,
+        "lwia": 100,
+        "swia": 100,
+        "extu": 32769,
+        "lrhu": 224
+      },
+      "max_observed_stack_bytes": 560,
+      "sample_bytes_identical_to_baseline": true,
+      "output_sha256": "f5dff8be9d5b75113bb36d7a3a2ae41d3aa66514dfbeec50b2d288917aa12353",
+      "raw_report_local": "analysis/octave-feasibility-prototype-agent/optimized-Os-rv32-counts.json"
+    },
+    "optimized-O2": {
+      "elf": "analysis/octave-platform-probe/optimized-O2.elf",
+      "elf_sha256": "3d3ad1ae1f2e320171e34a287478f72d2338a0586e88e734278811778240f2bd",
+      "instance_bytes": 57540,
+      "init_instructions": 257616,
+      "control_instructions": 443,
+      "reset_instructions": 32398,
+      "mean_instructions_per_block": 557297.9375,
+      "max_instructions_per_block": 1126388,
+      "max_abs_output": 0.0135184396058321,
+      "vendor_emulation": {
+        "addsl": 443704,
+        "mvnez": 2,
+        "extu": 32768,
+        "lrhu": 224
+      },
+      "max_observed_stack_bytes": 400,
+      "sample_bytes_identical_to_baseline": true,
+      "output_sha256": "f5dff8be9d5b75113bb36d7a3a2ae41d3aa66514dfbeec50b2d288917aa12353",
+      "raw_report_local": "analysis/octave-feasibility-prototype-agent/optimized-O2-rv32-counts.json"
+    },
+    "rom": {
+      "elf": "analysis/octave-platform-probe/rom.elf",
+      "elf_sha256": "2802d40efd228741de693ffa0d3b71b9cae36b8dd2a6e56e291d9ed96791e7d8",
+      "instance_bytes": 53444,
+      "init_instructions": 59668,
+      "control_instructions": 527,
+      "reset_instructions": 38019,
+      "mean_instructions_per_block": 674436.4375,
+      "max_instructions_per_block": 1355355,
+      "max_abs_output": 0.0135184396058321,
+      "vendor_emulation": {
+        "lwia": 100,
+        "swia": 100,
+        "addsl": 513370,
+        "extu": 32769,
+        "lrhu": 224
+      },
+      "max_observed_stack_bytes": 560,
+      "sample_bytes_identical_to_baseline": true,
+      "output_sha256": "f5dff8be9d5b75113bb36d7a3a2ae41d3aa66514dfbeec50b2d288917aa12353",
+      "raw_report_local": "analysis/octave-feasibility-prototype-agent/rom-rv32-counts.json"
+    },
+    "rom-O2": {
+      "elf": "analysis/octave-platform-probe/rom-O2.elf",
+      "elf_sha256": "4e8dfe32cc09af6212564d22a1f951147886f3b42529b826d255c9ed598d1eb3",
+      "instance_bytes": 53444,
+      "init_instructions": 53323,
+      "control_instructions": 443,
+      "reset_instructions": 32396,
+      "mean_instructions_per_block": 556247.84375,
+      "max_instructions_per_block": 1124290,
+      "max_abs_output": 0.0135184396058321,
+      "vendor_emulation": {
+        "mvnez": 2,
+        "addsl": 439608,
+        "extu": 32768,
+        "lrhu": 224
+      },
+      "max_observed_stack_bytes": 400,
+      "sample_bytes_identical_to_baseline": true,
+      "output_sha256": "f5dff8be9d5b75113bb36d7a3a2ae41d3aa66514dfbeec50b2d288917aa12353",
+      "raw_report_local": "analysis/octave-feasibility-prototype-agent/rom-O2-rv32-counts.json"
+    }
+  },
+  "window_parity": {
+    "bytes": 4096,
+    "baseline_target_computed_sha256": "1af3ed285079ae74d95657cc3c6fcd89a58c722a37bebabacf0cd443fb10675f",
+    "rom_stored_sha256": "1af3ed285079ae74d95657cc3c6fcd89a58c722a37bebabacf0cd443fb10675f",
+    "exact_match": true
+  },
+  "count_method_validation": {
+    "method": "Basic-block cached instruction decoding checked against a separate per-instruction Unicorn hook",
+    "calls": [
+      "core_size",
+      "core_init",
+      "core_parameters",
+      "core_reset",
+      "two64-frame core_process calls"
+    ],
+    "exact_count_match": true,
+    "report_local": "analysis/octave-feasibility-prototype-agent/count-validation.json"
+  },
+  "host_parity": {
+    "sample_frames": 2048,
+    "sample_rate": 48000,
+    "max_abs_error": 0.0,
+    "compiler_float_contract": "off",
+    "target": "baseline.elf with full linked libm/libc and vendor integer-op emulation",
+    "host": "clang++ O2 original core",
+    "threshold": 1e-06
+  },
+  "limits": [
+    "64-frame calls are synthetic test blocks, not an established NanoCore DMA/ISR callback deadline",
+    "Counts do not establish hardware utilization, clock rate, cache behavior or real-time fit",
+    "Finite two-tone input is not worst-case maximum-peak/noise stress",
+    "Full linked vendor libm/libc execute without stubs; executed T-Head custom integer/load-store operations use explicit semantic hooks",
+    "Observed stack depth only covers this fixture and excludes interrupt nesting",
+    "Exact exploratory ELF hashes identify these runs; a rebuilt ELF must be rechecked if executable content changes",
+    "No preset, firmware patch placement or physical audio behavior tested by this probe"
+  ],
+  "retained_build_equivalence": [
+    {
+      "variant": "baseline",
+      "retained_elf": "analysis/octave-platform-probe/final-build/baseline.elf",
+      "sha256": "7cd78e06019ee0349e9869e579e8439a477146380f8c4bc36db3a0e128808de2",
+      "equivalent_emulated_elf": "analysis/octave-platform-probe/baseline.elf",
+      "all_allocated_sections_byte_and_address_identical": true
+    },
+    {
+      "variant": "optimized",
+      "retained_elf": "analysis/octave-platform-probe/final-build/optimized.elf",
+      "sha256": "0841095a266cb08c9bca744cb97cac1e21c0718c936f80c4298ec9d331319282",
+      "equivalent_emulated_elf": "analysis/octave-platform-probe/rom-O2.elf",
+      "all_allocated_sections_byte_and_address_identical": true
+    }
+  ],
+  "retained_build": {
+    "purpose": "offline code-size and emulation probe; no device operations",
+    "flashable": false,
+    "compiler": "riscv64-unknown-elf-g++ (Xuantie-900 elf newlib gcc Toolchain V2.6.1 B-20220906) 10.2.0",
+    "flags": [
+      "-march=rv32imafdcpzpsfoperand_xtheade",
+      "-mabi=ilp32d",
+      "-Os",
+      "-std=c++14",
+      "-ffreestanding",
+      "-fno-builtin",
+      "-fno-exceptions",
+      "-fno-rtti",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-msmall-data-limit=0",
+      "-mno-relax",
+      "-ffp-contract=off",
+      "-fstack-usage"
+    ],
+    "variants": {
+      "baseline": {
+        "compile_flags": [
+          "-march=rv32imafdcpzpsfoperand_xtheade",
+          "-mabi=ilp32d",
+          "-Os",
+          "-std=c++14",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-exceptions",
+          "-fno-rtti",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-msmall-data-limit=0",
+          "-mno-relax",
+          "-ffp-contract=off",
+          "-fstack-usage",
+          "-DNC_OCTAVE_BASELINE"
+        ],
+        "size_output": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n   9624\t      0\t      0\t   9624\t   2598\t/out/baseline.o\n  19048\t   1072\t      4\t  20124\t   4e9c\t/out/baseline.elf\n",
+        "undefined_object_symbols": [
+          "         U atan2f",
+          "         U expf",
+          "         U memcpy",
+          "         U memset",
+          "         U powf",
+          "         U sqrtf",
+          "         U tanf"
+        ],
+        "elf_sha256": "7cd78e06019ee0349e9869e579e8439a477146380f8c4bc36db3a0e128808de2"
+      },
+      "optimized": {
+        "compile_flags": [
+          "-march=rv32imafdcpzpsfoperand_xtheade",
+          "-mabi=ilp32d",
+          "-O2",
+          "-std=c++14",
+          "-ffreestanding",
+          "-fno-builtin",
+          "-fno-exceptions",
+          "-fno-rtti",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-msmall-data-limit=0",
+          "-mno-relax",
+          "-ffp-contract=off",
+          "-fstack-usage",
+          "-fno-math-errno"
+        ],
+        "size_output": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n  15916\t      0\t      0\t  15916\t   3e2c\t/out/optimized.o\n  25060\t   1072\t      4\t  26136\t   6618\t/out/optimized.elf\n",
+        "undefined_object_symbols": [
+          "         U atan2f",
+          "         U expf",
+          "         U memset",
+          "         U powf",
+          "         U tanf"
+        ],
+        "elf_sha256": "0841095a266cb08c9bca744cb97cac1e21c0718c936f80c4298ec9d331319282"
+      }
+    }
+  },
+  "host_optimized_regression": [
+    {
+      "bitwise_samples": 1048576,
+      "max_error": 0,
+      "baseline_bytes": 61728,
+      "optimized_bytes": 53444,
+      "cases": 8
+    },
+    {
+      "attack_ms": 0,
+      "baseline_ns_per_sample_median": 766.039,
+      "optimized_ns_per_sample_median": 693.493,
+      "ratio": 0.9053
+    },
+    {
+      "attack_ms": 650,
+      "baseline_ns_per_sample_median": 868.578,
+      "optimized_ns_per_sample_median": 763.698,
+      "ratio": 0.87925
+    }
+  ]
+}

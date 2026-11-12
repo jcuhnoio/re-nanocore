@@ -130,6 +130,31 @@ equivalence. See the `user confirmation <evidence/univibe-1.12-user-confirmation
 written sectors, runtime checks and local backup paths. Complete images remain
 local under ``analysis/custom-fx/stock-1.12-session/``.
 
+Octave Studio port candidate
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The auditioned **Shared 2048/1024** core now has a buildable optimized candidate
+under ``firmware/custom-fx/octave/``. Its source keeps the original window sizes,
+four octave voices and spectral swell. Per-instance state falls from 61,728 to
+53,444 bytes; the speed-focused RISC-V build uses about 48.6% fewer executed
+instructions in the retained short fixture. Host regression compares over one
+million samples bit-for-bit; target emulation also matches the original output
+and window coefficients exactly. Instruction counts are not physical CPU timing.
+
+This is **not an installable patch yet**. The likely stock target is FX2/PITCH,
+subtype 8. Its 12,622-byte implementation is smaller than the candidate's complete
+25,060-byte text/constants build with standalone math routines. Its existing
+state/ring allocations are also too small. Free heap, code placement, library
+initialization, controls and peak full-chain timing need validation before a
+physical test. Removing another effect can supply audited code space, but does
+not automatically free safe RAM: family allocations and reset paths are shared.
+
+`Feasibility findings <docs/octave-nanocore-feasibility.txt>`_,
+`buildable candidate and reproduction <firmware/custom-fx/octave/README.rst>`_,
+and `target/host evidence <evidence/octave-target-execution.json>`_ retain the
+measurements and next steps. The accepted Octave Studio checkout and the pedal's
+working UniVibe firmware were left unchanged.
+
 Current result
 --------------
 
@@ -410,7 +435,7 @@ What remains
 * Exact processor/codec/radio identities and codec register configuration.
   G730 is consistent with our ISA evidence, but chip SKU and NAU88L21 identity
   have not been independently established on this board.
-* POG-style processing remains future work.
+* Integrating and physically profiling the optimized Octave Studio candidate.
 
 `Research status <docs/research-status.txt>`_ preserves the dated earlier findings;
 statements of old limitations there are historical when superseded above.
