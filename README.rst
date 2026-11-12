@@ -237,6 +237,8 @@ maximum was 1398.25 us against 1451 us. OCTAVE itself reached 869.5 us against
 run, not a robust worst-case or listening acceptance. Guitar input and control
 stress have not yet been confirmed. Delay/reverb and the noise gate were off;
 amp, cabinet and MOD remained on. The exact image readback passed.
+A later read in the same run reached **509.47 seconds / 351,058 callbacks**,
+still with zero faults or native overruns and the same timing maxima.
 
 Current result
 --------------
