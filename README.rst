@@ -40,9 +40,11 @@ Chrome browser tests exercise install, IndexedDB backup, exact restore and
 interrupted-upload recovery for all three versions with a simulated device;
 desktop and 360px layouts were checked. Backups are retained separately by
 firmware version, and cross-version restores are rejected. The 1.10 image and
-Python DFU route have been physically tested. **The 1.11 and 1.12 patches have
-not been flashed to hardware**; their checks are static and emulated. Browser/OS
-driver compatibility beyond the reported tests remains unverified.
+Python DFU route have been physically tested. **UniVibe on 1.12 is confirmed
+working on a physical NanoCore**: the user completed the browser upload and
+verification, then confirmed working audio in a listening test. **1.11 remains
+checked offline only.** Browser/OS driver compatibility beyond the reported
+tests remains unverified.
 
 The first user browser run reached complete readback but stopped before reboot
 with ``a.every is not a function``. The receipt's numeric ``bytes`` count collided
@@ -50,8 +52,9 @@ with the storage check for snapshot byte arrays; recovery reached the same error
 The fix distinguishes counts from byte arrays and adds regression coverage with
 the actual receipt shape. Reload the installer in the same browser without
 clearing site data, then retry recovery; the saved transaction remains available.
-This report establishes browser communication reaching readback, not yet a
-confirmed successful browser-triggered reboot.
+That initial report established browser communication reaching readback. A later
+1.12 browser upload completed successfully, followed by the user confirming
+working audio (see below).
 
 Implementation: ``web/``; deployment: ``.github/workflows/pages.yml``. Run
 ``node --test web/tests/*.test.js``. To preview, run
@@ -116,8 +119,12 @@ The active preset's MOD block changed from enabled variant10 to disabled
 variant0 on the first stock 1.12 runtime read; all preset contents and audio
 behavior have not been verified. The browser patch engine recognized this
 physical readback as stock1.12, generated the exact offline UniVibe payload and
-reversed it exactly in memory. The pedal was left on **stock1.12** for the browser
-installer test; this is not yet a physical1.12 UniVibe flash result.
+reversed it exactly in memory. The pedal was initially left on **stock1.12** for the browser
+installer test. The user subsequently completed that test: the installer showed
+“Firmware 1.12 · verified” and “UniVibe is ready,” and the user confirmed the
+effect sounds good. This establishes a successful physical 1.12 browser install
+and user listening test, not calibrated audio measurements or reference-pedal
+equivalence. See the `user confirmation <evidence/univibe-1.12-user-confirmation.json>`_.
 
 `Upgrade receipt <evidence/physical-stock-1.12-upgrade.json>`_ records the hashes,
 written sectors, runtime checks and local backup paths. Complete images remain
@@ -139,7 +146,9 @@ Current result
 * Modified 1.10 firmware has been physically flashed, read back in full and
   rebooted successfully. The latest deployed revision exposes UNIVIBE with
   **SPEED, DEPTH, LEVEL and a two-state CHORUS/VIBRATO MODE**.
-* Physical audio quality, real-time deadlines and equivalence to a real MXR M68
+* UniVibe 1.12 has also been installed through the browser, verified and
+  confirmed working by the user in a physical listening test.
+* Measured audio quality, real-time deadlines and equivalence to a real MXR M68
   remain unmeasured. The custom UniVibe is circuit-informed approximate DSP;
   its control layout is MXR-style, not evidence of a calibrated hardware clone.
 
