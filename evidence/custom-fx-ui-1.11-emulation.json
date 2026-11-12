@@ -1,0 +1,237 @@
+{
+  "firmware_version": "1.11",
+  "enum_cases": 912,
+  "enum_states": 2,
+  "enum_output_values": [
+    0,
+    1000
+  ],
+  "count_cases": 760,
+  "label_cases": 12,
+  "default_lengths_tested": 13,
+  "format_cases": [
+    {
+      "index": 0,
+      "value": 0,
+      "rendered": [
+        [
+          "%ld",
+          0
+        ]
+      ]
+    },
+    {
+      "index": 0,
+      "value": 0.35,
+      "rendered": [
+        [
+          "%ld",
+          35
+        ]
+      ]
+    },
+    {
+      "index": 0,
+      "value": 0.499,
+      "rendered": [
+        [
+          "%ld",
+          50
+        ]
+      ]
+    },
+    {
+      "index": 0,
+      "value": 0.5,
+      "rendered": [
+        [
+          "%ld",
+          50
+        ]
+      ]
+    },
+    {
+      "index": 0,
+      "value": 1,
+      "rendered": [
+        [
+          "%ld",
+          100
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "value": 0,
+      "rendered": [
+        [
+          "%ld",
+          0
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "value": 0.35,
+      "rendered": [
+        [
+          "%ld",
+          35
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "value": 0.499,
+      "rendered": [
+        [
+          "%ld",
+          50
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "value": 0.5,
+      "rendered": [
+        [
+          "%ld",
+          50
+        ]
+      ]
+    },
+    {
+      "index": 1,
+      "value": 1,
+      "rendered": [
+        [
+          "%ld",
+          100
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "value": 0,
+      "rendered": [
+        [
+          "%ld",
+          0
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "value": 0.35,
+      "rendered": [
+        [
+          "%ld",
+          35
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "value": 0.499,
+      "rendered": [
+        [
+          "%ld",
+          50
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "value": 0.5,
+      "rendered": [
+        [
+          "%ld",
+          50
+        ]
+      ]
+    },
+    {
+      "index": 2,
+      "value": 1,
+      "rendered": [
+        [
+          "%ld",
+          100
+        ]
+      ]
+    },
+    {
+      "index": 3,
+      "value": 0,
+      "rendered": [
+        "CHORUS"
+      ]
+    },
+    {
+      "index": 3,
+      "value": 0.35,
+      "rendered": [
+        "CHORUS"
+      ]
+    },
+    {
+      "index": 3,
+      "value": 0.499,
+      "rendered": [
+        "CHORUS"
+      ]
+    },
+    {
+      "index": 3,
+      "value": 0.5,
+      "rendered": [
+        "VIBRATO"
+      ]
+    },
+    {
+      "index": 3,
+      "value": 1,
+      "rendered": [
+        "VIBRATO"
+      ]
+    }
+  ],
+  "scope": "Native patched code, enum conversions and branches execute; memset/strcmp/printf boundaries emulated; no display device observed",
+  "physical_ui_verified": false,
+  "source_fit_sha256": "688aae0ddba602d24e4c3f186a4019928c491c1ab37bc3f6e75f101471436497",
+  "address_map": {
+    "source_sha256": "688aae0ddba602d24e4c3f186a4019928c491c1ab37bc3f6e75f101471436497",
+    "defaults": "0x40074776",
+    "format": "0x400279ae",
+    "format_capacity": 64,
+    "enum_tail": "0x40074d00",
+    "count_hook": "0x40026738",
+    "count_continue": "0x4002673c",
+    "count_return": "0x400266be",
+    "format_return": "0x40026a30",
+    "enum_hook": "0x4001af80",
+    "enum_continue": "0x4001af84",
+    "native_snprintf": "0x400055da",
+    "native_percentage": "0x4002507a",
+    "chorus": "0x40095670",
+    "vibrato": "0x40095a54",
+    "format_string": "0x400955d8",
+    "subtypes": "0x3006af14",
+    "depth": "0x40095db0",
+    "level": "0x40095d4c",
+    "label_tables": [
+      "0x400967d4",
+      "0x4009651c"
+    ],
+    "count_entry": "0x4002662a",
+    "label_entry": "0x40025606",
+    "format_entry": "0x400268fa",
+    "memset": "0x4000504c",
+    "strcmp": "0x4000521c",
+    "enum_count": "0x4001a61e",
+    "enum_value": "0x4001a71e",
+    "enum_index": "0x4001a65c",
+    "segment_offset": "0xc000"
+  },
+  "retained_code_file": "tools/custom_fx/vibe_ui_code-1.11.json"
+}

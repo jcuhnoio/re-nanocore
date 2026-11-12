@@ -4,7 +4,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
-from patch_image import patch_image, verify_manifest
+from patch_image import patch_image, verify_manifest, extract_fit
 
 ROOT=Path(__file__).resolve().parents[2]
 
@@ -42,15 +42,15 @@ def package(image_path, build_path, output, label=None, effect="gain"):
     # fails visibly instead of executing fragments of the old algorithm.
     replacement=code+b'\x02\x90'*((len(original)-len(code))//2)
     if effect == 'univibe':
-        if version != '1.10' or receipt['artifacts'][effect].get('parameter_layout') != ['SPEED','DEPTH','LEVEL','MODE']:
-            raise ValueError('Four-control UniVibe requires current 1.10 build metadata')
+        if receipt['artifacts'][effect].get('parameter_layout') != ['SPEED','DEPTH','LEVEL','MODE']:
+            raise ValueError('UniVibe requires current four-control build metadata')
         from vibe_ui import ui_processor_tail
-        tail_address, tail = ui_processor_tail()
+        tail_address, tail = ui_processor_tail(version)
         tail_offset = tail_address - int(site['entry_address'],16)
         if tail_offset < len(code) or tail_offset+len(tail)>len(replacement):
             raise ValueError('UI helper overlaps DSP or exceeds replacement site')
         replacement = replacement[:tail_offset]+tail+replacement[tail_offset+len(tail):]
-    plan={'image_kind':'raw-os-fit','firmware_version':version,
+    plan={'image_kind':'raw-os-fit','firmware_version':extract_fit(image)['image_version'],
           'input_sha256':sha(image),'patches':[{
           'offset':site['fit_file_offset'],'expected_hex':original.hex(),
           'replacement_hex':replacement.hex(),
@@ -58,10 +58,8 @@ def package(image_path, build_path, output, label=None, effect="gain"):
     if label is not None:
         plan['patches'].append(label_patch(image, label))
     if effect == 'univibe':
-        if version != '1.10' or receipt['artifacts'][effect].get('parameter_layout') != ['SPEED','DEPTH','LEVEL','MODE']:
-            raise ValueError('Four-control UniVibe requires current 1.10 build metadata')
         from vibe_ui import ui_patches
-        plan['patches'].extend(ui_patches(image))
+        plan['patches'].extend(ui_patches(image,version))
     result,manifest=patch_image(image,plan)
     verify_manifest(image,result,manifest)
     out=Path(output)

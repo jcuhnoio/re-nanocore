@@ -15,7 +15,7 @@ FLAGS = ['-march=rv32imafdcpzpsfoperand_xtheade', '-mabi=ilp32d',
          '-Os', '-std=c11', '-ffreestanding', '-fno-builtin',
          '-ffunction-sections', '-fdata-sections', '-msmall-data-limit=0',
          '-mno-relax', '-ffp-contract=off', '-Wall', '-Wextra', '-Werror']
-SITES = {'1.10': 0x400720ae, '1.12': 0x40074e5e}
+SITES = {'1.10': 0x400720ae, '1.11': 0x400747ee, '1.12': 0x40074e5e}
 
 
 def build(out, version):

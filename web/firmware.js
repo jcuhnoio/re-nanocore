@@ -18,7 +18,7 @@ export async function sha256(value) {
   return Array.from(new Uint8Array(result), b => b.toString(16).padStart(2, '0')).join('');
 }
 function schema(p) {
-  if (p?.schemaVersion !== 1 || p.firmwareVersion !== '1.10' ||
+  if (p?.schemaVersion !== 1 || !['1.10','1.11','1.12'].includes(p.firmwareVersion) ||
       !Number.isSafeInteger(p.osSize) || !Number.isSafeInteger(p.fitSize) ||
       p.fitSize <= 0 || p.fitSize > p.osSize || !p.segments?.length ||
       !p.patches?.length || !p.hashes?.length) throw new Error('Unsupported patch manifest.');
@@ -90,4 +90,15 @@ export async function prepareRestore(current, backup, patch) {
   expected.set(live.subarray(t.offset, t.offset + t.size), t.offset);
   if (!equal(expected, live)) throw new Error('Backup does not match this device’s current OS contents.');
   return original.slice();
+}
+
+/** Select by authenticated image contents, never a user-supplied version string. */
+export async function identifyImage(value, patches) {
+  const matches = [];
+  for (const patch of patches) {
+    try { matches.push({...(await validateImage(value, patch)), patch}); }
+    catch { /* Try another exact build; no writes happen during detection. */ }
+  }
+  if (matches.length !== 1) throw new Error('Unknown, damaged or ambiguous firmware. Supported exact builds: 1.10, 1.11 and 1.12; nothing will be written.');
+  return matches[0];
 }

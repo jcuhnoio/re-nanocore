@@ -1,4 +1,4 @@
-"""Exact1.10 MOD10 four-control UI patch fragments; no device operations.
+"""Exact-build 1.10/1.11/1.12 MOD10 four-control UI patch fragments; no device operations.
 
 Order SPEED, DEPTH, LEVEL, MODE. Values0..2 display percentages. MODE renders
 CHORUS below0.5 and VIBRATO at/above0.5. Native enum descriptor makes the
@@ -18,16 +18,23 @@ def jal(pc,target):
     if d%2 or not -(1<<20)<=d<(1<<20):raise ValueError('JAL range')
     return struct.pack('<I',0x6f|((d>>20)&1)<<31|((d>>1)&1023)<<21|((d>>11)&1)<<20|((d>>12)&255)<<12)
 
-def ui_processor_tail():
-    code=json.loads(Path(__file__).with_name('vibe_ui_code.json').read_text())
+def version_config(version):
+    return json.loads(Path(__file__).with_name("vibe_ui_versions.json").read_text())[version]
+
+def code_path(version):
+    return Path(__file__).with_name("vibe_ui_code.json" if version == "1.10" else f"vibe_ui_code-{version}.json")
+
+def ui_processor_tail(version="1.10"):
+    code=json.loads(code_path(version).read_text())
     section=code['sections']['.vibe_enum']
     return int(section['address'],16),bytes.fromhex(section['hex'])
 
 
-def ui_patches(image):
+def ui_patches(image,version="1.10"):
+    if version != "1.10":return version_patches(image,version)
     if hashlib.sha256(image).hexdigest()!=SOURCE_SHA:
         raise ValueError('UI patch requires exact validated1.10 FIT')
-    code=json.loads(Path(__file__).with_name('vibe_ui_code.json').read_text())
+    code=json.loads(code_path(version).read_text())
     result=[]
     def patch(address,replacement,description):
         offset=address-0x40000000+0x9000
@@ -47,4 +54,27 @@ def ui_patches(image):
             int(code['symbols']['vibe_mode_label'],16)]
     for table in [0x40094914,0x40094640]:
         patch(table,struct.pack('<4I',*labels),'Private MOD10 labels SPEED/DEPTH/LEVEL/MODE')
+    return result
+
+
+def version_patches(image,version):
+    c=version_config(version)
+    if hashlib.sha256(image).hexdigest()!=c['source_sha256']:
+        raise ValueError(f'UI patch requires exact validated {version} FIT')
+    code=json.loads(code_path(version).read_text())
+    result=[]
+    def patch(address,replacement,description):
+        offset=address-0x40000000+int(c['segment_offset'],16)
+        expected=image[offset:offset+len(replacement)]
+        result.append({'offset':offset,'expected_hex':expected.hex(),'replacement_hex':replacement.hex(),'description':description})
+    for name,capacity in [('.vibe_defaults',120),('.vibe_format',c['format_capacity'])]:
+        section=code['sections'][name];data=bytes.fromhex(section['hex'])
+        assert len(data)<=capacity and len(data)%2==0
+        patch(int(section['address'],16),data+b'\x02\x90'*((capacity-len(data))//2),'MOD10-only '+name)
+    for key,symbol in [('count_hook','vibe_count'),('enum_hook','vibe_enum')]:
+        address=int(c[key],16)
+        patch(address,jal(address,int(code['symbols'][symbol],16)),f'MOD10-only {key}; replay native alternatives')
+    labels=[int(code['symbols']['vibe_speed_label'],16),int(c['depth'],16),int(c['level'],16),int(code['symbols']['vibe_mode_label'],16)]
+    for table in c['label_tables']:
+        patch(int(table,16),struct.pack('<4I',*labels),'Private MOD10 labels SPEED/DEPTH/LEVEL/MODE')
     return result

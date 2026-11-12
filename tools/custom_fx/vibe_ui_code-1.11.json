@@ -1,0 +1,47 @@
+{
+  "sections": {
+    ".vibe_defaults": {
+      "address": "0x40074776",
+      "hex": "630505028142170300001303430463feb2008143114e63f5c2018323030011032320750011058502ddb782806304d7006f107bf9a9466315d50011456f10dbf015456f107bf0010000003333b33ecdcc4c3f0000003f000000005350454544004d4f444500000100",
+      "size": 104
+    },
+    ".vibe_format": {
+      "address": "0x400279ae",
+      "hex": "2685ca858d476318f402b707003fd38707f0d317f5a0b75609409386066789e7b7660940938646a5375609401306865defd0ddbf19a0efd06fe901456ff06f84",
+      "size": 64
+    },
+    ".vibe_enum": {
+      "address": "0x40074d00",
+      "hex": "9542631d55028d42639a5502b7b20630938292f183c2020029436391620285422320560023220600b702803f23245600232606002328060005458280011122cc6f604aa4",
+      "size": 68
+    }
+  },
+  "symbols": {
+    "defaults": "0x400747c0",
+    "vibe_speed_label": "0x400747d0",
+    "vibe_enum": "0x40074d00",
+    "vibe_count": "0x400747a2",
+    "vibe_defaults": "0x40074776",
+    "vibe_mode_label": "0x400747d6",
+    "vibe_format": "0x400279ae"
+  },
+  "provenance": {
+    "compiler": "riscv64-unknown-elf-gcc (Xuantie-900 elf newlib gcc Toolchain V2.6.1 B-20220906) 10.2.0",
+    "flags": [
+      "-march=rv32imafdcpzpsfoperand_xtheade",
+      "-mabi=ilp32d",
+      "-nostdlib",
+      "-Wl,-T,/out/vibe_ui.ld,--no-relax",
+      "-DV112=0",
+      "-DCHORUS_LABEL=0x40095670",
+      "-DVIBRATO_LABEL=0x40095a54",
+      "-DFORMAT_STRING=0x400955d8",
+      "-DMOD_SUBTYPE=805744409"
+    ],
+    "firmware_version": "1.11",
+    "source_file": "vibe_ui_multi.S",
+    "source_sha256": "0496153752d40a99664eb0f3bab29c95b7bebe09e188762363b323e4668e0e88",
+    "linker_sha256": "431a3c53c509c98e8ea4282eec6ffff5c94d84e8dde2787f9421a46a1352d81f",
+    "rebuild": "python3 tools/custom_fx/build_vibe_ui.py --version 1.11 --output NEW_DIRECTORY"
+  }
+}

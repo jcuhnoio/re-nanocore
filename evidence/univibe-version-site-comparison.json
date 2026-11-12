@@ -1,0 +1,356 @@
+{
+  "kind": "static instruction/constant comparison",
+  "versions": [
+    "1.11",
+    "1.12"
+  ],
+  "instructions": 403,
+  "body_bytes": 1392,
+  "body_sha256": {
+    "1.11": "3e5914c143b887c10ae9ff1ee8df96350d38fbc7cb501465142b787a07d7df9c",
+    "1.12": "df9ad72aeff7dc4e7d6e3c577149f86ed740502200b9b24fe82318b6cfb9ef33"
+  },
+  "all_nonrelocation_instructions_identical": true,
+  "relocated_identical_constants": [
+    {
+      "offset": "0x44",
+      "targets": {
+        "1.11": "0x40094e80",
+        "1.12": "0x40099f28"
+      },
+      "value_hex": "00007a44"
+    },
+    {
+      "offset": "0x76",
+      "targets": {
+        "1.11": "0x40094604",
+        "1.12": "0x4009672c"
+      },
+      "value_hex": "0000803f"
+    },
+    {
+      "offset": "0xfa",
+      "targets": {
+        "1.11": "0x4009a474",
+        "1.12": "0x4009f5a0"
+      },
+      "value_hex": "8e5d1340"
+    },
+    {
+      "offset": "0x106",
+      "targets": {
+        "1.11": "0x4009a3bc",
+        "1.12": "0x4009f4dc"
+      },
+      "value_hex": "ae47613f"
+    },
+    {
+      "offset": "0x11a",
+      "targets": {
+        "1.11": "0x4009a164",
+        "1.12": "0x4009f284"
+      },
+      "value_hex": "8fc2f53d"
+    },
+    {
+      "offset": "0x122",
+      "targets": {
+        "1.11": "0x4009a938",
+        "1.12": "0x400a0998"
+      },
+      "value_hex": "66668640"
+    },
+    {
+      "offset": "0x12a",
+      "targets": {
+        "1.11": "0x400952c4",
+        "1.12": "0x4009a374"
+      },
+      "value_hex": "0000803e"
+    },
+    {
+      "offset": "0x132",
+      "targets": {
+        "1.11": "0x4009a930",
+        "1.12": "0x400a0990"
+      },
+      "value_hex": "21b052bf"
+    },
+    {
+      "offset": "0x154",
+      "targets": {
+        "1.11": "0x40099fa4",
+        "1.12": "0x4009f0ac"
+      },
+      "value_hex": "6f12833a"
+    },
+    {
+      "offset": "0x182",
+      "targets": {
+        "1.11": "0x40099f94",
+        "1.12": "0x4009f090"
+      },
+      "value_hex": "db0fc940"
+    },
+    {
+      "offset": "0x18a",
+      "targets": {
+        "1.11": "0x4009a39c",
+        "1.12": "0x4009f4bc"
+      },
+      "value_hex": "db0f4940"
+    },
+    {
+      "offset": "0x192",
+      "targets": {
+        "1.11": "0x4009a4c0",
+        "1.12": "0x4009f5ec"
+      },
+      "value_hex": "db0fc93f"
+    },
+    {
+      "offset": "0x19a",
+      "targets": {
+        "1.11": "0x4009a4cc",
+        "1.12": "0x4009f5f8"
+      },
+      "value_hex": "1eef3836"
+    },
+    {
+      "offset": "0x1a2",
+      "targets": {
+        "1.11": "0x4009a4d0",
+        "1.12": "0x4009f5fc"
+      },
+      "value_hex": "010d50b9"
+    },
+    {
+      "offset": "0x1aa",
+      "targets": {
+        "1.11": "0x4009a4d4",
+        "1.12": "0x4009f600"
+      },
+      "value_hex": "8988083c"
+    },
+    {
+      "offset": "0x1b2",
+      "targets": {
+        "1.11": "0x4009a4d8",
+        "1.12": "0x4009f604"
+      },
+      "value_hex": "abaa2abe"
+    },
+    {
+      "offset": "0x1ba",
+      "targets": {
+        "1.11": "0x40094e88",
+        "1.12": "0x40099f30"
+      },
+      "value_hex": "00008040"
+    },
+    {
+      "offset": "0x1c2",
+      "targets": {
+        "1.11": "0x4009a4c4",
+        "1.12": "0x4009f5f0"
+      },
+      "value_hex": "db0fc9bf"
+    },
+    {
+      "offset": "0x1ca",
+      "targets": {
+        "1.11": "0x4009a4c8",
+        "1.12": "0x4009f5f4"
+      },
+      "value_hex": "db0f49c0"
+    },
+    {
+      "offset": "0x1d2",
+      "targets": {
+        "1.11": "0x4009558c",
+        "1.12": "0x4009a644"
+      },
+      "value_hex": "0000403f"
+    },
+    {
+      "offset": "0x1da",
+      "targets": {
+        "1.11": "0x40094618",
+        "1.12": "0x40096740"
+      },
+      "value_hex": "00000040"
+    },
+    {
+      "offset": "0x1e6",
+      "targets": {
+        "1.11": "0x4009a950",
+        "1.12": "0x400a09b0"
+      },
+      "value_hex": "00a0bf44"
+    },
+    {
+      "offset": "0x3b4",
+      "targets": {
+        "1.11": "0x40099f80",
+        "1.12": "0x4009f078"
+      },
+      "value_hex": "00803b47"
+    },
+    {
+      "offset": "0x3d0",
+      "targets": {
+        "1.11": "0x4009a92c",
+        "1.12": "0x400a098c"
+      },
+      "value_hex": "016b4cbf"
+    },
+    {
+      "offset": "0x3da",
+      "targets": {
+        "1.11": "0x40094604",
+        "1.12": "0x4009672c"
+      },
+      "value_hex": "0000803f"
+    },
+    {
+      "offset": "0x3e2",
+      "targets": {
+        "1.11": "0x40099f1c",
+        "1.12": "0x4009f020"
+      },
+      "value_hex": "ffff7f3f"
+    },
+    {
+      "offset": "0x3ea",
+      "targets": {
+        "1.11": "0x40099fb8",
+        "1.12": "0x4009f0bc"
+      },
+      "value_hex": "cdcccc3e"
+    },
+    {
+      "offset": "0x3f6",
+      "targets": {
+        "1.11": "0x4009605c",
+        "1.12": "0x4009b18c"
+      },
+      "value_hex": "6666e63e"
+    },
+    {
+      "offset": "0x3fe",
+      "targets": {
+        "1.11": "0x4009558c",
+        "1.12": "0x4009a644"
+      },
+      "value_hex": "0000403f"
+    },
+    {
+      "offset": "0x406",
+      "targets": {
+        "1.11": "0x4009a3bc",
+        "1.12": "0x4009f4dc"
+      },
+      "value_hex": "ae47613f"
+    },
+    {
+      "offset": "0x412",
+      "targets": {
+        "1.11": "0x4009a93c",
+        "1.12": "0x400a099c"
+      },
+      "value_hex": "00008841"
+    },
+    {
+      "offset": "0x41a",
+      "targets": {
+        "1.11": "0x40099fa8",
+        "1.12": "0x4009f0b0"
+      },
+      "value_hex": "000040c0"
+    },
+    {
+      "offset": "0x422",
+      "targets": {
+        "1.11": "0x4009a940",
+        "1.12": "0x400a09a0"
+      },
+      "value_hex": "0000a840"
+    },
+    {
+      "offset": "0x42a",
+      "targets": {
+        "1.11": "0x400952c4",
+        "1.12": "0x4009a374"
+      },
+      "value_hex": "0000803e"
+    },
+    {
+      "offset": "0x432",
+      "targets": {
+        "1.11": "0x4009a254",
+        "1.12": "0x4009f374"
+      },
+      "value_hex": "90c2753d"
+    },
+    {
+      "offset": "0x43a",
+      "targets": {
+        "1.11": "0x4009a944",
+        "1.12": "0x400a09a4"
+      },
+      "value_hex": "3d0a57bf"
+    },
+    {
+      "offset": "0x442",
+      "targets": {
+        "1.11": "0x4009a948",
+        "1.12": "0x400a09a8"
+      },
+      "value_hex": "e17a943e"
+    },
+    {
+      "offset": "0x44a",
+      "targets": {
+        "1.11": "0x4009a94c",
+        "1.12": "0x400a09ac"
+      },
+      "value_hex": "d7a330bf"
+    },
+    {
+      "offset": "0x4f8",
+      "targets": {
+        "1.11": "0x40094604",
+        "1.12": "0x4009672c"
+      },
+      "value_hex": "0000803f"
+    },
+    {
+      "offset": "0x55a",
+      "targets": {
+        "1.11": "0x4009a934",
+        "1.12": "0x400a0994"
+      },
+      "value_hex": "4e784640"
+    },
+    {
+      "offset": "0x562",
+      "targets": {
+        "1.11": "0x4009a92c",
+        "1.12": "0x400a098c"
+      },
+      "value_hex": "016b4cbf"
+    }
+  ],
+  "relocated_calls": [
+    {
+      "offset": "0x102",
+      "1.11": "0x40000bd8",
+      "1.12": "0x40000bd8"
+    }
+  ],
+  "limitations": [
+    "No physical execution or timing validation",
+    "Relocated external call semantics not independently re-proven here; custom DSP has no external calls",
+    "Computed incoming pointers remain outside static scan coverage"
+  ]
+}

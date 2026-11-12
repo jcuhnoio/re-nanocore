@@ -35,7 +35,11 @@ def export(stock, installed, manifest):
             data[r['offset']:r['offset']+r['size']] = bytes(r['size'])
         return digest(data)
     assert normalized(stock) == normalized(installed)
-    return {'schemaVersion': 1, 'firmwareVersion': before['image_version'],
+    version = {'1.10': '1.10', '1.11b': '1.11', '1.12': '1.12'}.get(before['image_version'])
+    if version is None or after['image_version'] != before['image_version']:
+        raise ValueError('Unsupported or changed firmware version')
+    return {'schemaVersion': 1, 'firmwareVersion': version,
+            'imageVersion': before['image_version'],
             'effect': 'UNIVIBE', 'replaces': 'VELVET VIBRATO',
             'osSize': manifest['os_partition_size'], 'fitSize': len(stock),
             'stockFitSha256': digest(stock), 'installedFitSha256': digest(installed),

@@ -11,7 +11,9 @@ Browser installer
 
 `Open the UniVibe installer <https://jcuhnoio.github.io/re-nanocore/>`_ in desktop
 Chrome or Edge. It replaces **Velvet Vibrato (MOD 10)** with **UNIVIBE**, on the
-exact verified **1.10** build only. There is no effect selector. The controls
+exact supported **1.10, 1.11 and 1.12** builds. The version is detected from
+authenticated firmware bytes; this does not upgrade or downgrade the pedal.
+There is no effect selector. The controls
 are SPEED, DEPTH, LEVEL and CHORUS/VIBRATO MODE.
 
 Connect USB and click **Upload UniVibe**. Allow MIDI SysEx access, then click
@@ -32,15 +34,15 @@ reboot. Keep the device in Lupgrader mode and use **Recover interrupted upload**
 in the same browser/origin. If an unsupported image was rejected before writing,
 a full power cycle can exit the bootloader.
 
-Validation status: 21 Node tests cover image identity, byte-preserving patches,
+Validation status: 26 Node tests cover image identity, byte-preserving patches,
 restore, protocol ordering, disconnects, readback corruption and recovery bounds.
 Chrome browser tests exercise install, IndexedDB backup, exact restore and
-interrupted-upload recovery with a simulated device; desktop and 360px layouts
-were checked. The underlying Python DFU route and this UniVibe image have been
-physically tested, but **the WebUSB port has not yet been physically flashed**:
-no USB NanoCore was enumerated during this installer session. Browser/OS driver
-compatibility beyond these tests remains unverified. Firmware 1.11/1.12 are
-intentionally rejected by this installer.
+interrupted-upload recovery for all three versions with a simulated device;
+desktop and 360px layouts were checked. Backups are retained separately by
+firmware version, and cross-version restores are rejected. The 1.10 image and
+Python DFU route have been physically tested. **The 1.11 and 1.12 patches have
+not been flashed to hardware**; their checks are static and emulated. Browser/OS
+driver compatibility beyond the reported tests remains unverified.
 
 The first user browser run reached complete readback but stopped before reboot
 with ``a.every is not a function``. The receipt's numeric ``bytes`` count collided
@@ -55,10 +57,50 @@ Implementation: ``web/``; deployment: ``.github/workflows/pages.yml``. Run
 ``node --test web/tests/*.test.js``. To preview, run
 ``python3 -m http.server 8765 --directory web``. The optional browser smoke test
 ``node tools/custom_fx/test_web_browser.cjs`` requires Playwright Core (or an
-absolute ``PLAYWRIGHT_MODULE``), Chrome (``CHROME_PATH``), the local original
-stock backup, and that server. Its screenshots remain under ``analysis/``.
+absolute ``PLAYWRIGHT_MODULE``), Chrome (``CHROME_PATH``), the three locally
+decoded release images, and that server. Its screenshots remain under ``analysis/``.
 The patch exporter is ``tools/custom_fx/export_web_patch.py``; it independently
 checks FIT CRC/MD5 before emitting exact-build SHA256 guards and deltas.
+
+UniVibe on newer firmware
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The published ``web/patch.json`` (1.10), ``web/patch-1.11.json`` and
+``web/patch-1.12.json`` contain only replacement ranges, expected original bytes
+and integrity hashes. GitHub Pages hosts these deltas alongside the installer.
+The browser reads the complete OS from the connected pedal and produces the
+modified firmware in memory. Full stock images, patched images and device
+backups remain local, outside the public repository. The release called 1.11
+has internal FIT version ``1.11b``; the exporter preserves this distinction.
+
+Porting required independently locating the processor, initializer, parameter
+count, formatter, label tables and enum hook. In particular, 1.11 has a smaller
+formatter region and 1.12 uses different count/formatter registers. The native
+1.11 and 1.12 Velvet processors match instruction-for-instruction except
+relocated constant references and one relocated call; all referenced constant
+bytes match. The rebuilt UniVibe DSP fits in each 1392-byte processor body,
+reserving a separate tail for the UI helper.
+
+`Static processor comparison <evidence/univibe-version-site-comparison.json>`_
+and `DSP target checks <evidence/univibe-version-dsp-tests.json>`_ record the
+new-version evidence. The latter compares executed RISC-V DSP with host C in
+mono, stereo, in-place and multiple sample-rate cases, including parameter
+changes, reset, ABI preservation and state bounds. These checks do not establish
+hardware audio quality or real-time deadlines. Native UI emulation also passed
+760 parameter-count cases, 912 enum cases, 12 labels, 13 default-buffer lengths
+and 20 formatted-value cases per newer version, including preservation of
+unrelated effects. See the `1.11 UI report <evidence/custom-fx-ui-1.11-emulation.json>`_
+and `1.12 UI report <evidence/custom-fx-ui-1.12-emulation.json>`_. Native library
+boundaries are emulated; this is not an observation of the physical display.
+
+Build each version using ``tools/custom_fx/build.py --version VERSION --output NEW_DIR``;
+``package.py --input DECODED_FIT --build NEW_DIR --output NEW_PACKAGE --effect univibe --label UNIVIBE``
+uses the corresponding retained UI code. UI assembly can be regenerated using
+``build_vibe_ui.py --version VERSION --output NEW_UI_DIR``. Finally,
+``export_web_patch.py --stock DECODED_FIT --installed NEW_PACKAGE/firmware.bin --manifest NEW_PACKAGE/manifest.json --output web/patch-VERSION.json``
+produces the browser delta (1.10 keeps its existing ``patch.json`` filename).
+These tools are under ``tools/custom_fx/`` and reuse the retained vendor toolchain;
+they never flash the device themselves.
 
 Current result
 --------------

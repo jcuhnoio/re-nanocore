@@ -1,9 +1,9 @@
 import {WebUSBTransport,RawOS,USB_FILTER} from './dfu.js';
-import {validateImage,install,prepareRestore,sha256} from './firmware.js';
+import {validateImage,install,prepareRestore,sha256,identifyImage} from './firmware.js?v=3';
 import {get,put,recoveryTarget} from './storage.js?v=2';
 const $ = id => document.getElementById(id);
 let mode='install', busy=false, critical=false, imported=null, backupURL;
-const patchPromise=fetch('./patch.json').then(r=>{if(!r.ok)throw Error('Could not load patch');return r.json();});
+const patchPromise=Promise.all(['patch.json','patch-1.11.json','patch-1.12.json'].map(path=>fetch('./'+path).then(r=>{if(!r.ok)throw Error('Could not load firmware patches; reload and try again.');return r.json();})));
 patchPromise.catch(()=>{});
 function status(text,detail=''){ $('status').textContent=text; $('detail').textContent=detail; }
 function progress({phase,completed,total}) {
@@ -12,13 +12,18 @@ function progress({phase,completed,total}) {
   for(const item of $('steps').children) item.classList.toggle('active',item.dataset.phase===stage);
   status({read:'Reading your firmware',preflight:'Checking the device again',write:'Uploading — keep USB connected',verify:'Verifying every byte',complete:'Verified. Your NanoCore is restarting.'}[phase]||phase);
 }
-function linkBackup(bytes) {
+function linkBackup(bytes,version) {
   if(backupURL) URL.revokeObjectURL(backupURL);
   backupURL=URL.createObjectURL(new Blob([bytes],{type:'application/octet-stream'}));
-  $('backupLink').href=backupURL; $('backupLink').download='nanocore-original-1.10-os.bin'; $('backupLink').hidden=false;
+  $('backupLink').href=backupURL; $('backupLink').download=`nanocore-original-${version}-os.bin`; $('backupLink').hidden=false;
 }
 async function refresh(){
-  const backup=await get('original'); if(backup)linkBackup(backup.bytes);
+  const backup=await get('original'); if(backup){
+    const state=await identifyImage(backup.bytes,await patchPromise);
+    if(state.kind!=='stock')throw Error('Saved original backup is not stock firmware.');
+    if(!await get('original-'+state.version))await put('original-'+state.version,{...backup,version:state.version});
+    linkBackup(backup.bytes,state.version);
+  }
   $('recovery').hidden=!(await get('pending'))?.active;
 }
 async function run(fn){
@@ -45,31 +50,40 @@ async function begin(nextMode){
   status('Connect the bootloader','Click Connect bootloader and choose Livtra Lupgrader. If it is missing, allow MIDI SysEx and try Upload again.');
 }
 async function upload(device){
-  const patch=await patchPromise;
+  const patches=await patchPromise;
   const transport=await WebUSBTransport.open(device);
   $('connection').textContent='NanoCore · USB connected'; $('reconnect').hidden=true;
   try{
     const dfu=new RawOS(transport,{onProgress:progress});
     const current=await dfu.readPartition();
-    let target;
+    let target,patch,version;
     if(mode==='recover'){
       const pending=await get('pending');
       if(!pending?.active)throw Error('No interrupted upload saved in this browser.');
-      await validateImage(pending.current,patch); await validateImage(pending.target,patch);
+      ({patch,version}=await identifyImage(pending.current,patches));
+      await validateImage(pending.target,patch);
       target=recoveryTarget(current,pending);
     }else{
-      const state=await validateImage(current,patch);
-      if(mode==='restore') target=await prepareRestore(current,imported||(await get('original')).bytes,patch);
+      const state=await identifyImage(current,patches);
+      ({patch,version}=state);
+      if(mode==='restore'){
+        const backup=imported||(await get('original-'+version))?.bytes||(await get('original'))?.bytes;
+        if(!backup)throw Error(`No original ${version} backup saved. Use a matching backup file.`);
+        target=await prepareRestore(current,backup,patch);
+      }
       else{
         if(state.kind==='stock'){
           status('Saving your original firmware');
-          await put('original',{bytes:current,sha256:await sha256(current)});linkBackup(current);
+          // Migrate legacy backups before updating the latest-backup pointer.
+          await refresh();
+          const backup={bytes:current,sha256:await sha256(current),version};
+          await put('original-'+version,backup);await put('original',backup);linkBackup(current,version);
         }
         target=await install(current,patch);
       }
     }
     // Keep the previous recovery record intact until its replacement is durable.
-    const pending={active:true,current,target,mode,created:new Date().toISOString()};
+    const pending={active:true,current,target,mode,version,created:new Date().toISOString()};
     if(mode!=='recover')await put('pending',pending);
     critical=true;
     const receipt=await dfu.program({expectedCurrent:current,target,
@@ -79,7 +93,7 @@ async function upload(device){
     await put('pending',{...pending,active:false,receipt});
     if($('log'))$('log').textContent=JSON.stringify(receipt,null,2);
     status(mode==='install'?'UniVibe is ready.':mode==='restore'?'Original firmware restored.':'Previous firmware recovered.',mode==='install'?'Find UNIVIBE in MOD, in place of Velvet Vibrato. Controls: speed, depth, level and chorus/vibrato.':'Every byte was verified. Your NanoCore is restarting.');
-    $('connection').textContent='Upload verified';
+    $('connection').textContent=`Firmware ${version} · verified`;
   }finally{await transport.close();}
 }
 $('primary').onclick=()=>run(()=>begin('install'));
@@ -90,7 +104,7 @@ $('importBackup').onclick=()=>$('backupFile').click();
 $('backupFile').onchange=()=>run(async()=>{
   const file=$('backupFile').files[0];if(!file)return;
   const bytes=new Uint8Array(await file.arrayBuffer());
-  if((await validateImage(bytes,await patchPromise)).kind!=='stock')throw Error('Choose an original stock 1.10 OS backup.');
+  if((await identifyImage(bytes,await patchPromise)).kind!=='stock')throw Error('Choose an original stock 1.10, 1.11 or 1.12 OS backup.');
   imported=bytes;status('Backup file ready','Click Restore original firmware to restore this backup.');
 });
 addEventListener('beforeunload',e=>{if(critical){e.preventDefault();e.returnValue='';}});
