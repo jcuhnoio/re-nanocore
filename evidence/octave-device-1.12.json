@@ -47,5 +47,8 @@
     "Counters are unsynchronized snapshots",
     "Peak measurements include initialization/control transitions",
     "Physical boot and full readback pass; real-time processing budget fails"
-  ]
+  ],
+  "user_report": "Enabling effect effectively freezes pedal",
+  "usable": false,
+  "recovery_status": "USB DFU entry did not enumerate; waiting for physical power cycle"
 }

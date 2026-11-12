@@ -77,3 +77,13 @@ listening confirmation remains separate. See evidence/octave-device-1.12.json.
 The next optimization needs both lower average cost and lower per-hop peaks.
 Additional code space or removing an unused effect will not solve CPU load.
 Preserve this build and measurement as the physical baseline for comparisons.
+
+User audition failure
+---------------------
+The user reports that enabling OCTAVE effectively freezes the pedal. Successful
+boot, numerical parity and readback did not establish usable runtime behavior.
+The known deadline overruns should have blocked audition. The USB DFU-entry
+message was sent, but Lupgrader did not enumerate; a physical power cycle has
+been requested before restoring the exact known-working UniVibe backup.
+Do not install this build. Future device experiments must bypass the expensive
+path on deadline failure and pass timing checks before interactive audition.
