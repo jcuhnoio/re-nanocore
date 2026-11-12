@@ -1,5 +1,16 @@
 // Backups never leave this origin. A read-after-write check gates every erase.
-export const equal = (a,b) => a?.length === b?.length && a.every((v,i) => v === b[i]);
+export const equal = (a,b) => a instanceof Uint8Array && b instanceof Uint8Array && a.length === b.length && a.every((v,i) => v === b[i]);
+export function verifySaved(value, saved) {
+  // Snapshot bytes are a Uint8Array; a DFU receipt's bytes field is a count.
+  for (const field of ['current','target','bytes']) {
+    if (value[field] === undefined) continue;
+    const expected = value[field], actual = saved?.[field];
+    const matches = expected instanceof Uint8Array ? equal(expected,actual)
+      : field === 'bytes' && Number.isSafeInteger(expected) && expected === actual;
+    if (!matches) throw new Error('Browser storage verification failed; operation stopped.');
+  }
+  return saved;
+}
 export async function database() {
   return new Promise((resolve,reject) => {
     const r = indexedDB.open('nanocore-univibe',1);
@@ -23,8 +34,7 @@ export async function put(key,value) {
     tx.oncomplete = resolve; tx.onerror = () => reject(tx.error); tx.onabort = () => reject(tx.error);
   }); } finally { db.close(); }
   const saved = await get(key);
-  for (const field of ['current','target','bytes']) if (value[field] && !equal(value[field],saved?.[field])) throw new Error('Browser backup verification failed; nothing will be erased.');
-  return saved;
+  return verifySaved(value, saved);
 }
 export function recoveryTarget(current, pending, size = 868352, sector = 65536) {
   if (![current,pending?.current,pending?.target].every(b => b instanceof Uint8Array && b.length === size)) throw new Error('No complete interrupted-upload backup.');

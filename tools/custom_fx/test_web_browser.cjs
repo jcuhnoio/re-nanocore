@@ -13,7 +13,7 @@ export class WebUSBTransport {static async open(){return {close:async()=>{}}}}
 export class RawOS {
  constructor(t,{onProgress}){this.onProgress=onProgress;}
  async readPartition(){return window.live ||= new Uint8Array(await (await fetch('./fixture.bin')).arrayBuffer());}
- async program(o){if(await o.backupSaved(window.live)!==true)throw Error('No backup');if(window.failUpload){window.failUpload=false;window.live.fill(255,0,65536);throw Error('Simulated disconnect');}window.live=o.target.slice();const receipt={exact_match:true};await o.onVerified(window.live,receipt);return receipt;}
+ async program(o){if(await o.backupSaved(window.live)!==true)throw Error('No backup');if(window.failUpload){window.failUpload=false;window.live.fill(255,0,65536);throw Error('Simulated disconnect');}window.live=o.target.slice();const receipt={input_sha256:'test-input',output_sha256:'test-output',bytes:window.live.length,erased_os_relative_sectors:[0,131072,196608,458752,589824],exact_match:true};await o.onVerified(window.live,receipt);return receipt;}
 }` }));
 await page.addInitScript(()=>{
 Object.defineProperty(navigator,'usb',{value:{getDevices:async()=>[{vendorId:0x33c3,productId:0x6678}]}});

@@ -32,7 +32,7 @@ reboot. Keep the device in Lupgrader mode and use **Recover interrupted upload**
 in the same browser/origin. If an unsupported image was rejected before writing,
 a full power cycle can exit the bootloader.
 
-Validation status: 19 Node tests cover image identity, byte-preserving patches,
+Validation status: 21 Node tests cover image identity, byte-preserving patches,
 restore, protocol ordering, disconnects, readback corruption and recovery bounds.
 Chrome browser tests exercise install, IndexedDB backup, exact restore and
 interrupted-upload recovery with a simulated device; desktop and 360px layouts
@@ -41,6 +41,15 @@ physically tested, but **the WebUSB port has not yet been physically flashed**:
 no USB NanoCore was enumerated during this installer session. Browser/OS driver
 compatibility beyond these tests remains unverified. Firmware 1.11/1.12 are
 intentionally rejected by this installer.
+
+The first user browser run reached complete readback but stopped before reboot
+with ``a.every is not a function``. The receipt's numeric ``bytes`` count collided
+with the storage check for snapshot byte arrays; recovery reached the same error.
+The fix distinguishes counts from byte arrays and adds regression coverage with
+the actual receipt shape. Reload the installer in the same browser without
+clearing site data, then retry recovery; the saved transaction remains available.
+This report establishes browser communication reaching readback, not yet a
+confirmed successful browser-triggered reboot.
 
 Implementation: ``web/``; deployment: ``.github/workflows/pages.yml``. Run
 ``node --test web/tests/*.test.js``. To preview, run

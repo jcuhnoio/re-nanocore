@@ -1,6 +1,6 @@
 import {WebUSBTransport,RawOS,USB_FILTER} from './dfu.js';
 import {validateImage,install,prepareRestore,sha256} from './firmware.js';
-import {get,put,recoveryTarget} from './storage.js';
+import {get,put,recoveryTarget} from './storage.js?v=2';
 const $ = id => document.getElementById(id);
 let mode='install', busy=false, critical=false, imported=null, backupURL;
 const patchPromise=fetch('./patch.json').then(r=>{if(!r.ok)throw Error('Could not load patch');return r.json();});
