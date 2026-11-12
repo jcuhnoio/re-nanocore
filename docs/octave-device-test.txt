@@ -136,3 +136,17 @@ Retained exact-arithmetic stage pairing lowers mean executed instructions by
 finer schedules increased peak work and were excluded. No device operations
 were performed. The overload latch remains in place; this is not evidence that
 the hardware deadline now passes. See evidence/octave-paired-fft-optimization.json.
+
+Paired-FFT guarded physical follow-up
+------------------------------------
+Full 868,352-byte readback matched the candidate before boot. The disabled effect
+returned all eleven controls, including attack about 646 ms. After enabling,
+two attempted calls reached 851.25 us against 580.25 us reserved; full-chain peak
+was 1496.25 us against 1451 us. One deadline was missed. The guard latched fault1,
+and subsequent telemetry advanced 1,390 audio callbacks without more octave
+processing or missed deadlines. Runtime ready/preset reads and USB updater entry
+remained responsive. This is not a sustained test or an audition pass.
+
+The exact working UniVibe 1.12 OS was restored with full readback verification.
+Normal runtime ready/preset reads passed, and the active preset matched the
+pre-test snapshot. No manual power cycle was required.

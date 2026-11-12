@@ -193,3 +193,24 @@ uses the simpler four-job schedule. See
 ``evidence/octave-paired-fft-optimization.json`` for accepted and rejected results.
 No firmware was flashed in this pass. The previous hardware failure is still
 unresolved; the pedal remains on the restored working UniVibe 1.12 image.
+
+Guarded physical test of paired FFT
+----------------------------------
+
+The paired build was subsequently flashed with exact full-partition readback.
+All eleven controls were returned, with attack set to about 646 ms before enabling.
+Two attempted callbacks produced a maximum of 851.25 us against the 580.25 us
+reserved octave budget. The complete chain reached 1496.25 us against 1451 us;
+one missed deadline occurred. The latch then bypassed the core, and 1,390 more
+audio callbacks between telemetry snapshots produced no additional misses.
+Runtime ready/preset requests and USB updater entry remained responsive.
+
+This is still a failed timing test. The earlier maximum was 1048.75 us, but these
+short, uncontrolled-input probes cannot establish a sustained or worst-case
+speedup. Further work should reduce or split the first analysis job without
+removing voices or the user's requested attack/dry processing. See
+``evidence/octave-paired-device-1.12.json`` for telemetry and restoration evidence.
+
+The exact working UniVibe 1.12 OS was restored with full readback verification.
+Normal runtime ready/preset reads passed, and the active preset matched the
+pre-test snapshot. No manual power cycle was required.

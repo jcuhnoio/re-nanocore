@@ -185,8 +185,13 @@ executed instructions another 13.3–14.6% and maximum 64-frame work 10.1–11.4
 on the retained noise/tone fixtures. Two finer schedules were rejected because
 they increased peak work. All four voices, attack and processed dry remain.
 See `paired-FFT evidence <evidence/octave-paired-fft-optimization.json>`_.
-This version has not been flashed; more cost reduction and physical timing
-validation are needed before another full-chain audition. The public installer is unchanged.
+The subsequent guarded physical test still fails: octave maximum is 851.25 us
+against 580.25 us reserved, and the chain reaches 1496.25 us against 1451 us.
+After one missed deadline the latch bypasses further work and the runtime stays
+responsive. This is only two attempted calls, not a sustained benchmark.
+See `paired-FFT device evidence <evidence/octave-paired-device-1.12.json>`_.
+The exact UniVibe backup was restored and normal runtime/preset reads passed.
+Further reduction or splitting of the first analysis job is needed before audition. The public installer is unchanged.
 The accepted Octave Studio checkout remains unchanged.
 
 Current result
