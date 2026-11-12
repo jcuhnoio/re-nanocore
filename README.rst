@@ -6,6 +6,51 @@ DSP reconstruction, and custom effects running in modified application firmware.
 This README records the investigation through 2026-11-12 and links each milestone
 to its tools, detailed findings and evidence.
 
+Browser installer
+-----------------
+
+`Open the UniVibe installer <https://jcuhnoio.github.io/re-nanocore/>`_ in desktop
+Chrome or Edge. It replaces **Velvet Vibrato (MOD 10)** with **UNIVIBE**, on the
+exact verified **1.10** build only. There is no effect selector. The controls
+are SPEED, DEPTH, LEVEL and CHORUS/VIBRATO MODE.
+
+Connect USB and click **Upload UniVibe**. Allow MIDI SysEx access, then click
+**Connect bootloader** and choose Livtra Lupgrader when prompted. The page reads
+and identifies the complete OS partition, saves a backup in this browser,
+patches locally, writes changed sectors, verifies every byte and requests reboot.
+Download the backup somewhere safe: clearing browser data removes the local copy.
+Presets using Velvet Vibrato now use UniVibe; adjust their values to taste.
+**Restore original** uses the saved stock backup or an imported complete OS
+``.bin`` backup. It checks that the backup matches the current device contents.
+
+Firmware never goes to a server. GitHub Pages serves HTML, CSS, JavaScript and
+small patch deltas, not a complete vendor firmware. IndexedDB stores the original
+backup and pending transaction, with read-after-write verification before erase.
+Interrupted-upload recovery restores the prior snapshot only when untouched
+sectors still match the saved transaction. A failed verification never requests
+reboot. Keep the device in Lupgrader mode and use **Recover interrupted upload**
+in the same browser/origin. If an unsupported image was rejected before writing,
+a full power cycle can exit the bootloader.
+
+Validation status: 19 Node tests cover image identity, byte-preserving patches,
+restore, protocol ordering, disconnects, readback corruption and recovery bounds.
+Chrome browser tests exercise install, IndexedDB backup, exact restore and
+interrupted-upload recovery with a simulated device; desktop and 360px layouts
+were checked. The underlying Python DFU route and this UniVibe image have been
+physically tested, but **the WebUSB port has not yet been physically flashed**:
+no USB NanoCore was enumerated during this installer session. Browser/OS driver
+compatibility beyond these tests remains unverified. Firmware 1.11/1.12 are
+intentionally rejected by this installer.
+
+Implementation: ``web/``; deployment: ``.github/workflows/pages.yml``. Run
+``node --test web/tests/*.test.js``. To preview, run
+``python3 -m http.server 8765 --directory web``. The optional browser smoke test
+``node tools/custom_fx/test_web_browser.cjs`` requires Playwright Core (or an
+absolute ``PLAYWRIGHT_MODULE``), Chrome (``CHROME_PATH``), the local original
+stock backup, and that server. Its screenshots remain under ``analysis/``.
+The patch exporter is ``tools/custom_fx/export_web_patch.py``; it independently
+checks FIT CRC/MD5 before emitting exact-build SHA256 guards and deltas.
+
 Current result
 --------------
 

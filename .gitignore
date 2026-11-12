@@ -66,3 +66,7 @@
 !/tools/firmware_probe/*.py
 !/tools/firmware_probe/*.S
 !/tools/firmware_probe/README.txt
+
+!/web/
+/web/node_modules/
+!/.github/workflows/pages.yml

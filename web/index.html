@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f1e8">
+  <meta name="description" content="Install a custom UniVibe effect on your NanoCore. A local-first USB installer with firmware backup and restore.">
+  <title>UniVibe for NanoCore</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header wrap">
+    <a class="brand" href="./" aria-label="NanoCore Mods home"><span class="brand-mark" aria-hidden="true">n<span>↗</span></span> NANOCORE <span class="brand-light">/ MODS</span></a>
+    <a class="source-link" href="https://github.com/jcuhnoio/re-nanocore">Open source <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="wrap">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="tiny-dot"></span> CUSTOM EFFECT · NO. 001</p>
+        <h1 id="hero-title">A new voice for<br>your NanoCore.</h1>
+        <p class="hero-description">That swirling, off-center pulse. Now on your pedal. Give your NanoCore a UniVibe with three simple controls and two distinct voices.</p>
+        <div class="hero-tags"><span>Replaces Velvet Vibrato</span><span>Firmware 1.10</span></div>
+      </div>
+      <div class="pedal-scene" role="img" aria-label="Illustration of a NanoCore displaying the UniVibe effect, with speed, depth, and level controls">
+        <span class="scene-orbit orbit-one"></span><span class="scene-orbit orbit-two"></span>
+        <div class="pedal">
+          <div class="pedal-top"><span>NANOCORE</span><span class="pedal-led"></span></div>
+          <div class="pedal-screen"><div class="screen-top"><span>MOD / 10</span><span>● ON</span></div><div class="screen-name">UNI<span>VIBE</span></div><svg class="wave" viewBox="0 0 240 48" fill="none" aria-hidden="true"><path d="M0 24C20 24 20 4 40 4S60 44 80 44S100 4 120 4S140 44 160 44S180 4 200 4S220 24 240 24" stroke="currentColor" stroke-width="2"/></svg><div class="screen-bottom"><span class="mode-active">CHORUS</span><span>VIBRATO</span></div></div>
+          <div class="knob-row"><div><span class="knob knob-speed"></span><small>SPEED</small></div><div><span class="knob knob-depth"></span><small>DEPTH</small></div><div><span class="knob knob-level"></span><small>LEVEL</small></div></div>
+          <div class="pedal-bottom"><span>001 / CUSTOM</span><span class="footswitch"></span></div>
+        </div>
+        <span class="scene-caption">A LITTLE MOVEMENT. A LOT OF CHARACTER.</span>
+      </div>
+    </section>
+
+    <section class="install-layout" aria-label="Install UniVibe">
+      <div class="installer card">
+        <div class="card-heading"><div><p class="eyebrow">MAKE IT YOURS</p><h2>Meet your next modulation.</h2></div><span id="connection" class="connection">Not connected</span></div>
+        <p class="install-intro">Connect your NanoCore over USB. We’ll back up its firmware, install UniVibe, and verify the upload.</p>
+        <ol id="steps" class="steps" aria-label="Installation stages">
+          <li data-phase="connect"><span class="step-number">1</span>Connect</li>
+          <li data-phase="read"><span class="step-number">2</span>Backup</li>
+          <li data-phase="write"><span class="step-number">3</span>Install</li>
+          <li data-phase="verify"><span class="step-number">4</span>Verify</li>
+        </ol>
+        <div class="status-panel">
+          <p id="status" role="status" aria-live="polite">Ready when you are.</p>
+          <p id="detail">Use desktop Chrome or Edge, connect USB, and keep your pedal powered throughout the upload.</p>
+          <progress id="progress" max="100" value="0" aria-label="Installation progress"></progress>
+        </div>
+        <p id="error" class="error" role="alert" hidden></p>
+        <button id="primary" class="button button-primary" type="button">Upload UniVibe <span aria-hidden="true">↗</span></button>
+        <button id="reconnect" class="button button-primary" type="button" hidden>Connect bootloader</button>
+        <button id="recovery" class="button button-primary" type="button" hidden>Recover interrupted upload</button>
+        <div class="backup-actions"><button id="restore" class="text-button" type="button">Restore original</button><span aria-hidden="true">·</span><button id="importBackup" class="text-button" type="button">Use a backup file</button><a id="backupLink" class="text-button" download hidden>Download backup</a></div>
+        <input id="backupFile" type="file" accept=".bin" hidden>
+        <p class="local-note"><svg viewBox="0 0 20 20" width="15" height="15" fill="none" aria-hidden="true"><rect x="4" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 8V5a3 3 0 0 1 6 0v3" stroke="currentColor" stroke-width="1.5"/></svg>Your firmware and backup stay in your browser.</p>
+        <details class="technical-log"><summary>Connection details</summary><pre id="log" aria-label="Installer log">No activity yet.</pre></details>
+        <noscript><p class="error">JavaScript is required to connect to your NanoCore and install the effect.</p></noscript>
+      </div>
+      <aside class="effect-notes" aria-labelledby="effect-title">
+        <p class="eyebrow">THE SOUND</p>
+        <h2 id="effect-title">Four ways to find<br>your sweet spot.</h2>
+        <dl class="controls"><div><dt>Level</dt><dd>Set your output volume.</dd></div><div><dt>Speed</dt><dd>From a slow sway to a fast pulse.</dd></div><div><dt>Depth</dt><dd>Dial in the intensity of the swirl.</dd></div><div><dt>Chorus / Vibrato</dt><dd>Blend in your dry tone, or go all wet.</dd></div></dl>
+        <div class="replacement-note"><span class="note-symbol" aria-hidden="true">↔</span><p><strong>One slot. A different sound.</strong>UniVibe takes the place of <strong>Velvet Vibrato (MOD 10)</strong>. Presets using that effect will now use UniVibe. Adjust their existing parameter values to taste.</p></div>
+      </aside>
+    </section>
+    <section class="before-start" aria-labelledby="before-title"><h2 id="before-title">A few things before you plug in.</h2><div class="info-grid"><article><span class="info-number">01 / BROWSER</span><h3>Desktop Chrome or Edge</h3><p>The installer needs USB and MIDI permissions. Your browser will ask you to choose your NanoCore and may ask again when it enters update mode.</p></article><article><span class="info-number">02 / COMPATIBILITY</span><h3>Verified firmware 1.10</h3><p>The installer checks the firmware on your device before making changes. Unsupported images are rejected. This is an independent, experimental modification. The firmware has run on hardware; this browser uploader still needs its first physical-device test.</p></article><article><span class="info-number">03 / BACKUP</span><h3>Keep a copy. Come back anytime.</h3><p>A backup is saved locally before installation. Download it somewhere safe. Use Restore original to return to your saved firmware.</p></article></div></section>
+  </main>
+  <footer class="site-footer wrap"><p>Built from curiosity. Made for your pedal.</p><nav aria-label="Footer"><a href="https://github.com/jcuhnoio/re-nanocore">Source ↗</a><a href="https://github.com/jcuhnoio/re-nanocore#readme">Documentation ↗</a></nav><small>Independent project. Not affiliated with NanoCore or MXR.</small></footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
