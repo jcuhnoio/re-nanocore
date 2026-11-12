@@ -214,3 +214,43 @@ removing voices or the user's requested attack/dry processing. See
 The exact working UniVibe 1.12 OS was restored with full readback verification.
 Normal runtime ready/preset reads passed, and the active preset matched the
 pre-test snapshot. No manual power cycle was required.
+
+Selective RISC-V fused FFT experiment
+------------------------------------
+
+Both build tools accept ``--fft-experiment exact|fma|specialized|combined``.
+The default remains ``exact``. ``combined`` uses explicit ``fmadd.s`` and
+``fmsub.s`` in paired FFT complex products and a dedicated first-stage pair for
+unity/quarter-turn rotations. Global fast-math remains disabled. The four-job
+schedule, all controls, state size and overload guard are unchanged.
+
+Compared with the previous paired FFT, the combined experiment reduces mean
+executed instructions 4.59% on two-tone and 4.10% on noise; maximum 64-frame work
+falls 2.88% and 2.55%. These are emulator instruction counts, not hardware timing.
+The million-sample host corpus gives maximum absolute error 3.09e-5 and RMS
+error about 98 dB below the reference signal. The short target fixtures give
+relative errors about -122/-111 dB. These are numerical measurements, not an
+inaudibility claim or universal error bound. The specialized-only host corpus
+remains bit-identical; FMA changes intermediate rounding.
+
+Reproduce the combined numerical comparison and target build::
+
+  c++ -std=c++14 -O2 -ffp-contract=off -fno-math-errno -DNC_OCTAVE_FFT_FMA -DNC_OCTAVE_FFT_SPECIALIZED tools/custom_fx/measure_octave_fft_error.cpp -o /tmp/octave-fft-error
+  /tmp/octave-fft-error
+  python3 tools/custom_fx/build_octave_probe.py --output analysis/NEW-FUSED-PROBE --fft-experiment combined
+
+The existing exact-reference adapter test rejects this candidate at its original
+1e-6 tolerance (observed 2.43e-6). That assertion was not weakened. Numerical
+comparison against the original is kept separate from adapter verification
+against a host library compiled with the same experimental arithmetic. The
+96-case scheduled test likewise compares direct and scheduled experimental
+cores; its bitwise result does not mean agreement with the original arithmetic.
+
+No firmware was flashed. This modest reduction does not establish that the
+previous physical timing failure is solved. Evidence and build hashes are in
+``evidence/octave-fused-fft-experiment.json``.
+
+The DSP implementation is C++14 with C-compatible firmware entry points. Native
+C-style firmware hooks and small assembly routines share the target ABI. The
+core needs no exceptions, RTTI or audio-time allocation; rewriting its control
+and scheduling code in C would not itself reduce the executed instruction cost.

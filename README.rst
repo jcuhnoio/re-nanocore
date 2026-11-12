@@ -192,6 +192,10 @@ responsive. This is only two attempted calls, not a sustained benchmark.
 See `paired-FFT device evidence <evidence/octave-paired-device-1.12.json>`_.
 The exact UniVibe backup was restored and normal runtime/preset reads passed.
 Further reduction or splitting of the first analysis job is needed before audition. The public installer is unchanged.
+A selective assembly experiment adds fused multiply-add/subtract and specialized
+FFT butterflies, reducing average emulated instructions another 4.1–4.6% with
+small measured numerical differences. It remains opt-in and has not been flashed;
+see `fused-FFT experiment <evidence/octave-fused-fft-experiment.json>`_.
 The accepted Octave Studio checkout remains unchanged.
 
 Current result

@@ -154,6 +154,40 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
         }
         if (Length < M) fftStage<(Length < M ? Length * 2 : Length)>(inverse);
     }
+    // Experimental FFT-only arithmetic; the default retains exact reference rounding.
+    static float fftProduct(float a, float b, float c, float d, bool subtract) {
+#ifdef NC_OCTAVE_FFT_FMA
+        const float other = c * d;
+#if defined(__riscv)
+        float result;
+        if (subtract)
+            asm("fmsub.s %0, %1, %2, %3" : "=f"(result) : "f"(a), "f"(b), "f"(other));
+        else
+            asm("fmadd.s %0, %1, %2, %3" : "=f"(result) : "f"(a), "f"(b), "f"(other));
+        return result;
+#else
+        return std::fma(a, b, subtract ? -other : other);
+#endif
+#else
+        return subtract ? a * b - c * d : a * b + c * d;
+#endif
+    }
+    // First two stages have only unity and quarter-turn twiddles. Using exact
+    // roots replaces tiny cosine-table residuals, so this is opt-in, not bit-exact.
+    void firstFftPair(bool inverse) {
+        const float sign = inverse ? 1.f : -1.f;
+        for (int a = 0; a < N / 2; a += 4) {
+            const float p0r=real[a]+real[a+1], p0i=imag[a]+imag[a+1];
+            const float p1r=real[a]-real[a+1], p1i=imag[a]-imag[a+1];
+            const float p2r=real[a+2]+real[a+3], p2i=imag[a+2]+imag[a+3];
+            const float p3r=real[a+2]-real[a+3], p3i=imag[a+2]-imag[a+3];
+            const float u1r=-sign*p3i, u1i=sign*p3r;
+            real[a]=p0r+p2r; imag[a]=p0i+p2i;
+            real[a+2]=p0r-p2r; imag[a+2]=p0i-p2i;
+            real[a+1]=p1r+u1r; imag[a+1]=p1i+u1i;
+            real[a+3]=p1r-u1r; imag[a+3]=p1i-u1i;
+        }
+    }
     // Fuse two radix-2 stages in registers. This keeps the original sequence
     // of floating operations but avoids storing/reloading the intermediate
     // stage. No fused floating-point multiply-add or fast-math is required.
@@ -170,12 +204,12 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
             for (int start=0; start<M; start+=Length*2) {
                 const int a=start+j, b=a+half, c=a+Length, d=c+half;
                 const float r0=real[a], i0=imag[a], r2=real[c], i2=imag[c];
-                const float t0r=w0r*real[b]-w0i*imag[b], t0i=w0r*imag[b]+w0i*real[b];
-                const float t1r=w0r*real[d]-w0i*imag[d], t1i=w0r*imag[d]+w0i*real[d];
+                const float t0r=fftProduct(w0r,real[b],w0i,imag[b],true), t0i=fftProduct(w0r,imag[b],w0i,real[b],false);
+                const float t1r=fftProduct(w0r,real[d],w0i,imag[d],true), t1i=fftProduct(w0r,imag[d],w0i,real[d],false);
                 const float p0r=r0+t0r, p0i=i0+t0i, p1r=r0-t0r, p1i=i0-t0i;
                 const float p2r=r2+t1r, p2i=i2+t1i, p3r=r2-t1r, p3i=i2-t1i;
-                const float u0r=w1r*p2r-w1i*p2i, u0i=w1r*p2i+w1i*p2r;
-                const float u1r=w2r*p3r-w2i*p3i, u1i=w2r*p3i+w2i*p3r;
+                const float u0r=fftProduct(w1r,p2r,w1i,p2i,true), u0i=fftProduct(w1r,p2i,w1i,p2r,false);
+                const float u1r=fftProduct(w2r,p3r,w2i,p3i,true), u1i=fftProduct(w2r,p3i,w2i,p3r,false);
                 real[a]=p0r+u0r; imag[a]=p0i+u0i;
                 real[c]=p0r-u0r; imag[c]=p0i-u0i;
                 real[b]=p1r+u1r; imag[b]=p1i+u1i;
@@ -197,7 +231,12 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 imag[j] = t;
             }
         }
+#ifdef NC_OCTAVE_FFT_SPECIALIZED
+        firstFftPair(inverse);
+        if (N / 2 > 4) pairedFftStages<8>(inverse);
+#else
         pairedFftStages<2>(inverse);
+#endif
         if (inverse)
             for (int i = 0; i < M; ++i) {
                 real[i] /= M;
