@@ -1,0 +1,82 @@
+NanoCore firmware decoding — 2026-11-12
+
+Result
+The complete 1.10 package payload is decoded and independently validated against
+physical flash readback. Both executable segments are byte-for-byte identical.
+The same decoder passes signature, payload CRC and FIT segment hashes for all
+seven archived releases (1.04–1.12). This recovers executable machine code;
+reconstructing DSP algorithms, source and audio callback interfaces remains
+separate reverse-engineering work.
+
+Reproduce
+See tools/firmware_decode/README.txt. The offline decoder authenticates the
+original package before decoding and emits the complete payload, FIT header,
+both segments, an address-mapped analysis ELF and a JSON verification manifest.
+No device is needed once the package and recovered key are available.
+
+Transform
+For a zero-based payload block index i, each 32-byte stream block is:
+  SHA256(key || nonce || uint64_little_endian(i))
+XOR that stream with the encrypted payload; truncate the final stream block.
+The nonce is LUM0 bytes [20:36]. Payload starts at 37 + the byte at offset 36.
+The 32-byte key is:
+  125a6c3e9bc107a4d2ff348955aae119c7425d2b800f6397182c4e713bd5e8f0
+The trailer CRC32 is over plaintext. Core and FMUC Ed25519 signatures remain
+publisher authentication and use a separate public verification key. Recovering
+the stream key does not recover the publisher's private signing key.
+
+Derivation from the actual device
+A complete original OS partition backup was captured before modifications.
+Raw DFU writes accepted a modified FIT application. A temporary 252-byte RISC-V
+handler replaced the amp-read handler at 0x4008a640 (normal protocol op 0x39).
+The handler used the application's existing FAL lookup/read functions to expose
+bounded reads of the SPL partition, with requests limited to 200 bytes. FIT
+segment MD5/CRC fields were recomputed; the package-signing route was not used.
+Emulation checked seven boundary/register/stack cases before deployment.
+Full OS readback matched the patched image plus preserved partition tail.
+
+The diagnostic application booted and returned the full 0x26000-byte SPL
+partition. An AIC updater image begins at SPL offset 0x7600; its 256-byte
+header loads at 0x40300000 and its code starts at 0x40300100. Its 99,704-byte
+firmware body contains the decoder at 0x40305e82, SHA256 compression at
+0x40305c74, SHA update at 0x40305df8 and stream key at 0x40313f58. The key
+therefore appears at updater-body offset 0x13e58 / SPL offset 0x1b558.
+
+Physical restoration
+The original 868,352-byte OS partition was restored and verified by a full
+readback: SHA256 575a3666c684b98bd3dfd1842e12afac458ecbecd2b20b30d626bb3f0fe8d289.
+A zero-length DFU DNLOAD followed by GETSTATUS completed the session and rebooted
+the pedal. Normal MIDI enumeration and all 49 native read calls succeeded.
+All 40 presets match the post-initial-reboot backup taken before the diagnostic
+patch. The earlier first power cycle had already changed the live Ambient
+slot relative to the initial capture; see the physical-investigation record.
+No acoustic/audio-output check was performed by these USB reads.
+
+1.10 validation
+Package SHA256:
+  c69e30b384d7c67a54c2b618a82bb3150b92fb7f2c1fd6c447e296547514770c
+Decoded payload: 667648 bytes, CRC32 b8cdf9aa, SHA256:
+  ed84c017176e6f41e07089af43031a3ca7a9a695a6c0e0ca30f9c1d743e7b82c
+Physical image SHA256:
+  3aa9fae0d61f9f0954baa501e25c59643f0fafd4c38b8642158cdbdffeef1362
+Only payload offsets 0x4e and 0x4f differ: the FIT build timestamp is 0x6a7e8a01
+in the release and 0x6a7ee040 on this pedal. Executable bytes are identical:
+  seg0 offset 0x800, length 0x8004, load 0x30040000
+       MD5 cf70f8a7ee3a8a467a586c41316a79ee, CRC32 e976d7ea
+  seg1 offset 0x9000, length 0x99f28, load/entry 0x40000000
+       MD5 e6cd9f7405f4e630a6dbc59b0dd3bb50, CRC32 c56072be
+
+Evidence and local artifacts
+Tracked evidence/firmware-decoding.json records package validations, capture
+hashes, restore receipt and runtime verification without distributing firmware.
+Local analysis/decoded-firmware-1.10 contains decoded outputs. Local
+analysis/decoder-capture contains the SPL/updater dump, decoder disassembly,
+diagnostic source/emulation, backups and full flash verification records.
+
+Next work enabled
+The encryption/container obstacle and application execution path are solved.
+Use the decoded ELF and cross-release comparisons to identify the audio task,
+buffer format, effect dispatch and parameter ABI. Then implement a minimal
+observable audio change with the same backup/verify/restore workflow before
+attempting Uni-Vibe or polyphonic pitch processing. Successful diagnostic code
+execution does not yet establish DSP timing headroom or the audio callback ABI.

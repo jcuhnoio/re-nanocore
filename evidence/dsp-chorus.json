@@ -1,0 +1,177 @@
+{
+  "firmware": "1.12",
+  "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "scope": "Classic chorus, UI block5 subtype0 -> internal kind4 subtype0. Other MOD variants enumerated, not fully recovered.",
+  "functions": [
+    {
+      "address": "0x40071cfe",
+      "proposed_name": "nc_mod_process_dispatch",
+      "module": "audio/modulation.c",
+      "basis": "Observed callback table and native thunk; generic path or subtype8 fastpath.",
+      "evidence_id": "ev_6fc593ea6ad1feab6d2b5a3d4d750060fb54d51001f72eec6565e4408d9de88b",
+      "evidence_path": "analysis/rea-1.12-dsp/results/01000-export-0x40071cfe.json"
+    },
+    {
+      "address": "0x4006dc08",
+      "proposed_name": "nc_mod_process_general",
+      "module": "audio/modulation.c",
+      "basis": "Focused REA export; classic chorus is subtype0 default path; also handles other MOD variants.",
+      "evidence_id": "ev_375fa617cf7ec4ea228a4d42d173940dd93767a02a6336256630d793c19a9146",
+      "evidence_path": "analysis/rea-1.12-dsp/results/01001-export-0x4006dc08.json"
+    },
+    {
+      "address": "0x40071208",
+      "proposed_name": "nc_mod_init",
+      "module": "audio/modulation.c",
+      "basis": "Audio init invokes with shared MOD allocation; initializes delay buffers, coefficients, oscillator and other subtype state.",
+      "evidence_id": "ev_a49612872583bd0069b95e14d1c70571889353576bd2198c4ed25612ecb9a842",
+      "evidence_path": "analysis/rea-1.12/results/03534-export-0x40071208.json"
+    },
+    {
+      "address": "0x40071ca6",
+      "proposed_name": "nc_chorus_default_parameters",
+      "module": "audio/modulation.c",
+      "basis": "Initial MOD subtype0 defaults at normalized rate0.6043956/depth1.",
+      "evidence_id": "ev_6efb42c209dec934bbde1a49d8678967be3e1ad2d11f71c599a1567cf800158a",
+      "evidence_path": "analysis/rea-1.12/results/03536-export-0x40071ca6.json"
+    },
+    {
+      "address": "0x40071aa4",
+      "proposed_name": "nc_mod_default_parameters",
+      "module": "audio/modulation.c",
+      "basis": "Subtype-dependent defaults; subtype0 uses same classic chorus defaults.",
+      "evidence_id": "ev_ec6051a0751d7b3fac3ea0c9250a8fc902ffea0ae30e39958f36890a919fac65",
+      "evidence_path": "analysis/rea-1.12/results/03535-export-0x40071aa4.json"
+    }
+  ],
+  "constants": {
+    "sample_rate_default": {
+      "address": "0x4009678c",
+      "bits_hex": "0x472c4400",
+      "float32": 44100.0
+    },
+    "rate_min_hz": {
+      "address": "0x40099f88",
+      "bits_hex": "0x3dcccccd",
+      "float32": 0.10000000149011612
+    },
+    "rate_span_hz": {
+      "address": "0x4009b184",
+      "bits_hex": "0x4068f5c3",
+      "float32": 3.640000104904175
+    },
+    "rate_max_hz": {
+      "address": "0x4009a368",
+      "bits_hex": "0x406f5c29",
+      "float32": 3.740000009536743
+    },
+    "two_pi": {
+      "address": "0x4009f090",
+      "bits_hex": "0x40c90fdb",
+      "float32": 6.2831854820251465
+    },
+    "base_delay_ms": {
+      "address": "0x4009f7cc",
+      "bits_hex": "0x40a33333",
+      "float32": 5.099999904632568
+    },
+    "samples_per_second_to_ms": {
+      "address": "0x40099f28",
+      "bits_hex": "0x447a0000",
+      "float32": 1000.0
+    },
+    "default_rate_normalized": {
+      "address": "0x4009f73c",
+      "bits_hex": "0x3f1ab9ac",
+      "float32": 0.6043956279754639
+    },
+    "default_depth_normalized": {
+      "address": "0x4009672c",
+      "bits_hex": "0x3f800000",
+      "float32": 1.0
+    },
+    "fixed_mix_control": {
+      "address": "0x40096760",
+      "bits_hex": "0x3f4ccccd",
+      "float32": 0.800000011920929
+    },
+    "dry_gain": {
+      "address": "0x4009f744",
+      "bits_hex": "0x3f79022b",
+      "float32": 0.9726893305778503
+    },
+    "wet_gain": {
+      "address": "0x4009f740",
+      "bits_hex": "0x3f22a777",
+      "float32": 0.6353678107261658
+    },
+    "ring_length_float": {
+      "address": "0x4009f79c",
+      "bits_hex": "0x44800000",
+      "float32": 1024.0
+    },
+    "initial_lfo_a": {
+      "address": "0x4009f76c",
+      "bits_hex": "0xbf6c835e",
+      "float32": -0.9238795042037964
+    },
+    "initial_lfo_b": {
+      "address": "0x4009f770",
+      "bits_hex": "0x3ec3ef15",
+      "float32": 0.3826834261417389
+    },
+    "wet_filter_RC": {
+      "address": "0x4009f7d8",
+      "bits_hex": "0x38858243",
+      "float32": 6.36619733995758e-05
+    },
+    "wet_filter_cutoff": {
+      "address": "0x4009f7d4",
+      "bits_hex": "0x451c4000",
+      "float32": 2500.0
+    }
+  },
+  "state_allocation_bytes": 103148,
+  "state_pointer_global": "0x30051814",
+  "classic_chorus_state_fields": {
+    "0x0000": "float32 sample_rate",
+    "0x0004": "uint32 ring_write_index",
+    "0x0008": "float32 wet_lowpass_left",
+    "0x000c": "float32 wet_lowpass_right",
+    "0x0010": "float32 lfo_a",
+    "0x0014": "float32 lfo_b",
+    "0x0018": "float32 sin_phase_step",
+    "0x001c": "float32 cos_phase_step",
+    "0x0020": "float32 cached_rate",
+    "0x0024": "float32 cached_depth",
+    "0x0028": "float32 cached_fixed_mix",
+    "0x002c": "float32 base_delay_samples",
+    "0x0030": "float32 depth_delay_samples",
+    "0x0034": "float32 wet_lowpass_alpha",
+    "0x0038": "float32 fixed_mix_value",
+    "0x003c": "float32 dry_gain",
+    "0x0040": "float32 wet_gain",
+    "0x0044": "float32 left_delay[1024]",
+    "0x1044": "float32 right_delay[1024]",
+    "0x2044": "uint8 current_subtype"
+  },
+  "native_disassembly": {
+    "path": "analysis/dsp/mod-general-vendor-disassembly.txt",
+    "sha256": "5587463c5e4a7ace0e9e8959c8a03b4fd4bf9eae320587f870669b475268c849",
+    "checked_addresses": [
+      "0x4006dd94",
+      "0x4006ddb0",
+      "0x4006dde8",
+      "0x4006ddea",
+      "0x4006de8e",
+      "0x4006de92",
+      "0x4006de96"
+    ]
+  },
+  "limitations": [
+    "Static observation, no audio equivalence/runtime timing tests.",
+    "REA pseudo-code contains false 64-bit accesses; native flw/fsw and four-byte strides establish float32 samples.",
+    "Shared MOD allocation must be retained until all variants/lifecycle callers are understood.",
+    "Only classic subtype0 signal path dissected deeply; ChorusII/III are separate paths."
+  ]
+}

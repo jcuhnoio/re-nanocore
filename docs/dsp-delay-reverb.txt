@@ -1,0 +1,147 @@
+Firmware 1.12: delay and reverb recovery
+=======================================
+Evidence index: evidence/dsp-delay-reverb.json. Its function records point to
+retained REA exports and evidence IDs, and its effect records contain every
+visible parameter name and subtype. Names prefixed nc_ are analyst annotations.
+These are recovered decompilations, not the manufacturer's original source.
+
+Coverage and subtype identity
+-----------------------------
+Delay is chain kind 5, callback 40066cee. Eight visible subtypes are implemented:
+0 BBD, 1 Digital, 2 Duck, 3 Ice, 4 Reverse, 5 Lofi, 6 Smear, 7 Mod.
+General processing is 40061c98. Ice also has a specialized 40060b4c entry;
+40066cee calls it directly when initialized state already selects subtype 3.
+Otherwise the general processor handles switching, parameter mapping and reset.
+
+Reverb is chain kind 3, RAM callback 30043fd4, NOT kind 6 (which is EQ).
+0 Room -> 300445ac; 1 Plate -> 4007fec8; 2 Hall -> 4007db8c;
+3 Concert -> 4007b7b0; 5 Shimmer -> 30045b78; 6 Cloud -> 30042d7e;
+7 Spring -> copied kernel originally at 400a29c8.
+Subtype 4 canonicalizes to 2, so it is a Hall alias. Although the raw name table
+has a Cloud string in slot 4, the UI name resolver canonicalizes before indexing.
+There are seven distinct reverb algorithms. UI resolver 40025d92 maps invalid
+reverb IDs >=8 to Cloud; the DSP callback maps >=8 to Room. Preserve this
+layer-specific behavior when reconstructing dispatch.
+
+UI parameters come from 4002607e and little-endian pointer tables in seg1.
+Delay table addresses by ID: 0:4009bb60, 1/4:4009bc04, 2:4009bbe4,
+3:4009bbd0, 5:4009bbb8, 6:4009bba0, 7:4009bb88.
+Reverb tables: Room/Plate 4009b9e8, Hall 4009ba08, Concert 4009ba44,
+Shimmer 4009ba1c, Cloud 4009ba58, Spring 4009b324.
+The evidence JSON records the exact visible labels and ordering.
+
+Delay architecture and arithmetic
+---------------------------------
+The general processor normalizes/clamps parameters, updates selected state,
+and then executes a distinct subtype branch. It uses sample-rate-derived delay
+lengths and circular float buffers supplied at initialization. Several parameter
+transitions use (target-current)/block_length increments to avoid block steps.
+Fractional taps use floor/index extraction and linear interpolation:
+    tap = ring[i] + frac * (ring[next] - ring[i]).
+Digital visibly feeds filtered taps back into a circular delay and mixes dry and
+wet paths. Two recursive biquad sections filter the tap; stereo input may be
+averaged into a shared delay while retaining dry channel information. Recursive
+quadrature oscillator state is also advanced in the branch; a clean-room Digital
+implementation must not assume this firmware branch is an entirely unmodulated
+single tap.
+
+Duck has separate SENS, DEPTH, ATK and REL controls and level/envelope state in
+addition to TIME/FBK/FILTER/MIX. Reverse maintains its own reversed read/window
+state rather than routing to an ordinary forward delay. Ice is a large separate
+processor using fractional delay/pitch-related state; its INTVL control must be
+kept distinct from Shimmer's PITCH control. Lofi has separate BITS and LOFI
+parameters. Smear uses 4006070c to compute sample-rate-aware filter coefficients.
+Mod has separate depth and rate parameters. BBD's third control is AGE.
+These role descriptions come from the branch and parameter evidence, not a
+claim that precise coefficient mappings have all been audited. Preserve each
+complete exported branch: replacing it with a textbook effect would lose the
+firmware behavior. Exact rounding, clamp boundaries, feedback saturation,
+window shapes and oscillator normalization still require instruction-level
+float-ABI repair and numerical verification.
+
+4006066c is a bypass/copy helper, NOT a reverse-delay DSP kernel. It copies
+separate channels where outputs exist; when stereo input has only a mono output,
+it averages L/R with coefficient 0.5 (seg1 constant 4009675c).
+40065e48 initializes delay state; 40065c3e clears buffers and state via a supplied
+clear callback. They must accompany the processing code in a usable port.
+
+Reverb lifecycle and processing
+-------------------------------
+40073b48 clears 0x74c68 bytes, establishes sample rate (44100 fallback if invalid),
+and marks current subtype invalid. 40073bb0 constructs/selects the algorithm.
+40073d9e resets its history. 40073170 caches normalized parameters and invokes
+algorithm-specific setters; unchanged controls avoid redundant configuration.
+The JSON identifies each initializer/configurator/resetter separately.
+30043fd4 validates state and buffers, canonicalizes subtype, and bypasses if the
+requested subtype does not match the constructed state. It processes at most
+128 samples per iteration with scratch storage at state+0x3c and +0x23c;
+algorithm state begins at +0x440. Wet level is clamped. Dry attenuation starts
+above mix 0.75 (seg1 float at 4009a644). Keep that curve instead of assuming an
+equal-power crossfade.
+
+The exported Room/Plate/Hall/Concert code contains distinct delay-network,
+filter, damping and feedback calculations. Do not collapse these to one generic
+reverb. Plate contains all-pass recurrences with coefficients -0.625 and +0.625
+(constants 400a0fd8 and 400a0fdc):
+    y = delayed - g*x;
+    stored = x + g*y.
+Other stages and feedback paths retain their own signs and gains. This establishes
+an all-pass building block, not attribution to a named published reverb design.
+Shimmer has its own RAM kernel and pitch parameter mapping/configuration; Cloud
+has a distinct RAM kernel, modulation controls and helper closure.
+
+Spring: recovered dynamically copied executable code
+----------------------------------------------------
+40073bb0 copies 0x24ea bytes from original address 400a1540 into aligned writable
+memory. It installs RAM_base+0x1488 at state+0x175b4. Therefore the missing
+indirect processing entry is original-address 400a29c8. Root's REA pass seeded
+that entry and recovered it with its direct helper closure. The earlier static
+function inventory alone missed this algorithm.
+
+The outer callback adds a 4096-sample fractional predelay ring at state+0x1c5f8,
+write index +0x20600, current delay +0x205f8, target delay +0x205fc. Target in
+samples is (5 + 75*normalized_predelay)*sample_rate/1000, from decoded float
+constants 40099f7c=5 and 4009a37c=75. It interpolates delay changes across the
+block, then invokes the copied five-argument kernel through +0x175b4.
+
+The copied kernel works in chunks <=64 samples. A parity flag and approximately
+half-length count retain continuity through odd block lengths. Symmetric FIR
+convolutions decimate part of the network; 400a2370 forms interpolation outputs.
+The kernel combines a full-rate branch with this half-rate branch and writes two
+output buffers. It uses multiple delay lines, all-pass diffusion sections,
+recursive damping/filter stages and feedback. This is substantially more than
+one comb filter or a physical spring label attached to a generic reverb.
+
+Recovered copied-code primitives:
+400a1540 copies float samples; 400a15ac exchanges delay storage and input/output.
+400a1628 reads a circular block without advancing the supplied index.
+400a1688 writes a circular block and advances a uint16 index.
+400a1704 exchanges a circular block and advances that index.
+These helpers split at most once at a wrap boundary; caller chunk sizes and
+buffer capacities are part of their contract.
+400a1790 is a transposed direct-form II biquad:
+    y = b0*x + z1;
+    z1 = b1*x - a1*y + z2;
+    z2 = b2*x - a2*y.
+State order is b0,b1,b2,a1,a2,z1,z2 (four-byte floats).
+400a1a80 implements a samplewise all-pass exchange:
+    old = delay[i]; v = x[i] + g*old;
+    delay[i] = v; x[i] = old - g*v.
+400a1b1c wraps that primitive around a circular delay. 400a1ba4 and 400a1dac
+compose additional all-pass stages. Generic helper names remain where individual
+roles are not sufficiently established. Full arithmetic stays in the retained
+C exports and must not be replaced by a fabricated approximation.
+
+What is and is not decoded
+--------------------------
+All visible delay/reverb subtype entry paths, lifecycle entries and the previously
+missing Spring code are identified; all 75 named function records have retained
+exports. This does not establish a bit-exact, compilable port. REA's decompiler
+currently emits undefined8/ulonglong accesses at four-byte float strides and
+some incorrect floating arguments/returns. These are representation defects,
+not evidence that audio samples are actually doubles or 64-bit integers.
+In particular Spring's internal five-argument kernel must not be assigned the
+ten-argument chain callback ABI. Repair floating register and memory widths
+against instructions before compiling. Reconstruct state layouts, retain constant
+tables and compare impulse, silence, parameter-step and sustained-input results
+against captured firmware behavior before claiming numerical equivalence.

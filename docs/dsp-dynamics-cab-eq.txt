@@ -1,0 +1,102 @@
+NanoCore 1.12: dynamics, cabinet/IR, EQ and expression DSP
+
+Evidence ledger: evidence/dsp-dynamics-cab-eq.json. Addresses refer to the
+validated 1.12 image. This is a static decoding report. Recovered C retains
+register/aliasing artifacts and has not been proved sample-exact by audio tests.
+
+DYNAMICS
+The callback at 40069738 is shared by internal dispatch kinds7 and9. Its
+four branches correspond to GATE, AUTO_GATE, NG+COM and COMP. Values>=4
+normalize to0. The state initialized by40069066 occupies0x2148 bytes.
+
+GATE maps THRESH to100*x-100dB and REL to5+95*x ms. It uses squared-input
+power envelopes and interpolated logarithmic lookup tables, hold state and
+smoothed gain; it must not be replaced with a simple amplitude comparator.
+Two1024-entry tables occupy state+0x78 and+0x1078. Left/right envelope state
+appears at+0x4c/+0x50. Attack/release coefficients include powers of0.5 rather
+than an assumed exp(-1/tau) convention.
+
+AUTO_GATE uses the tail state at+0x20d0..+0x2144. Initialization converts Fs
+into an approximately1ms detector window, rounded and bounded1..65535 samples.
+It combines filtered-input envelopes, a running noise estimate, hysteresis,
+hold counters and interpolation of the output gain across windows. SENS maps
+to12*x-6. REL maps to a time constant of(20+280*x)/ln(1000) milliseconds,
+then an exp(-window_seconds/tau) release coefficient. These are detector
+configuration values, not a claim that sensitivity is a literal gate threshold.
+
+COMP uses4005ff6c for parameter configuration and40060284 for processing.
+Controls map to threshold=60*x-60dB, ratio=1+19*x, knee=24*x dB,
+attack=200*x ms, release=1000*x ms, makeup=48*x-24dB.
+The detector links stereo channels, applying common gain reduction to both.
+The transfer includes a quadratic soft knee and log/exp approximations.
+For detector level d, threshold t, knee k, ratio r, the usual knee-domain
+expression visible in the code is d+(1/r-1)*(d-t+k/2)^2/(2*k); outside
+that interval it joins the unchanged and t+(d-t)/r segments. The actual
+code also includes envelope/history/hold logic. Configuration derives makeup
+as10^(makeup/20), and attack/release from exp(-1/(Fs*milliseconds*.001)).
+NG+COM runs the gate path then the same compressor with controls1..6; control0
+is GATE. Compressor substate starts at+0x2078. Reset40068da0 also calls the
+compressor detector reset4005ff48. Do not trust the decompiler's apparent
+11-argument callback prototype: float argument recovery adds artifacts.
+
+CABINET / IR
+Internal kind2 enters4005f2c4. Stereo is downmixed to mono before convolution
+and mono output is copied to both channels.40076694 clips IR length to1024.
+The first128 taps feed the direct FIR kernel30040000. Remaining taps form up
+to seven128-tap partitions transformed into256-float packed spectra. Main
+processor40076bf0 combines the direct head with the overlap-add FFT tail.
+400753d0 is the seven-partition complex multiply/accumulate specialization;
+40076988 services deferred FFT-tail work.40075ec4 wraps forward/inverse FFT
+and backend calibration/scaling. These details matter for reproducing latency
+and numerical scaling; substituting arbitrary FFT conventions is unverified.
+
+The wrapper maps normalized lowcut to exp(2.9957323+3.2188759*x), approximately
+20..500Hz, and highcut to exp(7.6009026+2.30258465*x), approximately2..20kHz.
+Cutoff is limited below Nyquist by0.99. If lowcut<=0.0001 and highcut>=0.9999,
+postfilters are skipped. Otherwise a=exp(-2*pi*f/Fs),
+hp=a_low*(input+previous_hp-previous_input),
+lp=(1-a_high)*hp+a_high*previous_lp.
+Linear LEVEL and optional fade then scale the output. Null controls use level0.8.
+State wrapper offsets:0 convolver pointer,4 Fs,8/c cachedcutoffs,10 HPcoefficient,
+14 previousinput,18 previousHP,1c LPcoefficient,20 previousLP,2c currentfade,
+30 fadeincrement,34 remainingfadesamples. IR identity is data selection, not a
+separate implementation per factory/user cabinet name.
+
+EQUALIZER
+Kind6 enters40066fb4. Subtypes0/1/2 select EQ3/EQ6/EQ8; higher values normalize
+to2. Init40066e08 clears0x268 bytes. Each channel has its own transposed
+DF-II biquad cascade: y=b0*x+z1; z1=z2+b1*x-a1*y; z2=b2*x-a2*y.
+EQ3 has100Hz low shelf,1500Hz peaking mid and5000Hz high shelf.
+EQ6 peaks at120/250/500/1000/2000/4000Hz.
+EQ8 peaks at60/120/250/500/1000/2000/4000/8000Hz.
+Band controls map to30*x-15dB, level to24*x-12dB. Coefficient calculation uses
+A=10^(gain/40), sine/cosine and normalized biquad formulas; histories reset
+when mode changes, cached controls avoid unnecessary coefficient regeneration.
+
+EXPRESSION / UTILITY
+Kind10 thunk40068d96 reaches400682f4. State init40068c0c uses0x5c bytes.
+Only four modes are reachable:0 VOLUME,1 PAN,2 WIDTH,3 WAH. Normalizer40068cce
+and main callback both force>=4 to0. The label table also contains PITCH,
+COMBFILTER,HAAS,TAPESTOP,BITCRUSH and repeatedVOLUME names. These strings do
+not establish available effects on this runtime path.
+
+VOLUME target=((max-min)*position+min)*level. Gain follows target with
+alpha=1-exp(-1000/(Fs*8)), an8ms smoothing constant. PAN is cosine-based
+balance with separately smoothed channel gains; center preserves both channels,
+an extreme attenuates the opposite channel. WIDTH computes mid=(L+R)/2 and
+side=(L-R)*width/2, reconstructs mid+side/mid-side, then applies level.
+Normalized width0 collapses to mono and1 retains original stereo width.
+
+WAH uses a nonlinear position law involving position^1.55 and an exponential
+sweep from approximately430Hz to2200Hz. Resonance depends on position and the
+second control; cutoff is capped at0.42Fs. Its resonant state-variable filter
+uses tan(pi*f/Fs) and1/(g*(g+1/Q)+1), with conditioning/DC removal and rational
+soft-clipping before/after the resonator. Floating-register placeholders in
+this branch require native-instruction reconciliation before treating the
+recovered pseudocode as executable or numerically faithful source.
+
+Next verification work: resolve remaining float-register artifacts; establish
+calling conventions from native instructions; derive tests using impulse,
+steady-tone and dynamics-step captures; compare original/translated output.
+No primary implementation entry point above is missing from the baseline
+per-function export. Full algorithm recovery is distinct from recompilability.

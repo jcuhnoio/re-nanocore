@@ -1,0 +1,77 @@
+Four-control UniVibe revision, NanoCore1.10
+=========================================
+
+Requested interface: MXR M68 style LEVEL, SPEED, DEPTH, CHORUS/VIBRATO.
+On-device order is SPEED, DEPTH, LEVEL, MODE. Only four parameters are exposed.
+No adjustable WAVE, VOICE or MIX remains. MODE uses the native enum mechanism;
+its stored endpoints are0/1, renderedCHORUS/VIBRATO. SPEED/DEPTH/LEVEL display
+normalized0..100 values, not a falsely calibrated analog scale or Hertz readout.
+
+Control mapping (our implementation, not claimed MXR pot calibration)
+-------------------------------------------------------------------
+SPEED: .2+5.8*x*x Hz; default35 (~.91Hz).
+DEPTH: modulation excursion0..1; default80.
+LEVEL: linear0..2 output gain;50=unity multiplier,100=+6.02dB; default50.
+MODE:0=CHORUS (equal dry/wet),1=VIBRATO (wet-only); defaultCHORUS.
+Mode changes crossfade briefly to avoid a hard audio discontinuity; that is not
+an additional continuously adjustable MIX control.
+
+Official interface reference:
+https://www.jimdunlop.com/content/manuals/M68.pdf
+The manual documents these control roles and dry-plus-wet versus wet-only modes.
+It does not establish our numerical knob mapping or prove sonic equivalence.
+
+DSP revision
+------------
+Source firmware/custom-fx/src/univibe.c retains the dedicated nine-argument
+Velvet ABI. It uses116bytes of existing substate; the native reset at+4 clears
+its marker. No heap, globals requiring initialization, or external DSP calls.
+
+The former ideal allpass network is replaced with four non-ideal first-order
+phase stages derived from Darabundit, Wedelich and Bischoff, DAFx2019 paper31:
+https://www.dafx.de/paper-archive/2019/DAFx2019_paper_31.pdf
+Original schematic cross-check:
+https://experimentalistsanonymous.com/diy/Schematics/Vibrato%20and%20Pitch%20Shift/Univibe.pdf
+
+Fixed Cp=[15n,220n,470n,4.7n]F, couplingC=1uF, seriesR=4.7k.
+The schematic says470N; paperTable1 prints470p, an apparent publication typo.
+Alpha=[1.01,.98,.97,.95], beta=[1.11,1.09,1.10,1.09] are measurements of one
+vintage unit. They are not verified MXR M68 component or transfer measurements.
+For eachstage: kc=Cp/(Cp+Cdc),ke=Cdc/(Cp+Cdc),w=(Cp+Cdc)/(Rprime*Cp*Cdc),
+A=alpha*ke-beta*kc. H(s)=(A*w-beta*s)/(s+w). Ordinary bilinear substitution
+withK=2Fs givesb0=(A*w-beta*K)/(K+w),b1=(A*w+beta*K)/(K+w),a1=(w-K)/(K+w).
+This includes frequency-dependent shelving omitted by the previous ideal stages.
+The dryfeed approximates the first splitter's emitter,1.01*input, before itsRC
+network; it is not the first filter output.
+
+Explicit approximation boundary
+-------------------------------
+The rounded symmetric triangle LFO,20/60ms lamp smoothing and fourth-power
+mapping between measured LDR resistance extrema are our approximations.
+Measured per-cell3D optical curves were not obtained. Mixer amplitudes are
+normalized for this implementation rather than exact analog resistor loading.
+Preamp/buffer saturation is not modeled. Fixed values here mean fixed internal
+voicing; they do not establish a faithful, calibrated MXR circuit recreation.
+The physical M68 or reference recordings would be needed for that comparison.
+
+Tests
+-----
+Independent double-precision direct-form1 impulse oracle at8k/44.1k/96kHz in
+bothmodes; levelzero/exact2x; modeboundary; sixteencontrolcorners over2seconds
+each; inplace/chunk invariance;116bytestatecanary. HostASan/UBSan passes.
+CompiledRV32 output matches hostC exactly across five4096frame cases, including
+init/controlchanges/reset, integer/FPcallee-save andstackchecks. Sampleloop
+maximumobserved12056instructions/64stereo frames is not a physicalcycle bound.
+Native UIhelpers receive separate emulatorvalidation; originalnon-MOD10 paths
+are compared tostock. See trackedcheck_vibe_ui_target.py and evidence receipt.
+
+Older five-control firmware remains recorded in docs/custom-fx-univibe.txt and
+evidence/custom-fx-univibe-flash.json. This revision's build/image/deployment
+receipts are separate; stock1.10 and each preflash fullOSbackup are retained.
+
+Physical deployment
+-------------------
+Flashed1.10 revision with exact868352byte fullOS readback. Device re-enumerated
+asruntimeMIDI and reportedready. UIappearance andsound awaituserconfirmation.
+See evidence/custom-fx-univibe-controls-flash.json and local session
+analysis/custom-fx/univibe-mxr-session for backup/readback/restorecommand.

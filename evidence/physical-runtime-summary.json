@@ -1,0 +1,36 @@
+{
+  "physical": true,
+  "firmware_version": "1.10 (user reported, not independently queried)",
+  "preset_reads": 40,
+  "amp_slots": 38,
+  "amp_slot_size": 12288,
+  "ir_slots": 30,
+  "ir_slot_size": 4096,
+  "active_snapshot_unchanged": true,
+  "usb": {
+    "vid": "33c3",
+    "pid": "1301",
+    "manufacturer": "Ember",
+    "configuration_bytes": 302,
+    "interfaces": 5,
+    "audio_channels": 2,
+    "audio_bits": 16,
+    "audio_sample_rate": 44100,
+    "runtime_interfaces": [
+      "audio control",
+      "audio streaming playback",
+      "audio streaming capture",
+      "audio control for MIDI",
+      "MIDI streaming"
+    ]
+  },
+  "decoded_midi_frames": 5,
+  "raw_files_sha256": {
+    "provenance.json": "85d84a21ee769e6a7ae9453d4ac880a7f7cdaa518ef5e31c40be48b8f82c890a",
+    "system-profiler.json": "3332ae2e664bb4f59772e01c85d2f566e5f2db70f330e8eecfc9dbf9e3a8d1ae",
+    "reads.json": "c18d76f1679f4f05a815eec17d960fe4c8da12a867c628b2e12b2ada41cdd997",
+    "usb-descriptors.json": "4df9137ad71e6f8ba95c11ae46a2eefce45c46d230f96346863ad6833efcb817",
+    "midi-decoded.json": "e2631aad15041c0d564fa0566ef7c812b628523f231c9898023b6a29dfa67a78",
+    "midi-incoming.json": "6583f10249bcaddb5056341af17293b5416322ca99fad23e6f39b72438f8856e"
+  }
+}

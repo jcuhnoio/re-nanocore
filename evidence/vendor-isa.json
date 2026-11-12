@@ -1,0 +1,1615 @@
+{
+  "date": "2026-11-12",
+  "sdk_commit": "77fbe30dd2de366fae702ece84e1694153d94591",
+  "toolchain_archive": "Xuantie-900-gcc-elf-newlib-x86_64-V2.6.1-20220906.tar.gz",
+  "archive_url": "https://media.githubusercontent.com/media/artinchip/luban-lite/77fbe30dd2de366fae702ece84e1694153d94591/tools/toolchain/Xuantie-900-gcc-elf-newlib-x86_64-V2.6.1-20220906.tar.gz",
+  "archive_sha256_matches_sdk_lfs": true,
+  "gcc_version": "riscv64-unknown-elf-gcc (Xuantie-900 elf newlib gcc Toolchain V2.6.1 B-20220906) 10.2.0\nCopyright (C) 2020 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.",
+  "binutils_version": "GNU Binutils 2.35",
+  "execution": "Existing Debian amd64 Docker image under emulation, --network none, repository mounted read-only except dedicated assembler output directory; target firmware never executed.",
+  "vendor_opcode_reference_commit": "a6257b56e4e40ce23eb2ddfdb861e27552b575bc",
+  "legacy_p_spec_commit": "c3409c8edb7df262cb3db0ff323077120e5f7f04",
+  "legacy_p_spec_version": "0.9.11-draft-20211209",
+  "identification": {
+    "range_start": "0x40000000",
+    "range_end_exclusive": "0x40091980",
+    "note": "Linear disassembly sites; not proof of runtime execution or complete executable coverage.",
+    "inputs": {
+      "analysis/direct-firmware/seg1-thead-disassembly.txt": "82b2c37d369ccbe95008282a23472b923fdd9e76a63ce7cbdad65657967e2af1",
+      "analysis/vendor-isa/firmware-vendor-all-disassembly.txt": "a52a8562abb82338d73a7f0c2d963b582677bc2d42e7ad449e40b0ce06318900"
+    },
+    "sites": 245,
+    "mnemonic_counts": {
+      "ipush": 1,
+      "ipop": 1,
+      "fmv.x.hw": 1,
+      "fmv.hw.x": 1,
+      "wexti": 18,
+      "dcache.cpa": 8,
+      "umar64": 5,
+      "smar64": 2,
+      "add64": 93,
+      "sub64": 8,
+      "dcache.ipa": 4,
+      "dcache.cipa": 4,
+      "dcache.call": 1,
+      "icache.iall": 2,
+      "mulr64": 11,
+      "insb": 70,
+      "pkbb16": 5,
+      "dcache.iall": 1,
+      "maxw": 2,
+      "minw": 4,
+      "swap8": 1,
+      "pktb16": 2
+    },
+    "instructions": [
+      {
+        "address": "0x400003c0",
+        "word": "0040000b",
+        "vendor_mnemonic": "ipush",
+        "operands": ""
+      },
+      {
+        "address": "0x4000046e",
+        "word": "0050000b",
+        "vendor_mnemonic": "ipop",
+        "operands": ""
+      },
+      {
+        "address": "0x40000ed8",
+        "word": "c005168b",
+        "vendor_mnemonic": "fmv.x.hw",
+        "operands": "a3,fa0"
+      },
+      {
+        "address": "0x40000fce",
+        "word": "a006950b",
+        "vendor_mnemonic": "fmv.hw.x",
+        "operands": "fa0,a3"
+      },
+      {
+        "address": "0x400073dc",
+        "word": "df650777",
+        "vendor_mnemonic": "wexti",
+        "operands": "a4,a0,22"
+      },
+      {
+        "address": "0x400073f8",
+        "word": "dec50777",
+        "vendor_mnemonic": "wexti",
+        "operands": "a4,a0,12"
+      },
+      {
+        "address": "0x40007408",
+        "word": "de250777",
+        "vendor_mnemonic": "wexti",
+        "operands": "a4,a0,2"
+      },
+      {
+        "address": "0x400076be",
+        "word": "0295000b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a0"
+      },
+      {
+        "address": "0x40007996",
+        "word": "a5349577",
+        "vendor_mnemonic": "umar64",
+        "operands": "a0,s1,s3"
+      },
+      {
+        "address": "0x40007fc2",
+        "word": "de780577",
+        "vendor_mnemonic": "wexti",
+        "operands": "a0,a6,7"
+      },
+      {
+        "address": "0x40007ff2",
+        "word": "85ce1877",
+        "vendor_mnemonic": "smar64",
+        "operands": "a6,t3,t3"
+      },
+      {
+        "address": "0x40009256",
+        "word": "a4b49777",
+        "vendor_mnemonic": "umar64",
+        "operands": "a4,s1,a1"
+      },
+      {
+        "address": "0x40009d06",
+        "word": "c1051577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,a6"
+      },
+      {
+        "address": "0x40009ebe",
+        "word": "c3e71677",
+        "vendor_mnemonic": "sub64",
+        "operands": "a2,a4,t5"
+      },
+      {
+        "address": "0x40009ec2",
+        "word": "de760577",
+        "vendor_mnemonic": "wexti",
+        "operands": "a0,a2,7"
+      },
+      {
+        "address": "0x40009ed0",
+        "word": "c2c71f77",
+        "vendor_mnemonic": "sub64",
+        "operands": "t5,a4,a2"
+      },
+      {
+        "address": "0x40009f18",
+        "word": "c3681777",
+        "vendor_mnemonic": "sub64",
+        "operands": "a4,a6,s6"
+      },
+      {
+        "address": "0x40009f1c",
+        "word": "de7706f7",
+        "vendor_mnemonic": "wexti",
+        "operands": "a3,a4,7"
+      },
+      {
+        "address": "0x40009f2a",
+        "word": "c2e81b77",
+        "vendor_mnemonic": "sub64",
+        "operands": "s6,a6,a4"
+      },
+      {
+        "address": "0x4000a190",
+        "word": "c0c71777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,a2"
+      },
+      {
+        "address": "0x4000a21e",
+        "word": "02a6800b",
+        "vendor_mnemonic": "dcache.ipa",
+        "operands": "a3"
+      },
+      {
+        "address": "0x4000ab40",
+        "word": "c1061677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a6"
+      },
+      {
+        "address": "0x4000ab60",
+        "word": "c1061677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a6"
+      },
+      {
+        "address": "0x4000ab80",
+        "word": "c1061677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a6"
+      },
+      {
+        "address": "0x4000aba0",
+        "word": "c1061677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a6"
+      },
+      {
+        "address": "0x4000b0d0",
+        "word": "c2a71577",
+        "vendor_mnemonic": "sub64",
+        "operands": "a0,a4,a0"
+      },
+      {
+        "address": "0x40010792",
+        "word": "02a7800b",
+        "vendor_mnemonic": "dcache.ipa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x400107d0",
+        "word": "0297800b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x40011fd8",
+        "word": "0297800b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x400121a2",
+        "word": "02b7800b",
+        "vendor_mnemonic": "dcache.cipa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x40013048",
+        "word": "c0c71677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a4,a2"
+      },
+      {
+        "address": "0x400140aa",
+        "word": "02b7800b",
+        "vendor_mnemonic": "dcache.cipa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x400141b4",
+        "word": "0010000b",
+        "vendor_mnemonic": "dcache.call",
+        "operands": ""
+      },
+      {
+        "address": "0x400141e4",
+        "word": "0100000b",
+        "vendor_mnemonic": "icache.iall",
+        "operands": ""
+      },
+      {
+        "address": "0x40014ff6",
+        "word": "f0a79577",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a0,a5,a0"
+      },
+      {
+        "address": "0x400164fa",
+        "word": "ac078577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,0"
+      },
+      {
+        "address": "0x40016502",
+        "word": "ac170577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a4,1"
+      },
+      {
+        "address": "0x4001650a",
+        "word": "ac278577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,2"
+      },
+      {
+        "address": "0x40016520",
+        "word": "ac078577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,0"
+      },
+      {
+        "address": "0x40016528",
+        "word": "ac170577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a4,1"
+      },
+      {
+        "address": "0x40016530",
+        "word": "ac278577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,2"
+      },
+      {
+        "address": "0x4001654a",
+        "word": "ac050777",
+        "vendor_mnemonic": "insb",
+        "operands": "a4,a0,0"
+      },
+      {
+        "address": "0x4001654e",
+        "word": "ac178777",
+        "vendor_mnemonic": "insb",
+        "operands": "a4,a5,1"
+      },
+      {
+        "address": "0x40016556",
+        "word": "ac278777",
+        "vendor_mnemonic": "insb",
+        "operands": "a4,a5,2"
+      },
+      {
+        "address": "0x4001e922",
+        "word": "c1061677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a6"
+      },
+      {
+        "address": "0x40022460",
+        "word": "a4f49577",
+        "vendor_mnemonic": "umar64",
+        "operands": "a0,s1,a5"
+      },
+      {
+        "address": "0x40022486",
+        "word": "a5249577",
+        "vendor_mnemonic": "umar64",
+        "operands": "a0,s1,s2"
+      },
+      {
+        "address": "0x40023582",
+        "word": "ac0707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,0"
+      },
+      {
+        "address": "0x4002358a",
+        "word": "ac1707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,1"
+      },
+      {
+        "address": "0x40023592",
+        "word": "ac2707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,2"
+      },
+      {
+        "address": "0x4002359a",
+        "word": "ac3707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,3"
+      },
+      {
+        "address": "0x4002433a",
+        "word": "de770777",
+        "vendor_mnemonic": "wexti",
+        "operands": "a4,a4,7"
+      },
+      {
+        "address": "0x400244ca",
+        "word": "c1271777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,s2"
+      },
+      {
+        "address": "0x40024514",
+        "word": "c0c71777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,a2"
+      },
+      {
+        "address": "0x40024588",
+        "word": "c0ac1c77",
+        "vendor_mnemonic": "add64",
+        "operands": "s8,s8,a0"
+      },
+      {
+        "address": "0x400245ce",
+        "word": "c3a51577",
+        "vendor_mnemonic": "sub64",
+        "operands": "a0,a0,s10"
+      },
+      {
+        "address": "0x400248c6",
+        "word": "f0e61677",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a2,a2,a4"
+      },
+      {
+        "address": "0x4002497c",
+        "word": "f0e61677",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a2,a2,a4"
+      },
+      {
+        "address": "0x400249a0",
+        "word": "c1061677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a6"
+      },
+      {
+        "address": "0x40024a0c",
+        "word": "f0e51777",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a4,a0,a4"
+      },
+      {
+        "address": "0x40028fba",
+        "word": "c1261677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s2"
+      },
+      {
+        "address": "0x40028fce",
+        "word": "dea60677",
+        "vendor_mnemonic": "wexti",
+        "operands": "a2,a2,10"
+      },
+      {
+        "address": "0x4002902c",
+        "word": "84d69577",
+        "vendor_mnemonic": "smar64",
+        "operands": "a0,a3,a3"
+      },
+      {
+        "address": "0x4002906c",
+        "word": "c0eb1b77",
+        "vendor_mnemonic": "add64",
+        "operands": "s6,s6,a4"
+      },
+      {
+        "address": "0x40029080",
+        "word": "f0871777",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a4,a4,s0"
+      },
+      {
+        "address": "0x4002908a",
+        "word": "df4705f7",
+        "vendor_mnemonic": "wexti",
+        "operands": "a1,a4,20"
+      },
+      {
+        "address": "0x400290ae",
+        "word": "c1441477",
+        "vendor_mnemonic": "add64",
+        "operands": "s0,s0,s4"
+      },
+      {
+        "address": "0x4003237a",
+        "word": "f0a71777",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a4,a4,a0"
+      },
+      {
+        "address": "0x40033a3e",
+        "word": "0296800b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a3"
+      },
+      {
+        "address": "0x40033ee2",
+        "word": "0297800b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x40034dd6",
+        "word": "0297800b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x40034e06",
+        "word": "02a7800b",
+        "vendor_mnemonic": "dcache.ipa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x40035454",
+        "word": "02a7800b",
+        "vendor_mnemonic": "dcache.ipa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x40035abe",
+        "word": "0295000b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a0"
+      },
+      {
+        "address": "0x40036cec",
+        "word": "f0f51577",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a0,a0,a5"
+      },
+      {
+        "address": "0x40036dca",
+        "word": "f0f51577",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a0,a0,a5"
+      },
+      {
+        "address": "0x40036dd6",
+        "word": "c0a41477",
+        "vendor_mnemonic": "add64",
+        "operands": "s0,s0,a0"
+      },
+      {
+        "address": "0x4003708e",
+        "word": "f1159677",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a2,a1,a7"
+      },
+      {
+        "address": "0x40037092",
+        "word": "f0f61877",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a6,a2,a5"
+      },
+      {
+        "address": "0x400370a0",
+        "word": "f0f81577",
+        "vendor_mnemonic": "mulr64",
+        "operands": "a0,a6,a5"
+      },
+      {
+        "address": "0x40037aea",
+        "word": "c1251977",
+        "vendor_mnemonic": "add64",
+        "operands": "s2,a0,s2"
+      },
+      {
+        "address": "0x40037c30",
+        "word": "c1251977",
+        "vendor_mnemonic": "add64",
+        "operands": "s2,a0,s2"
+      },
+      {
+        "address": "0x400385a2",
+        "word": "0297800b",
+        "vendor_mnemonic": "dcache.cpa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x400385e0",
+        "word": "02b7800b",
+        "vendor_mnemonic": "dcache.cipa",
+        "operands": "a5"
+      },
+      {
+        "address": "0x40039322",
+        "word": "0ed716f7",
+        "vendor_mnemonic": "pkbb16",
+        "operands": "a3,a4,a3"
+      },
+      {
+        "address": "0x40039374",
+        "word": "0ed716f7",
+        "vendor_mnemonic": "pkbb16",
+        "operands": "a3,a4,a3"
+      },
+      {
+        "address": "0x400393c6",
+        "word": "0ed716f7",
+        "vendor_mnemonic": "pkbb16",
+        "operands": "a3,a4,a3"
+      },
+      {
+        "address": "0x4003a27c",
+        "word": "02b5000b",
+        "vendor_mnemonic": "dcache.cipa",
+        "operands": "a0"
+      },
+      {
+        "address": "0x4003b008",
+        "word": "c1451577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,s4"
+      },
+      {
+        "address": "0x4003b15e",
+        "word": "c0e51777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a0,a4"
+      },
+      {
+        "address": "0x4003ee56",
+        "word": "c1071777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,a6"
+      },
+      {
+        "address": "0x4003ee76",
+        "word": "c0c71777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,a2"
+      },
+      {
+        "address": "0x4003eea6",
+        "word": "0100000b",
+        "vendor_mnemonic": "icache.iall",
+        "operands": ""
+      },
+      {
+        "address": "0x4003eede",
+        "word": "0020000b",
+        "vendor_mnemonic": "dcache.iall",
+        "operands": ""
+      },
+      {
+        "address": "0x4003f002",
+        "word": "c1071777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,a6"
+      },
+      {
+        "address": "0x4003f024",
+        "word": "c0c71777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,a2"
+      },
+      {
+        "address": "0x4003f096",
+        "word": "c2a91577",
+        "vendor_mnemonic": "sub64",
+        "operands": "a0,s2,a0"
+      },
+      {
+        "address": "0x4003f0b4",
+        "word": "c3251577",
+        "vendor_mnemonic": "sub64",
+        "operands": "a0,a0,s2"
+      },
+      {
+        "address": "0x4004334e",
+        "word": "ac0507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,0"
+      },
+      {
+        "address": "0x4004335a",
+        "word": "ac1707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,1"
+      },
+      {
+        "address": "0x4004335e",
+        "word": "ac2507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,2"
+      },
+      {
+        "address": "0x4004338c",
+        "word": "ac0507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,0"
+      },
+      {
+        "address": "0x40043398",
+        "word": "ac1707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,1"
+      },
+      {
+        "address": "0x4004339c",
+        "word": "ac2507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,2"
+      },
+      {
+        "address": "0x400449a0",
+        "word": "f2b50577",
+        "vendor_mnemonic": "maxw",
+        "operands": "a0,a0,a1"
+      },
+      {
+        "address": "0x4004566e",
+        "word": "f2850577",
+        "vendor_mnemonic": "maxw",
+        "operands": "a0,a0,s0"
+      },
+      {
+        "address": "0x400465e2",
+        "word": "f0950677",
+        "vendor_mnemonic": "minw",
+        "operands": "a2,a0,s1"
+      },
+      {
+        "address": "0x40046626",
+        "word": "f12585f7",
+        "vendor_mnemonic": "minw",
+        "operands": "a1,a1,s2"
+      },
+      {
+        "address": "0x40049dce",
+        "word": "ac0507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,0"
+      },
+      {
+        "address": "0x40049dda",
+        "word": "ac1687f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a3,1"
+      },
+      {
+        "address": "0x40049dde",
+        "word": "ac2707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,2"
+      },
+      {
+        "address": "0x40049de4",
+        "word": "ac3587f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a1,3"
+      },
+      {
+        "address": "0x4004a780",
+        "word": "df6b05f7",
+        "vendor_mnemonic": "wexti",
+        "operands": "a1,s6,22"
+      },
+      {
+        "address": "0x4004a88a",
+        "word": "ac078577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,0"
+      },
+      {
+        "address": "0x4004a892",
+        "word": "ac178577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,1"
+      },
+      {
+        "address": "0x4004a89c",
+        "word": "ac278577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,2"
+      },
+      {
+        "address": "0x4005281a",
+        "word": "ac078577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,0"
+      },
+      {
+        "address": "0x40052822",
+        "word": "ac178577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,1"
+      },
+      {
+        "address": "0x4005282a",
+        "word": "ac278577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,2"
+      },
+      {
+        "address": "0x40052834",
+        "word": "ac378577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,3"
+      },
+      {
+        "address": "0x40052f94",
+        "word": "f0f585f7",
+        "vendor_mnemonic": "minw",
+        "operands": "a1,a1,a5"
+      },
+      {
+        "address": "0x40052fa6",
+        "word": "f0c50677",
+        "vendor_mnemonic": "minw",
+        "operands": "a2,a0,a2"
+      },
+      {
+        "address": "0x40053af0",
+        "word": "ac078577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,0"
+      },
+      {
+        "address": "0x40053af8",
+        "word": "ac178577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,1"
+      },
+      {
+        "address": "0x40053b00",
+        "word": "ac278577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,2"
+      },
+      {
+        "address": "0x40053b0a",
+        "word": "ac378577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,3"
+      },
+      {
+        "address": "0x40053b8c",
+        "word": "ac078577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,0"
+      },
+      {
+        "address": "0x40053b96",
+        "word": "ac178577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,1"
+      },
+      {
+        "address": "0x40053b9e",
+        "word": "ac278577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,2"
+      },
+      {
+        "address": "0x40053ba8",
+        "word": "ac378577",
+        "vendor_mnemonic": "insb",
+        "operands": "a0,a5,3"
+      },
+      {
+        "address": "0x4005ae0e",
+        "word": "ad8585f7",
+        "vendor_mnemonic": "swap8",
+        "operands": "a1,a1"
+      },
+      {
+        "address": "0x40060624",
+        "word": "3e971777",
+        "vendor_mnemonic": "pktb16",
+        "operands": "a4,a4,s1"
+      },
+      {
+        "address": "0x40060628",
+        "word": "0ee79777",
+        "vendor_mnemonic": "pkbb16",
+        "operands": "a4,a5,a4"
+      },
+      {
+        "address": "0x40073a1c",
+        "word": "3ef41477",
+        "vendor_mnemonic": "pktb16",
+        "operands": "s0,s0,a5"
+      },
+      {
+        "address": "0x40073a2c",
+        "word": "0e879477",
+        "vendor_mnemonic": "pkbb16",
+        "operands": "s0,a5,s0"
+      },
+      {
+        "address": "0x4007e840",
+        "word": "de840677",
+        "vendor_mnemonic": "wexti",
+        "operands": "a2,s0,8"
+      },
+      {
+        "address": "0x4007e856",
+        "word": "df090677",
+        "vendor_mnemonic": "wexti",
+        "operands": "a2,s2,16"
+      },
+      {
+        "address": "0x4007e864",
+        "word": "df8a0677",
+        "vendor_mnemonic": "wexti",
+        "operands": "a2,s4,24"
+      },
+      {
+        "address": "0x4007e8ee",
+        "word": "de670bf7",
+        "vendor_mnemonic": "wexti",
+        "operands": "s7,a4,6"
+      },
+      {
+        "address": "0x4007e958",
+        "word": "de760877",
+        "vendor_mnemonic": "wexti",
+        "operands": "a6,a2,7"
+      },
+      {
+        "address": "0x4007e974",
+        "word": "c1651577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,s6"
+      },
+      {
+        "address": "0x4007e986",
+        "word": "c0ab1577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,s6,a0"
+      },
+      {
+        "address": "0x4007e98c",
+        "word": "c1e51f77",
+        "vendor_mnemonic": "add64",
+        "operands": "t5,a0,t5"
+      },
+      {
+        "address": "0x4007eb2e",
+        "word": "c1461677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s4"
+      },
+      {
+        "address": "0x4007eb40",
+        "word": "c0c41677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s0,a2"
+      },
+      {
+        "address": "0x4007eb5e",
+        "word": "c0861677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s0"
+      },
+      {
+        "address": "0x4007eb6e",
+        "word": "c0861677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s0"
+      },
+      {
+        "address": "0x4007eb7e",
+        "word": "c0641577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,s0,t1"
+      },
+      {
+        "address": "0x4007eb82",
+        "word": "c0c51477",
+        "vendor_mnemonic": "add64",
+        "operands": "s0,a0,a2"
+      },
+      {
+        "address": "0x4007eb90",
+        "word": "c0c51677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a0,a2"
+      },
+      {
+        "address": "0x4007ec5c",
+        "word": "c0ca1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s4,a2"
+      },
+      {
+        "address": "0x4007ec94",
+        "word": "c1461677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s4"
+      },
+      {
+        "address": "0x4007ecee",
+        "word": "c1261677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s2"
+      },
+      {
+        "address": "0x4007ecf4",
+        "word": "c0861677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s0"
+      },
+      {
+        "address": "0x4007ed04",
+        "word": "c0641577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,s0,t1"
+      },
+      {
+        "address": "0x4007ed0c",
+        "word": "c0c51977",
+        "vendor_mnemonic": "add64",
+        "operands": "s2,a0,a2"
+      },
+      {
+        "address": "0x4007ed12",
+        "word": "c0c41f77",
+        "vendor_mnemonic": "add64",
+        "operands": "t5,s0,a2"
+      },
+      {
+        "address": "0x4007edcc",
+        "word": "c0cb1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s6,a2"
+      },
+      {
+        "address": "0x4007ee60",
+        "word": "c1661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s6"
+      },
+      {
+        "address": "0x4007ee64",
+        "word": "c0661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,t1"
+      },
+      {
+        "address": "0x4007ee6a",
+        "word": "c0a61677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a0"
+      },
+      {
+        "address": "0x4007ee76",
+        "word": "c0cd1d77",
+        "vendor_mnemonic": "add64",
+        "operands": "s10,s10,a2"
+      },
+      {
+        "address": "0x4007ee7c",
+        "word": "c0851577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,s0"
+      },
+      {
+        "address": "0x4007ee80",
+        "word": "c0c51877",
+        "vendor_mnemonic": "add64",
+        "operands": "a6,a0,a2"
+      },
+      {
+        "address": "0x4007eeea",
+        "word": "c0cb1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s6,a2"
+      },
+      {
+        "address": "0x4007efb6",
+        "word": "c1661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s6"
+      },
+      {
+        "address": "0x4007efbc",
+        "word": "c0661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,t1"
+      },
+      {
+        "address": "0x4007efc2",
+        "word": "c0a61677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a0"
+      },
+      {
+        "address": "0x4007efd2",
+        "word": "c0851577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,s0"
+      },
+      {
+        "address": "0x4007efd6",
+        "word": "c0c51877",
+        "vendor_mnemonic": "add64",
+        "operands": "a6,a0,a2"
+      },
+      {
+        "address": "0x4007efe6",
+        "word": "c0c51f77",
+        "vendor_mnemonic": "add64",
+        "operands": "t5,a0,a2"
+      },
+      {
+        "address": "0x4007f076",
+        "word": "c0ca1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s4,a2"
+      },
+      {
+        "address": "0x4007f0d6",
+        "word": "c1461677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s4"
+      },
+      {
+        "address": "0x4007f120",
+        "word": "c0661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,t1"
+      },
+      {
+        "address": "0x4007f124",
+        "word": "c0a61677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a0"
+      },
+      {
+        "address": "0x4007f13c",
+        "word": "c0851c77",
+        "vendor_mnemonic": "add64",
+        "operands": "s8,a0,s0"
+      },
+      {
+        "address": "0x4007f140",
+        "word": "c0cc1577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,s8,a2"
+      },
+      {
+        "address": "0x4007f150",
+        "word": "c0c51f77",
+        "vendor_mnemonic": "add64",
+        "operands": "t5,a0,a2"
+      },
+      {
+        "address": "0x4007f194",
+        "word": "c0ca1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s4,a2"
+      },
+      {
+        "address": "0x4007f286",
+        "word": "c1861677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s8"
+      },
+      {
+        "address": "0x4007f28c",
+        "word": "c0661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,t1"
+      },
+      {
+        "address": "0x4007f292",
+        "word": "c0a61677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a0"
+      },
+      {
+        "address": "0x4007f2a2",
+        "word": "c0851a77",
+        "vendor_mnemonic": "add64",
+        "operands": "s4,a0,s0"
+      },
+      {
+        "address": "0x4007f2aa",
+        "word": "c0ca1a77",
+        "vendor_mnemonic": "add64",
+        "operands": "s4,s4,a2"
+      },
+      {
+        "address": "0x4007f2b2",
+        "word": "c0c51577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,a2"
+      },
+      {
+        "address": "0x4007f34e",
+        "word": "c0ca1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s4,a2"
+      },
+      {
+        "address": "0x4007f402",
+        "word": "c1a61677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s10"
+      },
+      {
+        "address": "0x4007f406",
+        "word": "c0661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,t1"
+      },
+      {
+        "address": "0x4007f40e",
+        "word": "c0a61677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a0"
+      },
+      {
+        "address": "0x4007f42a",
+        "word": "c0851d77",
+        "vendor_mnemonic": "add64",
+        "operands": "s10,a0,s0"
+      },
+      {
+        "address": "0x4007f436",
+        "word": "c0c51577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,a2"
+      },
+      {
+        "address": "0x4007f44a",
+        "word": "c0cd1d77",
+        "vendor_mnemonic": "add64",
+        "operands": "s10,s10,a2"
+      },
+      {
+        "address": "0x4007f494",
+        "word": "c0ca1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s4,a2"
+      },
+      {
+        "address": "0x4007f4fe",
+        "word": "c1461677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s4"
+      },
+      {
+        "address": "0x4007f58a",
+        "word": "c0661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,t1"
+      },
+      {
+        "address": "0x4007f58e",
+        "word": "c0a61677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,a0"
+      },
+      {
+        "address": "0x4007f5aa",
+        "word": "c0851b77",
+        "vendor_mnemonic": "add64",
+        "operands": "s6,a0,s0"
+      },
+      {
+        "address": "0x4007f5be",
+        "word": "c0c51577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,a2"
+      },
+      {
+        "address": "0x4007f5c2",
+        "word": "c0cb1677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,s6,a2"
+      },
+      {
+        "address": "0x4007f5ea",
+        "word": "c1281877",
+        "vendor_mnemonic": "add64",
+        "operands": "a6,a6,s2"
+      },
+      {
+        "address": "0x4007f5fa",
+        "word": "c1231377",
+        "vendor_mnemonic": "add64",
+        "operands": "t1,t1,s2"
+      },
+      {
+        "address": "0x4007f60a",
+        "word": "c12e1e77",
+        "vendor_mnemonic": "add64",
+        "operands": "t3,t3,s2"
+      },
+      {
+        "address": "0x4007f626",
+        "word": "c12f1f77",
+        "vendor_mnemonic": "add64",
+        "operands": "t5,t5,s2"
+      },
+      {
+        "address": "0x4007f63e",
+        "word": "c1471777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,s4"
+      },
+      {
+        "address": "0x4007f642",
+        "word": "c1661677",
+        "vendor_mnemonic": "add64",
+        "operands": "a2,a2,s6"
+      },
+      {
+        "address": "0x4007f64e",
+        "word": "c1241477",
+        "vendor_mnemonic": "add64",
+        "operands": "s0,s0,s2"
+      },
+      {
+        "address": "0x4007f66e",
+        "word": "c1851577",
+        "vendor_mnemonic": "add64",
+        "operands": "a0,a0,s8"
+      },
+      {
+        "address": "0x4007f7fe",
+        "word": "c1271777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,s2"
+      },
+      {
+        "address": "0x4007f8f2",
+        "word": "c1271777",
+        "vendor_mnemonic": "add64",
+        "operands": "a4,a4,s2"
+      },
+      {
+        "address": "0x4007f958",
+        "word": "a4e79a77",
+        "vendor_mnemonic": "umar64",
+        "operands": "s4,a5,a4"
+      },
+      {
+        "address": "0x4007f9e0",
+        "word": "ac0707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,0"
+      },
+      {
+        "address": "0x4007f9ec",
+        "word": "ac1707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,1"
+      },
+      {
+        "address": "0x4007fa02",
+        "word": "ac2707f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a4,2"
+      },
+      {
+        "address": "0x4007fa06",
+        "word": "ac3a87f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s5,3"
+      },
+      {
+        "address": "0x4007fa50",
+        "word": "df860677",
+        "vendor_mnemonic": "wexti",
+        "operands": "a2,a2,24"
+      },
+      {
+        "address": "0x4007fa5c",
+        "word": "df060677",
+        "vendor_mnemonic": "wexti",
+        "operands": "a2,a2,16"
+      },
+      {
+        "address": "0x4007fa68",
+        "word": "de860677",
+        "vendor_mnemonic": "wexti",
+        "operands": "a2,a2,8"
+      },
+      {
+        "address": "0x40087bd6",
+        "word": "ac0987f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s3,0"
+      },
+      {
+        "address": "0x40087bda",
+        "word": "ac1a07f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s4,1"
+      },
+      {
+        "address": "0x40087bde",
+        "word": "ac2a87f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s5,2"
+      },
+      {
+        "address": "0x40087bea",
+        "word": "ac3907f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s2,3"
+      },
+      {
+        "address": "0x40087cb6",
+        "word": "ac0987f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s3,0"
+      },
+      {
+        "address": "0x40087cba",
+        "word": "ac1a87f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s5,1"
+      },
+      {
+        "address": "0x40087cbe",
+        "word": "ac2a07f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s4,2"
+      },
+      {
+        "address": "0x40087cca",
+        "word": "ac3907f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s2,3"
+      },
+      {
+        "address": "0x4008a3cc",
+        "word": "ac0a07f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s4,0"
+      },
+      {
+        "address": "0x4008a3d0",
+        "word": "ac1807f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a6,1"
+      },
+      {
+        "address": "0x4008a3d4",
+        "word": "ac2507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,2"
+      },
+      {
+        "address": "0x4008a3e4",
+        "word": "ac3587f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a1,3"
+      },
+      {
+        "address": "0x4008a5f6",
+        "word": "ac0a07f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s4,0"
+      },
+      {
+        "address": "0x4008a5fa",
+        "word": "ac1807f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a6,1"
+      },
+      {
+        "address": "0x4008a5fe",
+        "word": "ac2507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,2"
+      },
+      {
+        "address": "0x4008a60a",
+        "word": "ac3587f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a1,3"
+      },
+      {
+        "address": "0x4008a782",
+        "word": "ac0a07f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s4,0"
+      },
+      {
+        "address": "0x4008a786",
+        "word": "ac1807f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a6,1"
+      },
+      {
+        "address": "0x4008a78a",
+        "word": "ac2507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,2"
+      },
+      {
+        "address": "0x4008a79a",
+        "word": "ac3587f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a1,3"
+      },
+      {
+        "address": "0x4008a9ae",
+        "word": "ac0a07f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,s4,0"
+      },
+      {
+        "address": "0x4008a9b2",
+        "word": "ac1807f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a6,1"
+      },
+      {
+        "address": "0x4008a9b6",
+        "word": "ac2507f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a0,2"
+      },
+      {
+        "address": "0x4008a9c2",
+        "word": "ac3587f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a5,a1,3"
+      },
+      {
+        "address": "0x4008ab18",
+        "word": "ac0485f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a1,s1,0"
+      },
+      {
+        "address": "0x4008ab1c",
+        "word": "ac1a05f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a1,s4,1"
+      },
+      {
+        "address": "0x4008af04",
+        "word": "ac0485f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a1,s1,0"
+      },
+      {
+        "address": "0x4008af08",
+        "word": "ac1a05f7",
+        "vendor_mnemonic": "insb",
+        "operands": "a1,s4,1"
+      }
+    ]
+  },
+  "assembler_roundtrip": {
+    "instructions": 245,
+    "bytes": 980,
+    "exact_match": true,
+    "sha256": "d56c1b4e2ae32dfab6c29c457701a0f44782e7d9fd403b5895cfe469ce1f8eff"
+  },
+  "emulation": {
+    "passed": 3780,
+    "total": 3780
+  },
+  "decompilation": {
+    "target": {
+      "name": "firmware-named.elf",
+      "digest": {
+        "sha256": "8922a2e8d977154602eb0a8a6264f6f80949da829add4da2efb5dd7e604d70a3"
+      },
+      "local_path": "/Users/juno/nanocore/analysis/rea-1.10/firmware-named.elf",
+      "format": "elf",
+      "architecture": "riscv"
+    },
+    "inventory_evidence_id": "ev_fe037ed310efdb893a9e81127f10f0064a2b96ed697829d04b9554838d3ddcf8",
+    "functions_discovered": 2645,
+    "decompiled": 2645,
+    "unavailable": 0,
+    "reviewed_function_names": 36,
+    "functions_with_warnings": 881,
+    "functions_with_bad_instructions": 0,
+    "functions_with_opaque_custom_operations": 22
+  },
+  "previous_bad_instruction_functions": 56,
+  "previous_truncated_functions_now_present_without_bad_instructions": 56,
+  "device_commands_sent": false,
+  "limitations": [
+    "SDK config and instruction matches support a T-Head RV32 IM AFDC + legacy P/XThead profile, not an exact chip SKU.",
+    "245 sites are bounded linear-disassembly observations, not complete instruction coverage or runtime observations.",
+    "45 modeled instruction constructors are a subset, not a complete processor emulator.",
+    "22 functions still contain opaque custom operations; 881 functions retain decompiler warnings.",
+    "REA profile digest excludes local language modifications; use separately recorded processor hashes."
+  ],
+  "artifacts": [
+    {
+      "path": "analysis/vendor-isa/toolchain.tar.gz",
+      "bytes": 165260682,
+      "sha256": "cdff169b09e9424f127a71300ce2e62ab059291a1b3fbc56c115dfb91c29b991"
+    },
+    {
+      "path": "analysis/vendor-isa/toolchain/bin/riscv64-unknown-elf-objdump",
+      "bytes": 1568184,
+      "sha256": "fad18fc80a7d5907a21bf549c72302889a5332664a123782afd9f37b7076278c"
+    },
+    {
+      "path": "analysis/vendor-isa/toolchain/bin/riscv64-unknown-elf-as",
+      "bytes": 1383336,
+      "sha256": "13626d389ba6a59713b2c12f7c39060970bb68d9d8153d7cd469117f69511c0a"
+    },
+    {
+      "path": "analysis/vendor-isa/P-20220905.adoc",
+      "bytes": 542554,
+      "sha256": "e8f99796022161fcef9070051aeb5de6a08994755c4b96b6af20f3bb5bc2d77b"
+    },
+    {
+      "path": "analysis/vendor-isa/riscv-opc.h",
+      "bytes": 145224,
+      "sha256": "5442ca5d09d8fc5011133c94d369a593c38a1fabbb910436685f3ca5fe4a8ed5"
+    },
+    {
+      "path": "analysis/vendor-isa/riscv-opc.c",
+      "bytes": 205498,
+      "sha256": "b1ff53a90974e112e7ce688adc524cf81eeef44c9faffa921784a3835338c873"
+    },
+    {
+      "path": "analysis/rea-1.10/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/RISCV/data/languages/riscv.ilp32d.sla",
+      "bytes": 82236,
+      "sha256": "77b481bd10c527182cf12a64ba400e24f56476f37e36b89bf3a0afc279d34edd"
+    },
+    {
+      "path": "analysis/rea-1.10/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/RISCV/data/languages/riscv.reg.sinc",
+      "bytes": 44906,
+      "sha256": "f6effc4eed31fc8177dbd3a5908e8a978c56ed7cc3e4df1748bbfdf4603797a7"
+    },
+    {
+      "path": "analysis/rea-1.10/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/RISCV/data/languages/nanocore-thead.sinc",
+      "bytes": 8949,
+      "sha256": "690dea16ffaaa18899f3e4efc621b2359ed30f5e55fe7a56d4be787072bfb94c"
+    },
+    {
+      "path": "analysis/rea-1.10-legacy-p/evidence.json",
+      "bytes": 19342380,
+      "sha256": "ed94ad0c1ed058ce0540a97127fa708e2aad76c6e694f4ee5d8b0c31eb5e0d87"
+    },
+    {
+      "path": "analysis/source-firmware-1.10-legacy-p/firmware.c",
+      "bytes": 4229134,
+      "sha256": "ff41a2565f10e91a17a86251c4a0451075159783218d9db09d816537a9959dd6"
+    }
+  ]
+}

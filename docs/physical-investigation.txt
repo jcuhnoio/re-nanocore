@@ -1,0 +1,58 @@
+Physical NanoCore investigation — 2026-11-11
+
+Scope
+Firmware 1.10 is user-reported. Device remains in normal runtime mode. No
+firmware upload, DFU transition, reset, preset write or asset write was issued.
+Original ToneCommand native library read APIs were used against physical MIDI.
+USB descriptor reads used libusb without claiming interfaces or changing config.
+
+Observed
+USB 33c3:1301, manufacturer Ember, product Nanocore, bcdDevice 0x0001.
+The bcdDevice field is not confirmation of installed firmware 1.10.
+Full 302-byte configuration: five interfaces, all Audio class. Audio control,
+stereo playback/capture streaming, and MIDI control/streaming. Audio alternate
+settings advertise 2-channel 16-bit PCM at 44100Hz. MIDI bulk endpoints 03/83,
+64-byte maximum packets. Audio endpoints 02/81, 184-byte maximum packets.
+No serial, mass-storage, vendor-specific or runtime DFU interface is exposed
+in this configuration. This does not exclude proprietary MIDI diagnostics,
+a distinct bootloader configuration, or an undocumented startup mode.
+
+49 native read calls succeeded: enumeration, readiness, current snapshot,
+settings, route, amp catalog, IR catalog, preset list, 40 populated preset
+reads, and a final snapshot. Initial/final snapshot JSON matches exactly.
+64 preset entries: 40 valid, 24 empty. Active preset index 1, Ambient.
+AMP catalog: 38 used slots, reported slot size 12288; active index 5.
+IR catalog: 30 used slots, reported slot size 4096; active index 4.
+Catalog sizes are asset allocation evidence, not physical flash geometry.
+Preset JSON backups are not raw firmware or verified restorable full backups.
+
+Independent CoreMIDI listener captured 20 packets during settings, snapshot
+and preset-1 reads. Reassembly gives five NC71 replies, all status 0, with
+validated declared lengths: settings 7 bytes; snapshot twice, 160 bytes each;
+preset chunks 205 and 75 bytes including 5-byte chunk headers. This implies
+270 preset bytes returned across the two chunks. The real packet fragmentation
+and seven-bit packing work independently of the host JSON parser.
+
+Local full evidence
+analysis/physical-20261111/: reads.json, provenance.json, ioreg.plist,
+system-profiler.json, usb-descriptors.json, midi-incoming.json,
+midi-decoded.json; reproducible Python acquisition scripts alongside them.
+Compact tracked summary: evidence/physical-runtime-summary.json.
+Raw OS inventory remains local because it also lists unrelated host devices.
+
+Implications and remaining non-invasive work
+No executable plaintext, CPU identity, decryption key or arbitrary-address
+read primitive was recovered. Review of existing diagnostic research still
+finds other-product restrictions, not a NanoCore general flash reader.
+The companion JimCommanD source primarily targets Mosaic; do not transfer
+its commands or hardware assumptions to NanoCore without tracing dispatch.
+
+Next priority: trace NanoCore-specific normal-mode dispatch for identity,
+asset-read and diagnostic commands before sending additional requests. Do not
+scan numeric opcodes: known neighboring operations include saves and resets.
+Asset reads could supply validated data for package comparisons, but do not
+in themselves expose program flash. Determine bootloader exit/recovery behavior
+before a separate DFU-only inspection. The current runtime descriptor cannot
+answer whether bootloader UPLOAD/readback exists. Do not launch API17 merely
+to inspect it: that route transitions and immediately begins firmware upload.
+Preserve current 1.10 for exact matching to the local signed 1.10 package.

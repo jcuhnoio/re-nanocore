@@ -1,0 +1,53 @@
+UNIVIBE custom effect, NanoCore1.10
+=================================
+
+Original C implementation in firmware/custom-fx/src/univibe.c. It replaces the
+same dedicated MOD10 Velvet Vibrato slot used by TEST001. No new effect ID is
+registered. Firmware label is UNIVIBE. Other effects retain their native code.
+
+Topology reference: Champ Darabundit, Russell Wedelich and Pete Bischoff,
+Digital Grey Box Model of the Uni-Vibe Effects Pedal, DAFx2019:
+https://www.dafx.de/paper-archive/2019/DAFx2019_paper_31.pdf
+The paper describes four unequal phase stages and lamp/LDR modulation, including
+non-ideal behavior absent from simple allpass models. This implementation is a
+compact inspired approximation, not the paper's measured grey-box model or a
+calibrated reproduction of an original pedal.
+
+Implementation choices
+----------------------
+Four first-order allpasses, center factors800/55/26/2550Hz times a common sweep.
+Rounded asymmetric triangle LFO;20ms rising/60ms falling lamp lag; quadratic
+lamp-to-frequency mapping. Coefficients updated every16samples; controls smoothed
+at that cadence. Two independent audio histories share one LFO. No feedback,
+heap allocation, external functions or global writable state. 946byte target
+payload inside the1392byte site;88bytes of the existing Velvet substate.
+Sample rate remains at+0; native initialization clears+4, resetting our marker.
+Firmware1.10 nativeinit0x40072020 clears+4,+8 and0xc..0x300b. Custom state and
+coefficients initialize on first call after that marker reset.
+
+Controls (existing labels retained)
+-----------------------------------
+RATE  :0.2..6Hz, quadratic knob mapping; start35percent of knob range (~0.91Hz).
+WAVE  :LFO rise/fall asymmetry; start50percent.
+VOICE :center-frequency multiplier0.5..2; start50percent.
+DEPTH :sweep excursion; start80percent.
+MIX   :0=dry,50percent=equal dry/wet phasing,100percent=wet phase vibrato.
+
+Validation
+----------
+Host tests: constant-coefficient impulse energy within0.001 of unity;32 control
+corners over1.6million stereo frames; exact inplace/partition agreement; finite
+bounded output; state canary preservation; dry bypass. ASan/UBSan passed.
+RV32 target execution: five4096frame cases with64frame callbacks, mono/stereo,
+inplace,8k/44.1k/96k sample rates, first-callinit, controlchanges and native reset
+marker. Output matched host C exactly; integer/FP callee saves, stack and state
+bounds passed. Only unsupported Xuantie addsl receives exact integer emulation.
+Maximum observed9679instructions/64stereo frames is not a hardware timing bound.
+No reference analog recording, circuit-exact comparison or hardware deadline
+measurement. Sound quality and physical audio await the user's listening test.
+
+Local targetbuild: analysis/custom-fx/univibe-build-1.10-final
+Patched image: analysis/custom-fx/univibe-1.10/firmware.bin
+Session: analysis/custom-fx/univibe-session
+Original stock backup: analysis/custom-fx/test001-session/backup/os-partition.bin
+Fresh preflash backup retains the confirmed TEST001 image as a second rollback.

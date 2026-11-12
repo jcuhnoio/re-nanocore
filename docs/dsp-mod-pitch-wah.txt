@@ -1,0 +1,198 @@
+NanoCore firmware 1.12: modulation, pitch and wah DSP
+==================================================
+
+Scope and evidence
+------------------
+This analysis identifies all nine selectable MOD effects and the four non-drive
+FX2 effects. The associated machine-readable provenance is
+ evidence/dsp-mod-pitch-wah.json.
+It links 29 named functions to retained REA exports and identifies every MOD
+label, including labels that cannot be selected through the normal picker.
+Source is decompiled firmware C-like code, not the vendor's original C and not
+a claim of sample-accurate reimplementation. Existing docs/dsp-chorus.txt gives
+the more detailed classic Chorus derivation. No hardware operation or listening
+test was performed for this analysis.
+
+The MOD picker table at 0x4009b34c is exactly:
+  0, 11, 1, 12, 2, 17, 4, 10, 3
+corresponding to Chorus, Chorus II, Phaser, Phaser II, Flanger, Jet Flanger,
+Vibrato, Velvet Vibrato, Tremolo. Function 0x40025d1e returns count nine;
+0x40025ca4 normalizes other MOD IDs to zero. The larger name table is not an
+availability list. IDs5/6/7/15 are additional Chorus labels; 8 Pulse Vibe,
+9 Motion Wah,13 Flanger II,14 Chorus III,16 Phaser III,18 Ring Mod are also
+labels. Only 8 and9 have additional explicit dormant processor branches found
+here; unsupported IDs fall through the dispatcher rather than implementing the
+algorithm implied by their label.
+
+The MOD chain callback is 0x40071cfe, internal kind4. It normally forwards to
+0x4006dc08 and has a subtype8 fast path to0x4006d0b4. Logical UI block5 must not
+be confused with internal DSP kind4. MOD initialization is0x40071208. The shared
+state allocation is0x192ec bytes; reducing it to classic Chorus's prefix would
+corrupt the other variants. Cached subtype is state+0x2044. Subtype transitions
+reset histories and initialize delegated states. Sample buffers are float32;
+Ghidra's undefined8/ulonglong expressions on overlapping four-byte addresses
+are inference artifacts, not evidence of float64 audio buffers.
+
+Selectable MOD implementations
+------------------------------
+0 Chorus, RATE DEPTH: shared processor0x4006dc08. Stereo1024-sample rings,
+linearly interpolated fractional reads and quadrature recursive sine LFO.
+Rate=.1+3.64*normalizedRate Hz. Delay center5.1ms with depth up to1ms.
+The wet path has a2500Hz one-pole lowpass; output gains are approximately
+.97268933 dry and .63536781 wet. See existing chorus evidence for exact paths,
+state offsets and limitations.
+
+1 Phaser, RATE FBK MIX: four serial first-order allpass stages per channel.
+Each stage has recurrence y=a*x+previousInput-a*previousOutput and retains
+both input and output. The first stage input includes feedback from the prior
+final-stage output. A recursive oscillator moves the allpass coefficient;
+left and right use quadrature components. Wet/dry combination and fixed level
+follow the cascade. This is an allpass phaser, not a delay-line flanger.
+
+12 Phaser II, unnamed-slot DEPTH RATE FBK MIX: a separate shared-dispatcher
+branch at LAB_ram_4006e482. Four allpass stages again, with coefficient bounds
+controlled by depth, plus a one-pole postfilter:
+  filtered += alpha*(allpass-filtered)
+  output = dry + mix*(filtered-dry)
+The first label pointer resolves to an empty string, and the recovered branch
+uses controls1..4. Do not invent a fifth functional control from its slot count.
+
+2 Flanger, RATE FBK MIX: uses512-element rings (index mask0x1ff). The delay
+engine advances on a variable internal clock and interpolates input and LFO
+values at clock boundaries. A table/computed coefficient branch controls that
+clock, with feedback into the ring. Preserve the full recovered branch: a
+conventional single fractional read driven by sine is not an equivalent
+replacement for this implementation.
+
+17 Jet Flanger, RATE DEPTH DELAY FBK HPF MIX LEVEL PHASE: delegated to
+0x40072754, subtype17 branch, initialized by0x40072570. Two1024-sample rings;
+fractional linear reads with feedback. Delay follows a reciprocal function of
+a triangle wave, of the form D=C/(1+depth*triangle(phase)); rate advances phase.
+A user phase offset is added before evaluating the waveform. Output combines
+dry and delayed samples with a fixed output gain. The loop reads controls
+0,1,3,5,7. DELAY, HPF and LEVEL labels exist but their values are not directly
+read in this branch. Do not claim those controls are verified operative.
+
+11 Chorus II, RATE AMOUNT FBK MIX: the other branch of0x40072754. Two
+fractional delay taps per channel, driven by sine/cosine quadrature components
+and read with linear interpolation from1024-sample rings. Amount changes delay
+excursion, feedback uses saved delayed output, and mixing uses cosine/sine
+weights, the wet sum receiving a half scale. Left/right tap center/excursion
+constants differ. This implementation is distinct from classic Chorus and
+from the single-tap reciprocal-delay Jet branch despite sharing a function.
+
+4 Vibrato, RATE DEPTH WAVE MIX: shared dispatcher uses stereo8192-sample
+rings (mask0x1fff). Four neighboring samples at indices i-1,i,i+1,i+2 enter a
+cubic interpolation polynomial. The variable delay is center+depth*wave(phase)
+with bounded delay and smoothing of changed controls. Waveform cases observed:
+0 recursive sine,1 triangle-like absolute-value form,2 square,3 saw/ramp.
+The right channel uses a phase offset. Preserve cubic interpolation and state
+transition smoothing; treating it as Chorus with dry removed loses behavior.
+
+10 Velvet Vibrato, RATE WAVE VOICE DEPTH MIX: delegated0x40074e5e, initializer
+0x40074d8c. The newly recovered full export is
+analysis/rea-1.12-effects/results/03569-export-0x40074e5e.json,
+evidence ev_b11ac76f726f822bfa07704b5457cf0e54058f258576c7f0e704fdefd7fb5238.
+Two1536-sample rings (explicit wrap at0x600), linear fractional interpolation.
+A sine polynomial and piecewise triangle waveform are blended continuously by
+WAVE. RATE uses an exponential mapping before conversion to phase/sample.
+VOICE changes delay center, depth scaling and output weights; crossing a voice
+threshold selects between delayed output alone and a weighted combination of
+delayed output and the immediately previous input ring sample. MIX then blends
+that wet result with dry. The recovered loop is about300 lines and has no
+missing algorithm helper; transcendental rate setup is shared math code.
+
+3 Tremolo, RATE DEPTH WAVE SMOOTH MIX: amplitude modulation, not variable
+delay. Wave-dependent gain combines unmodulated remainder and depth-scaled
+waveform, with normalization and optional one-pole smoothing. Output combines
+dry and gain-modulated wet signal and fixed gain. The discrete waveform cases
+include sine, square, ramp and triangle forms. Changing smoothing affects
+sample-to-sample gain changes, so a bare sine multiply is incomplete.
+
+Dormant implementation8 Pulse Vibe is0x4006d0b4. Dormant9 Motion Wah shares
+the fully reachable FX2 Motion Wah processor described below. Including these
+in the recovered C collection is useful; listing them as selectable MOD effects
+would be incorrect.
+
+FX2 pitch and wah implementations
+--------------------------------
+FX2 logical block1 subtypes8..11 are Pitch, Env Wah, Auto Wah, Motion Wah.
+Their wrapper0x4006b1c4 dispatches according to subtype; it also serves earlier
+FX2 drive models outside this report's scope. Motion Wah delegates directly to
+0x40071e7c with substate at parent+0xe24. Common FX2 init/reset/default helpers
+are included in the evidence ledger.
+
+8 Pitch, PITCH FINE MIX LEVEL:
+The wrapper maps coarse control to rounded48*x-24 semitones and fine control
+to2*x-1. Changes configure0x40078aba. Mono wet input is derived from stereo
+average, processed in chunks no larger than64 frames, and mixed back with each
+channel's original dry signal. LEVEL is not directly read in this wrapper's
+pitch branch.
+
+Actual processor0x40079bdc is a time-domain pitch shifter, not evidence of an
+FFT phase vocoder. It uses a2048-sample circular history (mask0x7ff), fractional
+linear reads, two read positions and a smooth crossfade at read-head handoffs.
+The crossfade follows the familiar cubic smoothstep form t*t*(3-2*t), subject
+to retained constant resolution. Input is averaged in groups of16 and stored
+in a256-element decimated history. Period estimation is refreshed periodically
+and gated by signal energy. Helper0x40077b1c evaluates period correlations;
+0x40077364 searches for an appropriate fractional-delay splice using
+correlation of interpolated history. Initialization0x4007876a, shift
+configuration0x40078aba and reset0x40079596 are all retained. These correlation
+and handoff details are essential; two arbitrary sweeping delay taps alone
+would not reproduce the firmware behavior.
+
+9 Env Wah, FREQ ENV Q MIX LEVEL:
+The wrapper rectifies a mono input/envelope feed and smooths it through saved
+filter state. The envelope and ENV control move the resonant filter frequency
+above a FREQ-controlled base. Coefficients refresh at eight-sample boundaries.
+For the observed lowpass coefficient setup:
+  g=tan(pi*f/Fs), norm=1/(1+g/Q+g*g)
+  b0=g*g*norm, b1=2*b0, b2=b0
+  a1=2*(g*g-1)*norm, a2=(1-g/Q+g*g)*norm
+Left/right have separate histories with wet/dry mixing. Frequency and Q are
+bounded; retain firmware mappings and coefficients in C rather than replacing
+them with guessed musical ranges. The final LEVEL label is not read directly
+in this processing branch.
+
+10 Auto Wah, FREQ SWEEP RATE SHAPE MIX LEVEL:
+The wrapper uses phase/LFO and shape-dependent sweep rather than input-level
+envelope to vary resonant filtering. Controls0..4 are read, and coefficients
+refresh in eight-frame blocks. Frequency mapping uses exponential functions;
+small-angle tangent approximation and shared math helpers appear in filter
+setup. The recovered full C branch is the authority for waveform/shape and
+filter details. LEVEL is again not directly read by this branch.
+
+11 Motion Wah, RATE VOICE SHAPE SWEEP MIX:
+Processor0x40071e7c is shared with dormant MOD9. State is sample rate, phase,
+smoothed sweep and two integrator states per channel; initializer0x40071d38.
+VOICE sets frequency bounds. A sinusoid plus sweep bias is clamped and smoothed
+once per block of at most8 frames, then converted exponentially to frequency.
+Input passes through a bounded rational nonlinear shaper. The filter is a
+two-integrator state-variable form, schematically:
+  v=(shapedInput-state2-k*state1)*norm*g+state1
+  state1=2*v-state1
+  state2=2*(g*v+state2)-state2
+  output=(1-mix)*dry+mix*v
+with norm=1/(1+k*g+g*g). Thus output is the bandpass state, not the Env Wah
+lowpass biquad output. Stereo channels keep distinct integrators. RATE,
+VOICE,SWEEP,MIX are read directly; the advertised SHAPE slot2 is not read in
+the recovered processor. It should not be represented as a verified working
+waveform selector.
+
+What this establishes and what remains
+-------------------------------------
+All selectable MOD and these four FX2 effects have a mapped implementation,
+initializer/reset/control path and retained C-like decompilation. No missing
+entry point remains in this scope after the Velvet recovery. Their stateful
+algorithms are substantially different and should remain separate in any
+human-readable reconstruction.
+
+Decompilation does not establish buildability, correct floating-register ABI,
+bit-exact constants/prototypes, or audio equivalence. Shared ROM/math functions,
+physical control scaling, outer gain staging and transition behavior still
+need careful integration when producing runnable replacement DSP. In
+particular, metadata-only controls should not be silently implemented from
+assumed textbook behavior. Full retained bodies and evidence-linked names are
+the appropriate C deliverable at this stage; semantic rewrites require tests
+against the actual firmware execution or captured device audio.

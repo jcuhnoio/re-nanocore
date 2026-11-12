@@ -1,0 +1,1656 @@
+{
+  "scope": "Buildable classic Chorus and custom gain, fixed-size Velvet slot replacement; not all DSP exported C ported",
+  "builds": {
+    "1.10": {
+      "firmware_version": "1.10",
+      "flags": [
+        "-march=rv32imafdcpzpsfoperand_xtheade",
+        "-mabi=ilp32d",
+        "-Os",
+        "-std=c11",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-msmall-data-limit=0",
+        "-mno-relax",
+        "-ffp-contract=off",
+        "-Wall",
+        "-Wextra",
+        "-Werror"
+      ],
+      "compiler": "riscv64-unknown-elf-gcc (Xuantie-900 elf newlib gcc Toolchain V2.6.1 B-20220906) 10.2.0",
+      "docker_image": "sha256:1f2403136cb0aef651921f255f5155701f36083e64764b3134c573438e13b46a",
+      "artifacts": {
+        "gain": {
+          "address": "0x400720ae",
+          "size": 154,
+          "sha256": "4eaa4fc350454af5d5fb917e3b1c248e777100b95ecec30c160ad7cd66d03d6a",
+          "source_sha256": "7b96c7a84f5c39dce5ed0bc924ff77bd5cbdef4bfe61c7ff1055dd138f096cf6",
+          "entry": "nc_fx_velvet_gain",
+          "unresolved_symbols": [],
+          "injection_candidate": true,
+          "capacity": 1392
+        },
+        "chorus": {
+          "address": "0x40080000",
+          "size": 1334,
+          "sha256": "9222f3f52ec3e9aee03ca529c9e381c30d188b6e7b4dcb6eef4bc65644a208b9",
+          "source_sha256": "adc56ecfa68a553e03adfb086c7687bda452d987ee7c711e0c9513b55cb14bff",
+          "entry": "nc_fx_chorus",
+          "unresolved_symbols": [],
+          "injection_candidate": false,
+          "capacity": 65536
+        }
+      }
+    },
+    "1.12": {
+      "firmware_version": "1.12",
+      "flags": [
+        "-march=rv32imafdcpzpsfoperand_xtheade",
+        "-mabi=ilp32d",
+        "-Os",
+        "-std=c11",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-msmall-data-limit=0",
+        "-mno-relax",
+        "-ffp-contract=off",
+        "-Wall",
+        "-Wextra",
+        "-Werror"
+      ],
+      "compiler": "riscv64-unknown-elf-gcc (Xuantie-900 elf newlib gcc Toolchain V2.6.1 B-20220906) 10.2.0",
+      "docker_image": "sha256:1f2403136cb0aef651921f255f5155701f36083e64764b3134c573438e13b46a",
+      "header_sha256": "7467c04b40f148a752afc23d1147a80766499a3491f1f320e957808f1cf1483d",
+      "artifacts": {
+        "gain": {
+          "address": "0x40074e5e",
+          "size": 154,
+          "sha256": "c9179a46e4817d7fb730e9184172d3f1f093e45f9c2681f02b97c2a10206e31c",
+          "source_sha256": "7b96c7a84f5c39dce5ed0bc924ff77bd5cbdef4bfe61c7ff1055dd138f096cf6",
+          "entry": "nc_fx_velvet_gain",
+          "unresolved_symbols": [],
+          "injection_candidate": true,
+          "capacity": 1392
+        },
+        "chorus": {
+          "address": "0x40080000",
+          "size": 1334,
+          "sha256": "9222f3f52ec3e9aee03ca529c9e381c30d188b6e7b4dcb6eef4bc65644a208b9",
+          "source_sha256": "adc56ecfa68a553e03adfb086c7687bda452d987ee7c711e0c9513b55cb14bff",
+          "entry": "nc_fx_chorus",
+          "unresolved_symbols": [],
+          "injection_candidate": false,
+          "capacity": 65536
+        }
+      }
+    }
+  },
+  "gain_target_tests": {
+    "1.10": {
+      "emulator": "Unicorn RV32",
+      "binary_sha256": "4eaa4fc350454af5d5fb917e3b1c248e777100b95ecec30c160ad7cd66d03d6a",
+      "device_tested": false,
+      "cases": [
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        }
+      ]
+    },
+    "1.12": {
+      "emulator": "Unicorn RV32",
+      "binary_sha256": "c9179a46e4817d7fb730e9184172d3f1f093e45f9c2681f02b97c2a10206e31c",
+      "device_tested": false,
+      "cases": [
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": false,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 0,
+          "inplace": true,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": false,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 0,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 1,
+          "gain": 2.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 0.25,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": -1.0,
+          "passed": true
+        },
+        {
+          "stereo": 1,
+          "inplace": true,
+          "frames": 64,
+          "gain": 2.0,
+          "passed": true
+        }
+      ]
+    }
+  },
+  "chorus_native_comparison": {
+    "emulator": "Unicorn RV32 2.1.4",
+    "native_sha256": "baf59b393f845beede0af7c6c7887d7a4e03a00a23caaa27eab6c0e9c39ef4d6",
+    "rebuilt_sha256": "9222f3f52ec3e9aee03ca529c9e381c30d188b6e7b4dcb6eef4bc65644a208b9",
+    "scope": "Steady-state subtype-0 loop with identical preinitialized state and cached controls",
+    "excluded": [
+      "native initialization",
+      "native trig and parameter changes",
+      "subtype switch",
+      "hardware timing",
+      "physical audio path"
+    ],
+    "instruction_hooks": "Xuantie addsl only; exact integer semantics, no skipped arithmetic",
+    "abi_checks": [
+      "SP restored",
+      "GP and TP preserved",
+      "s0-s11 preserved",
+      "64-bit fs0-fs11 preserved",
+      "output channel mode"
+    ],
+    "device_tested": false,
+    "cases": [
+      {
+        "case": "impulse_mono_fixed",
+        "frames": 2048,
+        "frames_per_callback": 2048,
+        "callback_calls": 1,
+        "rate": 0.0,
+        "depth": 0.0,
+        "different_samples_per_channel": [
+          0,
+          0
+        ],
+        "max_abs_error": 0.0,
+        "state_byte_differences": 0,
+        "native_vendor_instruction_hooks": {
+          "0x4006ddac": 2048,
+          "0x4006ddb4": 2048,
+          "0x4006ddd8": 2048
+        },
+        "rebuilt_vendor_instruction_hooks": {
+          "0x400802b6": 2048,
+          "0x400802c0": 2048,
+          "0x400801b2": 2048
+        },
+        "native_instruction_count": 86176,
+        "rebuilt_instruction_count": 138934
+      },
+      {
+        "case": "stereo_modulated",
+        "frames": 2048,
+        "frames_per_callback": 2048,
+        "callback_calls": 1,
+        "rate": 0.6043956279754639,
+        "depth": 1.0,
+        "different_samples_per_channel": [
+          0,
+          0
+        ],
+        "max_abs_error": 0.0,
+        "state_byte_differences": 0,
+        "native_vendor_instruction_hooks": {
+          "0x4006ddac": 2048,
+          "0x4006ddb4": 2048,
+          "0x4006ddd8": 2048,
+          "0x4006de32": 2048,
+          "0x4006de3c": 2048,
+          "0x4006de76": 2048
+        },
+        "rebuilt_vendor_instruction_hooks": {
+          "0x400802b6": 4096,
+          "0x400802c0": 4096,
+          "0x400801b2": 2048
+        },
+        "native_instruction_count": 161951,
+        "rebuilt_instruction_count": 247046
+      },
+      {
+        "case": "stereo_inplace_fast",
+        "frames": 2048,
+        "frames_per_callback": 2048,
+        "callback_calls": 1,
+        "rate": 1.0,
+        "depth": 1.0,
+        "different_samples_per_channel": [
+          0,
+          0
+        ],
+        "max_abs_error": 0.0,
+        "state_byte_differences": 0,
+        "native_vendor_instruction_hooks": {
+          "0x4006ddac": 2048,
+          "0x4006ddb4": 2048,
+          "0x4006ddd8": 2048,
+          "0x4006de32": 2048,
+          "0x4006de3c": 2048,
+          "0x4006de76": 2048
+        },
+        "rebuilt_vendor_instruction_hooks": {
+          "0x400802b6": 4096,
+          "0x400802c0": 4096,
+          "0x400801b2": 2048
+        },
+        "native_instruction_count": 161951,
+        "rebuilt_instruction_count": 247027
+      },
+      {
+        "case": "stereo_missing_right",
+        "frames": 2048,
+        "frames_per_callback": 2048,
+        "callback_calls": 1,
+        "rate": 0.25,
+        "depth": 0.6,
+        "different_samples_per_channel": [
+          0,
+          0
+        ],
+        "max_abs_error": 0.0,
+        "state_byte_differences": 0,
+        "native_vendor_instruction_hooks": {
+          "0x4006ddac": 2048,
+          "0x4006ddb4": 2048,
+          "0x4006ddd8": 2048,
+          "0x4006de32": 2048,
+          "0x4006de3c": 2048,
+          "0x4006de76": 2048
+        },
+        "rebuilt_vendor_instruction_hooks": {
+          "0x400802b6": 4096,
+          "0x400802c0": 4096,
+          "0x400801b2": 2048
+        },
+        "native_instruction_count": 161951,
+        "rebuilt_instruction_count": 242952
+      },
+      {
+        "case": "stereo_engine_blocks",
+        "frames": 2048,
+        "frames_per_callback": 64,
+        "callback_calls": 32,
+        "rate": 0.6043956279754639,
+        "depth": 1.0,
+        "different_samples_per_channel": [
+          0,
+          0
+        ],
+        "max_abs_error": 0.0,
+        "state_byte_differences": 0,
+        "native_vendor_instruction_hooks": {
+          "0x4006ddac": 2048,
+          "0x4006ddb4": 2048,
+          "0x4006ddd8": 2048,
+          "0x4006de32": 2048,
+          "0x4006de3c": 2048,
+          "0x4006de76": 2048
+        },
+        "rebuilt_vendor_instruction_hooks": {
+          "0x400802b6": 4096,
+          "0x400802c0": 4096,
+          "0x400801b2": 2048
+        },
+        "native_instruction_count": 166880,
+        "rebuilt_instruction_count": 250766
+      },
+      {
+        "case": "mono_engine_blocks",
+        "frames": 2048,
+        "frames_per_callback": 64,
+        "callback_calls": 32,
+        "rate": 0.2,
+        "depth": 0.75,
+        "different_samples_per_channel": [
+          0,
+          0
+        ],
+        "max_abs_error": 0.0,
+        "state_byte_differences": 0,
+        "native_vendor_instruction_hooks": {
+          "0x4006ddac": 2048,
+          "0x4006ddb4": 2048,
+          "0x4006ddd8": 2048
+        },
+        "rebuilt_vendor_instruction_hooks": {
+          "0x400802b6": 2048,
+          "0x400802c0": 2048,
+          "0x400801b2": 2048
+        },
+        "native_instruction_count": 91136,
+        "rebuilt_instruction_count": 142712
+      }
+    ]
+  },
+  "patch_manifests": {
+    "1.10": {
+      "schema_version": 1,
+      "image_kind": "raw-os-fit",
+      "firmware_version": "1.10",
+      "input_sha256": "ed84c017176e6f41e07089af43031a3ca7a9a695a6c0e0ca30f9c1d743e7b82c",
+      "output_sha256": "cc795b47a5f4c10c88aab5f7a2dc0f684e8a49f77a4fd12fed09359bb94dd0b8",
+      "size": 667648,
+      "os_partition_size": 868352,
+      "offset_origin": "OS partition start, not flash start",
+      "patches": [
+        {
+          "offset": 503982,
+          "size": 1392,
+          "expected_hex": "6307054e6385054e6383064e1971a2dc0a4486dea6dacad8ced6d2d4d6d2dad0a2aca6a8caa4cea052bc56b85ab45eb062ac66a86aa409c43333e00023006400872a050017140200872724fa539357a163020336468a3e8bba84b689b28a2e892a84630c083687270800530700f0d397e7a0639f07469707020007a4876fd317f4a06392073e072a4800530700f0d317eaa0639d0746d31744a1639c073c87248800530700f0d397e4a0639b0746d31794a0639d073a8729c800530700f0d397e9a063990746d31734a1639a073a07290801530700f0d317e9a063970746d31724a1639b0738530700f0d397e7a06391072ed317f4a0638207469767020007a54742efe0f8a59767020007a28734d30792a0638e072e53f244089767020007a7071d9777020087a7078a9717020007ae07309777020007a187885372e218d3f2c901d30800f005465372f20053f24a10d3f25a109767020087a727f0b3369000537555195372f210d3f2f210d3712409850663090b34d30e00f0c1655460035884009767020087a347ec9767020007a3472a9767020087aa873b9767020087a9c73b9767020087a4873b9767020087af473b9767020007af073b9717020007a847e39767020007acc7389767020087ac87389717020087ab07539707020007ad875ad318daa19767020007ab477f13172b000143930ef05ffd15894f096fbda80b1e54048726ce00338e6900c3f7d878d377f910c3f0117827201e00639df6037a958727c58093820260fa975377f7108b12540487a7c78087a6c20043f7c770d3f6d8104377e16853772711b387640043f7357098e305080b38083c63e40e23231404015c60d376f500d307d4a099c3d3f6860854e0110363066724b307690087a00700d385102063070a0063850a00b3876a008c63d3f77610d317f3a099c3d3f77708d397faa0638a071ed377f30853f6f710d397c6a153f7061143703649437006f8437006f043760640d3f7c71099e7d39776a16391071e53770709530600f063990800d31744a15306842099e353064a21d376f708537718d0c3f7c678c3f7f220d397d7a1630208189302f8ff8bb2023c99e7d317fba06392071a5377f708d31707c0d3f707d05315f7a001c5fd17d3f707d05377f70863d8071693870760138e17000b3e0e3c014563f6ce158b130405130e086027a613000b1ec4052726be000b15a4045c655376e408ed8fd377f7108b17f404d467c3f7c678d377f110e30f06e6d377f910338e6900c3f711782720fe00e390f6ed7a958726c580fa9787a7c7805377d71043f7c7705377e11059bd17640200872ae4c7468a3e8bba84b689b28a2e892a84e31e08c831a09767020007a5675e2db39707020007a447399767020007a5c7be9767020087a907c8530984209727020087a407d99717020007aa47309767020007a28704d3f444189767020087a6475b9767020007a207c49767020087a2875a9717020007ae07009767020087a887e59767020007a747599767020087a707599767020007a1c758c3f259e0014643f24468c3f8147143f1f410e5b1d307842031b9d304842099b1530a842025b153098420adb1d3098420b1b1231404000148e9bb9302f05fe38307e8054e814772855dbdd39787a1e38807e0d3f7fc0821b5138507a033aefe008b17c54371b55377ed080db55377670985b5f6506654d6544659b659265a965a065b6624c62426298629623ac23a223b823b622cc22c222d096182808280072a4800530700f09707020007a46727d30700f0d317eaa0e38707b887248800530700f0530a00f0d397e4a0e38907b88729c800530700f0d30400f0d397e9a0e38b07b807290801530700f0d30900f0d317e9a0e38d07b8530700f0530900f0d397e7a0e38f07b8a5bd9767020007a747469767020007a5474543f5e75051be",
+          "replacement_hex": "0245630d080287270800530700f05308f7a0630a080237280740072748145318f7a06315080263060500333810012300050101450148631ef80082803728074087274814cdb7d30700f0f1bfd307e720d9bfd30600f089c53383a50087260300530700f009c63303a6000727030099c6d3f6d7103383a6002720d300638a08006308070053f7e7103303a7002720e300050811054db70000803f0290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290",
+          "description": "Replace MOD10 Velvet Vibrato with custom attenuation; RATE becomes gain"
+        }
+      ],
+      "fit_hash_updates": [
+        {
+          "segment": "seg0",
+          "algorithm": "crc32",
+          "offset": 364,
+          "size": 4,
+          "before_hex": "e976d7ea",
+          "after_hex": "e976d7ea"
+        },
+        {
+          "segment": "seg0",
+          "algorithm": "md5",
+          "offset": 416,
+          "size": 16,
+          "before_hex": "cf70f8a7ee3a8a467a586c41316a79ee",
+          "after_hex": "cf70f8a7ee3a8a467a586c41316a79ee"
+        },
+        {
+          "segment": "seg1",
+          "algorithm": "crc32",
+          "offset": 656,
+          "size": 4,
+          "before_hex": "c56072be",
+          "after_hex": "2b259c0f"
+        },
+        {
+          "segment": "seg1",
+          "algorithm": "md5",
+          "offset": 708,
+          "size": 16,
+          "before_hex": "e6cd9f7405f4e630a6dbc59b0dd3bb50",
+          "after_hex": "fdf43e382b190a9804afda4110cc25aa"
+        }
+      ],
+      "changed_ranges": [
+        {
+          "offset": 656,
+          "size": 4
+        },
+        {
+          "offset": 708,
+          "size": 16
+        },
+        {
+          "offset": 503982,
+          "size": 64
+        },
+        {
+          "offset": 504047,
+          "size": 40
+        },
+        {
+          "offset": 504088,
+          "size": 146
+        },
+        {
+          "offset": 504235,
+          "size": 11
+        },
+        {
+          "offset": 504247,
+          "size": 19
+        },
+        {
+          "offset": 504267,
+          "size": 7
+        },
+        {
+          "offset": 504275,
+          "size": 7
+        },
+        {
+          "offset": 504283,
+          "size": 7
+        },
+        {
+          "offset": 504291,
+          "size": 33
+        },
+        {
+          "offset": 504325,
+          "size": 45
+        },
+        {
+          "offset": 504371,
+          "size": 7
+        },
+        {
+          "offset": 504379,
+          "size": 7
+        },
+        {
+          "offset": 504387,
+          "size": 7
+        },
+        {
+          "offset": 504395,
+          "size": 7
+        },
+        {
+          "offset": 504403,
+          "size": 7
+        },
+        {
+          "offset": 504411,
+          "size": 7
+        },
+        {
+          "offset": 504419,
+          "size": 7
+        },
+        {
+          "offset": 504427,
+          "size": 7
+        },
+        {
+          "offset": 504435,
+          "size": 7
+        },
+        {
+          "offset": 504443,
+          "size": 7
+        },
+        {
+          "offset": 504451,
+          "size": 7
+        },
+        {
+          "offset": 504459,
+          "size": 11
+        },
+        {
+          "offset": 504471,
+          "size": 63
+        },
+        {
+          "offset": 504535,
+          "size": 233
+        },
+        {
+          "offset": 504769,
+          "size": 132
+        },
+        {
+          "offset": 504902,
+          "size": 30
+        },
+        {
+          "offset": 504933,
+          "size": 27
+        },
+        {
+          "offset": 504961,
+          "size": 9
+        },
+        {
+          "offset": 504971,
+          "size": 7
+        },
+        {
+          "offset": 504979,
+          "size": 7
+        },
+        {
+          "offset": 504987,
+          "size": 11
+        },
+        {
+          "offset": 504999,
+          "size": 7
+        },
+        {
+          "offset": 505007,
+          "size": 7
+        },
+        {
+          "offset": 505015,
+          "size": 11
+        },
+        {
+          "offset": 505027,
+          "size": 7
+        },
+        {
+          "offset": 505035,
+          "size": 7
+        },
+        {
+          "offset": 505043,
+          "size": 7
+        },
+        {
+          "offset": 505051,
+          "size": 7
+        },
+        {
+          "offset": 505059,
+          "size": 7
+        },
+        {
+          "offset": 505067,
+          "size": 7
+        },
+        {
+          "offset": 505075,
+          "size": 7
+        },
+        {
+          "offset": 505083,
+          "size": 173
+        },
+        {
+          "offset": 505257,
+          "size": 97
+        },
+        {
+          "offset": 505355,
+          "size": 7
+        },
+        {
+          "offset": 505363,
+          "size": 11
+        }
+      ],
+      "all_fit_hashes_verified": true,
+      "padding_and_tail_preserved": true,
+      "publisher_signed": false,
+      "device_tested": false,
+      "limitations": "Offline integrity only; no proof of ABI, DSP behavior, bootability, or flash safety."
+    },
+    "1.12": {
+      "schema_version": 1,
+      "image_kind": "raw-os-fit",
+      "firmware_version": "1.12",
+      "input_sha256": "17ce4dc1fb0e58f3966ddb30349cd79122cad3b5a54e6e3bd69e8466b48bfe40",
+      "output_sha256": "d1fffae33f0812debaad07e7f509260c2c88d6af562985c56e3fb8d0c2353d3c",
+      "size": 727040,
+      "os_partition_size": 868352,
+      "offset_origin": "OS partition start, not flash start",
+      "patches": [
+        {
+          "offset": 532062,
+          "size": 1392,
+          "expected_hex": "6307054e6385054e6383064e1971a2dc0a4486dea6dacad8ced6d2d4d6d2dad0a2aca6a8caa4cea052bc56b85ab45eb062ac66a86aa409c43333e00023006400872a05001754020087276408539357a163020336468a3e8bba84b689b28a2e892a84630c083687270800530700f0d397e7a0639f07469727020007a48785d317f4a06392073e072a4800530700f0d317eaa0639d0746d31744a1639c073c87248800530700f0d397e4a0639b0746d31794a0639d073a8729c800530700f0d397e9a063990746d31734a1639a073a07290801530700f0d317e9a063970746d31724a1639b0738530700f0d397e7a06391072ed317f4a06382074697a7020007a58764efb098c797a7020007a28757d30792a0638e072e53f2440897a7020007a7c73097c7020087a787a19757020007aec73e97c7020007a107a05372e218d3f2c901d30800f005465372f20053f24a10d3f25a1097a7020087a7a70fb3369000537555195372f210d3f2f210d3712409850663090b34d30e00f0c16554600358840097a7020087a3070b97a7020007a3474d97a7020087aac75f97a7020087a9076097a7020087a4c75f97a7020087af875f97a7020007af475f9757020007a887f197a7020007ac075d97a7020087acc75c9757020087ab47619717020007ad8770d318daa197c7020007abc79613172b000143930ef05ffd15894f096fbda80b1e54048726ce00338e6900c3f7d878d377f910c3f0117827201e00639df6037a958727c58093820260fa975377f7108b12540487a7c78087a6c20043f7c770d3f6d8104377e16853772711b387640043f7357098e305080b38083c63e40e23231404015c60d376f500d307d4a099c3d3f6860854e0110363066724b307690087a00700d385102063070a0063850a00b3876a008c63d3f77610d317f3a099c3d3f77708d397faa0638a071ed377f30853f6f710d397c6a153f7061143703649437006f8437006f043760640d3f7c71099e7d39776a16391071e53770709530600f063990800d31744a15306842099e353064a21d376f708537718d0c3f7c678c3f7f220d397d7a1630208189302f8ff8bb2023c99e7d317fba06392071a5377f708d31707c0d3f707d05315f7a001c5fd17d3f707d05377f70863d8071693870760138e17000b3e0e3c014563f6ce158b130405130e086027a613000b1ec4052726be000b15a4045c655376e408ed8fd377f7108b17f404d467c3f7c678d377f110e30f06e6d377f910338e6900c3f711782720fe00e390f6ed7a958726c580fa9787a7c7805377d71043f7c7705377e11059bd17a40200872a64e6468a3e8bba84b689b28a2e892a84e31e08c831a097b7020007a5e7752db39717020007a4474f97a7020007a507de97a7020087a947e7530984209767020087a487f39757020007aa873e97a7020007a28727d3f4441897b7020087a6c77297a7020007a287e397b7020087a207729757020007aec70e97a7020087a8470e97b7020007a7c77097b7020087a7877097b7020007a14770c3f259e0014643f24468c3f8147143f1f410e5b1d307842031b9d304842099b1530a842025b153098420adb1d3098420b1b1231404000148e9bb9302f05fe38307e8054e814772855dbdd39787a1e38807e0d3f7fc0821b5138507a033aefe008b17c54371b55377ed080db55377670985b5f6506654d6544659b659265a965a065b6624c62426298629623ac23a223b823b622cc22c222d096182808280072a4800530700f09717020007a4673dd30700f0d317eaa0e38707b887248800530700f0530a00f0d397e4a0e38907b88729c800530700f0d30400f0d397e9a0e38b07b807290801530700f0d30900f0d317e9a0e38d07b8530700f0530900f0d397e7a0e38f07b8a5bd97b7020007a7c75d97b7020007a5c75c43f5e75051be",
+          "replacement_hex": "0245630d080287270800530700f05308f7a0630a080237580740072748ef5318f7a06315080263060500333810012300050101450148631ef800828037580740872748efcdb7d30700f0f1bfd307e720d9bfd30600f089c53383a50087260300530700f009c63303a6000727030099c6d3f6d7103383a6002720d300638a08006308070053f7e7103303a7002720e300050811054db70000803f0290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290029002900290",
+          "description": "Replace MOD10 Velvet Vibrato with custom attenuation; RATE becomes gain"
+        }
+      ],
+      "fit_hash_updates": [
+        {
+          "segment": "seg0",
+          "algorithm": "crc32",
+          "offset": 364,
+          "size": 4,
+          "before_hex": "439efb66",
+          "after_hex": "439efb66"
+        },
+        {
+          "segment": "seg0",
+          "algorithm": "md5",
+          "offset": 416,
+          "size": 16,
+          "before_hex": "39d756b5ddf02ff1564473de6289e8a1",
+          "after_hex": "39d756b5ddf02ff1564473de6289e8a1"
+        },
+        {
+          "segment": "seg1",
+          "algorithm": "crc32",
+          "offset": 656,
+          "size": 4,
+          "before_hex": "5eef65f1",
+          "after_hex": "3815ed06"
+        },
+        {
+          "segment": "seg1",
+          "algorithm": "md5",
+          "offset": 708,
+          "size": 16,
+          "before_hex": "1d3b8531e3dc0882aeaffbcbbb4a4af9",
+          "after_hex": "3fe30274a1370ff697de33fc70b81590"
+        }
+      ],
+      "changed_ranges": [
+        {
+          "offset": 656,
+          "size": 4
+        },
+        {
+          "offset": 708,
+          "size": 16
+        },
+        {
+          "offset": 532062,
+          "size": 64
+        },
+        {
+          "offset": 532127,
+          "size": 40
+        },
+        {
+          "offset": 532168,
+          "size": 146
+        },
+        {
+          "offset": 532315,
+          "size": 11
+        },
+        {
+          "offset": 532327,
+          "size": 19
+        },
+        {
+          "offset": 532347,
+          "size": 7
+        },
+        {
+          "offset": 532355,
+          "size": 7
+        },
+        {
+          "offset": 532363,
+          "size": 7
+        },
+        {
+          "offset": 532371,
+          "size": 33
+        },
+        {
+          "offset": 532405,
+          "size": 45
+        },
+        {
+          "offset": 532451,
+          "size": 7
+        },
+        {
+          "offset": 532459,
+          "size": 7
+        },
+        {
+          "offset": 532467,
+          "size": 7
+        },
+        {
+          "offset": 532475,
+          "size": 7
+        },
+        {
+          "offset": 532483,
+          "size": 7
+        },
+        {
+          "offset": 532491,
+          "size": 7
+        },
+        {
+          "offset": 532499,
+          "size": 7
+        },
+        {
+          "offset": 532507,
+          "size": 7
+        },
+        {
+          "offset": 532515,
+          "size": 7
+        },
+        {
+          "offset": 532523,
+          "size": 7
+        },
+        {
+          "offset": 532531,
+          "size": 7
+        },
+        {
+          "offset": 532539,
+          "size": 11
+        },
+        {
+          "offset": 532551,
+          "size": 63
+        },
+        {
+          "offset": 532615,
+          "size": 233
+        },
+        {
+          "offset": 532849,
+          "size": 132
+        },
+        {
+          "offset": 532982,
+          "size": 30
+        },
+        {
+          "offset": 533013,
+          "size": 27
+        },
+        {
+          "offset": 533041,
+          "size": 9
+        },
+        {
+          "offset": 533051,
+          "size": 7
+        },
+        {
+          "offset": 533059,
+          "size": 7
+        },
+        {
+          "offset": 533067,
+          "size": 11
+        },
+        {
+          "offset": 533079,
+          "size": 7
+        },
+        {
+          "offset": 533087,
+          "size": 7
+        },
+        {
+          "offset": 533095,
+          "size": 11
+        },
+        {
+          "offset": 533107,
+          "size": 7
+        },
+        {
+          "offset": 533115,
+          "size": 7
+        },
+        {
+          "offset": 533123,
+          "size": 7
+        },
+        {
+          "offset": 533131,
+          "size": 7
+        },
+        {
+          "offset": 533139,
+          "size": 7
+        },
+        {
+          "offset": 533147,
+          "size": 7
+        },
+        {
+          "offset": 533155,
+          "size": 7
+        },
+        {
+          "offset": 533163,
+          "size": 173
+        },
+        {
+          "offset": 533337,
+          "size": 97
+        },
+        {
+          "offset": 533435,
+          "size": 7
+        },
+        {
+          "offset": 533443,
+          "size": 11
+        }
+      ],
+      "all_fit_hashes_verified": true,
+      "padding_and_tail_preserved": true,
+      "publisher_signed": false,
+      "device_tested": false,
+      "limitations": "Offline integrity only; no proof of ABI, DSP behavior, bootability, or flash safety."
+    }
+  },
+  "physical_custom_fx_tested": false,
+  "historical_route": "docs/firmware-decoding.txt: custom1.10diagnostic flashed/booted/restored",
+  "limitations": [
+    "Only Chorus ported from original effects; gain is new code",
+    "Chorus cached-state tests exclude initialization and control changes",
+    "No physical audio or timing validation",
+    "Raw DFU backend newly generalized, only mocked protocol tests",
+    "Replacement consumes Velvet slot; no new effect registration",
+    "No complete firmware source rebuild"
+  ],
+  "offline_tests": {
+    "packaging_and_raw_dfu_tests": 17,
+    "gain_machine_code_cases_per_version": 60,
+    "chorus_host_tests": "passed, including ASan/UBSan",
+    "chorus_native_cases": 6,
+    "chorus_native_frames": 12288,
+    "native_comparison_state": "identical cached state; excludes initialization/control changes"
+  }
+}

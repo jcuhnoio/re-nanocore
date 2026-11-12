@@ -1,0 +1,55 @@
+{
+  "size": 667648,
+  "sha256": "3aa9fae0d61f9f0954baa501e25c59643f0fafd4c38b8642158cdbdffeef1362",
+  "segments": [
+    {
+      "name": "seg0",
+      "offset": 2048,
+      "size": 32772,
+      "md5": "cf70f8a7ee3a8a467a586c41316a79ee",
+      "crc32": "0xe976d7ea",
+      "md5_valid": true,
+      "crc32_valid": true
+    },
+    {
+      "name": "seg1",
+      "offset": 36864,
+      "size": 630568,
+      "md5": "e6cd9f7405f4e630a6dbc59b0dd3bb50",
+      "crc32": "0xc56072be",
+      "md5_valid": true,
+      "crc32_valid": true
+    }
+  ],
+  "physical": true,
+  "firmware_version_from_image": "1.10",
+  "image_description": "Artinchip Luban-lite",
+  "architecture": "riscv",
+  "segment_load_addresses": [
+    "0x30040000",
+    "0x40000000"
+  ],
+  "entry": "0x40000000",
+  "fmu_payload_length": 667648,
+  "readback_equals_fmu_payload": false,
+  "fmu_sha256": "c69e30b384d7c67a54c2b618a82bb3150b92fb7f2c1fd6c447e296547514770c",
+  "dfu": {
+    "vid": "33c3",
+    "pid": "6678",
+    "product": "Lupgrader",
+    "attributes": 11,
+    "transfer_size": 4096,
+    "bcdDFU": "011a",
+    "commands_hex": "002141",
+    "interface_string": "os"
+  },
+  "reset_result": 0,
+  "normal_runtime_restored": true,
+  "recovery": "User held power button; normal USB/MIDI ready confirmed",
+  "post_reboot_matches_baseline": {
+    "40": false,
+    "27": true
+  },
+  "stored_presets_verified_unchanged": 39,
+  "live_state_changed_after_restart": true
+}

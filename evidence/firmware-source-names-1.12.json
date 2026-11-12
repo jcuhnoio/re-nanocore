@@ -1,0 +1,1230 @@
+{
+  "firmware": "1.12",
+  "symbols": [
+    {
+      "address": "0x40000000",
+      "name": "firmware_entry",
+      "original_name": "FUN_ram_40000000",
+      "confidence": "derived",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40000000; data/callee runtime equivalence is not asserted."
+    },
+    {
+      "address": "0x4000500c",
+      "name": "memcpy",
+      "original_name": "FUN_ram_4000500c",
+      "confidence": "derived",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x400050d6; data/callee runtime equivalence is not asserted."
+    },
+    {
+      "address": "0x40003268",
+      "name": "strcmp",
+      "original_name": "FUN_ram_40003268",
+      "confidence": "derived",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40003288; data/callee runtime equivalence is not asserted."
+    },
+    {
+      "address": "0x40006e50",
+      "name": "fal_partition_read",
+      "original_name": "FUN_ram_40006e50",
+      "confidence": "derived",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40006f5e; data/callee runtime equivalence is not asserted."
+    },
+    {
+      "address": "0x400031bc",
+      "name": "memset",
+      "original_name": "FUN_ram_400031bc",
+      "confidence": "derived",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x400031dc; data/callee runtime equivalence is not asserted."
+    },
+    {
+      "address": "0x4002ed2c",
+      "name": "nc_midi_control_change",
+      "original_name": "FUN_ram_4002ed2c",
+      "confidence": "analyst-reviewed",
+      "basis": "Reviewed CC43/44 branch retained from 1.11; matched normalized pseudocode and inspected callers."
+    },
+    {
+      "address": "0x40028fc2",
+      "name": "nc_midi_dispatch_message",
+      "original_name": "FUN_ram_40028fc2",
+      "confidence": "analyst-reviewed",
+      "basis": "MIDI status/CC/NRPN dispatch; corresponding 1.11 400282ae."
+    },
+    {
+      "address": "0x40029386",
+      "name": "nc_midi_parse_stream",
+      "original_name": "FUN_ram_40029386",
+      "confidence": "analyst-reviewed",
+      "basis": "Running-status/SysEx byte parser; corresponding 1.11 40028672."
+    },
+    {
+      "address": "0x4002e8f2",
+      "name": "nc_submit_slot_command",
+      "original_name": "FUN_ram_4002e8f2",
+      "confidence": "analyst-reviewed",
+      "basis": "CC43/44 selector submission; corresponding 1.11 4002da2e."
+    },
+    {
+      "address": "0x4002b14c",
+      "name": "nc_radio_uart5_init",
+      "original_name": "FUN_ram_4002b14c",
+      "confidence": "analyst-reviewed",
+      "basis": "Reviewed uart5_rx initialization and radio control call chain."
+    },
+    {
+      "address": "0x4002aa7e",
+      "name": "nc_radio_uart_write",
+      "original_name": "FUN_ram_4002aa7e",
+      "confidence": "analyst-reviewed",
+      "basis": "Corresponding 1.11 40029d8e; serialized writes and retry counters."
+    },
+    {
+      "address": "0x4002ab26",
+      "name": "nc_radio_send_control_frame",
+      "original_name": "FUN_ram_4002ab26",
+      "confidence": "analyst-reviewed",
+      "basis": "Corresponding 1.11 40029e36; type-3 framing to UART writer."
+    },
+    {
+      "address": "0x4002b85c",
+      "name": "nc_radio_send_control_if_ready",
+      "original_name": "FUN_ram_4002b85c",
+      "confidence": "analyst-reviewed",
+      "basis": "Corresponding 1.11 4002ab6c; ready-handle guard."
+    },
+    {
+      "address": "0x4002be82",
+      "name": "nc_radio_send_enable_command",
+      "original_name": "FUN_ram_4002be82",
+      "confidence": "analyst-reviewed",
+      "basis": "Corresponding 1.11 4002b100; two-byte [2,enable] command."
+    },
+    {
+      "address": "0x4002d90a",
+      "name": "nc_radio_set_enabled",
+      "original_name": "FUN_ram_4002d90a",
+      "confidence": "analyst-reviewed",
+      "basis": "Corresponding 1.11 4002ca46; resets state and submits enable command."
+    },
+    {
+      "address": "0x4002d990",
+      "name": "nc_radio_retry_disable_during_shutdown",
+      "original_name": "FUN_ram_4002d990",
+      "confidence": "analyst-reviewed",
+      "basis": "Corresponding 1.11 4002cacc; disable retries retained in reviewed shutdown path."
+    },
+    {
+      "address": "0x4003f8c0",
+      "name": "nc_poweroff_wait_loop",
+      "original_name": "FUN_ram_4003f8c0",
+      "confidence": "analyst-reviewed",
+      "basis": "Reviewed power-off wait retains radio disable retry calls."
+    },
+    {
+      "address": "0x40025d92",
+      "name": "nc_effect_name",
+      "original_name": "FUN_ram_40025d92",
+      "confidence": "analyst-reviewed",
+      "basis": "Block/subtype effect names, including new block10 dispatch; availability of block10 not established."
+    },
+    {
+      "address": "0x4002607e",
+      "name": "nc_effect_parameter_name",
+      "original_name": "FUN_ram_4002607e",
+      "confidence": "analyst-reviewed",
+      "basis": "Reviewed Spring subtype7, Duck subtype2 and CAB parameter tables."
+    },
+    {
+      "address": "0x40027192",
+      "name": "nc_format_effect_parameter",
+      "original_name": "FUN_ram_40027192",
+      "confidence": "analyst-reviewed",
+      "basis": "Pitch coarse changes to 48*x-24, fine stays 2*x-1; reviewed binary float constants."
+    },
+    {
+      "address": "0x40025824",
+      "name": "nc_delay_parameter_count",
+      "original_name": "FUN_ram_40025824",
+      "confidence": "analyst-reviewed",
+      "basis": "Returns eight controls for delay subtype2 (Duck); used by name and count queries."
+    },
+    {
+      "address": "0x40026e8a",
+      "name": "nc_effect_parameter_count",
+      "original_name": "FUN_ram_40026e8a",
+      "confidence": "analyst-reviewed",
+      "basis": "Returns effect parameter counts; delegates Duck count to nc_delay_parameter_count."
+    },
+    {
+      "address": "0x40071cfe",
+      "name": "nc_mod_process_dispatch",
+      "original_name": "FUN_ram_40071cfe",
+      "confidence": "reviewed-static",
+      "basis": "Observed callback table and native thunk; generic path or subtype8 fastpath."
+    },
+    {
+      "address": "0x4006dc08",
+      "name": "nc_mod_process_general",
+      "original_name": "FUN_ram_4006dc08",
+      "confidence": "reviewed-static",
+      "basis": "Focused REA export; classic chorus is subtype0 default path; also handles other MOD variants."
+    },
+    {
+      "address": "0x40071208",
+      "name": "nc_mod_init",
+      "original_name": "FUN_ram_40071208",
+      "confidence": "reviewed-static",
+      "basis": "Audio init invokes with shared MOD allocation; initializes delay buffers, coefficients, oscillator and other subtype state."
+    },
+    {
+      "address": "0x40071ca6",
+      "name": "nc_chorus_default_parameters",
+      "original_name": "FUN_ram_40071ca6",
+      "confidence": "reviewed-static",
+      "basis": "Initial MOD subtype0 defaults at normalized rate0.6043956/depth1."
+    },
+    {
+      "address": "0x40071aa4",
+      "name": "nc_mod_default_parameters",
+      "original_name": "FUN_ram_40071aa4",
+      "confidence": "reviewed-static",
+      "basis": "Subtype-dependent defaults; subtype0 uses same classic chorus defaults."
+    },
+    {
+      "address": "0x4000854c",
+      "name": "nc_fx2_set_enabled",
+      "original_name": "FUN_ram_4000854c",
+      "confidence": "reviewed-static",
+      "basis": "Checks model readiness and selects subtype + 30 for drive subtypes 0..7."
+    },
+    {
+      "address": "0x4000848c",
+      "name": "nc_fx2_load_drive_slot",
+      "original_name": "FUN_ram_4000848c",
+      "confidence": "reviewed-static",
+      "basis": "Accepts model slots 30..37 and loads context 0x3004e9bc."
+    },
+    {
+      "address": "0x4006ca50",
+      "name": "nc_fx2_process",
+      "original_name": "FUN_ram_4006ca50",
+      "confidence": "reviewed-static",
+      "basis": "Native wrapper confirms all drive subtypes 0..7 force a7=1 before shared model processing."
+    },
+    {
+      "address": "0x4007404e",
+      "name": "nc_amp_drive_state_init",
+      "original_name": "FUN_ram_4007404e",
+      "confidence": "reviewed-static",
+      "basis": "Initializes the shared model wrapper, filter and cached controls; floating argument prototype needs native correction."
+    },
+    {
+      "address": "0x400741b8",
+      "name": "nc_amp_drive_process",
+      "original_name": "FUN_ram_400741b8",
+      "confidence": "reviewed-static",
+      "basis": "Shared AMP/drive callback with three-control mode, model processing, optional external EQ and crossfade."
+    },
+    {
+      "address": "0x40074160",
+      "name": "nc_drive_parameter_defaults",
+      "original_name": "FUN_ram_40074160",
+      "confidence": "reviewed-static",
+      "basis": "Initializes normalized drive defaults to [0.5, 0.5, 0.8]."
+    },
+    {
+      "address": "0x4008b62a",
+      "name": "nc_model_is_ready",
+      "original_name": "FUN_ram_4008b62a",
+      "confidence": "reviewed-static",
+      "basis": "Requires a runtime pointer at context + 0x10 and ready byte at + 0x50."
+    },
+    {
+      "address": "0x40088b3c",
+      "name": "nc_model_context_init",
+      "original_name": "FUN_ram_40088b3c",
+      "confidence": "reviewed-static",
+      "basis": "Initializes the 0x54-byte model context and activation tables."
+    },
+    {
+      "address": "0x30047ad2",
+      "name": "nc_model_process_block",
+      "original_name": "FUN_ram_30047ad2",
+      "confidence": "reviewed-static",
+      "basis": "In-place model processing in chunks of at most 128 samples, including recurrent and nonlinear paths."
+    },
+    {
+      "address": "0x30046744",
+      "name": "nc_model_recurrent_stage_process",
+      "original_name": "FUN_ram_30046744",
+      "confidence": "reviewed-static",
+      "basis": "GRU-style gated recurrence inferred from activation tables and hidden-state update."
+    },
+    {
+      "address": "0x4005c5ce",
+      "name": "nc_three_band_eq_process_sample",
+      "original_name": "FUN_ram_4005c5ce",
+      "confidence": "reviewed-static",
+      "basis": "Three cascaded transposed direct-form biquad recurrences."
+    },
+    {
+      "address": "0x400097e2",
+      "name": "nc_amp_drive_schedule_crossfade",
+      "original_name": "FUN_ram_400097e2",
+      "confidence": "reviewed-static",
+      "basis": "Schedules ceil(sample_rate * milliseconds / 1000) samples of interpolation using +0x84/+0x88/+0x8c."
+    },
+    {
+      "address": "0x40007738",
+      "name": "nc_amp_drive_set_crossfade",
+      "original_name": "FUN_ram_40007738",
+      "confidence": "reviewed-static",
+      "basis": "Sets the interpolation value immediately and clears the ramp."
+    },
+    {
+      "address": "0x40008376",
+      "name": "nc_amp_drive_invalidate_parameter_cache",
+      "original_name": "FUN_ram_40008376",
+      "confidence": "reviewed-static",
+      "basis": "Invalidates cached controls at wrapper +0x6c through +0x80."
+    },
+    {
+      "address": "0x4000c132",
+      "name": "nc_model_switch_worker",
+      "original_name": "FUN_ram_4000c132",
+      "confidence": "reviewed-static",
+      "basis": "Debounced request worker coordinates AMP/IR/drive loading and a 16-ms drive crossfade."
+    },
+    {
+      "address": "0x4005e044",
+      "name": "nc_dsp_process_chain",
+      "original_name": "FUN_ram_4005e044",
+      "confidence": "reviewed-static",
+      "basis": "Walks active-bank ordered nodes, smooths parameters and invokes dispatch-table callbacks."
+    },
+    {
+      "address": "0x4005ff2c",
+      "name": "nc_dsp_process_chain_checked",
+      "original_name": "FUN_ram_4005ff2c",
+      "confidence": "reviewed-static",
+      "basis": "Null/count guards before forwarding to chain processor; prototype omits forwarded registers."
+    },
+    {
+      "address": "0x4005feca",
+      "name": "nc_dsp_node_configure",
+      "original_name": "FUN_ram_4005feca",
+      "confidence": "reviewed-static",
+      "basis": "Sets processor kind, subtype, enabled flag, state pointer and zeroes parameter area."
+    },
+    {
+      "address": "0x4005fa8e",
+      "name": "nc_dsp_inactive_bank",
+      "original_name": "FUN_ram_4005fa8e",
+      "confidence": "reviewed-static",
+      "basis": "Returns bank at (active_selector XOR1)*0x308."
+    },
+    {
+      "address": "0x4005faaa",
+      "name": "nc_dsp_active_bank",
+      "original_name": "FUN_ram_4005faaa",
+      "confidence": "reviewed-static",
+      "basis": "Returns bank at active_selector*0x308."
+    },
+    {
+      "address": "0x4005fac2",
+      "name": "nc_dsp_publish_bank",
+      "original_name": "FUN_ram_4005fac2",
+      "confidence": "reviewed-static",
+      "basis": "Compares node metadata/parameter blocks, updates revisions and flips active selector."
+    },
+    {
+      "address": "0x4000e9f0",
+      "name": "nc_audio_engine_init",
+      "original_name": "FUN_ram_4000e9f0",
+      "confidence": "reviewed-static",
+      "basis": "Allocates DSP states, registers nodes, configures 44100Hz hardware and starts audio worker."
+    },
+    {
+      "address": "0x4000b698",
+      "name": "nc_audio_block_worker",
+      "original_name": "FUN_ram_4000b698",
+      "confidence": "reviewed-static",
+      "basis": "Drains queued DMA-half indices and invokes audio block processor."
+    },
+    {
+      "address": "0x40009d20",
+      "name": "nc_audio_process_dma_half",
+      "original_name": "FUN_ram_40009d20",
+      "confidence": "reviewed-static",
+      "basis": "Converts and mixes audio around the chain invocation; index0/1 guard and <=64-frame chunks."
+    },
+    {
+      "address": "0x40066cee",
+      "name": "nc_dsp_kind_5_process",
+      "original_name": "FUN_ram_40066cee",
+      "confidence": "reviewed-static",
+      "basis": "Native table kind5 callback; focused export shows optimized subtype3/general routing. Algorithm not fully dissected."
+    },
+    {
+      "address": "0x40068d96",
+      "name": "nc_dsp_kind_10_process",
+      "original_name": "FUN_ram_40068d96",
+      "confidence": "reviewed-static",
+      "basis": "Native table kind10 callback; focused export forwards to400682f4. Algorithm not fully dissected."
+    },
+    {
+      "address": "0x30040000",
+      "name": "dsp_fir_process_unrolled",
+      "original_name": "FUN_ram_30040000",
+      "basis": "RAM FIR kernel used by convolver direct head; coefficient/state multiply accumulation.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x30041298",
+      "name": "nc_reverb_cloud_helper_30041298",
+      "original_name": "FUN_ram_30041298",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x300419ae",
+      "name": "nc_reverb_cloud_helper_300419ae",
+      "original_name": "FUN_ram_300419ae",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x30042d7e",
+      "name": "nc_reverb_cloud_process",
+      "original_name": "FUN_ram_30042d7e",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x30043fd4",
+      "name": "nc_reverb_dispatch",
+      "original_name": "FUN_ram_30043fd4",
+      "basis": "RAM callback: routes subtype to algorithm, applies dry/wet mix",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x300445ac",
+      "name": "nc_reverb_room_process",
+      "original_name": "FUN_ram_300445ac",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x30045b78",
+      "name": "nc_reverb_shimmer_process",
+      "original_name": "FUN_ram_30045b78",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40025ca4",
+      "name": "nc_effect_normalize_subtype",
+      "original_name": "FUN_ram_40025ca4",
+      "basis": "Restricts MOD selector to nine supported IDs",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40025d1e",
+      "name": "nc_effect_picker_count",
+      "original_name": "FUN_ram_40025d1e",
+      "basis": "Returns nine MOD picker entries",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40025d2c",
+      "name": "nc_effect_picker_to_subtype",
+      "original_name": "FUN_ram_40025d2c",
+      "basis": "Reads MOD selector byte table4009b34c",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40025d4e",
+      "name": "nc_effect_subtype_to_picker",
+      "original_name": "FUN_ram_40025d4e",
+      "basis": "Inverse lookup in MOD selector table",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005c670",
+      "name": "nc_reverb_cloud_helper_4005c670",
+      "original_name": "FUN_ram_4005c670",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005d850",
+      "name": "nc_reverb_cloud_init",
+      "original_name": "FUN_ram_4005d850",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005dd98",
+      "name": "nc_reverb_cloud_set_sample_rate",
+      "original_name": "FUN_ram_4005dd98",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005ddbc",
+      "name": "nc_reverb_cloud_prepare",
+      "original_name": "FUN_ram_4005ddbc",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005ddc4",
+      "name": "nc_reverb_cloud_configure",
+      "original_name": "FUN_ram_4005ddc4",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005dde4",
+      "name": "nc_reverb_cloud_reset",
+      "original_name": "FUN_ram_4005dde4",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005f2c4",
+      "name": "cab_ir_process_with_cut_filters",
+      "original_name": "FUN_ram_4005f2c4",
+      "basis": "Mono downmix, IR processing, low/high cut first-order filters, output level and fade.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005ff48",
+      "name": "compressor_detector_reset",
+      "original_name": "FUN_ram_4005ff48",
+      "basis": "Resets compressor envelope, flags, gain and history fields.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4005ff6c",
+      "name": "compressor_configure",
+      "original_name": "FUN_ram_4005ff6c",
+      "basis": "Threshold, ratio, knee, attack, release and makeup configuration and coefficient calculation.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40060284",
+      "name": "compressor_process_linked_stereo",
+      "original_name": "FUN_ram_40060284",
+      "basis": "Linked detector, soft knee gain reduction, attack/release and makeup application.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006066c",
+      "name": "nc_delay_bypass_copy",
+      "original_name": "FUN_ram_4006066c",
+      "basis": "Copies mono/stereo or averages stereo to mono",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006070c",
+      "name": "nc_delay_configure_smear_filters",
+      "original_name": "FUN_ram_4006070c",
+      "basis": "Called from Smear branch; computes biquad coefficients",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40060b4c",
+      "name": "nc_delay_ice_process",
+      "original_name": "FUN_ram_40060b4c",
+      "basis": "Subtype 3 fast and general paths converge here",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40061c98",
+      "name": "nc_delay_process_variants",
+      "original_name": "FUN_ram_40061c98",
+      "basis": "Branches on subtype 0..7; shared parameter mapping and ring-buffer DSP",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40065bd4",
+      "name": "nc_delay_default_parameters",
+      "original_name": "FUN_ram_40065bd4",
+      "basis": "Default parameter table writer",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40065c3e",
+      "name": "nc_delay_reset",
+      "original_name": "FUN_ram_40065c3e",
+      "basis": "Clears delay state and buffers through supplied callback",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40065e48",
+      "name": "nc_delay_init",
+      "original_name": "FUN_ram_40065e48",
+      "basis": "Initializes sample rate, external buffers and state",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40066e08",
+      "name": "eq_state_init",
+      "original_name": "FUN_ram_40066e08",
+      "basis": "Clears0x268-byte state and sets sample rate, enable flag, subtype sentinel.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40066e8e",
+      "name": "eq_subtype_default_parameters",
+      "original_name": "FUN_ram_40066e8e",
+      "basis": "Initializes4/7/9 controls to midpoint according to band count.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40066f42",
+      "name": "eq_default_parameters",
+      "original_name": "FUN_ram_40066f42",
+      "basis": "Midpoint EQ control initialization.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40066fb4",
+      "name": "eq_multiband_process",
+      "original_name": "FUN_ram_40066fb4",
+      "basis": "Three-, six-, and eight-band coefficient generation and stereo biquad cascades.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400682f4",
+      "name": "expression_volume_pan_width_wah_process",
+      "original_name": "FUN_ram_400682f4",
+      "basis": "Runtime dispatch accepts only subtypes0..3, copies inputs then gain/balance/mid-side/Wah processing.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40068c0c",
+      "name": "expression_state_init",
+      "original_name": "FUN_ram_40068c0c",
+      "basis": "Initializes0x5c-byte control/filter state and sample rate.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40068c92",
+      "name": "expression_state_reset",
+      "original_name": "FUN_ram_40068c92",
+      "basis": "Clears filter history and resets smoothed controls.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40068cce",
+      "name": "expression_subtype_normalize",
+      "original_name": "FUN_ram_40068cce",
+      "basis": "Returns0 for subtype>=4, otherwise subtype.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40068cda",
+      "name": "expression_subtype_default_parameters",
+      "original_name": "FUN_ram_40068cda",
+      "basis": "Subtype-specific default normalized controls.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40068da0",
+      "name": "dynamics_detectors_reset",
+      "original_name": "FUN_ram_40068da0",
+      "basis": "Initializes adaptive gate window coefficients and resets gate/compressor detector histories.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40069066",
+      "name": "dynamics_state_init",
+      "original_name": "FUN_ram_40069066",
+      "basis": "Clears 0x2148-byte state and sets sample rate and cached controls.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40069592",
+      "name": "dynamics_gate_default_parameters",
+      "original_name": "FUN_ram_40069592",
+      "basis": "Initializes two controls for basic gate.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40069600",
+      "name": "dynamics_subtype_default_parameters",
+      "original_name": "FUN_ram_40069600",
+      "basis": "Four-way initialization of gate/adaptive/combined/compressor normalized controls.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40069738",
+      "name": "dynamics_gate_autogate_ngcomp_compressor_process",
+      "original_name": "FUN_ram_40069738",
+      "basis": "Four-way subtype dispatcher implements gate, adaptive gate, gate plus compressor, and compressor audio loops.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006b1c4",
+      "name": "nc_fx2_pitch_wah_process",
+      "original_name": "FUN_ram_4006b1c4",
+      "basis": "FX2 Pitch8 EnvWah9 AutoWah10 MotionWah11 dispatch",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006c4de",
+      "name": "nc_fx2_init",
+      "original_name": "FUN_ram_4006c4de",
+      "basis": "Allocates/configures FX2 state including pitch",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006c7ca",
+      "name": "nc_fx2_reset",
+      "original_name": "FUN_ram_4006c7ca",
+      "basis": "Resets pitch and FX2 state",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006c8d8",
+      "name": "nc_fx2_motion_wah_init",
+      "original_name": "FUN_ram_4006c8d8",
+      "basis": "Initializes MotionWah embedded state",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006c932",
+      "name": "nc_fx2_defaults",
+      "original_name": "FUN_ram_4006c932",
+      "basis": "FX2 default control setup",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4006d0b4",
+      "name": "nc_pulse_vibe_process",
+      "original_name": "FUN_ram_4006d0b4",
+      "basis": "Subtype8 callback fast path; dormant selector entry",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40071d38",
+      "name": "nc_motion_wah_init",
+      "original_name": "FUN_ram_40071d38",
+      "basis": "Initializes shared MotionWah state",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40071e7c",
+      "name": "nc_motion_wah_process",
+      "original_name": "FUN_ram_40071e7c",
+      "basis": "FX2 subtype11 and dormant MOD9 delegated processor",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40072570",
+      "name": "nc_chorus2_jet_flanger_init",
+      "original_name": "FUN_ram_40072570",
+      "basis": "Shared MOD11/17 state initializer",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40072754",
+      "name": "nc_chorus2_jet_flanger_process",
+      "original_name": "FUN_ram_40072754",
+      "basis": "Distinct MOD11 dual-tap and MOD17 triangle-swept delay branches",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40073170",
+      "name": "nc_reverb_apply_parameters",
+      "original_name": "FUN_ram_40073170",
+      "basis": "Cached parameter update; routes to subtype setters",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40073b48",
+      "name": "nc_reverb_init",
+      "original_name": "FUN_ram_40073b48",
+      "basis": "Clears 0x74c68 state bytes; sets sample rate and invalid subtype",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40073bb0",
+      "name": "nc_reverb_select_subtype",
+      "original_name": "FUN_ram_40073bb0",
+      "basis": "Constructs subtype; copies Spring executable blob",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40073d9e",
+      "name": "nc_reverb_reset",
+      "original_name": "FUN_ram_40073d9e",
+      "basis": "Routes reset to selected subtype",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40073e58",
+      "name": "nc_reverb_default_parameters",
+      "original_name": "FUN_ram_40073e58",
+      "basis": "Default parameter table writer",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40074d8c",
+      "name": "nc_velvet_vibrato_init",
+      "original_name": "FUN_ram_40074d8c",
+      "basis": "Initializes VelvetVibrato substate",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40074e5e",
+      "name": "nc_velvet_vibrato_process",
+      "original_name": "FUN_ram_40074e5e",
+      "basis": "MOD10 delegated 1536-sample stereo variable delay",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400753d0",
+      "name": "cab_convolver_accumulate_seven_partitions",
+      "original_name": "FUN_ram_400753d0",
+      "basis": "Complex multiply-accumulate across seven spectrum-history partitions.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40075ec4",
+      "name": "cab_convolver_fft_backend_transform",
+      "original_name": "FUN_ram_40075ec4",
+      "basis": "Forward/inverse FFT backend including calibration and scaling.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40076694",
+      "name": "cab_convolver_set_impulse_response",
+      "original_name": "FUN_ram_40076694",
+      "basis": "Limits impulse response to1024 samples, stores direct head and transforms tail partitions.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40076988",
+      "name": "cab_convolver_service_pending_fft_tail",
+      "original_name": "FUN_ram_40076988",
+      "basis": "Services queued FFT partition computation and overlap-add output.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40076bf0",
+      "name": "cab_convolver_process",
+      "original_name": "FUN_ram_40076bf0",
+      "basis": "Direct FIR head plus block FFT tail with overlap state and output queue.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40077364",
+      "name": "nc_pitch_find_splice",
+      "original_name": "FUN_ram_40077364",
+      "basis": "Fractional interpolation correlation search over ring history",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40077b1c",
+      "name": "nc_pitch_estimate_period",
+      "original_name": "FUN_ram_40077b1c",
+      "basis": "Incremental correlation over decimated pitch history",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007876a",
+      "name": "nc_pitch_init",
+      "original_name": "FUN_ram_4007876a",
+      "basis": "Pitch state initialization called from FX2 init",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40078aba",
+      "name": "nc_pitch_set_shift",
+      "original_name": "FUN_ram_40078aba",
+      "basis": "Pitch control configuration invoked for changed coarse/fine amount",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40079596",
+      "name": "nc_pitch_reset",
+      "original_name": "FUN_ram_40079596",
+      "basis": "Pitch state reset called by FX2 reset",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40079bdc",
+      "name": "nc_pitch_process",
+      "original_name": "FUN_ram_40079bdc",
+      "basis": "2048-sample fractional delay ring, period tracking and read-head crossfade",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007a4b4",
+      "name": "nc_reverb_concert_helper_4007a4b4",
+      "original_name": "FUN_ram_4007a4b4",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007b514",
+      "name": "nc_reverb_concert_init",
+      "original_name": "FUN_ram_4007b514",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007b5b8",
+      "name": "nc_reverb_concert_configure",
+      "original_name": "FUN_ram_4007b5b8",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007b5ec",
+      "name": "nc_reverb_concert_reset",
+      "original_name": "FUN_ram_4007b5ec",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007b7b0",
+      "name": "nc_reverb_concert_process",
+      "original_name": "FUN_ram_4007b7b0",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007c9ec",
+      "name": "nc_reverb_hall_helper_4007c9ec",
+      "original_name": "FUN_ram_4007c9ec",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007d834",
+      "name": "nc_reverb_hall_init",
+      "original_name": "FUN_ram_4007d834",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007d8f0",
+      "name": "nc_reverb_hall_configure",
+      "original_name": "FUN_ram_4007d8f0",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007d944",
+      "name": "nc_reverb_hall_reset",
+      "original_name": "FUN_ram_4007d944",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007db8c",
+      "name": "nc_reverb_hall_process",
+      "original_name": "FUN_ram_4007db8c",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007eae0",
+      "name": "nc_reverb_plate_helper_4007eae0",
+      "original_name": "FUN_ram_4007eae0",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007fba4",
+      "name": "nc_reverb_plate_init",
+      "original_name": "FUN_ram_4007fba4",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007fc48",
+      "name": "nc_reverb_plate_configure",
+      "original_name": "FUN_ram_4007fc48",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007fc84",
+      "name": "nc_reverb_plate_reset",
+      "original_name": "FUN_ram_4007fc84",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4007fec8",
+      "name": "nc_reverb_plate_process",
+      "original_name": "FUN_ram_4007fec8",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4008076c",
+      "name": "nc_reverb_room_helper_4008076c",
+      "original_name": "FUN_ram_4008076c",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40080f38",
+      "name": "nc_reverb_room_helper_40080f38",
+      "original_name": "FUN_ram_40080f38",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40082250",
+      "name": "nc_reverb_room_init",
+      "original_name": "FUN_ram_40082250",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40082360",
+      "name": "nc_reverb_room_reset",
+      "original_name": "FUN_ram_40082360",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40082726",
+      "name": "nc_reverb_room_set_parameter_1",
+      "original_name": "FUN_ram_40082726",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40082752",
+      "name": "nc_reverb_room_set_parameter_3",
+      "original_name": "FUN_ram_40082752",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400827ae",
+      "name": "nc_reverb_room_set_parameter_2",
+      "original_name": "FUN_ram_400827ae",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400827d8",
+      "name": "nc_reverb_room_set_parameter_4",
+      "original_name": "FUN_ram_400827d8",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4008281c",
+      "name": "nc_reverb_shimmer_helper_4008281c",
+      "original_name": "FUN_ram_4008281c",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40083e34",
+      "name": "nc_reverb_shimmer_init",
+      "original_name": "FUN_ram_40083e34",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40083f32",
+      "name": "nc_reverb_shimmer_configure",
+      "original_name": "FUN_ram_40083f32",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40083f80",
+      "name": "nc_reverb_shimmer_reset",
+      "original_name": "FUN_ram_40083f80",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40088c50",
+      "name": "nc_model_decode_payload",
+      "original_name": "FUN_ram_40088c50",
+      "basis": "Reviewed DSP dispatch/model loading path.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40091e9c",
+      "name": "nc_model_load_slot_payload",
+      "original_name": "FUN_ram_40091e9c",
+      "basis": "Reviewed DSP dispatch/model loading path.",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40094f12",
+      "name": "nc_reverb_spring_set_decay",
+      "original_name": "FUN_ram_40094f12",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40095044",
+      "name": "nc_reverb_spring_set_crossover",
+      "original_name": "FUN_ram_40095044",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40095452",
+      "name": "nc_reverb_spring_set_tone",
+      "original_name": "FUN_ram_40095452",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x40095476",
+      "name": "nc_reverb_spring_init",
+      "original_name": "FUN_ram_40095476",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x4009547e",
+      "name": "nc_reverb_spring_reset",
+      "original_name": "FUN_ram_4009547e",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1540",
+      "name": "nc_reverb_spring_copy_samples",
+      "original_name": "FUN_ram_400a1540",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a15ac",
+      "name": "nc_reverb_spring_exchange_samples",
+      "original_name": "FUN_ram_400a15ac",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1628",
+      "name": "nc_reverb_spring_ring_read",
+      "original_name": "FUN_ram_400a1628",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1688",
+      "name": "nc_reverb_spring_ring_write",
+      "original_name": "FUN_ram_400a1688",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1704",
+      "name": "nc_reverb_spring_ring_exchange",
+      "original_name": "FUN_ram_400a1704",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1790",
+      "name": "nc_reverb_spring_biquad_process",
+      "original_name": "FUN_ram_400a1790",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a17d8",
+      "name": "nc_reverb_spring_helper_400a17d8",
+      "original_name": "FUN_ram_400a17d8",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1868",
+      "name": "nc_reverb_spring_helper_400a1868",
+      "original_name": "FUN_ram_400a1868",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a19cc",
+      "name": "nc_reverb_spring_helper_400a19cc",
+      "original_name": "FUN_ram_400a19cc",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1a80",
+      "name": "nc_reverb_spring_allpass_exchange",
+      "original_name": "FUN_ram_400a1a80",
+      "basis": "Delay/input exchange: v=x+g*old; delay=v; output=old-g*v",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1b1c",
+      "name": "nc_reverb_spring_allpass_ring_process",
+      "original_name": "FUN_ram_400a1b1c",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1ba4",
+      "name": "nc_reverb_spring_allpass_cascade",
+      "original_name": "FUN_ram_400a1ba4",
+      "basis": "Repeated all-pass recurrence over staged state",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1dac",
+      "name": "nc_reverb_spring_helper_400a1dac",
+      "original_name": "FUN_ram_400a1dac",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a1e4c",
+      "name": "nc_reverb_spring_helper_400a1e4c",
+      "original_name": "FUN_ram_400a1e4c",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a2370",
+      "name": "nc_reverb_spring_fir_interpolate",
+      "original_name": "FUN_ram_400a2370",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a2630",
+      "name": "nc_reverb_spring_helper_400a2630",
+      "original_name": "FUN_ram_400a2630",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a26b8",
+      "name": "nc_reverb_spring_helper_400a26b8",
+      "original_name": "FUN_ram_400a26b8",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "confidence": "reviewed-static"
+    },
+    {
+      "address": "0x400a29c8",
+      "name": "nc_reverb_spring_copied_kernel",
+      "original_name": "FUN_ram_400a29c8",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "confidence": "reviewed-static"
+    }
+  ]
+}

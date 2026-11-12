@@ -1,0 +1,84 @@
+Update — 2026-11-12: Full decoding and modified-application execution are now
+validated; see firmware-decoding.txt. Earlier open questions below are historical.
+
+NanoCore physical firmware recovery — 2026-11-11
+
+Breakthrough
+A 667648-byte plaintext firmware image was recovered over USB DFU without
+opening the enclosure or writing firmware. SHA256:
+3aa9fae0d61f9f0954baa501e25c59643f0fafd4c38b8642158cdbdffeef1362
+Image metadata independently identifies version 1.10, Artinchip Luban-lite,
+RISC-V architecture. Exact processor SKU remains unknown.
+
+Validation
+The first 2048 bytes contain a flattened-device-tree/FIT-style image header.
+External segments, with offsets relative to the complete readback:
+seg0: offset 2048, length 32772, load 0x30040000.
+ MD5 cf70f8a7ee3a8a467a586c41316a79ee; CRC32 e976d7ea.
+seg1: offset 36864, length 630568, load/entry 0x40000000.
+ MD5 e6cd9f7405f4e630a6dbc59b0dd3bb50; CRC32 c56072be.
+Both independently computed hashes match both embedded hash fields exactly.
+RISC-V disassembly of seg1 shows coherent startup, mtvec/mscratch setup,
+stack/global-pointer setup, calls and a zero-initialization loop. The ELF
+wrapper is analyst-generated from raw bytes, not a recovered original ELF.
+Disassembly is adjusted to the declared load address 0x40000000.
+
+Readback has the same length as the stored opaque 1.10 FMU payload but differs
+from it. This recovers executable plaintext without yet implementing the LUM0
+transform or proving how plaintext relates byte-for-byte to packaged input.
+No publisher signing key or device-side acceptance bypass was recovered.
+
+Physical protocol
+1. Send only MIDI F0 7D 44 46 55 01 F7. Do not invoke native API17, which uploads.
+2. Device changes from 33c3:1301 Nanocore to 33c3:6678 Livtra Lupgrader.
+3. Configuration: one FE/01/02 interface, string "os"; DFU descriptor
+   09 21 0b ff 00 00 10 1a 01. Transfer size 4096, upload advertised.
+4. GETSTATE reports 2; GETSTATUS reports success/idle.
+5. UPLOAD block0 returns 00 21 41 (command list).
+6. Initial UPLOAD block2 without setting address returns command-list residue
+   followed by zeros; this is not valid firmware evidence.
+7. DNLOAD block0 containing 21||LE32(offset) sets the address cursor.
+   GETSTATUS transitions busy4 (50ms timeout) -> download-idle5.
+   ABORT returns to idle2. UPLOAD block2 then returns real data at that offset.
+8. Repeat with explicit 4096-byte offsets, obeying poll delays; final read2048.
+   ABORT at completion returns idle2.
+No erase41, data DNLOAD block>=2, vendor metadata/start, unprotect or firmware
+manifestation request was sent. Setting the address cursor is a control write.
+The initial two-page experiment polled busy immediately; the complete dump
+respected the reported delay. All dump transfers completed at exact lengths.
+
+Recovery
+USB bus reset succeeded but re-enumerated Lupgrader, not the application.
+User held the power button to restart the pedal. Post-restart enumeration,
+readiness, snapshot and settings are checked in post-reboot.json; the compact
+receipt records whether state matches the pre-capture baseline.
+
+Artifacts
+Full binaries and transfers stay local in analysis/physical-dfu-20261111/:
+firmware-1.10-readback.bin, seg0.bin, seg1.bin, firmware-layout.dts,
+seg1.elf, seg1-disassembly.txt, validation.json, dump-transfers.json,
+probe.json, address-probe.json, usb-descriptors.json, post-reboot.json.
+Reproduction scripts are alongside captures. They are exploratory physical
+scripts, not a general-purpose validated uploader/readback CLI.
+Tracked receipt: evidence/physical-firmware-readback.json (no firmware bytes).
+
+Next research
+Analyze startup and image layout, map code/data and locate DSP dispatch.
+The official ArtInChip Luban-lite source provides SDK comparison material:
+https://github.com/artinchip/luban-lite
+The observed command scheme resembles ST's documented DFU extension, but this
+is not proof of STM32 silicon; the recovered image says RISC-V/Artinchip:
+https://www.st.com/resource/en/application_note/an3156-how-to-use-usb-dfu-protocol-in-bootloader-on-stm32-mcus-stmicroelectronics.pdf
+USB DFU state/capability reference: https://www.usb.org/sites/default/files/DFU_1.1.pdf
+Locate updater/decode code if present in these segments; otherwise investigate
+whether the DFU address space exposes only the "os" image or additional
+partitions. No read outside the bounded application image has been attempted.
+Preserve this matched plaintext/package pair before any version changes.
+
+Post-restart verification result
+Runtime ready confirmed; global settings unchanged. 39 of 40 stored preset
+JSON responses match baseline exactly. Active slot1 Ambient differs: volume
+95 ->83, fx2Slot255 ->30, and effect slots differ. Live snapshot also differs.
+No preset-write command was sent by these scripts. Cause of the difference
+is not established; do not claim all presets survived byte-for-byte unchanged.
+Original responses remain in the pre-capture backup; no restoration attempted.

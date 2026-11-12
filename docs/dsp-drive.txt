@@ -1,0 +1,162 @@
+NanoCore 1.12: FX2 drive/model processing
+======================================
+
+Status: static trace, 2026-11-12. No firmware patch, device write or audio test.
+The reviewed retained REA evidence is indexed in evidence/dsp-drive.json.
+
+Main finding
+------------
+FX2 drive subtypes 0..7 use stored model slots 30..37 and the same processing
+engine as AMP. They are not eight independent hardcoded overdrive functions.
+Their wrapper selects a three-control gain/tone/level mode. The underlying model
+runtime contains coefficient-driven recurrent processing and nonlinear lookup
+paths, but calling this entire format NAM or fully recovering each pedal's
+transfer function would go beyond the evidence gathered here.
+
+Selector to process path
+------------------------
+UI effect metadata 40025d92 identifies logical block 1's subtypes below 8 as the
+'distortion' family; 8..11 instead select Pitch/Wah variants. The metadata table
+at 4009bc34 contains GAIN, TONE, LEVEL. Subtypes 5..7 have a special BOOST label
+path, so not every one of the eight models exposes the same visible controls.
+The AMP metadata table at 4009bc20 has GAIN, LOW, MID, HIGH, LEVEL.
+
+4000854c enables/disables the FX2 chain node. For subtype<8 it checks model
+context 3004e9bc and calls 4000848c(subtype+30). 4000848c accepts only 30..37,
+loads through 40091e9c, applies defaults through 40007a82 and stores the selected
+slot. The loader validates a DDPB payload (LE magic 0x42504444; versions 1..3
+or 5 at this call site), then calls 40088c50. It obtains the model contents from
+registered storage callbacks; these coefficients are not just code in seg1.
+
+The main chain's processing kind8 points to 4006ca50. That callback receives
+state, input L/R, output L/R, sample count, normalized parameter array, subtype,
+stereo-present flag and output-stereo pointer. Its subtype<8 branch stores the
+subtype at FX2 state+0xe40, dereferences state+0 to obtain the model wrapper,
+forces a7=1, then tail-jumps to 400741b8. The forced argument is proven by native
+instructions at 4006caa8 (li a7,1) and 4006caac (j 400741b8); the pseudocode
+omits those forwarded parameters. Subtypes>=8 go to 4006b1c4 instead.
+
+400741b8 processes the loaded model through RAM routine 30047ad2. The same
+callback is chain kind1 (AMP), but AMP normally uses the five-control branch.
+4007404e initializes its wrapper; decompiled float arguments are incomplete,
+so its displayed prototype must not be copied into a patch without disassembly.
+
+Buffers and processing
+----------------------
+400741b8 requires non-null input-L, output-L and nonzero frame count. Its null
+or unavailable-model path copies input to output (when not already in place).
+An optional ready byte at wrapper+4 and the model-valid check 4008b62a gate DSP.
+That check requires model_context+0x10!=0 and model_context+0x50!=0.
+
+Input samples are accessed at four-byte strides with floating-point arithmetic.
+When stereo input is provided, the active model path averages (L+R)*0.5 into
+the working output. After processing it copies mono output to the right output
+if requested. This is a mono model embedded in a stereo-capable callback, not
+proof of two independent stereo model instances.
+
+30047ad2 is an in-place model processor with (output_level, model_context,
+sample_buffer, count) as the observed logical arguments. It processes batches
+of at most 128 samples. The runtime ultimately applies output_level to the
+result, combined with a model-derived output gain. It contains multiple
+coefficient/state-dependent paths; the selected model contents decide which
+ones execute. No universal oversampling factor has been established.
+
+Parameters
+----------
+The wrapper mode forced by FX2 has these controls:
+  p[0] gain: clamp normalized value then map 2*x-1 into model_context+0x14.
+  p[1] tone: clamp 0..1 into model_context+0x2c.
+  p[2] level: clamp 0..1; passed to 30047ad2 as output scaling.
+Updates use a float comparison threshold near 1e-6 to avoid repeated writes.
+The no-parameter defaults are gain=0 in internal coordinates, tone=0.5, level=1.
+The separate default-array helper 40074160 initializes [0.5,0.5,0.8].
+Thus the null-parameter fallback and preset defaults are intentionally distinct.
+
+The other 400741b8 branch maps normalized low/mid/high to -10..+10 and applies
+three cascaded biquads after the model, using 4005c2aa/4005c3cc/4005c4ae to update
+coefficients and 4005c5ce per sample. The three-control drive path skips this
+external three-band EQ and instead sets the model's tone coordinate. Within
+30047ad2 tone updates two opposed-gain filter stages before later model stages.
+
+State and transitions
+---------------------
+Model wrapper fields relative to the wrapper, NOT the larger FX2 state:
+  +0x00 model context pointer; +0x04 ready-byte pointer.
+  +0x08 external three-band filter state.
+  +0x6c cached gain; +0x70/+0x74/+0x78 cached low/mid/high;
+  +0x7c cached model tone; +0x80 cached level.
+  +0x84 current wet interpolation; +0x88 per-sample increment;
+  +0x8c remaining interpolation samples.
+  +0x90 left dry scratch, 128 float samples;
+  +0x290 right dry scratch, 128 float samples.
+The observed static wrapper at 3004e52c extends through the scratch region
+ending 3004e9bc, where its model context starts. The minimum inferred extent is
+0x490 bytes; this is not a promise that all future versions use that layout.
+
+For <=128 sample calls with an active transition, dry inputs are saved before
+in-place processing. The output is dry + mix*(processed-dry), with mix advanced
+per sample. For larger calls, this wrapper does not enter its scratch-backed
+crossfade path. 400097e2 computes N=ceil(sample_rate*milliseconds/1000), then
+increment=(target-current)/N; callers use endpoints zero/one. Sample rate falls
+back to 44100 if the global value is zero. 40007738 sets the interpolation
+immediately; 40008cf8 waits up to 64 one-ms sleeps for it to finish.
+
+The asynchronous model switch worker 4000c132 debounces requests, waits for
+transition completion, temporarily disables FX2, loads the requested model,
+invalidates cached controls, then requests a 16-ms interpolation toward wet.
+This is a concrete route for studying the earlier click-fix claim. It does not
+prove the audible switching result without an output recording.
+
+One nonlinear implementation recovered
+--------------------------------------
+The final stage of 30047ad2 has an optional cubic-table fast path, enabled when
+runtime+0x6b0 contains a table pointer. Its observable recurrence can be written:
+
+  u = A*(x + D*envelope) + B
+  envelope += alpha*(abs(x)-envelope)
+  u = clamp(u, 0, Umax)
+  k = floor(u); t = u-k
+  shaped = ((c3[k]*t+c2[k])*t+c1[k])*t+c0[k] + direct*x
+  y = output_level * model_gain * biquad2(biquad1(shaped))
+
+Coefficients c0..c3 occupy 16 bytes per table entry. A/B/Umax/D/alpha/direct
+and the live envelope are runtime offsets +0x6b4/+0x6b8/+0x6bc/+0x6c0/+0x6c4/
++0x6c8/+0x6cc. The code uses the old envelope to calculate u and then updates it.
+This is a dynamic, coefficient-driven waveshaper with filtering, not simply
+hard clipping. Other paths invoke generic model-stage routines such as 30046744;
+we have not yet established which specific drive slots take this fast path.
+
+Recurrent model stage
+---------------------
+Generic stage 30046744 additionally implements a GRU-style recurrent update.
+Its single-state fast path forms two input-plus-recurrent affine expressions,
+passes them through a sigmoid-like lookup, uses one as a reset gate on the
+candidate's recurrent contribution, applies a tanh-like lookup to the candidate,
+and writes h_new = gate*h_old + (1-gate)*candidate. The general path contains
+matrix-vector products via 4009557c rather than only scalar coefficients.
+
+Initializer 40088b3c builds two 512-entry activation tables plus endpoint copies:
+tanh-like values over [-5,5] at 30083fd8 and sigmoid-like values over [-8,8] at
+300847dc. Its first tanh value is -0.9999092221; the sigmoid formula is explicitly
+1/(1+exp_like(-x)), with x=i*16/511-8. Runtime interpolation scales are 511/10 and
+511/16, and inputs beyond the intervals use endpoints. Math helper 40000aa2's
+branches and saturation match tanh;40000bd8 wraps an exponential-like routine.
+This is strong structural evidence for GRU-style neural stages, not proof of a
+particular published model format or which drive model uses which topology.
+
+What remains before replacing it
+-------------------------------
+1. Read and identify the actual DDPB model contents for slots 30..37, including
+   which internal model paths each selects. Factory asset slot names are not
+   established by this pass.
+2. Validate the callback ABI in a small offline native/emulated harness; retain
+   32-bit floating-point accesses rather than the decompiler's misleading
+   undefined8/ulonglong stores.
+3. Recover and replay model stages with real coefficients, then compare audio
+   outputs to the physical pedal. Full neural/nonlinear architecture recovery
+   remains open; no bit-exact C reconstruction is claimed.
+4. For a first custom effect, replace the kind8 callback or one guarded subtype
+   while keeping the callback contract and transition buffers. Patching the
+   shared kind1/model callback globally would also affect AMP.
+
+No hardware execution, timing benchmark or flashable firmware was produced.

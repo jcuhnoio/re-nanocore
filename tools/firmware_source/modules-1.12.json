@@ -1,0 +1,250 @@
+{
+  "firmware_version": "1.12",
+  "functions": {
+    "0x40000000": {
+      "name": "firmware_entry",
+      "file": "boot/startup.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40000000; data/callee runtime equivalence is not asserted."
+    },
+    "0x4000500c": {
+      "name": "memcpy",
+      "file": "runtime/memory.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x400050d6; data/callee runtime equivalence is not asserted."
+    },
+    "0x40003268": {
+      "name": "strcmp",
+      "file": "runtime/memory.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40003288; data/callee runtime equivalence is not asserted."
+    },
+    "0x40006e50": {
+      "name": "fal_partition_read",
+      "file": "storage/partitions.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40006f5e; data/callee runtime equivalence is not asserted."
+    },
+    "0x400031bc": {
+      "name": "memset",
+      "file": "runtime/memory.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x400031dc; data/callee runtime equivalence is not asserted."
+    },
+    "0x4002ed2c": {
+      "name": "nc_midi_control_change",
+      "file": "protocol/control_change.c",
+      "basis": "Reviewed CC43/44 branch retained from 1.11; matched normalized pseudocode and inspected callers."
+    },
+    "0x40028fc2": {
+      "name": "nc_midi_dispatch_message",
+      "file": "protocol/midi_stream.c",
+      "basis": "MIDI status/CC/NRPN dispatch; corresponding 1.11 400282ae."
+    },
+    "0x40029386": {
+      "name": "nc_midi_parse_stream",
+      "file": "protocol/midi_stream.c",
+      "basis": "Running-status/SysEx byte parser; corresponding 1.11 40028672."
+    },
+    "0x4002e8f2": {
+      "name": "nc_submit_slot_command",
+      "file": "protocol/control_change.c",
+      "basis": "CC43/44 selector submission; corresponding 1.11 4002da2e."
+    },
+    "0x4002b14c": {
+      "name": "nc_radio_uart5_init",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Reviewed uart5_rx initialization and radio control call chain."
+    },
+    "0x4002aa7e": {
+      "name": "nc_radio_uart_write",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Corresponding 1.11 40029d8e; serialized writes and retry counters."
+    },
+    "0x4002ab26": {
+      "name": "nc_radio_send_control_frame",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Corresponding 1.11 40029e36; type-3 framing to UART writer."
+    },
+    "0x4002b85c": {
+      "name": "nc_radio_send_control_if_ready",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Corresponding 1.11 4002ab6c; ready-handle guard."
+    },
+    "0x4002be82": {
+      "name": "nc_radio_send_enable_command",
+      "file": "bluetooth/control.c",
+      "basis": "Corresponding 1.11 4002b100; two-byte [2,enable] command."
+    },
+    "0x4002d90a": {
+      "name": "nc_radio_set_enabled",
+      "file": "bluetooth/control.c",
+      "basis": "Corresponding 1.11 4002ca46; resets state and submits enable command."
+    },
+    "0x4002d990": {
+      "name": "nc_radio_retry_disable_during_shutdown",
+      "file": "bluetooth/control.c",
+      "basis": "Corresponding 1.11 4002cacc; disable retries retained in reviewed shutdown path."
+    },
+    "0x4003f8c0": {
+      "name": "nc_poweroff_wait_loop",
+      "file": "power/shutdown.c",
+      "basis": "Reviewed power-off wait retains radio disable retry calls."
+    },
+    "0x40025d92": {
+      "name": "nc_effect_name",
+      "file": "audio/effect_metadata.c",
+      "basis": "Block/subtype effect names, including new block10 dispatch; availability of block10 not established."
+    },
+    "0x4002607e": {
+      "name": "nc_effect_parameter_name",
+      "file": "audio/effect_metadata.c",
+      "basis": "Reviewed Spring subtype7, Duck subtype2 and CAB parameter tables."
+    },
+    "0x40027192": {
+      "name": "nc_format_effect_parameter",
+      "file": "audio/effect_metadata.c",
+      "basis": "Pitch coarse changes to 48*x-24, fine stays 2*x-1; reviewed binary float constants."
+    },
+    "0x40025824": {
+      "name": "nc_delay_parameter_count",
+      "file": "audio/effect_metadata.c",
+      "basis": "Returns eight controls for delay subtype2 (Duck); used by name and count queries."
+    },
+    "0x40026e8a": {
+      "name": "nc_effect_parameter_count",
+      "file": "audio/effect_metadata.c",
+      "basis": "Returns effect parameter counts; delegates Duck count to nc_delay_parameter_count."
+    },
+    "0x40071208": {
+      "name": "nc_mod_init",
+      "file": "audio/modulation.c",
+      "basis": "Audio init invokes with shared MOD allocation; initializes delay buffers, coefficients, oscillator and other subtype state."
+    },
+    "0x40071ca6": {
+      "name": "nc_chorus_default_parameters",
+      "file": "audio/modulation.c",
+      "basis": "Initial MOD subtype0 defaults at normalized rate0.6043956/depth1."
+    },
+    "0x40071aa4": {
+      "name": "nc_mod_default_parameters",
+      "file": "audio/modulation.c",
+      "basis": "Subtype-dependent defaults; subtype0 uses same classic chorus defaults."
+    },
+    "0x4000854c": {
+      "name": "nc_fx2_set_enabled",
+      "file": "audio/fx2_control.c",
+      "basis": "Checks model readiness and selects subtype + 30 for drive subtypes 0..7."
+    },
+    "0x4000848c": {
+      "name": "nc_fx2_load_drive_slot",
+      "file": "audio/fx2_control.c",
+      "basis": "Accepts model slots 30..37 and loads context 0x3004e9bc."
+    },
+    "0x4006ca50": {
+      "name": "nc_fx2_process",
+      "file": "audio/fx2_process.c",
+      "basis": "Native wrapper confirms all drive subtypes 0..7 force a7=1 before shared model processing."
+    },
+    "0x4007404e": {
+      "name": "nc_amp_drive_state_init",
+      "file": "audio/amp_drive.c",
+      "basis": "Initializes the shared model wrapper, filter and cached controls; floating argument prototype needs native correction."
+    },
+    "0x400741b8": {
+      "name": "nc_amp_drive_process",
+      "file": "audio/amp_drive.c",
+      "basis": "Shared AMP/drive callback with three-control mode, model processing, optional external EQ and crossfade."
+    },
+    "0x40074160": {
+      "name": "nc_drive_parameter_defaults",
+      "file": "audio/amp_drive.c",
+      "basis": "Initializes normalized drive defaults to [0.5, 0.5, 0.8]."
+    },
+    "0x4008b62a": {
+      "name": "nc_model_is_ready",
+      "file": "audio/model_runtime.c",
+      "basis": "Requires a runtime pointer at context + 0x10 and ready byte at + 0x50."
+    },
+    "0x40088b3c": {
+      "name": "nc_model_context_init",
+      "file": "audio/model_runtime.c",
+      "basis": "Initializes the 0x54-byte model context and activation tables."
+    },
+    "0x30047ad2": {
+      "name": "nc_model_process_block",
+      "file": "audio/model_runtime.c",
+      "basis": "In-place model processing in chunks of at most 128 samples, including recurrent and nonlinear paths."
+    },
+    "0x30046744": {
+      "name": "nc_model_recurrent_stage_process",
+      "file": "audio/model_runtime.c",
+      "basis": "GRU-style gated recurrence inferred from activation tables and hidden-state update."
+    },
+    "0x4005c5ce": {
+      "name": "nc_three_band_eq_process_sample",
+      "file": "audio/model_filters.c",
+      "basis": "Three cascaded transposed direct-form biquad recurrences."
+    },
+    "0x400097e2": {
+      "name": "nc_amp_drive_schedule_crossfade",
+      "file": "audio/amp_drive.c",
+      "basis": "Schedules ceil(sample_rate * milliseconds / 1000) samples of interpolation using +0x84/+0x88/+0x8c."
+    },
+    "0x40007738": {
+      "name": "nc_amp_drive_set_crossfade",
+      "file": "audio/amp_drive.c",
+      "basis": "Sets the interpolation value immediately and clears the ramp."
+    },
+    "0x40008376": {
+      "name": "nc_amp_drive_invalidate_parameter_cache",
+      "file": "audio/amp_drive.c",
+      "basis": "Invalidates cached controls at wrapper +0x6c through +0x80."
+    },
+    "0x4000c132": {
+      "name": "nc_model_switch_worker",
+      "file": "audio/model_switch.c",
+      "basis": "Debounced request worker coordinates AMP/IR/drive loading and a 16-ms drive crossfade."
+    },
+    "0x4005e044": {
+      "name": "nc_dsp_process_chain",
+      "file": "audio/chain.c",
+      "basis": "Walks active-bank ordered nodes, smooths parameters and invokes dispatch-table callbacks."
+    },
+    "0x4005ff2c": {
+      "name": "nc_dsp_process_chain_checked",
+      "file": "audio/chain.c",
+      "basis": "Null/count guards before forwarding to chain processor; prototype omits forwarded registers."
+    },
+    "0x4005feca": {
+      "name": "nc_dsp_node_configure",
+      "file": "audio/chain.c",
+      "basis": "Sets processor kind, subtype, enabled flag, state pointer and zeroes parameter area."
+    },
+    "0x4005fa8e": {
+      "name": "nc_dsp_inactive_bank",
+      "file": "audio/chain.c",
+      "basis": "Returns bank at (active_selector XOR1)*0x308."
+    },
+    "0x4005faaa": {
+      "name": "nc_dsp_active_bank",
+      "file": "audio/chain.c",
+      "basis": "Returns bank at active_selector*0x308."
+    },
+    "0x4005fac2": {
+      "name": "nc_dsp_publish_bank",
+      "file": "audio/chain.c",
+      "basis": "Compares node metadata/parameter blocks, updates revisions and flips active selector."
+    },
+    "0x4000e9f0": {
+      "name": "nc_audio_engine_init",
+      "file": "audio/engine.c",
+      "basis": "Allocates DSP states, registers nodes, configures 44100Hz hardware and starts audio worker."
+    },
+    "0x4000b698": {
+      "name": "nc_audio_block_worker",
+      "file": "audio/engine.c",
+      "basis": "Drains queued DMA-half indices and invokes audio block processor."
+    },
+    "0x40009d20": {
+      "name": "nc_audio_process_dma_half",
+      "file": "audio/engine.c",
+      "basis": "Converts and mixes audio around the chain invocation; index0/1 guard and <=64-frame chunks."
+    }
+  }
+}

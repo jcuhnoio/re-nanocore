@@ -1,0 +1,59 @@
+Dedicated custom effect replacement sites
+=========================================
+
+Firmware 1.10: Velvet Vibrato processor at 0x400720ae, 1392 bytes,
+end-exclusive 0x4007261e; seg1+0x720ae; FIT file offset 0x7b0ae.
+Firmware 1.12: same processor at 0x40074e5e, 1392 bytes,
+end-exclusive 0x400753ce; seg1+0x74e5e; FIT file offset 0x81e5e.
+
+These are live, dedicated function bodies, not unused padding. Replacing either
+changes MOD subtype 10 (Velvet Vibrato), including existing presets using it.
+The shared MOD dispatcher and every other subtype stay in place. The original
+Velvet sound is necessarily sacrificed in the patched image.
+
+The exact body bytes, SHA256, decoded package hash and REA inclusive body ranges
+are in evidence/custom-fx-patch-site.json. Both versions have a single observed
+external decoded reference: a tail jump at 0x4006c2da (1.10) or 0x4006e470 (1.12).
+A scan of vendor-objdump output finds no external reference to an interior body
+address. Neither decoded segment contains a halfword-aligned 32-bit literal
+pointing anywhere into the body. These checks do not rule out every runtime
+computed target, but support a dedicated-function replacement rather than a
+speculative code cave.
+
+ABI: nine integer/pointer arguments
+----------------------------------
+void entry(void *state, const float *in_l, const float *in_r,
+           float *out_l, float *out_r, uint32_t frames,
+           const float *params, uint32_t input_mode, uint8_t *output_mode);
+
+Arguments 1..8 occupy a0..a7; argument 9 is at entry sp+0. Unlike the top-level
+MOD callback this delegated function receives NO subtype argument. The caller
+adds 0x142c0 (1.10) or 0x142c8 (1.12) to the shared MOD state pointer. On 1.12,
+0x4006e42e stores the output-mode pointer at sp+224, 0x4006e452 moves input mode
+to a7, and 0x4006e46e restores sp by 224 before the tail jump. At the callee,
+0x40074e6a allocates 128 bytes and 0x40074e6e loads argument 9 from sp+128.
+It writes one byte at that pointer reflecting whether out_r exists. Native flw
+and fsw establish float32 sample storage; fsd/fld saves show preserved double
+FP register state under the ilp32d calling convention.
+
+Build a freestanding RV32 ilp32d function linked at the specific firmware entry.
+Code plus constants must fit 1392 bytes. Keep the remainder of the original body
+unchanged if the replacement is shorter. Use -msmall-data-limit=0 and disable
+relaxation; check generated instructions for accidental gp/tp dependencies,
+undefined calls, dynamic relocations and writable static storage. No C runtime
+initialization occurs. Preserve callee-saved registers, stack alignment and the
+existing GP. A stateless gain probe avoids state-layout/initialization assumptions.
+
+This is an offline site and ABI assessment. It does not establish hardware audio
+correctness, latency or equivalence of a reconstructed effect. Existing modified
+1.10 raw-DFU boot/restoration evidence is described in docs/firmware-decoding.txt;
+that experiment did not test these custom effect replacements.
+
+Inputs inspected:
+- analysis/rea-1.10-comparison/results/03510-info-0x400720ae.json
+- analysis/rea-1.12-effects/results/03569-info-0x40074e5e.json
+- analysis/vendor-isa/firmware-vendor-all-disassembly.txt (1.10)
+- analysis/all-effects/vendor-disassembly.txt (1.12, regenerated vendor objdump)
+- analysis/dsp/mod-general-vendor-disassembly.txt (1.12 shared caller)
+- firmware/versions/1.12/effects/processors/modulation/40074e5e_nc_velvet_vibrato_process.c
+- decoded release manifests and original seg0.bin/seg1.bin images

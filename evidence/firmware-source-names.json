@@ -1,0 +1,306 @@
+{
+  "firmware": "1.10",
+  "symbols": [
+    {
+      "address": "0x40000000",
+      "name": "firmware_entry",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40000000"
+    },
+    {
+      "address": "0x40000004",
+      "name": "runtime_startup",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40000004"
+    },
+    {
+      "address": "0x400031dc",
+      "name": "memset",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_400031dc"
+    },
+    {
+      "address": "0x40003288",
+      "name": "strcmp",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40003288"
+    },
+    {
+      "address": "0x400050d6",
+      "name": "memcpy",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_400050d6"
+    },
+    {
+      "address": "0x40006efa",
+      "name": "fal_partition_find",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40006efa"
+    },
+    {
+      "address": "0x40006df2",
+      "name": "fal_partition_get_flash",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40006df2"
+    },
+    {
+      "address": "0x40006f5e",
+      "name": "fal_partition_read",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40006f5e"
+    },
+    {
+      "address": "0x40012b30",
+      "name": "read_u32_le",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40012b30"
+    },
+    {
+      "address": "0x40012f62",
+      "name": "dfu_find_updater_image",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40012f62"
+    },
+    {
+      "address": "0x40013674",
+      "name": "nc_sysex_unpack_7bit",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40013674"
+    },
+    {
+      "address": "0x40013750",
+      "name": "nc_register_opcode_handler",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40013750"
+    },
+    {
+      "address": "0x40013760",
+      "name": "nc_register_message_listener",
+      "confidence": "medium",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40013760"
+    },
+    {
+      "address": "0x40013b2e",
+      "name": "nc_dispatch_request",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "FUN_ram_40013b2e"
+    },
+    {
+      "address": "0x300499ac",
+      "name": "fal_partition_flash_devices",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "DAT_ram_300499ac"
+    },
+    {
+      "address": "0x300499b0",
+      "name": "fal_partition_table",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "DAT_ram_300499b0"
+    },
+    {
+      "address": "0x300499b4",
+      "name": "fal_partition_count",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "DAT_ram_300499b4"
+    },
+    {
+      "address": "0x300658fc",
+      "name": "nc_opcode_handlers",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "DAT_ram_300658fc"
+    },
+    {
+      "address": "0x30067548",
+      "name": "nc_message_listener_count",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "DAT_ram_30067548"
+    },
+    {
+      "address": "0x3006754c",
+      "name": "nc_message_listeners",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "DAT_ram_3006754c"
+    },
+    {
+      "address": "0x30046358",
+      "name": "flash_partition_definitions",
+      "confidence": "high",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "original_name": "DAT_ram_30046358"
+    },
+    {
+      "address": "0x40012a2a",
+      "name": "nc_handle_preset_list_names",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x40 in a0 at registration call 0x40012aa2; docs/protocol.txt",
+      "original_name": "FUN_ram_40012a2a"
+    },
+    {
+      "address": "0x400129fa",
+      "name": "nc_handle_preset_read_chunk",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x41 in a0 at registration call 0x40012ab2; docs/protocol.txt",
+      "original_name": "FUN_ram_400129fa"
+    },
+    {
+      "address": "0x400129ca",
+      "name": "nc_handle_opcode_48",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x48 in a0 at registration call 0x40012ac2; docs/protocol.txt",
+      "original_name": "FUN_ram_400129ca"
+    },
+    {
+      "address": "0x4001299a",
+      "name": "nc_handle_opcode_42",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x42 in a0 at registration call 0x40012ad2; docs/protocol.txt",
+      "original_name": "FUN_ram_4001299a"
+    },
+    {
+      "address": "0x4001296a",
+      "name": "nc_handle_opcode_43",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x43 in a0 at registration call 0x40012ae2; docs/protocol.txt",
+      "original_name": "FUN_ram_4001296a"
+    },
+    {
+      "address": "0x4001293a",
+      "name": "nc_handle_opcode_44",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x44 in a0 at registration call 0x40012af2; docs/protocol.txt",
+      "original_name": "FUN_ram_4001293a"
+    },
+    {
+      "address": "0x4001290a",
+      "name": "nc_handle_opcode_45",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x45 in a0 at registration call 0x40012b02; docs/protocol.txt",
+      "original_name": "FUN_ram_4001290a"
+    },
+    {
+      "address": "0x400128da",
+      "name": "nc_handle_preset_readiness",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x46 in a0 at registration call 0x40012b12; docs/protocol.txt",
+      "original_name": "FUN_ram_400128da"
+    },
+    {
+      "address": "0x400128aa",
+      "name": "nc_handle_opcode_49",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x49 in a0 at registration call 0x40012b26; docs/protocol.txt",
+      "original_name": "FUN_ram_400128aa"
+    },
+    {
+      "address": "0x4008b6ec",
+      "name": "nc_handle_opcode_35",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x35 in a0 at registration call 0x4008eb40; docs/protocol.txt",
+      "original_name": "FUN_ram_4008b6ec"
+    },
+    {
+      "address": "0x4008addc",
+      "name": "nc_handle_amp_slot_info",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x36 in a0 at registration call 0x4008eb50; docs/protocol.txt",
+      "original_name": "FUN_ram_4008addc"
+    },
+    {
+      "address": "0x400876b6",
+      "name": "nc_handle_opcode_37",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x37 in a0 at registration call 0x4008eb60; docs/protocol.txt",
+      "original_name": "FUN_ram_400876b6"
+    },
+    {
+      "address": "0x4008a640",
+      "name": "nc_handle_amp_read_chunk",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x39 in a0 at registration call 0x4008eb70; docs/protocol.txt",
+      "original_name": "FUN_ram_4008a640"
+    },
+    {
+      "address": "0x40087c44",
+      "name": "nc_handle_opcode_38",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x38 in a0 at registration call 0x4008eb80; docs/protocol.txt",
+      "original_name": "FUN_ram_40087c44"
+    },
+    {
+      "address": "0x40087844",
+      "name": "nc_handle_opcode_3a",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x3a in a0 at registration call 0x4008eb90; docs/protocol.txt",
+      "original_name": "FUN_ram_40087844"
+    },
+    {
+      "address": "0x4008d91c",
+      "name": "nc_handle_opcode_3b",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x3b in a0 at registration call 0x4008eba0; docs/protocol.txt",
+      "original_name": "FUN_ram_4008d91c"
+    },
+    {
+      "address": "0x4008ba94",
+      "name": "nc_handle_opcode_55",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x55 in a0 at registration call 0x4008ebc2; docs/protocol.txt",
+      "original_name": "FUN_ram_4008ba94"
+    },
+    {
+      "address": "0x4008a9f4",
+      "name": "nc_handle_ir_slot_info",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x56 in a0 at registration call 0x4008ebd2; docs/protocol.txt",
+      "original_name": "FUN_ram_4008a9f4"
+    },
+    {
+      "address": "0x40087706",
+      "name": "nc_handle_opcode_57",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x57 in a0 at registration call 0x4008ebe2; docs/protocol.txt",
+      "original_name": "FUN_ram_40087706"
+    },
+    {
+      "address": "0x4008a28c",
+      "name": "nc_handle_opcode_59",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x59 in a0 at registration call 0x4008ebf2; docs/protocol.txt",
+      "original_name": "FUN_ram_4008a28c"
+    },
+    {
+      "address": "0x40087b30",
+      "name": "nc_handle_opcode_5a",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x5a in a0 at registration call 0x4008ec02; docs/protocol.txt",
+      "original_name": "FUN_ram_40087b30"
+    },
+    {
+      "address": "0x400883d4",
+      "name": "nc_handle_opcode_5b",
+      "confidence": "high for opcode binding; role from captured host protocol where named",
+      "basis": "handler address in a1 and opcode 0x5b in a0 at registration call 0x4008ec16; docs/protocol.txt",
+      "original_name": "FUN_ram_400883d4"
+    }
+  ]
+}

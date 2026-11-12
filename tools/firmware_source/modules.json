@@ -1,0 +1,185 @@
+{
+  "description": "Reviewed placements. Unlisted functions remain in address-organized unresolved files. Protocol families follow recorded opcode registrations; names do not imply all handler semantics are known.",
+  "functions": {
+    "0x40000000": {
+      "file": "boot/startup.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "firmware_entry"
+    },
+    "0x40000004": {
+      "file": "boot/startup.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "runtime_startup"
+    },
+    "0x400031dc": {
+      "file": "runtime/memory.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "memset"
+    },
+    "0x40003288": {
+      "file": "runtime/memory.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "strcmp"
+    },
+    "0x400050d6": {
+      "file": "runtime/memory.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "memcpy"
+    },
+    "0x40006efa": {
+      "file": "storage/partitions.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "fal_partition_find"
+    },
+    "0x40006df2": {
+      "file": "storage/partitions.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "fal_partition_get_flash"
+    },
+    "0x40006f5e": {
+      "file": "storage/partitions.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "fal_partition_read"
+    },
+    "0x40012b30": {
+      "file": "formats/integers.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "read_u32_le"
+    },
+    "0x40012f62": {
+      "file": "update/updater_image.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "dfu_find_updater_image"
+    },
+    "0x40013674": {
+      "file": "protocol/midi.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "nc_sysex_unpack_7bit"
+    },
+    "0x40013750": {
+      "file": "protocol/midi.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "nc_register_opcode_handler"
+    },
+    "0x40013760": {
+      "file": "protocol/midi.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "nc_register_message_listener"
+    },
+    "0x40013b2e": {
+      "file": "protocol/midi.c",
+      "basis": "prior physical/disassembly evidence and REA pseudocode; data labels follow verified uses",
+      "name": "nc_dispatch_request"
+    },
+    "0x40012a2a": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x40 in a0 at registration call 0x40012aa2; docs/protocol.txt",
+      "name": "nc_handle_preset_list_names"
+    },
+    "0x400129fa": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x41 in a0 at registration call 0x40012ab2; docs/protocol.txt",
+      "name": "nc_handle_preset_read_chunk"
+    },
+    "0x400129ca": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x48 in a0 at registration call 0x40012ac2; docs/protocol.txt",
+      "name": "nc_handle_opcode_48"
+    },
+    "0x4001299a": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x42 in a0 at registration call 0x40012ad2; docs/protocol.txt",
+      "name": "nc_handle_opcode_42"
+    },
+    "0x4001296a": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x43 in a0 at registration call 0x40012ae2; docs/protocol.txt",
+      "name": "nc_handle_opcode_43"
+    },
+    "0x4001293a": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x44 in a0 at registration call 0x40012af2; docs/protocol.txt",
+      "name": "nc_handle_opcode_44"
+    },
+    "0x4001290a": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x45 in a0 at registration call 0x40012b02; docs/protocol.txt",
+      "name": "nc_handle_opcode_45"
+    },
+    "0x400128da": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x46 in a0 at registration call 0x40012b12; docs/protocol.txt",
+      "name": "nc_handle_preset_readiness"
+    },
+    "0x400128aa": {
+      "file": "protocol/preset_commands.c",
+      "basis": "handler address in a1 and opcode 0x49 in a0 at registration call 0x40012b26; docs/protocol.txt",
+      "name": "nc_handle_opcode_49"
+    },
+    "0x4008b6ec": {
+      "file": "protocol/amp_commands.c",
+      "basis": "handler address in a1 and opcode 0x35 in a0 at registration call 0x4008eb40; docs/protocol.txt",
+      "name": "nc_handle_opcode_35"
+    },
+    "0x4008addc": {
+      "file": "protocol/amp_commands.c",
+      "basis": "handler address in a1 and opcode 0x36 in a0 at registration call 0x4008eb50; docs/protocol.txt",
+      "name": "nc_handle_amp_slot_info"
+    },
+    "0x400876b6": {
+      "file": "protocol/amp_commands.c",
+      "basis": "handler address in a1 and opcode 0x37 in a0 at registration call 0x4008eb60; docs/protocol.txt",
+      "name": "nc_handle_opcode_37"
+    },
+    "0x4008a640": {
+      "file": "protocol/amp_commands.c",
+      "basis": "handler address in a1 and opcode 0x39 in a0 at registration call 0x4008eb70; docs/protocol.txt",
+      "name": "nc_handle_amp_read_chunk"
+    },
+    "0x40087c44": {
+      "file": "protocol/amp_commands.c",
+      "basis": "handler address in a1 and opcode 0x38 in a0 at registration call 0x4008eb80; docs/protocol.txt",
+      "name": "nc_handle_opcode_38"
+    },
+    "0x40087844": {
+      "file": "protocol/amp_commands.c",
+      "basis": "handler address in a1 and opcode 0x3a in a0 at registration call 0x4008eb90; docs/protocol.txt",
+      "name": "nc_handle_opcode_3a"
+    },
+    "0x4008d91c": {
+      "file": "protocol/amp_commands.c",
+      "basis": "handler address in a1 and opcode 0x3b in a0 at registration call 0x4008eba0; docs/protocol.txt",
+      "name": "nc_handle_opcode_3b"
+    },
+    "0x4008ba94": {
+      "file": "protocol/ir_commands.c",
+      "basis": "handler address in a1 and opcode 0x55 in a0 at registration call 0x4008ebc2; docs/protocol.txt",
+      "name": "nc_handle_opcode_55"
+    },
+    "0x4008a9f4": {
+      "file": "protocol/ir_commands.c",
+      "basis": "handler address in a1 and opcode 0x56 in a0 at registration call 0x4008ebd2; docs/protocol.txt",
+      "name": "nc_handle_ir_slot_info"
+    },
+    "0x40087706": {
+      "file": "protocol/ir_commands.c",
+      "basis": "handler address in a1 and opcode 0x57 in a0 at registration call 0x4008ebe2; docs/protocol.txt",
+      "name": "nc_handle_opcode_57"
+    },
+    "0x4008a28c": {
+      "file": "protocol/ir_commands.c",
+      "basis": "handler address in a1 and opcode 0x59 in a0 at registration call 0x4008ebf2; docs/protocol.txt",
+      "name": "nc_handle_opcode_59"
+    },
+    "0x40087b30": {
+      "file": "protocol/ir_commands.c",
+      "basis": "handler address in a1 and opcode 0x5a in a0 at registration call 0x4008ec02; docs/protocol.txt",
+      "name": "nc_handle_opcode_5a"
+    },
+    "0x400883d4": {
+      "file": "protocol/ir_commands.c",
+      "basis": "handler address in a1 and opcode 0x5b in a0 at registration call 0x4008ec16; docs/protocol.txt",
+      "name": "nc_handle_opcode_5b"
+    }
+  }
+}

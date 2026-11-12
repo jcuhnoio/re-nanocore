@@ -1,0 +1,168 @@
+{
+  "firmware": "1.10",
+  "effect_name": "TEST001",
+  "replaced_slot": "MOD10 Velvet Vibrato",
+  "gain_control": "RATE,0..1",
+  "backup_sha256": "575a3666c684b98bd3dfd1842e12afac458ecbecd2b20b30d626bb3f0fe8d289",
+  "target_full_os_sha256": "45dcae9b02e7ffe38203feb3803cb120b7773a4b0ed654823deae7a271203604",
+  "expected_changed_sectors": [
+    "0x0",
+    "0x70000",
+    "0x90000"
+  ],
+  "image": "analysis/custom-fx/test001-1.10/firmware.bin",
+  "backup": "analysis/custom-fx/test001-session/backup/os-partition.bin",
+  "deployment": {
+    "input_sha256": "575a3666c684b98bd3dfd1842e12afac458ecbecd2b20b30d626bb3f0fe8d289",
+    "output_sha256": "45dcae9b02e7ffe38203feb3803cb120b7773a4b0ed654823deae7a271203604",
+    "bytes": 868352,
+    "erased_os_relative_sectors": [
+      0,
+      458752,
+      589824
+    ],
+    "exact_match": true,
+    "manifestation_status": "000000000800",
+    "action": "deploy"
+  },
+  "runtime_reads": [
+    {
+      "op": 16,
+      "args": {},
+      "seconds": 0.628433957695961,
+      "response": {
+        "data": {
+          "devices": [
+            {
+              "dfu": false,
+              "display_name": "Nanocore",
+              "kind": "nanocore",
+              "midi": true,
+              "runtime_pid": 4865
+            }
+          ]
+        },
+        "success": true
+      }
+    },
+    {
+      "op": 153,
+      "args": {
+        "k": "nanocore"
+      },
+      "seconds": 0.42291391734033823,
+      "response": {
+        "data": {
+          "ready": true
+        },
+        "success": true
+      }
+    },
+    {
+      "op": 40,
+      "args": {
+        "k": "nanocore"
+      },
+      "seconds": 0.004038750194013119,
+      "response": {
+        "data": {
+          "activeSlot": 1,
+          "chainOrder": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "presetVolume": 83,
+          "slots": [
+            {
+              "enabled": true,
+              "params": [
+                0.5,
+                0.32100000977516174
+              ],
+              "variant": 1
+            },
+            {
+              "enabled": false,
+              "params": [
+                0.5,
+                0.5,
+                0.800000011920929
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.8999999761581421,
+                0.550000011920929,
+                0.6000000238418579,
+                0.6600000262260437,
+                0.800000011920929
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.5299999713897705,
+                0.5400000214576721
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.15000000596046448,
+                0.40799999237060547,
+                0.30000001192092896
+              ],
+              "variant": 1
+            },
+            {
+              "enabled": false,
+              "params": [
+                0.5,
+                0.5
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.07000000029802322,
+                0.800000011920929,
+                0.6000000238418579,
+                0.0,
+                0.44999998807907104
+              ],
+              "variant": 6
+            },
+            {
+              "enabled": false,
+              "params": [
+                0.5,
+                0.5,
+                0.5,
+                0.5
+              ],
+              "variant": 0
+            }
+          ],
+          "version": 3
+        },
+        "success": true
+      }
+    }
+  ],
+  "physical": true,
+  "custom_dsp_audio_verified": false,
+  "ui_name_seen_by_user": false,
+  "status": "Full readback and runtime verified; user confirms uploaded TEST001 firmware; audio behavior not independently measured",
+  "user_confirmation": "User confirmed TEST001 firmware uploaded before requesting UniVibe"
+}

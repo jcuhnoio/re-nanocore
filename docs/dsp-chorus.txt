@@ -1,0 +1,167 @@
+NanoCore 1.12: classic Chorus DSP
+================================
+
+Scope: static dissection of classic Chorus (UI block 5, subtype 0), not every
+chorus-labelled MOD variant. Target package SHA256 and exact constants/evidence
+IDs are in evidence/dsp-chorus.json. Nothing was installed or executed on the
+pedal, and no audio-equivalence or timing measurement is claimed.
+
+Entry and lifecycle
+-------------------
+The UI name resolver 40025d92 labels block 5 / subtype 0 CHORUS. Parameter-name
+resolver 4002607e returns RATE and DEPTH from table 4009bad0. Audio setup
+4000e9f0 allocates 0x192ec bytes at the pointer held in 30051814, initializes it
+with 40071208, and registers internal kind 4 / subtype 0 in chain slot 6.
+That kind selects callback 40071cfe from the 8-byte-stride callback table at
+4009f168. Its ordinary path tail-jumps to 4006dc08. Subtype 8 has a separate
+fast path to 4006d0b4 and is labelled Pulse Vibe, not classic Chorus.
+
+Both 40071cfe and 4006dc08 were missed by the initial automated function
+inventory. A focused REA run seeded these two entries and recovered their
+pseudocode. This is a concrete reason that full export of discovered functions
+must not be called full DSP recovery.
+
+The callable interface observed at the chain dispatcher is:
+
+  process(state, in_left, in_right, out_left, out_right, sample_count,
+          normalized_parameters, subtype, input_is_stereo, out_is_stereo)
+
+Sample arrays contain IEEE754 float32 values. Native instructions in the
+chorus loop use flw/fsw, four-byte increments and single-precision arithmetic.
+The generated C-like output incorrectly presents some of these accesses as
+undefined8 or ulonglong stores; those types must not be copied into a patch.
+The callback itself is void and reports output stereo state through the last
+pointer, if present.
+
+Classic controls and constants
+------------------------------
+Both controls are clamped to [0,1]. A null parameter pointer selects defaults.
+The default normalized Rate is 0.6043956279754639 and Depth is 1.0.
+For an ordinary valid sample rate Fs:
+
+  rate_hz = 0.1 + 3.64 * rate                // 0.1..3.74 Hz
+  step = 2*pi*rate_hz/Fs
+  sin_step = sin(step); cos_step = cos(step)
+  base_delay = Fs * 5.1 / 1000               // 5.1 ms
+  depth_delay = min(base_delay, Fs*depth/1000) // 0..1 ms modulation
+  wet_alpha = (1/Fs) / ((1/Fs) + 1/(2*pi*2500))
+
+At Fs=44100, the nominal delay is 224.91 samples and maximum modulation is
+44.1 samples. The default rate is about 2.3 Hz. The initializer computes the
+wet filter with a cutoff limited by 0.495*Fs, capped at 2500 Hz; the formula
+above applies to the normal 44.1/48 kHz operating range. Invalid sample-rate
+fallback branches differ between initialization and processing and have not
+been simplified into a universal contract.
+
+The simple Chorus exposes no user Mix control. It caches a fixed 0.8 control
+and uses dry gain 0.9726893305778503 and wet gain 0.6353678107261658. These are
+observed firmware constants, not an assumed equal-power or unity-sum mix.
+Upstream/downstream gain staging is outside this focused analysis.
+
+Readable signal path
+--------------------
+The following is analyst pseudocode, not the original source or a bit-exact
+reference implementation. It describes the normal subtype-0 path:
+
+  for each sample:
+      delayL = max(0, base_delay + lfoA * depth_delay)
+      readL = wrap_1024(write_index - delayL)
+      i = floor(readL); fraction = readL - i
+      tapL = (1-fraction)*ringL[i] + fraction*ringL[(i+1)&1023]
+      wetL = (1-wet_alpha)*wetL + wet_alpha*tapL
+      outL = dry_gain*inL + wet_gain*wetL
+      ringL[write_index] = inL
+
+      if input_is_stereo:
+          delayR = max(0, base_delay + lfoB * depth_delay)
+          readR = wrap_1024(write_index - delayR)
+          i = floor(readR); fraction = readR - i
+          tapR = (1-fraction)*ringR[i] + fraction*ringR[(i+1)&1023]
+          wetR = (1-wet_alpha)*wetR + wet_alpha*tapR
+          outR = dry_gain*inR + wet_gain*wetR  // if outR is non-null
+          ringR[write_index] = inR             // missing inR is treated as zero
+
+      oldA = lfoA
+      lfoA = oldA*cos_step + lfoB*sin_step
+      lfoB = lfoB*cos_step - oldA*sin_step
+      write_index = (write_index + 1) & 1023
+
+Reads precede writes. The two oscillator components are quadrature phases;
+initial values are approximately -0.9238795 and 0.3826834. The oscillator
+rotates recursively rather than evaluating sin() for every sample. Both
+components advance even for mono input. The right wet state is retained when
+not processing a right channel. No delay feedback is present in this classic
+branch: each ring receives dry input, while the wet smoothing filter has its
+own one-pole memory. Other MOD branches can have different feedback structures.
+
+Critical state offsets
+----------------------
+Byte offset   Meaning / observed representation
+0x0000        sample rate, float32
+0x0004        circular write index, uint32 (decompiler misleadingly casts float)
+0x0008/000c   wet low-pass left/right history, float32
+0x0010/0014   oscillator A/B, float32
+0x0018/001c   sin(step), cos(step), float32
+0x0020/0024   cached normalized rate/depth, float32
+0x0028        cached fixed mix control, float32
+0x002c        base delay in samples, float32
+0x0030        delay excursion in samples, float32
+0x0034        wet low-pass coefficient, float32
+0x0038        fixed mix value, float32
+0x003c/0040   dry/wet gain, float32
+0x0044        left float32 ring[1024], through 0x1043
+0x1044        right float32 ring[1024], through 0x2043
+0x2044        current MOD subtype, uint8
+
+These offsets describe the classic branch's prefix only. The shared MOD
+allocation is 103148 bytes (0x192ec), containing state for many other variants.
+It must not be shrunk to the classic prefix without tracing every lifecycle
+and subtype caller. Subtype changes clear buffers, reseed oscillators, reset
+other MOD histories, store the selected subtype and invalidate cached controls.
+
+Exact selected float32 encodings
+-------------------------------
+Rate minimum   0x3dcccccd (40099f88)
+Rate span      0x4068f5c3 (4009b184)
+Rate maximum   0x406f5c29 (4009a368)
+2*pi           0x40c90fdb (4009f090)
+5.1 ms         0x40a33333 (4009f7cc)
+Default Rate   0x3f1ab9ac (4009f73c)
+Default Depth  0x3f800000 (4009672c)
+Fixed Mix      0x3f4ccccd (40096760)
+Dry gain       0x3f79022b (4009f744)
+Wet gain       0x3f22a777 (4009f740)
+LFO A seed     0xbf6c835e (4009f76c)
+LFO B seed     0x3ec3ef15 (4009f770)
+Wet filter RC  0x38858243 (4009f7d8)
+
+Evidence and proposed names
+---------------------------
+40071cfe nc_mod_process_dispatch
+  ev_6fc593ea6ad1feab6d2b5a3d4d750060fb54d51001f72eec6565e4408d9de88b
+4006dc08 nc_mod_process_general
+  ev_375fa617cf7ec4ea228a4d42d173940dd93767a02a6336256630d793c19a9146
+40071208 nc_mod_init
+  ev_a49612872583bd0069b95e14d1c70571889353576bd2198c4ed25612ecb9a842
+40071ca6 nc_chorus_default_parameters
+  ev_6efb42c209dec934bbde1a49d8678967be3e1ad2d11f71c599a1567cf800158a
+40071aa4 nc_mod_default_parameters
+  ev_ec6051a0751d7b3fac3ea0c9250a8fc902ffea0ae30e39958f36890a919fac65
+
+Focused exports: analysis/rea-1.12-dsp/results/. Native vendor disassembly:
+analysis/dsp/mod-general-vendor-disassembly.txt. Important corroborating sites:
+4006dd94 conversion/read index, 4006ddb0/4006ddc0 ring sample loads,
+4006dde8 output float store, 4006ddea dry ring write, 4006de8e/4006de92 oscillator
+rotation, and 4006de96 four-byte sample stride.
+
+Remaining work before replacing it
+----------------------------------
+1. Confirm register/stack preservation and allowed callback latency with a
+   controlled execution harness; preserve floating-point ABI and saved registers.
+2. Check startup, bypass and subtype-switch behavior for the proposed replacement.
+3. Feed deterministic impulses/sines through original code and the reconstruction
+   to compare ring sequencing, floating-point rounding and stereo behavior.
+4. Establish the modified-image loading/recovery path separately. Recovering this
+   DSP algorithm does not establish that a patched image can boot.
+5. Trace Chorus II/III separately. UI labels alone do not imply they reuse this
+   branch; some nominal subtype values are remapped or rejected elsewhere.

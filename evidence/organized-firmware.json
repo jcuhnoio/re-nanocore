@@ -1,0 +1,18 @@
+{
+  "firmware_version": "1.10",
+  "source_index_sha256": "533d01850fdbec3d02ee96a15a2a9945835e8eeb6009da7d08e7cba8ff765bc6",
+  "layout_sha256": "c78a69ca8e2572404037dee3757c66a15ef42cd60729de39bac7f96127648257",
+  "count": 2645,
+  "source_files": 144,
+  "reviewed_placements": 36,
+  "warnings": 881,
+  "opaque_custom_operations": 22,
+  "bad_instructions": 0,
+  "all_function_hashes_verified": true,
+  "documentation_links_verified": true,
+  "helper_tests_passed": 6,
+  "direct_pseudocode_edges": 7347,
+  "ambiguous_calls": 52,
+  "manifest_sha256": "15d68aefd7e576f5a936c64f95f0f884e77872fafb0c058c367017acde643959",
+  "note": "Lossless organizational change. Semantic placements limited to reviewed functions. Remaining functions grouped by address; no new runtime claims."
+}

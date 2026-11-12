@@ -1,0 +1,568 @@
+{
+  "firmware": "1.12",
+  "scope": "All MOD labels and implementations; FX2 Pitch/EnvWah/AutoWah/MotionWah",
+  "selector": {
+    "address": "0x4009b34c",
+    "ids": [
+      0,
+      11,
+      1,
+      12,
+      2,
+      17,
+      4,
+      10,
+      3
+    ],
+    "count": 9
+  },
+  "functions": [
+    {
+      "address": "0x40071cfe",
+      "proposed_name": "nc_modulation_callback",
+      "module": "mod",
+      "basis": "Internal kind4 callback; subtype8 fast path else shared processor",
+      "evidence_path": "analysis/rea-1.12-effects/results/03535-export-0x40071cfe.json",
+      "evidence_id": "ev_3c02173796a45602f492979d805531d2995634e531ba342706e11b0085067b2b"
+    },
+    {
+      "address": "0x4006dc08",
+      "proposed_name": "nc_modulation_process",
+      "module": "mod",
+      "basis": "Subtype branches 0..4,8,9,10,11,12,17 and delegation",
+      "evidence_path": "analysis/rea-1.12-effects/results/03526-export-0x4006dc08.json",
+      "evidence_id": "ev_7fa8590672653f42fd23f7fd9e5e0a92d6c785643457176995ae5c60d5bd5f28"
+    },
+    {
+      "address": "0x40071208",
+      "proposed_name": "nc_modulation_init",
+      "module": "mod",
+      "basis": "Initializes allocated shared MOD state",
+      "evidence_path": "analysis/rea-1.12-effects/results/03531-export-0x40071208.json",
+      "evidence_id": "ev_9fcf62b69db4a9390b4ab15af5220ce3df3c4109df0c56158381edbd7d6786e6"
+    },
+    {
+      "address": "0x40071aa4",
+      "proposed_name": "nc_modulation_subtype_defaults",
+      "module": "mod",
+      "basis": "Subtype parameter defaults",
+      "evidence_path": "analysis/rea-1.12-effects/results/03532-export-0x40071aa4.json",
+      "evidence_id": "ev_209989c72dbcbe8a6aefe17d6cf2cf712bad97178fdb7e21be15c79bdb328ad7"
+    },
+    {
+      "address": "0x40071ca6",
+      "proposed_name": "nc_modulation_defaults",
+      "module": "mod",
+      "basis": "Default MOD controls",
+      "evidence_path": "analysis/rea-1.12-effects/results/03533-export-0x40071ca6.json",
+      "evidence_id": "ev_a89b16f18a90e2b4d279899711e9fb52b2b207d47b15bc77109ede922729bb17"
+    },
+    {
+      "address": "0x4006d0b4",
+      "proposed_name": "nc_pulse_vibe_process",
+      "module": "mod",
+      "basis": "Subtype8 callback fast path; dormant selector entry",
+      "evidence_path": "analysis/rea-1.12-effects/results/03525-export-0x4006d0b4.json",
+      "evidence_id": "ev_d96c26c03cbef1f366729a1b477dd3547fb0f8cc9188bcd3d545c1e846ab298b"
+    },
+    {
+      "address": "0x40071d38",
+      "proposed_name": "nc_motion_wah_init",
+      "module": "wah",
+      "basis": "Initializes shared MotionWah state",
+      "evidence_path": "analysis/rea-1.12-effects/results/03536-export-0x40071d38.json",
+      "evidence_id": "ev_7b0bff624ec3629dae0ac736b3caa96337ec65fc814cd948813c859a589d9180"
+    },
+    {
+      "address": "0x40071e7c",
+      "proposed_name": "nc_motion_wah_process",
+      "module": "wah",
+      "basis": "FX2 subtype11 and dormant MOD9 delegated processor",
+      "evidence_path": "analysis/rea-1.12-effects/results/03540-export-0x40071e7c.json",
+      "evidence_id": "ev_93bcbde392e12f310662e93e5fd9b356758a75333746e07e752ab6a8e0e62705"
+    },
+    {
+      "address": "0x40074d8c",
+      "proposed_name": "nc_velvet_vibrato_init",
+      "module": "mod",
+      "basis": "Initializes VelvetVibrato substate",
+      "evidence_path": "analysis/rea-1.12-effects/results/03567-export-0x40074d8c.json",
+      "evidence_id": "ev_d55568346574035f7968c021deb3a15ca3ad676719433ff36b79e7199f82f5fc"
+    },
+    {
+      "address": "0x40074e5e",
+      "proposed_name": "nc_velvet_vibrato_process",
+      "module": "mod",
+      "basis": "MOD10 delegated 1536-sample stereo variable delay",
+      "evidence_path": "analysis/rea-1.12-effects/results/03569-export-0x40074e5e.json",
+      "evidence_id": "ev_b11ac76f726f822bfa07704b5457cf0e54058f258576c7f0e704fdefd7fb5238"
+    },
+    {
+      "address": "0x40072570",
+      "proposed_name": "nc_chorus2_jet_flanger_init",
+      "module": "mod",
+      "basis": "Shared MOD11/17 state initializer",
+      "evidence_path": "analysis/rea-1.12-effects/results/03541-export-0x40072570.json",
+      "evidence_id": "ev_6d41af51868a6955fce98ef66aee0a6fef5edc0f907cb7406035dc6f583bc47f"
+    },
+    {
+      "address": "0x40072754",
+      "proposed_name": "nc_chorus2_jet_flanger_process",
+      "module": "mod",
+      "basis": "Distinct MOD11 dual-tap and MOD17 triangle-swept delay branches",
+      "evidence_path": "analysis/rea-1.12-effects/results/03544-export-0x40072754.json",
+      "evidence_id": "ev_78bf5f95d430f2ded9bb14f1237bcd816ff688518199d646a3171eaccbdb4741"
+    },
+    {
+      "address": "0x4006b1c4",
+      "proposed_name": "nc_fx2_pitch_wah_process",
+      "module": "fx2",
+      "basis": "FX2 Pitch8 EnvWah9 AutoWah10 MotionWah11 dispatch",
+      "evidence_path": "analysis/rea-1.12-effects/results/03514-export-0x4006b1c4.json",
+      "evidence_id": "ev_950a5e5405d94b41922bc302d73a351ef0e0a5062353c214bd94a06eda145ba6"
+    },
+    {
+      "address": "0x40077364",
+      "proposed_name": "nc_pitch_find_splice",
+      "module": "pitch",
+      "basis": "Fractional interpolation correlation search over ring history",
+      "evidence_path": "analysis/rea-1.12-effects/results/03579-export-0x40077364.json",
+      "evidence_id": "ev_9f499d25a2f3a74e73d552fae2b7dc8bdf337dae5419847a9a9854d92af97ac4"
+    },
+    {
+      "address": "0x40077b1c",
+      "proposed_name": "nc_pitch_estimate_period",
+      "module": "pitch",
+      "basis": "Incremental correlation over decimated pitch history",
+      "evidence_path": "analysis/rea-1.12-effects/results/03580-export-0x40077b1c.json",
+      "evidence_id": "ev_bc02c2295cc573e3ec17558f9ffb5057152a52b3b33c8d0f0ed1d0eaf89df678"
+    },
+    {
+      "address": "0x4007876a",
+      "proposed_name": "nc_pitch_init",
+      "module": "pitch",
+      "basis": "Pitch state initialization called from FX2 init",
+      "evidence_path": "analysis/rea-1.12-effects/results/03581-export-0x4007876a.json",
+      "evidence_id": "ev_58f527eb26f9e0806c87062c2c60158fe657d372d5a7ec4353dbfebb08b66a4f"
+    },
+    {
+      "address": "0x40078aba",
+      "proposed_name": "nc_pitch_set_shift",
+      "module": "pitch",
+      "basis": "Pitch control configuration invoked for changed coarse/fine amount",
+      "evidence_path": "analysis/rea-1.12-effects/results/03582-export-0x40078aba.json",
+      "evidence_id": "ev_73fb1d0f58b28a913dd8daf7dc64ba2943bd63f8ebc7cbd44e8b77738cc8e6ec"
+    },
+    {
+      "address": "0x40079596",
+      "proposed_name": "nc_pitch_reset",
+      "module": "pitch",
+      "basis": "Pitch state reset called by FX2 reset",
+      "evidence_path": "analysis/rea-1.12-effects/results/03584-export-0x40079596.json",
+      "evidence_id": "ev_98a5566c883df441e42efd1a2659b053094ba77ff64234723a224a9d6d515c3f"
+    },
+    {
+      "address": "0x40079bdc",
+      "proposed_name": "nc_pitch_process",
+      "module": "pitch",
+      "basis": "2048-sample fractional delay ring, period tracking and read-head crossfade",
+      "evidence_path": "analysis/rea-1.12-effects/results/03585-export-0x40079bdc.json",
+      "evidence_id": "ev_6e45d65406de81516fa0bb45831d708f1c79b2b8d4fe7e8c9a19a21d3fc8fbfc"
+    },
+    {
+      "address": "0x4006c4de",
+      "proposed_name": "nc_fx2_init",
+      "module": "fx2",
+      "basis": "Allocates/configures FX2 state including pitch",
+      "evidence_path": "analysis/rea-1.12-effects/results/03515-export-0x4006c4de.json",
+      "evidence_id": "ev_1e8a2e23c565c7e1ebd4af11c134535fb8e0e0dccd15d2189db8fb09dc9f1954"
+    },
+    {
+      "address": "0x4006c7ca",
+      "proposed_name": "nc_fx2_reset",
+      "module": "fx2",
+      "basis": "Resets pitch and FX2 state",
+      "evidence_path": "analysis/rea-1.12-effects/results/03516-export-0x4006c7ca.json",
+      "evidence_id": "ev_30b2af4db3cc0810f7d3173adad6a5657e7d58ee1a1f528259638bbba0d89817"
+    },
+    {
+      "address": "0x4006c8d8",
+      "proposed_name": "nc_fx2_motion_wah_init",
+      "module": "fx2",
+      "basis": "Initializes MotionWah embedded state",
+      "evidence_path": "analysis/rea-1.12-effects/results/03519-export-0x4006c8d8.json",
+      "evidence_id": "ev_9b199205dabe516586d55f75b96c90736602a3eecbc6486cfe47928650907153"
+    },
+    {
+      "address": "0x4006c932",
+      "proposed_name": "nc_fx2_defaults",
+      "module": "fx2",
+      "basis": "FX2 default control setup",
+      "evidence_path": "analysis/rea-1.12-effects/results/03522-export-0x4006c932.json",
+      "evidence_id": "ev_1688b3a25a4d8d3d721229dc700b2e5ff4c8a417acda6e1682c84e448c839384"
+    },
+    {
+      "address": "0x40025ca4",
+      "proposed_name": "nc_effect_normalize_subtype",
+      "module": "catalog",
+      "basis": "Restricts MOD selector to nine supported IDs",
+      "evidence_path": "analysis/rea-1.12-effects/results/01971-export-0x40025ca4.json",
+      "evidence_id": "ev_d3916b2ea3465912cd88a74a9f78797f88983a6d6275c97dc3d2fe5503ee99a6"
+    },
+    {
+      "address": "0x40025d1e",
+      "proposed_name": "nc_effect_picker_count",
+      "module": "catalog",
+      "basis": "Returns nine MOD picker entries",
+      "evidence_path": "analysis/rea-1.12-effects/results/01973-export-0x40025d1e.json",
+      "evidence_id": "ev_e6abf8f82b86a1b683e682eb75858003459a2c4639584277fb5859d693fc14a4"
+    },
+    {
+      "address": "0x40025d2c",
+      "proposed_name": "nc_effect_picker_to_subtype",
+      "module": "catalog",
+      "basis": "Reads MOD selector byte table4009b34c",
+      "evidence_path": "analysis/rea-1.12-effects/results/01974-export-0x40025d2c.json",
+      "evidence_id": "ev_230e13fb3dc958c0700c254ecffa2d24c6952ce04f0e747d8a1cc948ce58290b"
+    },
+    {
+      "address": "0x40025d4e",
+      "proposed_name": "nc_effect_subtype_to_picker",
+      "module": "catalog",
+      "basis": "Inverse lookup in MOD selector table",
+      "evidence_path": "analysis/rea-1.12-effects/results/01975-export-0x40025d4e.json",
+      "evidence_id": "ev_83933322ab1014fc64d9694c7c17bcc6c7ec118916444ae0bc8b985139d1aef1"
+    },
+    {
+      "address": "0x40025d92",
+      "proposed_name": "nc_effect_name",
+      "module": "catalog",
+      "basis": "Effect label resolver including dormant MOD names",
+      "evidence_path": "analysis/rea-1.12-effects/results/01976-export-0x40025d92.json",
+      "evidence_id": "ev_981f6326b0aa263fbb50149952133da2043ce6eb0c086c5d2c306f16ed8185cb"
+    },
+    {
+      "address": "0x4002607e",
+      "proposed_name": "nc_effect_parameter_label",
+      "module": "catalog",
+      "basis": "Parameter label tables for MOD and FX2",
+      "evidence_path": "analysis/rea-1.12-effects/results/01977-export-0x4002607e.json",
+      "evidence_id": "ev_8bd57d13f00c718c23aadf36acfdbcdcacbaacbfb692a225d1df02096cee5252"
+    }
+  ],
+  "effects": [
+    {
+      "family": "MOD",
+      "subtype": 0,
+      "name": "Chorus",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "DEPTH"
+      ],
+      "processor": "0x4006dc08",
+      "branch": "1024-sample stereo linearly interpolated delay, quadrature LFO, wet lowpass",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 1,
+      "name": "Phaser",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "FBK",
+        "MIX"
+      ],
+      "processor": "0x4006dc08",
+      "branch": "Four feedback allpass stages per channel",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 2,
+      "name": "Flanger",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "FBK",
+        "MIX"
+      ],
+      "processor": "0x4006dc08",
+      "branch": "Variable-clock feedback delay; 512-element ring",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 3,
+      "name": "Tremolo",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "DEPTH",
+        "WAVE",
+        "SMOOTH",
+        "MIX"
+      ],
+      "processor": "0x4006dc08",
+      "branch": "Amplitude modulation with waveform selector and optional smoothing",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 4,
+      "name": "Vibrato",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "DEPTH",
+        "WAVE",
+        "MIX"
+      ],
+      "processor": "0x4006dc08",
+      "branch": "8192-sample stereo delay with four-point cubic interpolation",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 5,
+      "name": "Chorus",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "MOD",
+      "subtype": 6,
+      "name": "Chorus",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "MOD",
+      "subtype": 7,
+      "name": "Chorus",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "MOD",
+      "subtype": 8,
+      "name": "Pulse Vibe",
+      "selectable": false,
+      "parameters": [],
+      "processor": "0x4006d0b4",
+      "branch": "Dedicated PulseVibe branch",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 9,
+      "name": "Motion Wah",
+      "selectable": false,
+      "parameters": [],
+      "processor": "0x40071e7c",
+      "branch": "Dedicated MotionWah branch",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 10,
+      "name": "Velvet Vibrato",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "WAVE",
+        "VOICE",
+        "DEPTH",
+        "MIX"
+      ],
+      "processor": "0x40074e5e",
+      "branch": "1536-sample stereo variable delay; sine/triangle waveform blend and voice morph",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 11,
+      "name": "Chorus II",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "AMOUNT",
+        "FBK",
+        "MIX"
+      ],
+      "processor": "0x40072754",
+      "branch": "Two fractional delay taps per channel, quadrature LFO, equal-power-style wet/dry",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 12,
+      "name": "Phaser II",
+      "selectable": true,
+      "parameters": [
+        "",
+        "DEPTH",
+        "RATE",
+        "FBK",
+        "MIX"
+      ],
+      "processor": "0x4006dc08",
+      "branch": "Four allpass stages with depth/rate/feedback and postfilter",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 13,
+      "name": "Flanger II",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "MOD",
+      "subtype": 14,
+      "name": "Chorus III",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "MOD",
+      "subtype": 15,
+      "name": "Chorus",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "MOD",
+      "subtype": 16,
+      "name": "Phaser III",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "MOD",
+      "subtype": 17,
+      "name": "Jet Flanger",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "DEPTH",
+        "DELAY",
+        "FBK",
+        "HPF",
+        "MIX",
+        "LEVEL",
+        "PHASE"
+      ],
+      "processor": "0x40072754",
+      "branch": "Triangle-swept reciprocal delay, feedback, linear interpolation",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "MOD",
+      "subtype": 18,
+      "name": "Ring Mod",
+      "selectable": false,
+      "parameters": [],
+      "processor": null,
+      "branch": "Label exists; no distinct processor branch identified, normalizer redirects to Chorus",
+      "status": "label-only; unavailable through normal picker"
+    },
+    {
+      "family": "FX2",
+      "subtype": 8,
+      "name": "Pitch",
+      "selectable": true,
+      "parameters": [
+        "PITCH",
+        "FINE",
+        "MIX",
+        "LEVEL"
+      ],
+      "processor": "0x4006b1c4",
+      "helper_processor": "0x40079bdc",
+      "branch": "Mono wet pitch-shift ring processor in <=64-frame chunks; stereo dry retained",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "FX2",
+      "subtype": 9,
+      "name": "Env Wah",
+      "selectable": true,
+      "parameters": [
+        "FREQ",
+        "ENV",
+        "Q",
+        "MIX",
+        "LEVEL"
+      ],
+      "processor": "0x4006b1c4",
+      "helper_processor": null,
+      "branch": "Rectified input envelope controls resonant lowpass coefficients refreshed every eight frames",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "FX2",
+      "subtype": 10,
+      "name": "Auto Wah",
+      "selectable": true,
+      "parameters": [
+        "FREQ",
+        "SWEEP",
+        "RATE",
+        "SHAPE",
+        "MIX",
+        "LEVEL"
+      ],
+      "processor": "0x4006b1c4",
+      "helper_processor": null,
+      "branch": "LFO/shape-driven resonant filter refreshed every eight frames",
+      "status": "recovered C-like implementation"
+    },
+    {
+      "family": "FX2",
+      "subtype": 11,
+      "name": "Motion Wah",
+      "selectable": true,
+      "parameters": [
+        "RATE",
+        "VOICE",
+        "SHAPE",
+        "SWEEP",
+        "MIX"
+      ],
+      "processor": "0x40071e7c",
+      "helper_processor": null,
+      "branch": "Nonlinear pre-shaper, voice-dependent exponential frequency sweep and state-variable bandpass",
+      "status": "recovered C-like implementation"
+    }
+  ],
+  "missing_entries": [],
+  "limitations": [
+    "Decompiler C-like output is not original source or audio-equivalence proof.",
+    "Float load/store register widths and prototypes need repair before native recompilation.",
+    "UI parameter labels do not prove every control affects the local processing loop; Jet DELAY/HPF/LEVEL and FX2 LEVEL are not read directly by the recovered branch.",
+    "Dormant labels are not proof of additional available effects."
+  ]
+}

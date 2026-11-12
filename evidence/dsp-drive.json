@@ -1,0 +1,300 @@
+{
+  "firmware": "1.12",
+  "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "scope": "FX2 drive subtypes 0..7 and shared AMP/model runtime; read-only static analysis.",
+  "native_forwarded_argument_proof": {
+    "path": "analysis/dsp-1.12/drive-wrapper-disassembly.txt",
+    "sha256": "1740771926967af7e1821f96715ade338d358af303256f97f8bf18bfab86b19d",
+    "instructions": [
+      {
+        "address": "0x4006caa8",
+        "bytes_le": "8548",
+        "decoded": "li a7,1"
+      },
+      {
+        "address": "0x4006caac",
+        "bytes_le": "6f70c070",
+        "decoded": "j 0x400741b8"
+      }
+    ]
+  },
+  "selector": {
+    "logical_ui_block": 1,
+    "drive_subtypes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "model_slots": [
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ],
+    "chain_kind": 8,
+    "callback": "0x4006ca50",
+    "shared_callback": "0x400741b8",
+    "shared_mode": 1
+  },
+  "drive_controls": {
+    "labels": [
+      "GAIN",
+      "TONE",
+      "LEVEL"
+    ],
+    "table": "0x4009bc34",
+    "gain": "Clamp normalized gain, then 2*x-1 -> model context +0x14.",
+    "tone": "Clamp x to 0..1 -> model context +0x2c.",
+    "level": "Clamp x to 0..1 -> model processor output scaling.",
+    "metadata_exception": "Subtypes 5..7 use special BOOST label handling."
+  },
+  "float_constants": {
+    "0x4009675c": 0.5,
+    "0x40096760": 0.800000011920929,
+    "0x4009672c": 1.0,
+    "0x40096728": -1.0,
+    "0x40096740": 2.0,
+    "0x40096748": 9.999999974752427e-07,
+    "0x4009f124": 0.9999989867210388,
+    "0x40099f50": 20.0,
+    "0x4009a354": -10.0,
+    "0x40099f38": 10.0,
+    "0x40096764": 8.0,
+    "0x40096768": -8.0,
+    "0x40099f7c": 5.0,
+    "0x4009f9e4": -5.0,
+    "0x400a1388": 31.9375,
+    "0x400a138c": 51.099998474121094,
+    "0x40099f58": 16.0,
+    "0x400a1394": 511.0,
+    "0x400a1390": -0.9999092221260071
+  },
+  "wrapper_state": {
+    "0x00": "model_context",
+    "0x04": "ready_byte_pointer",
+    "0x08": "three_band_filter_state",
+    "0x6c": "gain_cache",
+    "0x70": "low_cache",
+    "0x74": "mid_cache",
+    "0x78": "high_cache",
+    "0x7c": "tone_cache",
+    "0x80": "level_cache",
+    "0x84": "current_mix",
+    "0x88": "mix_increment",
+    "0x8c": "mix_samples_remaining",
+    "0x90": "dry_left_128_floats",
+    "0x290": "dry_right_128_floats"
+  },
+  "neural_stage_evidence": {
+    "routine": "0x30046744",
+    "inference": "GRU-style reset/update gates and tanh-like candidate; h_next = gate*h_old + (1-gate)*candidate.",
+    "table_initializer": "0x40088b3c",
+    "tanh_like_table": "0x30083fd8",
+    "sigmoid_like_table": "0x300847dc",
+    "samples": 512,
+    "ranges": [
+      [
+        -5,
+        5
+      ],
+      [
+        -8,
+        8
+      ]
+    ],
+    "model_topology_per_drive_slot": "unknown"
+  },
+  "nonlinear_branch": {
+    "routine": "0x30047ad2",
+    "enabled_when": "Runtime +0x6b0 contains a non-null coefficient table pointer.",
+    "coefficient_entry_bytes": 16,
+    "coordinate": "A*(x + D*old_envelope) + B, clamped to the table domain.",
+    "envelope": "e_next = e + alpha*(abs(x)-e)",
+    "shape": "((c3*t+c2)*t+c1)*t+c0 + direct*x",
+    "output": "Two cascaded biquads, model gain and the level control.",
+    "which_drive_slots_use_branch": "unknown"
+  },
+  "limitations": [
+    "No physical execution or audio verification.",
+    "Model-slot coefficient payloads were not recovered in this pass.",
+    "The float ABI and apparent 64-bit pseudocode loads/stores require native validation before patching.",
+    "No published model-format identity or bit-exact reconstruction is claimed.",
+    "All addresses are specific to firmware 1.12."
+  ],
+  "functions": [
+    {
+      "address": "0x4000854c",
+      "proposed_name": "nc_fx2_set_enabled",
+      "module": "audio/fx2_control.c",
+      "basis": "Checks model readiness and selects subtype + 30 for drive subtypes 0..7.",
+      "evidence_id": "ev_f9d707aaeb15d31109807bdc27eb3cc581767e24a147b68c18cf5b4300e98d0d",
+      "source": "analysis/source-firmware-1.12/functions/4000854c_FUN_ram_4000854c.c",
+      "source_sha256": "597824ef07b61acfae64986c163ae145c11a54f507012a0a0bdbe14ac6fa430b",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/01294-export-0x4000854c.json"
+    },
+    {
+      "address": "0x4000848c",
+      "proposed_name": "nc_fx2_load_drive_slot",
+      "module": "audio/fx2_control.c",
+      "basis": "Accepts model slots 30..37 and loads context 0x3004e9bc.",
+      "evidence_id": "ev_5487630b86eb54ccd670b4f10edf887db69256d7417c2ae9d0fa18c09b8605bd",
+      "source": "analysis/source-firmware-1.12/functions/4000848c_FUN_ram_4000848c.c",
+      "source_sha256": "f7cecacf183df33b1da3bfea79e3c1bbbd775b9e64a10aac0d04f88568841ada",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/01292-export-0x4000848c.json"
+    },
+    {
+      "address": "0x4006ca50",
+      "proposed_name": "nc_fx2_process",
+      "module": "audio/fx2_process.c",
+      "basis": "Native wrapper confirms all drive subtypes 0..7 force a7=1 before shared model processing.",
+      "evidence_id": "ev_9bc0a557338e7d5e11a6ef1fb7e02906399238fa7c1bfeb0ebdb681b23c32c21",
+      "source": "analysis/source-firmware-1.12/functions/4006ca50_FUN_ram_4006ca50.c",
+      "source_sha256": "d9bdcc7805d00dd8ffdf068eac0c9f363278b409e569fdfb78653f96e2d671ed",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/03527-export-0x4006ca50.json"
+    },
+    {
+      "address": "0x4007404e",
+      "proposed_name": "nc_amp_drive_state_init",
+      "module": "audio/amp_drive.c",
+      "basis": "Initializes the shared model wrapper, filter and cached controls; floating argument prototype needs native correction.",
+      "evidence_id": "ev_50bc6e85972982477cab591f1f2db72fc4368c6da0a19fdd370c89fe48b25863",
+      "source": "analysis/source-firmware-1.12/functions/4007404e_FUN_ram_4007404e.c",
+      "source_sha256": "42bc00d27e51a858deb8e1120f8508c592fac871689af265b5d2b0d26534625c",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/03555-export-0x4007404e.json"
+    },
+    {
+      "address": "0x400741b8",
+      "proposed_name": "nc_amp_drive_process",
+      "module": "audio/amp_drive.c",
+      "basis": "Shared AMP/drive callback with three-control mode, model processing, optional external EQ and crossfade.",
+      "evidence_id": "ev_ad56b9d10bc26ebeeb0312839033d6aceb1a72336054063587a600fd544fd8cc",
+      "source": "analysis/source-firmware-1.12/functions/400741b8_FUN_ram_400741b8.c",
+      "source_sha256": "1cc23ea2a0b7a773dd1b545018f23b6c8a2bb63b716d0786a30f1381924a2e70",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/03560-export-0x400741b8.json"
+    },
+    {
+      "address": "0x40074160",
+      "proposed_name": "nc_drive_parameter_defaults",
+      "module": "audio/amp_drive.c",
+      "basis": "Initializes normalized drive defaults to [0.5, 0.5, 0.8].",
+      "evidence_id": "ev_a5a8e84c581a702f44b5a9af23a3770fb120c14e0705f128bd3e364d81b41284",
+      "source": "analysis/source-firmware-1.12/functions/40074160_FUN_ram_40074160.c",
+      "source_sha256": "32746e2953125d5cff7291166a0f4d8c6f16c7585cc301f4fbf51a1ec9b754ce",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/03558-export-0x40074160.json"
+    },
+    {
+      "address": "0x4008b62a",
+      "proposed_name": "nc_model_is_ready",
+      "module": "audio/model_runtime.c",
+      "basis": "Requires a runtime pointer at context + 0x10 and ready byte at + 0x50.",
+      "evidence_id": "ev_c2ce7c509ef8d85f68413a1aab593be235c4a19b996a64ab677afadfc85bc0b0",
+      "source": "analysis/source-firmware-1.12/functions/4008b62a_FUN_ram_4008b62a.c",
+      "source_sha256": "2c6aa713a1d1595b6e18b8dd0f3e40129db8f7b0edc80ece946d54bd124093f2",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/03640-export-0x4008b62a.json"
+    },
+    {
+      "address": "0x40088b3c",
+      "proposed_name": "nc_model_context_init",
+      "module": "audio/model_runtime.c",
+      "basis": "Initializes the 0x54-byte model context and activation tables.",
+      "evidence_id": "ev_592a2b5b197ace98a192cf8e23f48f7c4d43b9886b0fd918e37f153d07c0cffe",
+      "source": "analysis/source-firmware-1.12/functions/40088b3c_FUN_ram_40088b3c.c",
+      "source_sha256": "9837897f5b5251314a3cc0a96687b8138c6b34b6afbc722e5edf92ccd08cf660",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/03636-export-0x40088b3c.json"
+    },
+    {
+      "address": "0x30047ad2",
+      "proposed_name": "nc_model_process_block",
+      "module": "audio/model_runtime.c",
+      "basis": "In-place model processing in chunks of at most 128 samples, including recurrent and nonlinear paths.",
+      "evidence_id": "ev_e48bad05d19a1bf3b05894ea6309b7b510398a578a2411745a34a7410306c076",
+      "source": "analysis/source-firmware-1.12/functions/30047ad2_FUN_ram_30047ad2.c",
+      "source_sha256": "c0de125588429072226f3e0c405932208758bfc2a47bd65b3b735a21aee70741",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/01019-export-0x30047ad2.json"
+    },
+    {
+      "address": "0x30046744",
+      "proposed_name": "nc_model_recurrent_stage_process",
+      "module": "audio/model_runtime.c",
+      "basis": "GRU-style gated recurrence inferred from activation tables and hidden-state update.",
+      "evidence_id": "ev_82605307aa2f307d3ed3841eae6ba1b11d146872f93f996c72087e4b138f5af8",
+      "source": "analysis/source-firmware-1.12/functions/30046744_FUN_ram_30046744.c",
+      "source_sha256": "f39f7abcb01d6be0ddf06b3539841f16b81e2eb46f5f4182f02db7526aff68df",
+      "confidence": "analyst-inference",
+      "evidence_path": "analysis/rea-1.12/results/01016-export-0x30046744.json"
+    },
+    {
+      "address": "0x4005c5ce",
+      "proposed_name": "nc_three_band_eq_process_sample",
+      "module": "audio/model_filters.c",
+      "basis": "Three cascaded transposed direct-form biquad recurrences.",
+      "evidence_id": "ev_1235e901e0ab2dc25d6e85f157dc4c226a3e11e330c4207c00da0834fa260581",
+      "source": "analysis/source-firmware-1.12/functions/4005c5ce_FUN_ram_4005c5ce.c",
+      "source_sha256": "e526ff9884e70761f03ce053f14dc569ecdbafe770c139b27bf7cb4e610518de",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/03466-export-0x4005c5ce.json"
+    },
+    {
+      "address": "0x400097e2",
+      "proposed_name": "nc_amp_drive_schedule_crossfade",
+      "module": "audio/amp_drive.c",
+      "basis": "Schedules ceil(sample_rate * milliseconds / 1000) samples of interpolation using +0x84/+0x88/+0x8c.",
+      "evidence_id": "ev_42ca38e2709485edab77cc086dfe6b0f84aff8ead8cc9f6667ab40a2921c6b76",
+      "source": "analysis/source-firmware-1.12/functions/400097e2_FUN_ram_400097e2.c",
+      "source_sha256": "51deccf9551fc3d36b6f35cbce9170eef1789039efac1f5b3e5617508006067b",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/01318-export-0x400097e2.json"
+    },
+    {
+      "address": "0x40007738",
+      "proposed_name": "nc_amp_drive_set_crossfade",
+      "module": "audio/amp_drive.c",
+      "basis": "Sets the interpolation value immediately and clears the ramp.",
+      "evidence_id": "ev_c9491e27d72d62f4263bc64785538d99d25b9ab01c712ec09541627a0bd7c234",
+      "source": "analysis/source-firmware-1.12/functions/40007738_FUN_ram_40007738.c",
+      "source_sha256": "8c84acff980c5bf170d4e3fa8cb0d8589d08017b2649d03df62742e7ad01e801",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/01257-export-0x40007738.json"
+    },
+    {
+      "address": "0x40008376",
+      "proposed_name": "nc_amp_drive_invalidate_parameter_cache",
+      "module": "audio/amp_drive.c",
+      "basis": "Invalidates cached controls at wrapper +0x6c through +0x80.",
+      "evidence_id": "ev_7c7cae260e5fbf296b7337de90214fff6bc66a32894c713aa02629616139f207",
+      "source": "analysis/source-firmware-1.12/functions/40008376_FUN_ram_40008376.c",
+      "source_sha256": "893fd883aedfa09cff15c767dc348035567db9054c480da31dd6b3b7d383a0f5",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/01288-export-0x40008376.json"
+    },
+    {
+      "address": "0x4000c132",
+      "proposed_name": "nc_model_switch_worker",
+      "module": "audio/model_switch.c",
+      "basis": "Debounced request worker coordinates AMP/IR/drive loading and a 16-ms drive crossfade.",
+      "evidence_id": "ev_a2b795a33133cf1f0d87c82a428b61ac1b0a5e6b141aa5f680e8105872c64dd7",
+      "source": "analysis/source-firmware-1.12/functions/4000c132_FUN_ram_4000c132.c",
+      "source_sha256": "12e181db6eee33468de248ccaa78973ec9d64643c059c41fa846b2e57fab9659",
+      "confidence": "reviewed-static",
+      "evidence_path": "analysis/rea-1.12/results/01337-export-0x4000c132.json"
+    }
+  ]
+}

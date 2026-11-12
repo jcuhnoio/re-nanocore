@@ -1,0 +1,505 @@
+{
+  "firmware": "1.10",
+  "effect": "UNIVIBE",
+  "controls": [
+    "SPEED",
+    "DEPTH",
+    "LEVEL",
+    "MODE"
+  ],
+  "mode_states": [
+    "CHORUS",
+    "VIBRATO"
+  ],
+  "defaults": [
+    0.35,
+    0.8,
+    0.5,
+    0
+  ],
+  "fresh_backup_sha256": "109ac9ba595be830fbc27878d48ca359aa0171bd3cf04e9bc8de5e7200784bd0",
+  "target_full_os_sha256": "8d2fdbb5ccc9694a4dcf07dd79226493e75629ef9ef66898e850b837afa7b85d",
+  "expected_changed_sectors": [
+    "0x0",
+    "0x20000",
+    "0x30000",
+    "0x70000",
+    "0x90000"
+  ],
+  "stock_backup": "analysis/custom-fx/test001-session/backup/os-partition.bin",
+  "previous_backup": "analysis/custom-fx/univibe-mxr-session/backup/os-partition.bin",
+  "deployment": {
+    "input_sha256": "109ac9ba595be830fbc27878d48ca359aa0171bd3cf04e9bc8de5e7200784bd0",
+    "output_sha256": "8d2fdbb5ccc9694a4dcf07dd79226493e75629ef9ef66898e850b837afa7b85d",
+    "bytes": 868352,
+    "erased_os_relative_sectors": [
+      0,
+      131072,
+      196608,
+      458752,
+      589824
+    ],
+    "exact_match": true,
+    "manifestation_status": "000000000800",
+    "action": "deploy"
+  },
+  "runtime_reads": [
+    {
+      "op": 16,
+      "args": {},
+      "seconds": 0.6499978331848979,
+      "response": {
+        "data": {
+          "devices": [
+            {
+              "dfu": false,
+              "display_name": "Nanocore",
+              "kind": "nanocore",
+              "midi": true,
+              "runtime_pid": 4865
+            }
+          ]
+        },
+        "success": true
+      }
+    },
+    {
+      "op": 153,
+      "args": {
+        "k": "nanocore"
+      },
+      "seconds": 0.4089058330282569,
+      "response": {
+        "data": {
+          "ready": true
+        },
+        "success": true
+      }
+    },
+    {
+      "op": 40,
+      "args": {
+        "k": "nanocore"
+      },
+      "seconds": 0.003369041718542576,
+      "response": {
+        "data": {
+          "activeSlot": 1,
+          "chainOrder": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "presetVolume": 83,
+          "slots": [
+            {
+              "enabled": true,
+              "params": [
+                0.5,
+                0.32100000977516174
+              ],
+              "variant": 1
+            },
+            {
+              "enabled": false,
+              "params": [
+                0.5,
+                0.5,
+                0.800000011920929
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.8999999761581421,
+                0.550000011920929,
+                0.6000000238418579,
+                0.6600000262260437,
+                0.800000011920929
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.5299999713897705,
+                0.5400000214576721
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.15000000596046448,
+                0.40799999237060547,
+                0.30000001192092896
+              ],
+              "variant": 1
+            },
+            {
+              "enabled": false,
+              "params": [
+                0.5,
+                0.5
+              ],
+              "variant": 0
+            },
+            {
+              "enabled": true,
+              "params": [
+                0.07000000029802322,
+                0.800000011920929,
+                0.6000000238418579,
+                0.0,
+                0.44999998807907104
+              ],
+              "variant": 6
+            },
+            {
+              "enabled": false,
+              "params": [
+                0.5,
+                0.5,
+                0.5,
+                0.5
+              ],
+              "variant": 0
+            }
+          ],
+          "version": 3
+        },
+        "success": true
+      }
+    }
+  ],
+  "build": {
+    "firmware_version": "1.10",
+    "flags": [
+      "-march=rv32imafdcpzpsfoperand_xtheade",
+      "-mabi=ilp32d",
+      "-Os",
+      "-std=c11",
+      "-ffreestanding",
+      "-fno-builtin",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-msmall-data-limit=0",
+      "-mno-relax",
+      "-ffp-contract=off",
+      "-Wall",
+      "-Wextra",
+      "-Werror"
+    ],
+    "compiler": "riscv64-unknown-elf-gcc (Xuantie-900 elf newlib gcc Toolchain V2.6.1 B-20220906) 10.2.0",
+    "docker_image": "sha256:1f2403136cb0aef651921f255f5155701f36083e64764b3134c573438e13b46a",
+    "header_sha256": "53ff7cd34da15780671ef51094348375d57b78e938911302e66ae41efcdf6940",
+    "artifacts": {
+      "gain": {
+        "address": "0x400720ae",
+        "size": 154,
+        "sha256": "4eaa4fc350454af5d5fb917e3b1c248e777100b95ecec30c160ad7cd66d03d6a",
+        "source_sha256": "7b96c7a84f5c39dce5ed0bc924ff77bd5cbdef4bfe61c7ff1055dd138f096cf6",
+        "entry": "nc_fx_velvet_gain",
+        "unresolved_symbols": [],
+        "injection_candidate": true,
+        "capacity": 1392
+      },
+      "univibe": {
+        "address": "0x400720ae",
+        "size": 1106,
+        "sha256": "8c4676abf4dc51e913fd973abd111955d2955840f45f9dbfa3908510293dd8ae",
+        "source_sha256": "e04d258565bdf24e12f0c568194509062de588c388593067124c8be5709d87eb",
+        "entry": "nc_fx_univibe",
+        "unresolved_symbols": [],
+        "injection_candidate": true,
+        "capacity": 1298,
+        "parameter_layout": [
+          "SPEED",
+          "DEPTH",
+          "LEVEL",
+          "MODE"
+        ]
+      },
+      "chorus": {
+        "address": "0x40080000",
+        "size": 1336,
+        "sha256": "0cbce154b54cfc10cab3f2a052fa4043b6a03d2f2639a25fe58644d16b517624",
+        "source_sha256": "adc56ecfa68a553e03adfb086c7687bda452d987ee7c711e0c9513b55cb14bff",
+        "entry": "nc_fx_chorus",
+        "unresolved_symbols": [],
+        "injection_candidate": false,
+        "capacity": 65536
+      }
+    }
+  },
+  "dsp_tests": {
+    "sha256": "8c4676abf4dc51e913fd973abd111955d2955840f45f9dbfa3908510293dd8ae",
+    "cases": [
+      {
+        "stereo": 0,
+        "inplace": false,
+        "sample_rate": 44100,
+        "frames": 4096,
+        "max_error": 0,
+        "max_instructions_per_64_frames": 7000,
+        "abi_and_state_bounds_passed": true
+      },
+      {
+        "stereo": 1,
+        "inplace": false,
+        "sample_rate": 44100,
+        "frames": 4096,
+        "max_error": 0,
+        "max_instructions_per_64_frames": 12056,
+        "abi_and_state_bounds_passed": true
+      },
+      {
+        "stereo": 1,
+        "inplace": true,
+        "sample_rate": 44100,
+        "frames": 4096,
+        "max_error": 0,
+        "max_instructions_per_64_frames": 12056,
+        "abi_and_state_bounds_passed": true
+      },
+      {
+        "stereo": 1,
+        "inplace": false,
+        "sample_rate": 8000,
+        "frames": 4096,
+        "max_error": 0,
+        "max_instructions_per_64_frames": 12056,
+        "abi_and_state_bounds_passed": true
+      },
+      {
+        "stereo": 1,
+        "inplace": false,
+        "sample_rate": 96000,
+        "frames": 4096,
+        "max_error": 0,
+        "max_instructions_per_64_frames": 12056,
+        "abi_and_state_bounds_passed": true
+      }
+    ],
+    "device_audio_tested": false,
+    "vendor_hook": "addsl exact integer semantics",
+    "includes": [
+      "first-call init",
+      "control changes",
+      "native reset marker",
+      "integer and floating callee-save checks"
+    ]
+  },
+  "ui_tests": {
+    "enum_cases": 912,
+    "enum_states": 2,
+    "enum_output_values": [
+      0,
+      1000
+    ],
+    "count_cases": 760,
+    "label_cases": 12,
+    "default_lengths_tested": 13,
+    "format_cases": [
+      {
+        "index": 0,
+        "value": 0,
+        "rendered": [
+          [
+            "%ld",
+            0
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 0.35,
+        "rendered": [
+          [
+            "%ld",
+            35
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 0.499,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 0.5,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 1,
+        "rendered": [
+          [
+            "%ld",
+            100
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0,
+        "rendered": [
+          [
+            "%ld",
+            0
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0.35,
+        "rendered": [
+          [
+            "%ld",
+            35
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0.499,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0.5,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 1,
+        "rendered": [
+          [
+            "%ld",
+            100
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0,
+        "rendered": [
+          [
+            "%ld",
+            0
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0.35,
+        "rendered": [
+          [
+            "%ld",
+            35
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0.499,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0.5,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 1,
+        "rendered": [
+          [
+            "%ld",
+            100
+          ]
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0,
+        "rendered": [
+          "CHORUS"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0.35,
+        "rendered": [
+          "CHORUS"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0.499,
+        "rendered": [
+          "CHORUS"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0.5,
+        "rendered": [
+          "VIBRATO"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 1,
+        "rendered": [
+          "VIBRATO"
+        ]
+      }
+    ],
+    "scope": "Native patched code, enum conversions and branches execute; memset/strcmp/printf boundaries emulated; no display device observed",
+    "physical_ui_verified": false
+  },
+  "host_tests": "ASan/UBSan and independent doubleDF1 oracle pass;16controlcorners;level/mode/chunk/inplace/statebounds pass",
+  "offline_unit_tests": 21,
+  "physical_ui_observed": false,
+  "physical_audio_measured": false,
+  "scope": "MXR-style control layout; circuit-informed approximate DSP, not a measured M68 clone",
+  "status": "Full OS readback exact, normal MIDI and runtime ready after reboot; user UI/listening feedback pending"
+}

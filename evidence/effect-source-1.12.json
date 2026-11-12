@@ -1,0 +1,39 @@
+{
+  "firmware": "1.12",
+  "scope": "Every reviewed exposed selector family; transitive decompiler C plus recovered copied Spring code. Not a compilable DSP library.",
+  "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "directory": "firmware/versions/1.12/effects",
+  "manifest_sha256": "70a7c02ed89fdaf2c6f373cbe452184c4d885e82544d7e6dba90bcb231d218c7",
+  "functions": 343,
+  "reviewed_functions": 150,
+  "selector_entries": 52,
+  "selector_aliases": 1,
+  "decompiler_warning_functions": 95,
+  "bad_instruction_functions": 0,
+  "unresolved_direct_function_references": [],
+  "source_quality": "Native code decompiled with retained type/register artifacts; all effects have callback and branch records, not numerical equivalence proof.",
+  "newly_recovered_entries": [
+    "0x40074e5e",
+    "0x400a1688",
+    "0x400a1790",
+    "0x400a1a80",
+    "0x400a1b1c",
+    "0x400a1dac",
+    "0x400a1e4c",
+    "0x400a2630",
+    "0x400a26b8",
+    "0x400a29c8"
+  ],
+  "assets_not_recovered": "The firmware alone does not supply all stored AMP/drive model and IR coefficients.",
+  "device_operations": false,
+  "validation": {
+    "source_tool_tests_passed": 17,
+    "function_body_hashes_verified": 343,
+    "all_52_selector_entries_have_branch_assessments": true,
+    "all_recorded_branch_processors_present": true,
+    "seeded_elf_preserves_loaded_bytes_and_mappings": true,
+    "catalog_c_compiles": true,
+    "dsp_c_compiles": false,
+    "audio_equivalence_tested": false
+  }
+}

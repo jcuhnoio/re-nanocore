@@ -1,0 +1,76 @@
+NanoCore raw OS DFU pipeline
+==========================
+
+raw_dfu.py is separate from the signed FMU uploader. It sends plaintext FIT
+application images through the OS DFU interface. It cannot generate publisher
+signatures. The historical 1.10 diagnostic image was flashed, booted, and restored
+with the earlier capture scripts; this reusable backend has only mocked protocol
+tests and has not itself been exercised against hardware. A successful readback
+proves bytes, not boot, DSP behavior, ABI correctness, or recovery availability.
+
+The pedal must already enumerate as 33c3:6678 Livtra Lupgrader. This tool checks
+interface 0 / alternate 0 / FE:01:02, name 'os', upload/download capabilities, and
+4096-byte transfer size. It does not send the MIDI detach command. Connect only
+one NanoCore in Lupgrader mode; libusb opens the first matching VID/PID. All
+addresses are OS-relative, not whole-flash addresses. No SPL writes are exposed.
+
+1. Read a backup (the tool leaves the pedal in DFU mode):
+
+  python3 tools/custom_fx/raw_dfu.py backup --output analysis/custom-fx-backup
+
+The output directory must not exist. Keep os-partition.bin and receipt.json.
+The backup covers exactly 0xd4000 bytes, including padding/tail. Record its SHA256.
+
+2. Prepare a custom image with patch_image.py or package.py. The patch manifest
+binds the exact decoded source, original byte ranges and all FIT hash updates.
+A patch_image.py plan needs image_kind='raw-os-fit', firmware_version,
+input_sha256, and patches containing offset, expected_hex, replacement_hex.
+No patch may change image size or directly edit FIT headers, padding, or tail.
+
+3. Deploy with explicit artifact and current partition identities:
+
+  python3 tools/custom_fx/raw_dfu.py deploy \
+    --backup analysis/custom-fx-backup/os-partition.bin \
+    --backup-sha256 BACKUP_SHA256 \
+    --expected-current-sha256 CURRENT_FULL_OS_SHA256 \
+    --source analysis/decoder-capture/validated-releases/nanocore-1.12/firmware.bin \
+    --image CUSTOM_IMAGE.bin --manifest CUSTOM_MANIFEST.json \
+    --output analysis/custom-fx-deploy
+
+Deploy appends the backup tail after the image and checks the resulting FIT.
+The decoded source must match the backup's firmware version and every segment's
+bytes, file offset, size, load address and entry address. FIT timestamp differences
+are allowed. This command replaces effects in the same base firmware; it refuses
+to turn a 1.10 backup into a 1.12 upgrade. Use the version matching your backup in
+the source path above.
+Before any erase it reads the entire live OS, requires the expected SHA256, and
+saves/fsyncs preflight-os.bin. It computes changed 64KiB sectors and rewrites each
+complete sector, preserving neighboring bytes. It refuses a change in the final
+partial sector (0xd0000..0xd4000), since a 64KiB erase might affect presets. A full
+partition readback must match before zero-length DNLOAD and GETSTATUS request
+manifestation. The historical manifestation response was state 8. A missing or
+unexpected response is an error, not reported as successful reboot.
+
+4. Restore the exact original full OS partition using its backup:
+
+  python3 tools/custom_fx/raw_dfu.py restore \
+    --backup analysis/custom-fx-backup/os-partition.bin \
+    --backup-sha256 BACKUP_SHA256 \
+    --expected-current-sha256 DEPLOYED_FULL_OS_SHA256 \
+    --output analysis/custom-fx-restore
+
+Use the full partition output hash from the deployment receipt, not the shorter
+custom FIT image hash. After a partial write failure, capture another backup to
+establish the current hash; retain the original backup separately. A failure
+leaves failure.txt and any completed readback/preflight evidence. No automatic
+reboot occurs after readback mismatch. Physical power cycling may be needed
+when stuck in DFU. Manifestation success does not establish normal enumeration.
+
+The deployed image's changes can alter Bluetooth, preset layout, audio callbacks,
+and memory use even if FIT hashes are correct. The transport neither relocates
+code nor validates effect ABI/state allocation. Keep those checks in the build
+and emulation pipeline before using deploy.
+
+Tests (offline, no USB device access):
+
+  python3 -m unittest discover -s tools/custom_fx -p 'test_*.py' -v

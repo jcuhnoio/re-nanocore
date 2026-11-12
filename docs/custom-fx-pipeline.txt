@@ -1,0 +1,84 @@
+NanoCore custom FX build and replacement pipeline
+================================================
+
+Outcome
+-------
+A real C -> RV32 ELF -> fixed-size raw FIT pipeline now exists for 1.10 and 1.12.
+It replaces Velvet Vibrato with a custom gain effect while preserving the other
+original effects. The buildable library also contains reconstructed classic
+Chorus. This is not a complete source rebuild of all 343 decompiled routines.
+Those exports retain uncertain types, globals and calling conventions, so adding
+placeholder typedefs would produce misleading and potentially incorrect builds.
+
+Build / firmware comparison
+---------------------------
+Compiler: retained Xuantie GCC 10.2.0 V2.6.1 B-20220906, SDK flags
+-march=rv32imafdcpzpsfoperand_xtheade -mabi=ilp32d, -Os, no small data or relaxation.
+Built ELF: ELF32 little-endian RISC-V, flags5 (RVC,double-float ABI), 16byte stack
+alignment, no remaining relocations or unresolved symbols. Original analysis
+ELFs are synthetic wrappers around firmware segments, not original linker outputs;
+whole-image binary reproducibility cannot be inferred from their metadata.
+
+Gain occupies154bytes of the1392byte dedicated native Velvet body, at
+1.10 0x400720ae / FIT0x7b0ae and1.12 0x40074e5e / FIT0x81e5e.
+The entry uses nine arguments, unlike the ten-argument top-level DSP callback.
+The replacement has no state allocation, external calls or gp-relative storage.
+Unicorn ran60cases per linked version: mono/stereo, inplace/separate,0/1/64frames,
+five gains including clamping, integer callee-saved registers and stack preserved.
+
+Chorus builds to1334bytes including init/helpers at review address0x40080000.
+It is not injected at that address. Native-loop comparison across six cases/12288frames, including consecutive64frame
+callbacks, has exact output and
+fullstate agreement for tested identically initialized/cached-control cases;
+see evidence/custom-fx-build.json and its linked comparison for exact coverage.
+The initial2048-frame cases execute1.50–1.61x as many instructions as original.
+Instruction counts are not cycle estimates. Initialization, native trigonometry,
+parameter changes, physical audio and real-time deadlines remain unverified.
+Host numerical/state tests pass, also under AddressSanitizer/UndefinedBehaviorSanitizer.
+
+Packaging and upload distinction
+-------------------------------
+Offline patching validates FIT segment bounds, original hash and bytes, equal
+replacement length, recalculatedMD5/CRC and exact allowed changes. Existing
+publisher signatures cannot be reproduced; these outputs are raw OS/FIT images,
+not ToneCommand-signed FMUs. This is a replacement slot, not yet a loader for new
+registered effect IDs or arbitrary-size code.
+
+Historical physical evidence already shows a modified1.10 diagnostic application
+was written through rawDFU, booted and executed, then originalOS restored with
+verified readback. See docs/firmware-decoding.txt. The new patcher reproduces that
+historical diagnostic image exactly. This establishes that publisher signing is
+not a barrier on the demonstrated raw route. It does NOT prove that the new gain
+image or reconstructed Chorus has run on the pedal.
+
+No hardware writes were performed for this build task. New gain images remain
+offline-tested candidates. The earlier one-off diagnostic writer hardcodes erase
+sectors; do not reuse it for these images. The reusable rawDFU backend and its
+mocked protocol tests (17 packaging/transport tests total) are separate from tools/nanocore_dfu's signedFMU backend.
+A real deployment must use a fresh fullOS backup, preserve its partition tail,
+verify the full written partition, and then validate effect audio and restoration.
+
+Artifacts and next boundary
+---------------------------
+Tracked source: firmware/custom-fx and tools/custom_fx.
+Evidence: evidence/custom-fx-patch-site.json, evidence/custom-fx-build.json.
+Local binaries: analysis/custom-fx/build-1.10 and build-1.12-final.
+Local patchedFITs: analysis/custom-fx/patched-1.10/firmware.bin and patched-1.12/firmware.bin.
+They replace MOD10 Velvet with gain; RATE controls amplitude0..1.
+
+The next physical experiment is that bounded gain replacement on matching
+firmware (the deployment backend rejects a different base version or segment bytes), measured through the audio path, followed by full verified restoration.
+Chorus needs a subtype-specific hook that preserves the other MOD branches,
+control/init equivalence tests and deadline measurement. Larger effects need
+reviewed placement/relocation and model/IR assets as applicable. Bluetooth and
+all unrelated firmware remain their original bytes under this fixed-size patch.
+
+Physical TEST001 experiment (2026-11-12)
+--------------------------------------
+User requested1.10 deployment, naming the effect TEST001. The fresh fullOSbackup
+matched the previously restored original. Applied gain+label patch, erased only
+OS-relative sectors0,0x70000,0x90000, and verified all868352bytes before reboot.
+Device re-enumerated in normalMIDI mode, reported ready and returned activechain
+state. TEST001 replaces Velvet Vibrato in MOD; RATE is gain0..1. UserUI/audio
+confirmation remains pending. NewrawDFU backend has now completed this physical
+deployment. See evidence/custom-fx-test001-flash.json and local session backup.

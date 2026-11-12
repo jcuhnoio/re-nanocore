@@ -1,0 +1,147 @@
+{
+  "date": "2026-11-12",
+  "scope": "Files staged for publication, checked out into a clean snapshot without local analysis artifacts",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/nanocore_dfu",
+        "-p",
+        "test_*.py"
+      ],
+      "passed": true,
+      "test_count": 23,
+      "skipped_real_firmware_fixture": true
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/firmware_decode",
+        "-p",
+        "test_*.py"
+      ],
+      "passed": true,
+      "test_count": 10,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/firmware_source",
+        "-p",
+        "test_*.py"
+      ],
+      "passed": true,
+      "test_count": 17,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tools/custom_fx",
+        "-p",
+        "test_*.py"
+      ],
+      "passed": true,
+      "test_count": 21,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "python3",
+        "tools/firmware_source/organize_source.py",
+        "--output",
+        "firmware",
+        "--verify"
+      ],
+      "passed": true,
+      "test_count": null,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "python3",
+        "tools/firmware_source/organize_source.py",
+        "--output",
+        "firmware/versions/1.11",
+        "--verify"
+      ],
+      "passed": true,
+      "test_count": null,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "python3",
+        "tools/firmware_source/organize_source.py",
+        "--output",
+        "firmware/versions/1.12",
+        "--verify"
+      ],
+      "passed": true,
+      "test_count": null,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "python3",
+        "tools/firmware_source/build_effects.py",
+        "--output",
+        "firmware/versions/1.12/effects",
+        "--verify"
+      ],
+      "passed": true,
+      "test_count": null,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "cc",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-fsyntax-only",
+        "firmware/versions/1.12/effects/catalog.c"
+      ],
+      "passed": true,
+      "test_count": null,
+      "skipped_real_firmware_fixture": false
+    },
+    {
+      "command": [
+        "make",
+        "-C",
+        "firmware/custom-fx",
+        "test"
+      ],
+      "passed": true,
+      "test_count": null,
+      "skipped_real_firmware_fixture": false
+    }
+  ],
+  "dependency_note": "Decoder tests use cryptography50.0.2 in existing virtualenv; CI installs declared requirements. Target builds/Ghidra/emulation remain separately documented local checks.",
+  "generated_export_whitespace": "Original decompiler whitespace retained to preserve recorded source hashes; generated exports are not reformatted.",
+  "historical_diagnostic_rebuild": {
+    "bytes": 252,
+    "sha256": "208b30f02c148275fda2e73ddcfc0a2885ff0c9b1a957df2ebc20d8c1cc11647",
+    "matches_original": true,
+    "emulated_cases_passed": 7
+  }
+}

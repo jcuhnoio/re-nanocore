@@ -1,0 +1,174 @@
+{
+  "firmware": "1.10",
+  "offline_only": true,
+  "sdk_commit": "77fbe30dd2de366fae702ece84e1694153d94591",
+  "partitions": [
+    {
+      "name": "spl",
+      "flash": "norflash0",
+      "offset": "0x0",
+      "length": "0x26000"
+    },
+    {
+      "name": "env",
+      "flash": "norflash0",
+      "offset": "0x26000",
+      "length": "0x2000"
+    },
+    {
+      "name": "os",
+      "flash": "norflash0",
+      "offset": "0x28000",
+      "length": "0xd4000"
+    },
+    {
+      "name": "presets",
+      "flash": "norflash0",
+      "offset": "0xfc000",
+      "length": "0xac000"
+    },
+    {
+      "name": "ui_asset",
+      "flash": "norflash0",
+      "offset": "0x1a8000",
+      "length": "0x57000"
+    },
+    {
+      "name": "device_info",
+      "flash": "norflash0",
+      "offset": "0x1ff000",
+      "length": "0x1000"
+    }
+  ],
+  "functions": [
+    {
+      "address": "0x40000000",
+      "label": "application entry",
+      "confidence": "image metadata and disassembly"
+    },
+    {
+      "address": "0x400050d6",
+      "label": "memory copy",
+      "confidence": "call-site behavior"
+    },
+    {
+      "address": "0x40006efa",
+      "label": "FAL partition lookup",
+      "confidence": "string argument and returned structure use"
+    },
+    {
+      "address": "0x40006f5e",
+      "label": "FAL partition read",
+      "confidence": "SDK structure and matching dataflow"
+    },
+    {
+      "address": "0x40012f62",
+      "label": "scan SPL for updater AIC header",
+      "confidence": "byte comparisons and output use"
+    },
+    {
+      "address": "0x40013674",
+      "label": "NC seven-bit unpack candidate",
+      "confidence": "NC70 receive call-site"
+    },
+    {
+      "address": "0x40013b2e",
+      "label": "NC70 request dispatcher",
+      "confidence": "header/opcode/length parsing"
+    },
+    {
+      "address": "0x40014188",
+      "label": "copy updater into RAM",
+      "confidence": "destination 0x40300100"
+    },
+    {
+      "address": "0x4001423a",
+      "label": "jump to updater",
+      "confidence": "jalr to 0x40300100"
+    }
+  ],
+  "decoding_probes": {
+    "assumption": "captured plaintext is byte-aligned with packaged payload; opaque16 is IV/nonce; bounded prior app-key reuse candidates only",
+    "payload_size": 667648,
+    "readback_size": 667648,
+    "trailer_hex": "aaf9cdb8",
+    "plain_crc32_hex_le": "6a317be8",
+    "opaque16_matches_plain_md5": false,
+    "probes": [
+      {
+        "hypothesis": "root HMAC-SHA512 counter 0",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "root HMAC-SHA512 counter 1",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "root AES-128-cbc",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "root AES-128-ctr",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "root AES-256-cbc",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "root AES-256-ctr",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "sapf HMAC-SHA512 counter 0",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "sapf HMAC-SHA512 counter 1",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "sapf AES-128-cbc",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "sapf AES-128-ctr",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "sapf AES-256-cbc",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "sapf AES-256-ctr",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "ac6f HMAC-SHA512 counter 0",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "ac6f HMAC-SHA512 counter 1",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "ac6f AES-128-cbc",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "ac6f AES-128-ctr",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "ac6f AES-256-cbc",
+        "matches_exact_plaintext_prefix": false
+      },
+      {
+        "hypothesis": "ac6f AES-256-ctr",
+        "matches_exact_plaintext_prefix": false
+      }
+    ]
+  },
+  "no_decoder_recovered": true,
+  "no_device_commands_sent": true
+}

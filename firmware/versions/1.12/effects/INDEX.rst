@@ -1,0 +1,444 @@
+Effect implementations
+======================
+
+All entries are firmware selector slots, including shared processors and aliases.
+Each linked callback leads to a family processor; follow named calls or symbols.tsv.
+
+FX1
+---
+
+* GATE (subtype 0, selector-entry): `dynamics_gate_autogate_ngcomp_compressor_process <processors/dynamics/40069738_dynamics_gate_autogate_ngcomp_compressor_process.c>`_
+* AUTO GATE (subtype 1, selector-entry): `dynamics_gate_autogate_ngcomp_compressor_process <processors/dynamics/40069738_dynamics_gate_autogate_ngcomp_compressor_process.c>`_
+* NG+COM (subtype 2, selector-entry): `dynamics_gate_autogate_ngcomp_compressor_process <processors/dynamics/40069738_dynamics_gate_autogate_ngcomp_compressor_process.c>`_
+* COMP (subtype 3, selector-entry): `dynamics_gate_autogate_ngcomp_compressor_process <processors/dynamics/40069738_dynamics_gate_autogate_ngcomp_compressor_process.c>`_
+
+FX2
+---
+
+* Drive model slot 30 (subtype 0, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* Drive model slot 31 (subtype 1, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* Drive model slot 32 (subtype 2, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* Drive model slot 33 (subtype 3, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* Drive model slot 34 (subtype 4, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* Drive model slot 35 (subtype 5, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* Drive model slot 36 (subtype 6, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* Drive model slot 37 (subtype 7, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* PITCH (subtype 8, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* ENV WAH (subtype 9, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* WAH (subtype 10, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* MOTION WAH (subtype 11, selector-entry): `nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+
+AMP
+---
+
+* AMP model (subtype 0, selector-entry): `nc_amp_drive_process <processors/amp_drive/400741b8_nc_amp_drive_process.c>`_
+
+CAB
+---
+
+* CAB / IR (subtype 0, selector-entry): `cab_ir_process_with_cut_filters <processors/cab/4005f2c4_cab_ir_process_with_cut_filters.c>`_
+
+DEL
+---
+
+* BBD (subtype 0, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* DIGITAL (subtype 1, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* DUCK (subtype 2, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* ICE (subtype 3, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* REVERSE (subtype 4, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* LOFI (subtype 5, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* SMEAR (subtype 6, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* MOD (subtype 7, selector-entry): `nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+
+MOD
+---
+
+* CHORUS (subtype 0, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* CHORUS II (subtype 11, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* PHASER (subtype 1, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* PHASER II (subtype 12, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* FLANGER (subtype 2, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* JET FLANGER (subtype 17, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* VIBRATO (subtype 4, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* VELVET VIBRATO (subtype 10, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* TREMOLO (subtype 3, selector-entry): `nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+
+REV
+---
+
+* ROOM (subtype 0, selector-entry): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* PLATE (subtype 1, selector-entry): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* HALL (subtype 2, selector-entry): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* CONCERT (subtype 3, selector-entry): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* HALL (subtype 4, selector-alias): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* SHIMMER (subtype 5, selector-entry): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* CLOUD (subtype 6, selector-entry): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* SPRING (subtype 7, selector-entry): `nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+
+EQ
+--
+
+* EQ3 (subtype 0, selector-entry): `eq_multiband_process <processors/eq/40066fb4_eq_multiband_process.c>`_
+* EQ6 (subtype 1, selector-entry): `eq_multiband_process <processors/eq/40066fb4_eq_multiband_process.c>`_
+* EQ8 (subtype 2, selector-entry): `eq_multiband_process <processors/eq/40066fb4_eq_multiband_process.c>`_
+
+GAT
+---
+
+* GATE (subtype 0, selector-entry): `dynamics_gate_autogate_ngcomp_compressor_process <processors/dynamics/40069738_dynamics_gate_autogate_ngcomp_compressor_process.c>`_
+* AUTO GATE (subtype 1, selector-entry): `dynamics_gate_autogate_ngcomp_compressor_process <processors/dynamics/40069738_dynamics_gate_autogate_ngcomp_compressor_process.c>`_
+
+EXP
+---
+
+* VOLUME (subtype 0, selector-entry): `nc_dsp_kind_10_process <processors/support/4006/40068d96_nc_dsp_kind_10_process.c>`_
+* PAN (subtype 1, selector-entry): `nc_dsp_kind_10_process <processors/support/4006/40068d96_nc_dsp_kind_10_process.c>`_
+* WIDTH (subtype 2, selector-entry): `nc_dsp_kind_10_process <processors/support/4006/40068d96_nc_dsp_kind_10_process.c>`_
+* WAH (subtype 3, selector-entry): `nc_dsp_kind_10_process <processors/support/4006/40068d96_nc_dsp_kind_10_process.c>`_
+
+Function index
+--------------
+
+* `0x30040000 dsp_fir_process_unrolled <processors/cab/30040000_dsp_fir_process_unrolled.c>`_
+* `0x30040358 FUN_ram_30040358 <processors/support/3004/30040358_FUN_ram_30040358.c>`_
+* `0x300404cc FUN_ram_300404cc <processors/support/3004/300404cc_FUN_ram_300404cc.c>`_
+* `0x300408dc FUN_ram_300408dc <processors/support/3004/300408dc_FUN_ram_300408dc.c>`_
+* `0x30040a04 FUN_ram_30040a04 <processors/support/3004/30040a04_FUN_ram_30040a04.c>`_
+* `0x30040fc4 FUN_ram_30040fc4 <processors/support/3004/30040fc4_FUN_ram_30040fc4.c>`_
+* `0x30041060 FUN_ram_30041060 <processors/support/3004/30041060_FUN_ram_30041060.c>`_
+* `0x300410e6 FUN_ram_300410e6 <processors/support/3004/300410e6_FUN_ram_300410e6.c>`_
+* `0x3004113c FUN_ram_3004113c <processors/support/3004/3004113c_FUN_ram_3004113c.c>`_
+* `0x30041298 nc_reverb_cloud_helper_30041298 <processors/reverb/30041298_nc_reverb_cloud_helper_30041298.c>`_
+* `0x300419ae nc_reverb_cloud_helper_300419ae <processors/reverb/300419ae_nc_reverb_cloud_helper_300419ae.c>`_
+* `0x30042d7e nc_reverb_cloud_process <processors/reverb/30042d7e_nc_reverb_cloud_process.c>`_
+* `0x30043fd0 FUN_ram_30043fd0 <processors/support/3004/30043fd0_FUN_ram_30043fd0.c>`_
+* `0x30043fd4 nc_reverb_dispatch <processors/reverb/30043fd4_nc_reverb_dispatch.c>`_
+* `0x300445ac nc_reverb_room_process <processors/reverb/300445ac_nc_reverb_room_process.c>`_
+* `0x30045b78 nc_reverb_shimmer_process <processors/reverb/30045b78_nc_reverb_shimmer_process.c>`_
+* `0x30046744 nc_model_recurrent_stage_process <processors/model_runtime/30046744_nc_model_recurrent_stage_process.c>`_
+* `0x30046fc6 FUN_ram_30046fc6 <processors/support/3004/30046fc6_FUN_ram_30046fc6.c>`_
+* `0x30047928 FUN_ram_30047928 <processors/support/3004/30047928_FUN_ram_30047928.c>`_
+* `0x30047ad2 nc_model_process_block <processors/model_runtime/30047ad2_nc_model_process_block.c>`_
+* `0x4000010a FUN_ram_4000010a <processors/support/4000/4000010a_FUN_ram_4000010a.c>`_
+* `0x400002f4 FUN_ram_400002f4 <processors/support/4000/400002f4_FUN_ram_400002f4.c>`_
+* `0x400002fa FUN_ram_400002fa <processors/support/4000/400002fa_FUN_ram_400002fa.c>`_
+* `0x40000658 FUN_ram_40000658 <processors/support/4000/40000658_FUN_ram_40000658.c>`_
+* `0x40000712 FUN_ram_40000712 <processors/support/4000/40000712_FUN_ram_40000712.c>`_
+* `0x4000078c FUN_ram_4000078c <processors/support/4000/4000078c_FUN_ram_4000078c.c>`_
+* `0x40000844 FUN_ram_40000844 <processors/support/4000/40000844_FUN_ram_40000844.c>`_
+* `0x40000882 FUN_ram_40000882 <processors/support/4000/40000882_FUN_ram_40000882.c>`_
+* `0x400008c0 FUN_ram_400008c0 <processors/support/4000/400008c0_FUN_ram_400008c0.c>`_
+* `0x40000902 FUN_ram_40000902 <processors/support/4000/40000902_FUN_ram_40000902.c>`_
+* `0x40000970 FUN_ram_40000970 <processors/support/4000/40000970_FUN_ram_40000970.c>`_
+* `0x400009d2 FUN_ram_400009d2 <processors/support/4000/400009d2_FUN_ram_400009d2.c>`_
+* `0x40000a4e FUN_ram_40000a4e <processors/support/4000/40000a4e_FUN_ram_40000a4e.c>`_
+* `0x40000aa2 FUN_ram_40000aa2 <processors/support/4000/40000aa2_FUN_ram_40000aa2.c>`_
+* `0x40000b8a FUN_ram_40000b8a <processors/support/4000/40000b8a_FUN_ram_40000b8a.c>`_
+* `0x40000bd8 FUN_ram_40000bd8 <processors/support/4000/40000bd8_FUN_ram_40000bd8.c>`_
+* `0x40000c50 FUN_ram_40000c50 <processors/support/4000/40000c50_FUN_ram_40000c50.c>`_
+* `0x40000c5e FUN_ram_40000c5e <processors/support/4000/40000c5e_FUN_ram_40000c5e.c>`_
+* `0x40000cc4 FUN_ram_40000cc4 <processors/support/4000/40000cc4_FUN_ram_40000cc4.c>`_
+* `0x40000d2c FUN_ram_40000d2c <processors/support/4000/40000d2c_FUN_ram_40000d2c.c>`_
+* `0x40000d44 FUN_ram_40000d44 <processors/support/4000/40000d44_FUN_ram_40000d44.c>`_
+* `0x40000e74 FUN_ram_40000e74 <processors/support/4000/40000e74_FUN_ram_40000e74.c>`_
+* `0x40000ec4 FUN_ram_40000ec4 <processors/support/4000/40000ec4_FUN_ram_40000ec4.c>`_
+* `0x40001066 FUN_ram_40001066 <processors/support/4000/40001066_FUN_ram_40001066.c>`_
+* `0x400012a2 FUN_ram_400012a2 <processors/support/4000/400012a2_FUN_ram_400012a2.c>`_
+* `0x400014b2 FUN_ram_400014b2 <processors/support/4000/400014b2_FUN_ram_400014b2.c>`_
+* `0x4000156a FUN_ram_4000156a <processors/support/4000/4000156a_FUN_ram_4000156a.c>`_
+* `0x40001bb4 FUN_ram_40001bb4 <processors/support/4000/40001bb4_FUN_ram_40001bb4.c>`_
+* `0x40001e38 FUN_ram_40001e38 <processors/support/4000/40001e38_FUN_ram_40001e38.c>`_
+* `0x40001f08 FUN_ram_40001f08 <processors/support/4000/40001f08_FUN_ram_40001f08.c>`_
+* `0x40002050 FUN_ram_40002050 <processors/support/4000/40002050_FUN_ram_40002050.c>`_
+* `0x400026b6 FUN_ram_400026b6 <processors/support/4000/400026b6_FUN_ram_400026b6.c>`_
+* `0x4000275c FUN_ram_4000275c <processors/support/4000/4000275c_FUN_ram_4000275c.c>`_
+* `0x40002970 FUN_ram_40002970 <processors/support/4000/40002970_FUN_ram_40002970.c>`_
+* `0x40002c60 FUN_ram_40002c60 <processors/support/4000/40002c60_FUN_ram_40002c60.c>`_
+* `0x40002c74 FUN_ram_40002c74 <processors/support/4000/40002c74_FUN_ram_40002c74.c>`_
+* `0x40002c8c FUN_ram_40002c8c <processors/support/4000/40002c8c_FUN_ram_40002c8c.c>`_
+* `0x40002c96 FUN_ram_40002c96 <processors/support/4000/40002c96_FUN_ram_40002c96.c>`_
+* `0x40002d78 FUN_ram_40002d78 <processors/support/4000/40002d78_FUN_ram_40002d78.c>`_
+* `0x40002ed4 FUN_ram_40002ed4 <processors/support/4000/40002ed4_FUN_ram_40002ed4.c>`_
+* `0x40002f1a FUN_ram_40002f1a <processors/support/4000/40002f1a_FUN_ram_40002f1a.c>`_
+* `0x40002f28 FUN_ram_40002f28 <processors/support/4000/40002f28_FUN_ram_40002f28.c>`_
+* `0x40002fdc FUN_ram_40002fdc <processors/support/4000/40002fdc_FUN_ram_40002fdc.c>`_
+* `0x4000303c FUN_ram_4000303c <processors/support/4000/4000303c_FUN_ram_4000303c.c>`_
+* `0x400031bc memset <processors/support/4000/400031bc_memset.c>`_
+* `0x40003bf8 FUN_ram_40003bf8 <processors/support/4000/40003bf8_FUN_ram_40003bf8.c>`_
+* `0x40004346 FUN_ram_40004346 <processors/support/4000/40004346_FUN_ram_40004346.c>`_
+* `0x400043ae FUN_ram_400043ae <processors/support/4000/400043ae_FUN_ram_400043ae.c>`_
+* `0x40004660 FUN_ram_40004660 <processors/support/4000/40004660_FUN_ram_40004660.c>`_
+* `0x4000479e FUN_ram_4000479e <processors/support/4000/4000479e_FUN_ram_4000479e.c>`_
+* `0x400047a4 FUN_ram_400047a4 <processors/support/4000/400047a4_FUN_ram_400047a4.c>`_
+* `0x4000487e FUN_ram_4000487e <processors/support/4000/4000487e_FUN_ram_4000487e.c>`_
+* `0x4000491c FUN_ram_4000491c <processors/support/4000/4000491c_FUN_ram_4000491c.c>`_
+* `0x40004920 FUN_ram_40004920 <processors/support/4000/40004920_FUN_ram_40004920.c>`_
+* `0x40004988 FUN_ram_40004988 <processors/support/4000/40004988_FUN_ram_40004988.c>`_
+* `0x40004a22 FUN_ram_40004a22 <processors/support/4000/40004a22_FUN_ram_40004a22.c>`_
+* `0x40004b14 FUN_ram_40004b14 <processors/support/4000/40004b14_FUN_ram_40004b14.c>`_
+* `0x40004d36 FUN_ram_40004d36 <processors/support/4000/40004d36_FUN_ram_40004d36.c>`_
+* `0x40004f0a FUN_ram_40004f0a <processors/support/4000/40004f0a_FUN_ram_40004f0a.c>`_
+* `0x40004f2c FUN_ram_40004f2c <processors/support/4000/40004f2c_FUN_ram_40004f2c.c>`_
+* `0x40004f4a FUN_ram_40004f4a <processors/support/4000/40004f4a_FUN_ram_40004f4a.c>`_
+* `0x40004f92 FUN_ram_40004f92 <processors/support/4000/40004f92_FUN_ram_40004f92.c>`_
+* `0x4000500c memcpy <processors/support/4000/4000500c_memcpy.c>`_
+* `0x400050f8 FUN_ram_400050f8 <processors/support/4000/400050f8_FUN_ram_400050f8.c>`_
+* `0x4000513e FUN_ram_4000513e <processors/support/4000/4000513e_FUN_ram_4000513e.c>`_
+* `0x4000559c FUN_ram_4000559c <processors/support/4000/4000559c_FUN_ram_4000559c.c>`_
+* `0x400055d4 FUN_ram_400055d4 <processors/support/4000/400055d4_FUN_ram_400055d4.c>`_
+* `0x40005648 FUN_ram_40005648 <processors/support/4000/40005648_FUN_ram_40005648.c>`_
+* `0x40005754 FUN_ram_40005754 <processors/support/4000/40005754_FUN_ram_40005754.c>`_
+* `0x40005b98 FUN_ram_40005b98 <processors/support/4000/40005b98_FUN_ram_40005b98.c>`_
+* `0x40005b9c FUN_ram_40005b9c <processors/support/4000/40005b9c_FUN_ram_40005b9c.c>`_
+* `0x40005d78 FUN_ram_40005d78 <processors/support/4000/40005d78_FUN_ram_40005d78.c>`_
+* `0x40005da0 FUN_ram_40005da0 <processors/support/4000/40005da0_FUN_ram_40005da0.c>`_
+* `0x40005e14 FUN_ram_40005e14 <processors/support/4000/40005e14_FUN_ram_40005e14.c>`_
+* `0x40005ef4 FUN_ram_40005ef4 <processors/support/4000/40005ef4_FUN_ram_40005ef4.c>`_
+* `0x40005efc FUN_ram_40005efc <processors/support/4000/40005efc_FUN_ram_40005efc.c>`_
+* `0x40005f7a FUN_ram_40005f7a <processors/support/4000/40005f7a_FUN_ram_40005f7a.c>`_
+* `0x40005ffe FUN_ram_40005ffe <processors/support/4000/40005ffe_FUN_ram_40005ffe.c>`_
+* `0x40006092 FUN_ram_40006092 <processors/support/4000/40006092_FUN_ram_40006092.c>`_
+* `0x400061cc FUN_ram_400061cc <processors/support/4000/400061cc_FUN_ram_400061cc.c>`_
+* `0x400061ee FUN_ram_400061ee <processors/support/4000/400061ee_FUN_ram_400061ee.c>`_
+* `0x40006382 FUN_ram_40006382 <processors/support/4000/40006382_FUN_ram_40006382.c>`_
+* `0x4000638c FUN_ram_4000638c <processors/support/4000/4000638c_FUN_ram_4000638c.c>`_
+* `0x40006430 FUN_ram_40006430 <processors/support/4000/40006430_FUN_ram_40006430.c>`_
+* `0x4000648c FUN_ram_4000648c <processors/support/4000/4000648c_FUN_ram_4000648c.c>`_
+* `0x400064e4 FUN_ram_400064e4 <processors/support/4000/400064e4_FUN_ram_400064e4.c>`_
+* `0x400064f2 FUN_ram_400064f2 <processors/support/4000/400064f2_FUN_ram_400064f2.c>`_
+* `0x40006550 FUN_ram_40006550 <processors/support/4000/40006550_FUN_ram_40006550.c>`_
+* `0x4000657e FUN_ram_4000657e <processors/support/4000/4000657e_FUN_ram_4000657e.c>`_
+* `0x40006618 FUN_ram_40006618 <processors/support/4000/40006618_FUN_ram_40006618.c>`_
+* `0x4000666c FUN_ram_4000666c <processors/support/4000/4000666c_FUN_ram_4000666c.c>`_
+* `0x400066a2 FUN_ram_400066a2 <processors/support/4000/400066a2_FUN_ram_400066a2.c>`_
+* `0x4000677c FUN_ram_4000677c <processors/support/4000/4000677c_FUN_ram_4000677c.c>`_
+* `0x400067c6 FUN_ram_400067c6 <processors/support/4000/400067c6_FUN_ram_400067c6.c>`_
+* `0x40006b14 FUN_ram_40006b14 <processors/support/4000/40006b14_FUN_ram_40006b14.c>`_
+* `0x40006b30 FUN_ram_40006b30 <processors/support/4000/40006b30_FUN_ram_40006b30.c>`_
+* `0x40006b36 FUN_ram_40006b36 <processors/support/4000/40006b36_FUN_ram_40006b36.c>`_
+* `0x40007450 FUN_ram_40007450 <processors/support/4000/40007450_FUN_ram_40007450.c>`_
+* `0x400075de FUN_ram_400075de <processors/support/4000/400075de_FUN_ram_400075de.c>`_
+* `0x4000771a FUN_ram_4000771a <processors/support/4000/4000771a_FUN_ram_4000771a.c>`_
+* `0x40007738 nc_amp_drive_set_crossfade <processors/amp_drive/40007738_nc_amp_drive_set_crossfade.c>`_
+* `0x40007780 FUN_ram_40007780 <processors/support/4000/40007780_FUN_ram_40007780.c>`_
+* `0x400077a2 FUN_ram_400077a2 <processors/support/4000/400077a2_FUN_ram_400077a2.c>`_
+* `0x40007876 FUN_ram_40007876 <processors/support/4000/40007876_FUN_ram_40007876.c>`_
+* `0x40007990 FUN_ram_40007990 <processors/support/4000/40007990_FUN_ram_40007990.c>`_
+* `0x400079d0 FUN_ram_400079d0 <processors/support/4000/400079d0_FUN_ram_400079d0.c>`_
+* `0x40007a82 FUN_ram_40007a82 <processors/support/4000/40007a82_FUN_ram_40007a82.c>`_
+* `0x40007b94 FUN_ram_40007b94 <processors/support/4000/40007b94_FUN_ram_40007b94.c>`_
+* `0x40007bb6 FUN_ram_40007bb6 <processors/support/4000/40007bb6_FUN_ram_40007bb6.c>`_
+* `0x40008376 nc_amp_drive_invalidate_parameter_cache <processors/amp_drive/40008376_nc_amp_drive_invalidate_parameter_cache.c>`_
+* `0x400083aa FUN_ram_400083aa <processors/support/4000/400083aa_FUN_ram_400083aa.c>`_
+* `0x4000848c nc_fx2_load_drive_slot <processors/fx2_control/4000848c_nc_fx2_load_drive_slot.c>`_
+* `0x400084dc FUN_ram_400084dc <processors/support/4000/400084dc_FUN_ram_400084dc.c>`_
+* `0x4000854c nc_fx2_set_enabled <processors/fx2_control/4000854c_nc_fx2_set_enabled.c>`_
+* `0x400086c0 FUN_ram_400086c0 <processors/support/4000/400086c0_FUN_ram_400086c0.c>`_
+* `0x400086ec FUN_ram_400086ec <processors/support/4000/400086ec_FUN_ram_400086ec.c>`_
+* `0x40008c5a FUN_ram_40008c5a <processors/support/4000/40008c5a_FUN_ram_40008c5a.c>`_
+* `0x40008cf8 FUN_ram_40008cf8 <processors/support/4000/40008cf8_FUN_ram_40008cf8.c>`_
+* `0x400093da FUN_ram_400093da <processors/support/4000/400093da_FUN_ram_400093da.c>`_
+* `0x400097e2 nc_amp_drive_schedule_crossfade <processors/amp_drive/400097e2_nc_amp_drive_schedule_crossfade.c>`_
+* `0x4000bb70 FUN_ram_4000bb70 <processors/support/4000/4000bb70_FUN_ram_4000bb70.c>`_
+* `0x4000bb90 FUN_ram_4000bb90 <processors/support/4000/4000bb90_FUN_ram_4000bb90.c>`_
+* `0x4000bf64 FUN_ram_4000bf64 <processors/support/4000/4000bf64_FUN_ram_4000bf64.c>`_
+* `0x4000c132 nc_model_switch_worker <processors/model_switch/4000c132_nc_model_switch_worker.c>`_
+* `0x40025824 nc_delay_parameter_count <processors/support/4002/40025824_nc_delay_parameter_count.c>`_
+* `0x40025be8 FUN_ram_40025be8 <processors/support/4002/40025be8_FUN_ram_40025be8.c>`_
+* `0x40025c64 FUN_ram_40025c64 <processors/support/4002/40025c64_FUN_ram_40025c64.c>`_
+* `0x40025c82 FUN_ram_40025c82 <processors/support/4002/40025c82_FUN_ram_40025c82.c>`_
+* `0x40025ca4 nc_effect_normalize_subtype <processors/metadata/40025ca4_nc_effect_normalize_subtype.c>`_
+* `0x40025d1e nc_effect_picker_count <processors/metadata/40025d1e_nc_effect_picker_count.c>`_
+* `0x40025d2c nc_effect_picker_to_subtype <processors/metadata/40025d2c_nc_effect_picker_to_subtype.c>`_
+* `0x40025d4e nc_effect_subtype_to_picker <processors/metadata/40025d4e_nc_effect_subtype_to_picker.c>`_
+* `0x40025d92 nc_effect_name <processors/metadata/40025d92_nc_effect_name.c>`_
+* `0x4002607e nc_effect_parameter_name <processors/metadata/4002607e_nc_effect_parameter_name.c>`_
+* `0x4002d116 FUN_ram_4002d116 <processors/support/4002/4002d116_FUN_ram_4002d116.c>`_
+* `0x4002d154 FUN_ram_4002d154 <processors/support/4002/4002d154_FUN_ram_4002d154.c>`_
+* `0x4005bfd2 FUN_ram_4005bfd2 <processors/support/4005/4005bfd2_FUN_ram_4005bfd2.c>`_
+* `0x4005c2aa FUN_ram_4005c2aa <processors/support/4005/4005c2aa_FUN_ram_4005c2aa.c>`_
+* `0x4005c3cc FUN_ram_4005c3cc <processors/support/4005/4005c3cc_FUN_ram_4005c3cc.c>`_
+* `0x4005c4ae FUN_ram_4005c4ae <processors/support/4005/4005c4ae_FUN_ram_4005c4ae.c>`_
+* `0x4005c5ce nc_three_band_eq_process_sample <processors/model_filters/4005c5ce_nc_three_band_eq_process_sample.c>`_
+* `0x4005c670 nc_reverb_cloud_helper_4005c670 <processors/reverb/4005c670_nc_reverb_cloud_helper_4005c670.c>`_
+* `0x4005d850 nc_reverb_cloud_init <processors/reverb/4005d850_nc_reverb_cloud_init.c>`_
+* `0x4005dd98 nc_reverb_cloud_set_sample_rate <processors/reverb/4005dd98_nc_reverb_cloud_set_sample_rate.c>`_
+* `0x4005ddbc nc_reverb_cloud_prepare <processors/reverb/4005ddbc_nc_reverb_cloud_prepare.c>`_
+* `0x4005ddc4 nc_reverb_cloud_configure <processors/reverb/4005ddc4_nc_reverb_cloud_configure.c>`_
+* `0x4005dde4 nc_reverb_cloud_reset <processors/reverb/4005dde4_nc_reverb_cloud_reset.c>`_
+* `0x4005e044 nc_dsp_process_chain <processors/chain/4005e044_nc_dsp_process_chain.c>`_
+* `0x4005f2c4 cab_ir_process_with_cut_filters <processors/cab/4005f2c4_cab_ir_process_with_cut_filters.c>`_
+* `0x4005fa8e nc_dsp_inactive_bank <processors/chain/4005fa8e_nc_dsp_inactive_bank.c>`_
+* `0x4005faaa nc_dsp_active_bank <processors/chain/4005faaa_nc_dsp_active_bank.c>`_
+* `0x4005fac2 nc_dsp_publish_bank <processors/chain/4005fac2_nc_dsp_publish_bank.c>`_
+* `0x4005feca nc_dsp_node_configure <processors/chain/4005feca_nc_dsp_node_configure.c>`_
+* `0x4005ff48 compressor_detector_reset <processors/dynamics/4005ff48_compressor_detector_reset.c>`_
+* `0x4005ff6c compressor_configure <processors/dynamics/4005ff6c_compressor_configure.c>`_
+* `0x4006010e FUN_ram_4006010e <processors/support/4006/4006010e_FUN_ram_4006010e.c>`_
+* `0x40060284 compressor_process_linked_stereo <processors/dynamics/40060284_compressor_process_linked_stereo.c>`_
+* `0x4006066c nc_delay_bypass_copy <processors/delay/4006066c_nc_delay_bypass_copy.c>`_
+* `0x4006070c nc_delay_configure_smear_filters <processors/delay/4006070c_nc_delay_configure_smear_filters.c>`_
+* `0x40060b4c nc_delay_ice_process <processors/delay/40060b4c_nc_delay_ice_process.c>`_
+* `0x40061c98 nc_delay_process_variants <processors/delay/40061c98_nc_delay_process_variants.c>`_
+* `0x40065832 FUN_ram_40065832 <processors/support/4006/40065832_FUN_ram_40065832.c>`_
+* `0x400658b8 FUN_ram_400658b8 <processors/support/4006/400658b8_FUN_ram_400658b8.c>`_
+* `0x40065bd4 nc_delay_default_parameters <processors/delay/40065bd4_nc_delay_default_parameters.c>`_
+* `0x40065c3e nc_delay_reset <processors/delay/40065c3e_nc_delay_reset.c>`_
+* `0x40065e48 nc_delay_init <processors/delay/40065e48_nc_delay_init.c>`_
+* `0x40066cee nc_delay_dispatch <processors/delay/40066cee_nc_delay_dispatch.c>`_
+* `0x40066e08 eq_state_init <processors/eq/40066e08_eq_state_init.c>`_
+* `0x40066e8e eq_subtype_default_parameters <processors/eq/40066e8e_eq_subtype_default_parameters.c>`_
+* `0x40066f42 eq_default_parameters <processors/eq/40066f42_eq_default_parameters.c>`_
+* `0x40066fb4 eq_multiband_process <processors/eq/40066fb4_eq_multiband_process.c>`_
+* `0x400682f4 expression_volume_pan_width_wah_process <processors/expression/400682f4_expression_volume_pan_width_wah_process.c>`_
+* `0x40068c0c expression_state_init <processors/expression/40068c0c_expression_state_init.c>`_
+* `0x40068c92 expression_state_reset <processors/expression/40068c92_expression_state_reset.c>`_
+* `0x40068cce expression_subtype_normalize <processors/expression/40068cce_expression_subtype_normalize.c>`_
+* `0x40068cda expression_subtype_default_parameters <processors/expression/40068cda_expression_subtype_default_parameters.c>`_
+* `0x40068d96 nc_dsp_kind_10_process <processors/support/4006/40068d96_nc_dsp_kind_10_process.c>`_
+* `0x40068da0 dynamics_detectors_reset <processors/dynamics/40068da0_dynamics_detectors_reset.c>`_
+* `0x40069066 dynamics_state_init <processors/dynamics/40069066_dynamics_state_init.c>`_
+* `0x40069592 dynamics_gate_default_parameters <processors/dynamics/40069592_dynamics_gate_default_parameters.c>`_
+* `0x40069600 dynamics_subtype_default_parameters <processors/dynamics/40069600_dynamics_subtype_default_parameters.c>`_
+* `0x40069738 dynamics_gate_autogate_ngcomp_compressor_process <processors/dynamics/40069738_dynamics_gate_autogate_ngcomp_compressor_process.c>`_
+* `0x4006b1c4 nc_fx2_pitch_wah_process <processors/fx2/4006b1c4_nc_fx2_pitch_wah_process.c>`_
+* `0x4006c4de nc_fx2_init <processors/fx2/4006c4de_nc_fx2_init.c>`_
+* `0x4006c7ca nc_fx2_reset <processors/fx2/4006c7ca_nc_fx2_reset.c>`_
+* `0x4006c8d8 nc_fx2_motion_wah_init <processors/fx2/4006c8d8_nc_fx2_motion_wah_init.c>`_
+* `0x4006c932 nc_fx2_defaults <processors/fx2/4006c932_nc_fx2_defaults.c>`_
+* `0x4006ca50 nc_fx2_process <processors/fx2_process/4006ca50_nc_fx2_process.c>`_
+* `0x4006cb08 FUN_ram_4006cb08 <processors/support/4006/4006cb08_FUN_ram_4006cb08.c>`_
+* `0x4006d0b4 nc_pulse_vibe_process <processors/modulation/4006d0b4_nc_pulse_vibe_process.c>`_
+* `0x4006dc08 nc_mod_process_general <processors/modulation/4006dc08_nc_mod_process_general.c>`_
+* `0x40070e4c FUN_ram_40070e4c <processors/support/4007/40070e4c_FUN_ram_40070e4c.c>`_
+* `0x40070eb8 FUN_ram_40070eb8 <processors/support/4007/40070eb8_FUN_ram_40070eb8.c>`_
+* `0x40071208 nc_mod_init <processors/modulation/40071208_nc_mod_init.c>`_
+* `0x40071aa4 nc_mod_default_parameters <processors/modulation/40071aa4_nc_mod_default_parameters.c>`_
+* `0x40071ca6 nc_chorus_default_parameters <processors/modulation/40071ca6_nc_chorus_default_parameters.c>`_
+* `0x40071cfe nc_mod_process_dispatch <processors/modulation/40071cfe_nc_mod_process_dispatch.c>`_
+* `0x40071d38 nc_motion_wah_init <processors/wah/40071d38_nc_motion_wah_init.c>`_
+* `0x40071d8a FUN_ram_40071d8a <processors/support/4007/40071d8a_FUN_ram_40071d8a.c>`_
+* `0x40071e10 FUN_ram_40071e10 <processors/support/4007/40071e10_FUN_ram_40071e10.c>`_
+* `0x40071e7c nc_motion_wah_process <processors/wah/40071e7c_nc_motion_wah_process.c>`_
+* `0x40072570 nc_chorus2_jet_flanger_init <processors/modulation/40072570_nc_chorus2_jet_flanger_init.c>`_
+* `0x400725f4 FUN_ram_400725f4 <processors/support/4007/400725f4_FUN_ram_400725f4.c>`_
+* `0x40072666 FUN_ram_40072666 <processors/support/4007/40072666_FUN_ram_40072666.c>`_
+* `0x40072754 nc_chorus2_jet_flanger_process <processors/modulation/40072754_nc_chorus2_jet_flanger_process.c>`_
+* `0x40073170 nc_reverb_apply_parameters <processors/reverb/40073170_nc_reverb_apply_parameters.c>`_
+* `0x40073b48 nc_reverb_init <processors/reverb/40073b48_nc_reverb_init.c>`_
+* `0x40073bb0 nc_reverb_select_subtype <processors/reverb/40073bb0_nc_reverb_select_subtype.c>`_
+* `0x40073d9e nc_reverb_reset <processors/reverb/40073d9e_nc_reverb_reset.c>`_
+* `0x40073e58 nc_reverb_default_parameters <processors/reverb/40073e58_nc_reverb_default_parameters.c>`_
+* `0x4007404e nc_amp_drive_state_init <processors/amp_drive/4007404e_nc_amp_drive_state_init.c>`_
+* `0x40074098 FUN_ram_40074098 <processors/support/4007/40074098_FUN_ram_40074098.c>`_
+* `0x40074160 nc_drive_parameter_defaults <processors/amp_drive/40074160_nc_drive_parameter_defaults.c>`_
+* `0x400741b8 nc_amp_drive_process <processors/amp_drive/400741b8_nc_amp_drive_process.c>`_
+* `0x40074a46 FUN_ram_40074a46 <processors/support/4007/40074a46_FUN_ram_40074a46.c>`_
+* `0x40074a6e FUN_ram_40074a6e <processors/support/4007/40074a6e_FUN_ram_40074a6e.c>`_
+* `0x40074cf0 FUN_ram_40074cf0 <processors/support/4007/40074cf0_FUN_ram_40074cf0.c>`_
+* `0x40074d8c nc_velvet_vibrato_init <processors/modulation/40074d8c_nc_velvet_vibrato_init.c>`_
+* `0x40074de6 FUN_ram_40074de6 <processors/support/4007/40074de6_FUN_ram_40074de6.c>`_
+* `0x40074e5e nc_velvet_vibrato_process <processors/modulation/40074e5e_nc_velvet_vibrato_process.c>`_
+* `0x400753d0 cab_convolver_accumulate_seven_partitions <processors/cab/400753d0_cab_convolver_accumulate_seven_partitions.c>`_
+* `0x40075638 FUN_ram_40075638 <processors/support/4007/40075638_FUN_ram_40075638.c>`_
+* `0x40075ec4 cab_convolver_fft_backend_transform <processors/cab/40075ec4_cab_convolver_fft_backend_transform.c>`_
+* `0x40076694 cab_convolver_set_impulse_response <processors/cab/40076694_cab_convolver_set_impulse_response.c>`_
+* `0x40076988 cab_convolver_service_pending_fft_tail <processors/cab/40076988_cab_convolver_service_pending_fft_tail.c>`_
+* `0x40076bf0 cab_convolver_process <processors/cab/40076bf0_cab_convolver_process.c>`_
+* `0x40077364 nc_pitch_find_splice <processors/pitch/40077364_nc_pitch_find_splice.c>`_
+* `0x40077b1c nc_pitch_estimate_period <processors/pitch/40077b1c_nc_pitch_estimate_period.c>`_
+* `0x4007876a nc_pitch_init <processors/pitch/4007876a_nc_pitch_init.c>`_
+* `0x40078aba nc_pitch_set_shift <processors/pitch/40078aba_nc_pitch_set_shift.c>`_
+* `0x40078d94 FUN_ram_40078d94 <processors/support/4007/40078d94_FUN_ram_40078d94.c>`_
+* `0x40079596 nc_pitch_reset <processors/pitch/40079596_nc_pitch_reset.c>`_
+* `0x40079bdc nc_pitch_process <processors/pitch/40079bdc_nc_pitch_process.c>`_
+* `0x4007a4b4 nc_reverb_concert_helper_4007a4b4 <processors/reverb/4007a4b4_nc_reverb_concert_helper_4007a4b4.c>`_
+* `0x4007b514 nc_reverb_concert_init <processors/reverb/4007b514_nc_reverb_concert_init.c>`_
+* `0x4007b5b8 nc_reverb_concert_configure <processors/reverb/4007b5b8_nc_reverb_concert_configure.c>`_
+* `0x4007b5ec nc_reverb_concert_reset <processors/reverb/4007b5ec_nc_reverb_concert_reset.c>`_
+* `0x4007b7b0 nc_reverb_concert_process <processors/reverb/4007b7b0_nc_reverb_concert_process.c>`_
+* `0x4007c9ec nc_reverb_hall_helper_4007c9ec <processors/reverb/4007c9ec_nc_reverb_hall_helper_4007c9ec.c>`_
+* `0x4007d834 nc_reverb_hall_init <processors/reverb/4007d834_nc_reverb_hall_init.c>`_
+* `0x4007d8f0 nc_reverb_hall_configure <processors/reverb/4007d8f0_nc_reverb_hall_configure.c>`_
+* `0x4007d944 nc_reverb_hall_reset <processors/reverb/4007d944_nc_reverb_hall_reset.c>`_
+* `0x4007db8c nc_reverb_hall_process <processors/reverb/4007db8c_nc_reverb_hall_process.c>`_
+* `0x4007eae0 nc_reverb_plate_helper_4007eae0 <processors/reverb/4007eae0_nc_reverb_plate_helper_4007eae0.c>`_
+* `0x4007fba4 nc_reverb_plate_init <processors/reverb/4007fba4_nc_reverb_plate_init.c>`_
+* `0x4007fc48 nc_reverb_plate_configure <processors/reverb/4007fc48_nc_reverb_plate_configure.c>`_
+* `0x4007fc84 nc_reverb_plate_reset <processors/reverb/4007fc84_nc_reverb_plate_reset.c>`_
+* `0x4007fec8 nc_reverb_plate_process <processors/reverb/4007fec8_nc_reverb_plate_process.c>`_
+* `0x4008076c nc_reverb_room_helper_4008076c <processors/reverb/4008076c_nc_reverb_room_helper_4008076c.c>`_
+* `0x40080f38 nc_reverb_room_helper_40080f38 <processors/reverb/40080f38_nc_reverb_room_helper_40080f38.c>`_
+* `0x40082250 nc_reverb_room_init <processors/reverb/40082250_nc_reverb_room_init.c>`_
+* `0x40082360 nc_reverb_room_reset <processors/reverb/40082360_nc_reverb_room_reset.c>`_
+* `0x40082726 nc_reverb_room_set_parameter_1 <processors/reverb/40082726_nc_reverb_room_set_parameter_1.c>`_
+* `0x40082752 nc_reverb_room_set_parameter_3 <processors/reverb/40082752_nc_reverb_room_set_parameter_3.c>`_
+* `0x400827ae nc_reverb_room_set_parameter_2 <processors/reverb/400827ae_nc_reverb_room_set_parameter_2.c>`_
+* `0x400827d8 nc_reverb_room_set_parameter_4 <processors/reverb/400827d8_nc_reverb_room_set_parameter_4.c>`_
+* `0x4008281c nc_reverb_shimmer_helper_4008281c <processors/reverb/4008281c_nc_reverb_shimmer_helper_4008281c.c>`_
+* `0x40083e34 nc_reverb_shimmer_init <processors/reverb/40083e34_nc_reverb_shimmer_init.c>`_
+* `0x40083f32 nc_reverb_shimmer_configure <processors/reverb/40083f32_nc_reverb_shimmer_configure.c>`_
+* `0x40083f80 nc_reverb_shimmer_reset <processors/reverb/40083f80_nc_reverb_shimmer_reset.c>`_
+* `0x40084290 FUN_ram_40084290 <processors/support/4008/40084290_FUN_ram_40084290.c>`_
+* `0x400851a8 FUN_ram_400851a8 <processors/support/4008/400851a8_FUN_ram_400851a8.c>`_
+* `0x4008526c FUN_ram_4008526c <processors/support/4008/4008526c_FUN_ram_4008526c.c>`_
+* `0x400853f4 FUN_ram_400853f4 <processors/support/4008/400853f4_FUN_ram_400853f4.c>`_
+* `0x4008556e FUN_ram_4008556e <processors/support/4008/4008556e_FUN_ram_4008556e.c>`_
+* `0x4008561e FUN_ram_4008561e <processors/support/4008/4008561e_FUN_ram_4008561e.c>`_
+* `0x40085624 FUN_ram_40085624 <processors/support/4008/40085624_FUN_ram_40085624.c>`_
+* `0x4008566a FUN_ram_4008566a <processors/support/4008/4008566a_FUN_ram_4008566a.c>`_
+* `0x40085a26 FUN_ram_40085a26 <processors/support/4008/40085a26_FUN_ram_40085a26.c>`_
+* `0x40085ab2 FUN_ram_40085ab2 <processors/support/4008/40085ab2_FUN_ram_40085ab2.c>`_
+* `0x40085be0 FUN_ram_40085be0 <processors/support/4008/40085be0_FUN_ram_40085be0.c>`_
+* `0x400860c4 FUN_ram_400860c4 <processors/support/4008/400860c4_FUN_ram_400860c4.c>`_
+* `0x400865d8 FUN_ram_400865d8 <processors/support/4008/400865d8_FUN_ram_400865d8.c>`_
+* `0x4008681a FUN_ram_4008681a <processors/support/4008/4008681a_FUN_ram_4008681a.c>`_
+* `0x40086a70 FUN_ram_40086a70 <processors/support/4008/40086a70_FUN_ram_40086a70.c>`_
+* `0x40086c10 FUN_ram_40086c10 <processors/support/4008/40086c10_FUN_ram_40086c10.c>`_
+* `0x40086fe8 FUN_ram_40086fe8 <processors/support/4008/40086fe8_FUN_ram_40086fe8.c>`_
+* `0x40087444 FUN_ram_40087444 <processors/support/4008/40087444_FUN_ram_40087444.c>`_
+* `0x40087bc0 FUN_ram_40087bc0 <processors/support/4008/40087bc0_FUN_ram_40087bc0.c>`_
+* `0x40088068 FUN_ram_40088068 <processors/support/4008/40088068_FUN_ram_40088068.c>`_
+* `0x40088578 FUN_ram_40088578 <processors/support/4008/40088578_FUN_ram_40088578.c>`_
+* `0x40088b3c nc_model_context_init <processors/model_runtime/40088b3c_nc_model_context_init.c>`_
+* `0x40088c50 nc_model_decode_payload <processors/model_runtime/40088c50_nc_model_decode_payload.c>`_
+* `0x4008b5da FUN_ram_4008b5da <processors/support/4008/4008b5da_FUN_ram_4008b5da.c>`_
+* `0x4008b61c FUN_ram_4008b61c <processors/support/4008/4008b61c_FUN_ram_4008b61c.c>`_
+* `0x4008b62a nc_model_is_ready <processors/model_runtime/4008b62a_nc_model_is_ready.c>`_
+* `0x4008b9c8 FUN_ram_4008b9c8 <processors/support/4008/4008b9c8_FUN_ram_4008b9c8.c>`_
+* `0x4008d424 FUN_ram_4008d424 <processors/support/4008/4008d424_FUN_ram_4008d424.c>`_
+* `0x4008d7c4 FUN_ram_4008d7c4 <processors/support/4008/4008d7c4_FUN_ram_4008d7c4.c>`_
+* `0x4008dbe0 FUN_ram_4008dbe0 <processors/support/4008/4008dbe0_FUN_ram_4008dbe0.c>`_
+* `0x40091e9c nc_model_load_slot_payload <processors/model_storage/40091e9c_nc_model_load_slot_payload.c>`_
+* `0x400925b4 FUN_ram_400925b4 <processors/support/4009/400925b4_FUN_ram_400925b4.c>`_
+* `0x40094cd0 FUN_ram_40094cd0 <processors/support/4009/40094cd0_FUN_ram_40094cd0.c>`_
+* `0x40094cda FUN_ram_40094cda <processors/support/4009/40094cda_FUN_ram_40094cda.c>`_
+* `0x40094dda FUN_ram_40094dda <processors/support/4009/40094dda_FUN_ram_40094dda.c>`_
+* `0x40094f12 nc_reverb_spring_set_decay <processors/reverb/40094f12_nc_reverb_spring_set_decay.c>`_
+* `0x40095044 nc_reverb_spring_set_crossover <processors/reverb/40095044_nc_reverb_spring_set_crossover.c>`_
+* `0x4009531a FUN_ram_4009531a <processors/support/4009/4009531a_FUN_ram_4009531a.c>`_
+* `0x40095452 nc_reverb_spring_set_tone <processors/reverb/40095452_nc_reverb_spring_set_tone.c>`_
+* `0x40095476 nc_reverb_spring_init <processors/reverb/40095476_nc_reverb_spring_init.c>`_
+* `0x4009547e nc_reverb_spring_reset <processors/reverb/4009547e_nc_reverb_spring_reset.c>`_
+* `0x400954f8 FUN_ram_400954f8 <processors/support/4009/400954f8_FUN_ram_400954f8.c>`_
+* `0x4009557c FUN_ram_4009557c <processors/support/4009/4009557c_FUN_ram_4009557c.c>`_
+* `0x400955dc FUN_ram_400955dc <processors/support/4009/400955dc_FUN_ram_400955dc.c>`_
+* `0x4009582a FUN_ram_4009582a <processors/support/4009/4009582a_FUN_ram_4009582a.c>`_
+* `0x400a1540 nc_reverb_spring_copy_samples <processors/reverb/400a1540_nc_reverb_spring_copy_samples.c>`_
+* `0x400a15ac nc_reverb_spring_exchange_samples <processors/reverb/400a15ac_nc_reverb_spring_exchange_samples.c>`_
+* `0x400a1628 nc_reverb_spring_ring_read <processors/reverb/400a1628_nc_reverb_spring_ring_read.c>`_
+* `0x400a1688 nc_reverb_spring_ring_write <processors/reverb/400a1688_nc_reverb_spring_ring_write.c>`_
+* `0x400a1704 nc_reverb_spring_ring_exchange <processors/reverb/400a1704_nc_reverb_spring_ring_exchange.c>`_
+* `0x400a1790 nc_reverb_spring_biquad_process <processors/reverb/400a1790_nc_reverb_spring_biquad_process.c>`_
+* `0x400a17d8 nc_reverb_spring_helper_400a17d8 <processors/reverb/400a17d8_nc_reverb_spring_helper_400a17d8.c>`_
+* `0x400a1868 nc_reverb_spring_helper_400a1868 <processors/reverb/400a1868_nc_reverb_spring_helper_400a1868.c>`_
+* `0x400a19cc nc_reverb_spring_helper_400a19cc <processors/reverb/400a19cc_nc_reverb_spring_helper_400a19cc.c>`_
+* `0x400a1a80 nc_reverb_spring_allpass_exchange <processors/reverb/400a1a80_nc_reverb_spring_allpass_exchange.c>`_
+* `0x400a1b1c nc_reverb_spring_allpass_ring_process <processors/reverb/400a1b1c_nc_reverb_spring_allpass_ring_process.c>`_
+* `0x400a1ba4 nc_reverb_spring_allpass_cascade <processors/reverb/400a1ba4_nc_reverb_spring_allpass_cascade.c>`_
+* `0x400a1dac nc_reverb_spring_helper_400a1dac <processors/reverb/400a1dac_nc_reverb_spring_helper_400a1dac.c>`_
+* `0x400a1e4c nc_reverb_spring_helper_400a1e4c <processors/reverb/400a1e4c_nc_reverb_spring_helper_400a1e4c.c>`_
+* `0x400a2370 nc_reverb_spring_fir_interpolate <processors/reverb/400a2370_nc_reverb_spring_fir_interpolate.c>`_
+* `0x400a2630 nc_reverb_spring_helper_400a2630 <processors/reverb/400a2630_nc_reverb_spring_helper_400a2630.c>`_
+* `0x400a26b8 nc_reverb_spring_helper_400a26b8 <processors/reverb/400a26b8_nc_reverb_spring_helper_400a26b8.c>`_
+* `0x400a29c8 nc_reverb_spring_copied_kernel <processors/reverb/400a29c8_nc_reverb_spring_copied_kernel.c>`_

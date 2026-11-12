@@ -1,0 +1,84 @@
+NanoCore vendor instruction identification — 2026-11-12
+
+Result
+The SDK's archived Xuantie toolchain resolves all 245 previously unknown LLVM
+instruction sites in the examined range [0x40000000, 0x40091980). Assembling
+those disassembled instructions reproduces all 980 original bytes exactly.
+This identifies a combination of legacy RISC-V packed-DSP P instructions and
+T-Head extensions. It supports the SDK's RV32IMAFDC + P/Zpsfoperand/XThead
+configuration and ILP32D ABI; it does not establish the exact chip SKU.
+
+Exact toolchain
+SDK commit: 77fbe30dd2de366fae702ece84e1694153d94591
+Archive: tools/toolchain/Xuantie-900-gcc-elf-newlib-x86_64-V2.6.1-20220906.tar.gz
+SHA256: cdff169b09e9424f127a71300ce2e62ab059291a1b3fbc56c115dfb91c29b991
+The download matches the SDK's Git LFS object identity and length (165260682).
+Compiler: Xuantie V2.6.1 B-20220906, GCC 10.2.0; GNU Binutils 2.35.
+The Linux x86-64 tools ran in the existing Debian amd64 Docker image with no
+network and read-only firmware input. Only assembler result files were writable.
+No firmware was executed and no pedal commands were sent.
+
+Examples confirmed by vendor disassembly and assembly
+  0x40013048 c0c71677  add64 a2,a4,a2
+    Adds the 64-bit values in a4:a5 and a2:a3, returning a2:a3. This was the
+    missing overflow-aware bounds check in dfu_find_updater_image.
+  0x4008a9ae ac0a07f7  insb a5,s4,0
+    Inserts the low byte of s4 into byte zero of a5, preserving other bytes.
+    Adjacent INSB instructions assemble byte fields for the AMP reader.
+  0x40000ed8 c005168b  fmv.x.hw a3,fa0
+    Copies the upper 32 bits of double-precision register fa0 into a3.
+  0x40000fce a006950b  fmv.hw.x fa0,a3
+    Replaces fa0's upper 32 bits with a3, preserving its lower bits.
+
+Among the 245 sites: 93 ADD64, 70 INSB, 18 WEXTI, 11 MULR64, 8 SUB64,
+5 UMAR64, 2 SMAR64, plus packed halfword operations, signed min/max, byte swap,
+FP high-half moves, cache operations and interrupt push/pop. The tracked receipt
+contains exact addresses, words, mnemonics, operands, counts and input hashes.
+These are bounded linear-disassembly sites, not a claim of runtime execution or
+complete executable coverage. Vendor names differ from newer th.* spellings.
+
+Correct specification generation
+The current RISC-V P draft is substantially different. Semantics here use
+0.9.11-draft-20211209 from repository commit
+c3409c8edb7df262cb3db0ff323077120e5f7f04, which predates the SDK toolchain build.
+The reference vendor opcode table is pinned at
+a6257b56e4e40ce23eb2ddfdb861e27552b575bc (vendor 2.8 branch); it is a supporting
+reference, not claimed to be the precise source revision of the archived 2.6.1
+binary. The actual 2.6.1 tools independently confirm the instruction encodings.
+
+Decompiler improvement
+Added 14 constructors to the prior 31-instruction model: ADD64/SUB64,
+MULR64/SMAR64/UMAR64, WEXTI, INSB, PKBB16/PKTB16, MINW/MAXW, SWAP8 and the two
+FP high-half moves. Tests cover register-pair carry/borrow, aliasing, signed and
+unsigned products, byte preservation and double-register preservation.
+All 3,780 emulation checks passed, including the prior 1,380 cases.
+
+The new REA export contains 2,645 functions. All 56 previously truncated
+functions remain present and no longer have bad-instruction truncation.
+881 functions retain other decompiler warnings; 22 retain opaque custom
+operations. Zero truncations does not establish original source recovery,
+correct types, resolved indirect calls or complete function discovery.
+The custom SLEIGH model remains a bounded subset, not a complete CPU emulator.
+Its compiled and source hashes are recorded separately because REA's analysis
+profile digest does not encode local processor-language modifications.
+
+Latest local output
+  analysis/source-firmware-1.10-legacy-p/firmware.c
+  analysis/source-firmware-1.10-legacy-p/functions/
+  analysis/source-firmware-1.10-legacy-p/index.json
+  analysis/rea-1.10-legacy-p/evidence.json
+The earlier source export remains intact for comparison. All previously named
+functions/data and the seven reviewed local-variable mappings are preserved.
+
+Reproduce
+See tools/firmware_source/README.txt. identify_instructions.py compares LLVM
+unknown sites to vendor objdump -D, verifies the exact bytes and records counts.
+The instruction model, test generator, REA driver and source exporter are in the
+same directory. Receipt: evidence/vendor-isa.json.
+
+Primary sources
+https://github.com/artinchip/luban-lite/tree/77fbe30dd2de366fae702ece84e1694153d94591/tools/toolchain
+https://github.com/T-head-Semi/binutils-gdb/blob/a6257b56e4e40ce23eb2ddfdb861e27552b575bc/include/opcode/riscv-opc.h
+https://github.com/riscv/riscv-p-spec/blob/c3409c8edb7df262cb3db0ff323077120e5f7f04/P-ext-proposal.adoc
+https://github.com/T-head-Semi/thead-extension-spec/blob/master/xtheadfmv/fmv_x_hw.adoc
+https://github.com/T-head-Semi/thead-extension-spec/blob/master/xtheadfmv/fmv_hw_x.adoc

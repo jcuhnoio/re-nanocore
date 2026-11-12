@@ -1,0 +1,144 @@
+{
+  "1.11": {
+    "package_sha256": "07cbb169bec3a792931c83bde6da2664f58ad5156d5e26fa4daacac373060195",
+    "tables": {
+      "spring": {
+        "address": "0x40096768",
+        "pointers": [
+          "0x40095d64",
+          "0x40095d6c",
+          "0x40095d84",
+          "0x40095af8",
+          "0x40095b14"
+        ],
+        "labels": [
+          "DECAY",
+          "PREDLY",
+          "XOVER",
+          "MOD",
+          "MIX"
+        ]
+      },
+      "duck": {
+        "address": "0x4009691c",
+        "pointers": [
+          "0x40095e28",
+          "0x40095dac",
+          "0x40095e30",
+          "0x40095b14"
+        ],
+        "labels": [
+          "TIME",
+          "FBK",
+          "FILTER",
+          "MIX"
+        ]
+      },
+      "cab": {
+        "address": "0x40096940",
+        "pointers": [
+          "0x40095e48",
+          "0x40095e50"
+        ],
+        "labels": [
+          "LOCUT",
+          "HICUT"
+        ]
+      }
+    },
+    "constants": {
+      "pitch_coarse_scale": {
+        "address": "0x400952cc",
+        "float32": 24.0
+      },
+      "pitch_coarse_offset": {
+        "address": "0x4009527c",
+        "float32": -12.0
+      },
+      "pitch_fine_scale": {
+        "address": "0x40094618",
+        "float32": 2.0
+      },
+      "pitch_fine_offset": {
+        "address": "0x40094600",
+        "float32": -1.0
+      }
+    }
+  },
+  "1.12": {
+    "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+    "tables": {
+      "spring": {
+        "address": "0x4009b324",
+        "pointers": [
+          "0x4009ae70",
+          "0x4009ae78",
+          "0x4009ae90",
+          "0x4009ae80",
+          "0x4009abd8"
+        ],
+        "labels": [
+          "DECAY",
+          "PREDLY",
+          "XOVER",
+          "TONE",
+          "MIX"
+        ]
+      },
+      "duck": {
+        "address": "0x4009bbe4",
+        "pointers": [
+          "0x4009af34",
+          "0x4009aeb8",
+          "0x4009af54",
+          "0x4009aebc",
+          "0x4009af5c",
+          "0x4009af60",
+          "0x4009af3c",
+          "0x4009abd8"
+        ],
+        "labels": [
+          "TIME",
+          "FBK",
+          "SENS",
+          "DEPTH",
+          "ATK",
+          "REL",
+          "FILTER",
+          "MIX"
+        ]
+      },
+      "cab": {
+        "address": "0x4009bc14",
+        "pointers": [
+          "0x4009af64",
+          "0x4009af6c",
+          "0x4009ae58"
+        ],
+        "labels": [
+          "LOCUT",
+          "HICUT",
+          "LEVEL"
+        ]
+      }
+    },
+    "constants": {
+      "pitch_coarse_scale": {
+        "address": "0x4009b138",
+        "float32": 48.0
+      },
+      "pitch_coarse_offset": {
+        "address": "0x4009a324",
+        "float32": -24.0
+      },
+      "pitch_fine_scale": {
+        "address": "0x40096740",
+        "float32": 2.0
+      },
+      "pitch_fine_offset": {
+        "address": "0x40096728",
+        "float32": -1.0
+      }
+    }
+  }
+}

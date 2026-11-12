@@ -1,0 +1,440 @@
+{
+  "firmware": "1.12",
+  "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "scope": "Dynamics, cabinet convolution, EQ and EXP utility DSP. Read-only static evidence.",
+  "functions": [
+    {
+      "address": "0x40069738",
+      "proposed_name": "dynamics_gate_autogate_ngcomp_compressor_process",
+      "module": "dsp/dynamics",
+      "basis": "Four-way subtype dispatcher implements gate, adaptive gate, gate plus compressor, and compressor audio loops.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40069738_FUN_ram_40069738.c",
+      "evidence_id": "ev_70d5f0b48fbf28ef55ca61f8296a4c3017193dbbc173fde87a6ffc51f4c3350c"
+    },
+    {
+      "address": "0x40069066",
+      "proposed_name": "dynamics_state_init",
+      "module": "dsp/dynamics",
+      "basis": "Clears 0x2148-byte state and sets sample rate and cached controls.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40069066_FUN_ram_40069066.c",
+      "evidence_id": "ev_751bfd0ab794e2f13481a014b85ce0c7e2ddd8e2fe5c95a50acf30a9d9655716"
+    },
+    {
+      "address": "0x40068da0",
+      "proposed_name": "dynamics_detectors_reset",
+      "module": "dsp/dynamics",
+      "basis": "Initializes adaptive gate window coefficients and resets gate/compressor detector histories.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40068da0_FUN_ram_40068da0.c",
+      "evidence_id": "ev_7747559710c0284ff26f94abb6f228a3fd97858aef769a90ce8fd01fb23ace83"
+    },
+    {
+      "address": "0x40069592",
+      "proposed_name": "dynamics_gate_default_parameters",
+      "module": "dsp/dynamics",
+      "basis": "Initializes two controls for basic gate.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40069592_FUN_ram_40069592.c",
+      "evidence_id": "ev_9e0f0f0b79b5b0a835831dfae848043d2bac15e3dcf8bb229e40d8769a4c27c6"
+    },
+    {
+      "address": "0x40069600",
+      "proposed_name": "dynamics_subtype_default_parameters",
+      "module": "dsp/dynamics",
+      "basis": "Four-way initialization of gate/adaptive/combined/compressor normalized controls.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40069600_FUN_ram_40069600.c",
+      "evidence_id": "ev_cf50368ccd112992e47a244ff3d9ab3b995007a39c0594dce176f19494c8ede3"
+    },
+    {
+      "address": "0x4005ff48",
+      "proposed_name": "compressor_detector_reset",
+      "module": "dsp/dynamics",
+      "basis": "Resets compressor envelope, flags, gain and history fields.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/4005ff48_FUN_ram_4005ff48.c",
+      "evidence_id": "ev_54ffe19363a3d3414005e35b9b993924eb597da46f65c265b29d7d8656813482"
+    },
+    {
+      "address": "0x4005ff6c",
+      "proposed_name": "compressor_configure",
+      "module": "dsp/dynamics",
+      "basis": "Threshold, ratio, knee, attack, release and makeup configuration and coefficient calculation.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/4005ff6c_FUN_ram_4005ff6c.c",
+      "evidence_id": "ev_270ec4425fa1733874da830a5ff44a563748a8b19ba9d8efb3a70cf5c27ca072"
+    },
+    {
+      "address": "0x40060284",
+      "proposed_name": "compressor_process_linked_stereo",
+      "module": "dsp/dynamics",
+      "basis": "Linked detector, soft knee gain reduction, attack/release and makeup application.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40060284_FUN_ram_40060284.c",
+      "evidence_id": "ev_87fc1711410667759a6c66cbc2bdc8ca7301c84ab28057cdc281f2f8131baf71"
+    },
+    {
+      "address": "0x4005f2c4",
+      "proposed_name": "cab_ir_process_with_cut_filters",
+      "module": "dsp/cab",
+      "basis": "Mono downmix, IR processing, low/high cut first-order filters, output level and fade.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/4005f2c4_FUN_ram_4005f2c4.c",
+      "evidence_id": "ev_f9f68dd4fabcd30fdf8fb920d37a7e4642f95d4a50f22b0537dcbbdfaf49fc9f"
+    },
+    {
+      "address": "0x40076694",
+      "proposed_name": "cab_convolver_set_impulse_response",
+      "module": "dsp/cab",
+      "basis": "Limits impulse response to1024 samples, stores direct head and transforms tail partitions.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40076694_FUN_ram_40076694.c",
+      "evidence_id": "ev_e04e406d51ebc2d2ad7f428eefe47d0ec6f90c2e8156190d623e820799f73afd"
+    },
+    {
+      "address": "0x40076bf0",
+      "proposed_name": "cab_convolver_process",
+      "module": "dsp/cab",
+      "basis": "Direct FIR head plus block FFT tail with overlap state and output queue.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40076bf0_FUN_ram_40076bf0.c",
+      "evidence_id": "ev_156bb60799bf08c128e9ca55554da1205f48ea15ef704b31f45e1e4019fcdf59"
+    },
+    {
+      "address": "0x400753d0",
+      "proposed_name": "cab_convolver_accumulate_seven_partitions",
+      "module": "dsp/cab",
+      "basis": "Complex multiply-accumulate across seven spectrum-history partitions.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/400753d0_FUN_ram_400753d0.c",
+      "evidence_id": "ev_f9d3a59b9cfe28d9e5fb43ea9fcbde3858f3742b3a925a77ebd89a23c165496b"
+    },
+    {
+      "address": "0x40075ec4",
+      "proposed_name": "cab_convolver_fft_backend_transform",
+      "module": "dsp/cab",
+      "basis": "Forward/inverse FFT backend including calibration and scaling.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40075ec4_FUN_ram_40075ec4.c",
+      "evidence_id": "ev_da6513bb1d631949dac9e30fcfe697f71c383e161fdec283f9dce2d5cb1c6bcb"
+    },
+    {
+      "address": "0x40076988",
+      "proposed_name": "cab_convolver_service_pending_fft_tail",
+      "module": "dsp/cab",
+      "basis": "Services queued FFT partition computation and overlap-add output.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40076988_FUN_ram_40076988.c",
+      "evidence_id": "ev_515cd802dd0d25e782947cd6c6157489b8b490d4a33893b559de661cf47a383a"
+    },
+    {
+      "address": "0x30040000",
+      "proposed_name": "dsp_fir_process_unrolled",
+      "module": "dsp/cab",
+      "basis": "RAM FIR kernel used by convolver direct head; coefficient/state multiply accumulation.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/30040000_FUN_ram_30040000.c",
+      "evidence_id": "ev_cf7472f8dabbacc976ff850f9ce91332e9245b4f5951ef8e4c3c7d26a5ab702a"
+    },
+    {
+      "address": "0x40066fb4",
+      "proposed_name": "eq_multiband_process",
+      "module": "dsp/eq",
+      "basis": "Three-, six-, and eight-band coefficient generation and stereo biquad cascades.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40066fb4_FUN_ram_40066fb4.c",
+      "evidence_id": "ev_6a07fe199bd48451843469f3a9febacfcaeeded5121b6b2dca9d1d1da8a67ba9"
+    },
+    {
+      "address": "0x40066e08",
+      "proposed_name": "eq_state_init",
+      "module": "dsp/eq",
+      "basis": "Clears0x268-byte state and sets sample rate, enable flag, subtype sentinel.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40066e08_FUN_ram_40066e08.c",
+      "evidence_id": "ev_f520a5de7ddb9ed058a3dbfd0ba261728a48a9ddc44a757c3ba5167dbdf2c6a6"
+    },
+    {
+      "address": "0x40066e8e",
+      "proposed_name": "eq_subtype_default_parameters",
+      "module": "dsp/eq",
+      "basis": "Initializes4/7/9 controls to midpoint according to band count.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40066e8e_FUN_ram_40066e8e.c",
+      "evidence_id": "ev_5038a6fff57b0dcbbbf6535009ac8d8792a88bc0035054acbe21fa353983cd60"
+    },
+    {
+      "address": "0x40066f42",
+      "proposed_name": "eq_default_parameters",
+      "module": "dsp/eq",
+      "basis": "Midpoint EQ control initialization.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40066f42_FUN_ram_40066f42.c",
+      "evidence_id": "ev_caaaddc5233b6eb3e0b60b676e5f9675f564042ee1888df159bd33f52d90d05c"
+    },
+    {
+      "address": "0x400682f4",
+      "proposed_name": "expression_volume_pan_width_wah_process",
+      "module": "dsp/expression",
+      "basis": "Runtime dispatch accepts only subtypes0..3, copies inputs then gain/balance/mid-side/Wah processing.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/400682f4_FUN_ram_400682f4.c",
+      "evidence_id": "ev_d8510ba486923e2c8f2657e6d2592a640885adaa3435f68a4a790bbbb1013910"
+    },
+    {
+      "address": "0x40068c0c",
+      "proposed_name": "expression_state_init",
+      "module": "dsp/expression",
+      "basis": "Initializes0x5c-byte control/filter state and sample rate.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40068c0c_FUN_ram_40068c0c.c",
+      "evidence_id": "ev_9fde6a334572144f35cf54a9faf3f36019764d367de24685df61b49a3d27aae9"
+    },
+    {
+      "address": "0x40068c92",
+      "proposed_name": "expression_state_reset",
+      "module": "dsp/expression",
+      "basis": "Clears filter history and resets smoothed controls.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40068c92_FUN_ram_40068c92.c",
+      "evidence_id": "ev_7fc7d1df9c4045787e0efa4c00a36d6169b6d76eff618554faa00a293ceddf0f"
+    },
+    {
+      "address": "0x40068cce",
+      "proposed_name": "expression_subtype_normalize",
+      "module": "dsp/expression",
+      "basis": "Returns0 for subtype>=4, otherwise subtype.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40068cce_FUN_ram_40068cce.c",
+      "evidence_id": "ev_25387a1bc99cadf55734b97b8dbc5367c4395fcb209350f547219fc7378a664e"
+    },
+    {
+      "address": "0x40068cda",
+      "proposed_name": "expression_subtype_default_parameters",
+      "module": "dsp/expression",
+      "basis": "Subtype-specific default normalized controls.",
+      "evidence_path": "analysis/source-firmware-1.12/functions/40068cda_FUN_ram_40068cda.c",
+      "evidence_id": "ev_4191fe90e0cfc89e375ede76ca5b499388d9eb50eeb8807d9a6bbbd321fda9ad"
+    }
+  ],
+  "effects": [
+    {
+      "name": "GATE",
+      "internal_dispatch_kind": [
+        7,
+        9
+      ],
+      "subtype": 0,
+      "parameters": [
+        "THRESH",
+        "REL"
+      ],
+      "process_entry": "0x40069738",
+      "algorithm": "Power envelope, logarithmic lookup-table gain target, hold and smoothed gate gain; threshold -100..0dB, release5..100ms.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 0
+    },
+    {
+      "name": "AUTO_GATE",
+      "internal_dispatch_kind": [
+        7,
+        9
+      ],
+      "subtype": 1,
+      "parameters": [
+        "SENS",
+        "REL"
+      ],
+      "process_entry": "0x40069738",
+      "algorithm": "Adaptive noise estimate/detector with approximately1ms windows, hysteresis/hold and interpolated output gain.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 0
+    },
+    {
+      "name": "NG+COM",
+      "internal_dispatch_kind": [
+        7,
+        9
+      ],
+      "subtype": 2,
+      "parameters": [
+        "GATE",
+        "THRESH",
+        "RATIO",
+        "KNEE",
+        "ATK",
+        "REL",
+        "MAKEUP"
+      ],
+      "process_entry": "0x40069738",
+      "algorithm": "Gate followed by the shared linked stereo soft-knee compressor.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 0
+    },
+    {
+      "name": "COMP",
+      "internal_dispatch_kind": [
+        7,
+        9
+      ],
+      "subtype": 3,
+      "parameters": [
+        "THRESH",
+        "RATIO",
+        "KNEE",
+        "ATK",
+        "REL",
+        "MAKEUP"
+      ],
+      "process_entry": "0x40069738",
+      "algorithm": "Linked stereo compressor with soft knee, envelope attack/release and makeup gain.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 0
+    },
+    {
+      "name": "CAB/IR",
+      "internal_dispatch_kind": 2,
+      "subtype": null,
+      "parameters": [
+        "LOWCUT",
+        "HIGHCUT",
+        "LEVEL"
+      ],
+      "process_entry": "0x4005f2c4",
+      "algorithm": "Mono IR convolution:128-sample direct FIR head plus up to seven128-sample FFT partitions; maximum1024 taps. First-order high-pass and low-pass postfilters and linear level/fade.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 3,
+      "subtype_note": "Cabinet identities select IR data; catalog owns factory/user slot names, not separate DSP algorithms."
+    },
+    {
+      "name": "EQ3",
+      "internal_dispatch_kind": 6,
+      "subtype": 0,
+      "parameters": [
+        "LOW",
+        "MID",
+        "HIGH",
+        "LEVEL"
+      ],
+      "process_entry": "0x40066fb4",
+      "algorithm": "Independent left/right transposed direct-form-II biquad cascades; band gain -15..+15dB, level -12..+12dB.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 7,
+      "frequencies_hz": [
+        100,
+        1500,
+        5000
+      ],
+      "topology": "low shelf, peak, high shelf"
+    },
+    {
+      "name": "EQ6",
+      "internal_dispatch_kind": 6,
+      "subtype": 1,
+      "parameters": [
+        "B-120",
+        "B-250",
+        "B-500",
+        "B-1K",
+        "B-2K",
+        "B-4K",
+        "LEVEL"
+      ],
+      "process_entry": "0x40066fb4",
+      "algorithm": "Independent left/right transposed direct-form-II biquad cascades; band gain -15..+15dB, level -12..+12dB.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 7,
+      "frequencies_hz": [
+        120,
+        250,
+        500,
+        1000,
+        2000,
+        4000
+      ],
+      "topology": "peaking filters"
+    },
+    {
+      "name": "EQ8",
+      "internal_dispatch_kind": 6,
+      "subtype": 2,
+      "parameters": [
+        "B-60",
+        "B-120",
+        "B-250",
+        "B-500",
+        "B-1K",
+        "B-2K",
+        "B-4K",
+        "B-8K",
+        "LEVEL"
+      ],
+      "process_entry": "0x40066fb4",
+      "algorithm": "Independent left/right transposed direct-form-II biquad cascades; band gain -15..+15dB, level -12..+12dB.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 7,
+      "frequencies_hz": [
+        60,
+        120,
+        250,
+        500,
+        1000,
+        2000,
+        4000,
+        8000
+      ],
+      "topology": "peaking filters"
+    },
+    {
+      "name": "VOLUME",
+      "internal_dispatch_kind": 10,
+      "subtype": 0,
+      "parameters": [
+        "position",
+        "minimum",
+        "maximum",
+        "level"
+      ],
+      "process_entry": "0x400682f4",
+      "algorithm": "Gain target=((maximum-minimum)*position+minimum)*level; per-sample smoothing.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 9,
+      "parameter_labels_note": "Semantic argument roles; catalog owns exact displayed spellings."
+    },
+    {
+      "name": "PAN",
+      "internal_dispatch_kind": 10,
+      "subtype": 1,
+      "parameters": [
+        "position",
+        "level"
+      ],
+      "process_entry": "0x400682f4",
+      "algorithm": "Cosine balance attenuation of opposite channel, independent smoothed left/right gains; mono uses level.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 9,
+      "parameter_labels_note": "Semantic argument roles; catalog owns exact displayed spellings."
+    },
+    {
+      "name": "WIDTH",
+      "internal_dispatch_kind": 10,
+      "subtype": 2,
+      "parameters": [
+        "width",
+        "level"
+      ],
+      "process_entry": "0x400682f4",
+      "algorithm": "Mid/side matrix:mid=(L+R)/2;side=(L-R)*width/2;out=level*(mid +/- side).",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 9,
+      "parameter_labels_note": "Semantic argument roles; catalog owns exact displayed spellings."
+    },
+    {
+      "name": "WAH",
+      "internal_dispatch_kind": 10,
+      "subtype": 3,
+      "parameters": [
+        "position",
+        "resonance",
+        "level"
+      ],
+      "process_entry": "0x400682f4",
+      "algorithm": "Position-dependent nonlinear resonant state-variable filter with input/output conditioning and rational soft clipping.",
+      "availability": "UI selector and runtime branch verified",
+      "ui_block": 9,
+      "parameter_labels_note": "Semantic argument roles; catalog owns exact displayed spellings."
+    }
+  ],
+  "missing_entries": [],
+  "latent_names_not_available": [
+    "PITCH",
+    "COMBFILTER",
+    "HAAS",
+    "TAPESTOP",
+    "BITCRUSH"
+  ],
+  "limitations": [
+    "Recovered C-like analysis retains decompiler float-register and aliasing artifacts; not original source or bit-exact/buildable code.",
+    "Runtime behavior has not been compared against captured audio vectors.",
+    "Metadata-only EXP labels beyond subtype3 are not implemented by this dispatch path; normalization routes them to VOLUME."
+  ]
+}

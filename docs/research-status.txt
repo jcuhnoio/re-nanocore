@@ -1,3 +1,48 @@
+Current status — 2026-11-12 (custom DSP and UI deployed)
+See README.rst for the full chronology and current reproduction commands.
+Authenticated package decoding works for all seven archived releases. Organized
+1.10/1.11/1.12 research trees and the343routine1.12DSPexport are included.
+Buildable Chorus matches original cached-state sample-loop tests; other exported
+routines remain research pseudocode. RawOSDFU deployed TEST001 and two custom
+UniVibe revisions on1.10 with fullreadback and normalruntime reboot. Latest
+UniVibe has SPEED/DEPTH/LEVEL and a native two-stateCHORUS/VIBRATO control.
+Physical sound quality, deadline margins and exactMXR sonic equivalence remain
+unmeasured. Stock and successive preflash backups are retained locally; the
+pedal is currently on modified1.10, not the earlier restoredstock snapshot.
+See custom-fx-univibe-controls.txt and evidence/custom-fx-univibe-controls-flash.json.
+The dated limitations below are historical and superseded where noted above.
+
+Update — 2026-11-12 (vendor ISA confirmed)
+The exact SDK toolchain identifies the missing legacy P/T-Head instructions.
+All 245 examined unknown words round-trip through its assembler. The latest
+REA export has 2,645 functions and ZERO bad-instruction truncations (previously
+56); 22 opaque-operation functions and other warnings remain. See
+vendor-instruction-set.txt and analysis/source-firmware-1.10-legacy-p.
+The earlier pass and its counts below are retained as historical evidence.
+
+Update — 2026-11-12 (source reconstruction)
+REA/Ghidra exported 2,641 functions as C-like pseudocode. A tested T-Head subset
+and explicit handler seeds improve analysis; 36 function names and seven data
+names are recorded. 56 functions still have bad-instruction truncation. See
+firmware-source.txt and evidence/firmware-source.json for coverage and limits.
+
+Update — 2026-11-12
+Complete LUM0 decoding is solved for 1.10 and all six other archived releases.
+Both 1.10 executable segments exactly match physical readback. A temporary
+modified application executed and captured the updater containing the decoder.
+The original OS partition was restored byte-for-byte; normal runtime and all
+40 presets were verified against the pre-patch baseline. See firmware-decoding.txt.
+Remaining work is DSP/audio ABI reconstruction, not package decryption.
+Historical limitations below are retained as dated findings and superseded
+where the newer physical evidence resolves them.
+
+Update — 2026-11-11
+Physical DFU readback recovered validated plaintext NanoCore 1.10 firmware.
+Image metadata identifies Artinchip Luban-lite / RISC-V; both segment MD5 and
+CRC32 hashes match. See firmware-readback.txt and the physical firmware receipt.
+The historical no-plaintext/no-hardware conclusions below are superseded.
+At that point, LUM0 transformation and modified-image acceptance were unresolved.
+
 Research status — 2026-11-06
 
 Objective

@@ -1,0 +1,99 @@
+Update — 2026-11-12: Full decoding and modified-application execution are now
+validated; see firmware-decoding.txt. Earlier open questions below are historical.
+
+Direct firmware analysis — 2026-11-11
+
+Scope and outcome
+Offline analysis of the validated 1.10 readback. No further physical USB/MIDI
+commands were sent. We now have a source-correlated flash layout, the normal
+MIDI dispatch entry, and a traced application-to-updater loading path. A LUM0
+decoder/key and identified DSP processing callbacks are still outstanding.
+Receipt: evidence/direct-firmware-analysis.json.
+
+Image and ISA
+seg0: 32772 bytes loaded at 0x30040000, includes code and initialized data.
+seg1: 630568 bytes loaded at 0x40000000, includes entry/startup, application
+code and read-only data. These segments are not simply bootloader vs app.
+Enable LLVM RISC-V M/A/F/D/C and T-Head BA/BB/BS/CONDMOV/MEMIDX/MEMPAIR/MAC/SYNC
+extensions. Several previously unknown instructions resolve as th.addsl,
+th.lrw and th.srb. Some instructions remain unknown; linear disassembly also
+interprets data as instructions and must not be treated as recovered functions.
+The exact ArtInChip chip SKU is not established.
+
+Flash partition table
+At seg0 offset0x6358 / runtime address0x30046358 there are six64-byte records.
+The SDK confirms FAL magic0x45503130, name24, flash_name24, offset32,length32,
+reserved32. All entries refer to norflash0:
+  name          offset       length       end-exclusive
+  spl           0x000000     0x026000     0x026000
+  env           0x026000     0x002000     0x028000
+  os            0x028000     0x0d4000     0x0fc000
+  presets       0x0fc000     0x0ac000     0x1a8000
+  ui_asset      0x1a8000     0x057000     0x1ff000
+  device_info   0x1ff000     0x001000     0x200000
+These are application partition declarations, not a direct physical flash
+capacity measurement. Our DFU cursor0 returned the os image, not raw flash0.
+Do not equate the captured file's offsets with absolute flash addresses.
+
+Decoder lead: separate updater inside SPL
+0x40013fa4 loads the string "spl" and calls partition lookup0x40006efa.
+0x40013fb8 calls0x40012f62, which reads256-byte chunks via0x40006f5e, looking
+for ASCII "AIC ". It checks header+0x18==0x40300000 and+0x1c==0x40300100,
+reads firmware length at+0x14, bounds the image against the partition and
+RAM end0x40340000, and returns data offset and length.
+This matches the official SDK aic_image_header layout and is stronger than
+identifying the updater solely from nearby diagnostic strings.
+The caller allocates a buffer, reads the payload in4096-byte chunks, disables
+interrupts/clears interrupt state, copies to0x40300100 at0x40014188, performs
+cache/instruction synchronization, and jumps there at0x4001423a with a0=0x44,
+a1=0. Diagnostics label this sequence DFU-J0..DFU-J4.
+
+Consequently the updater's executable is loaded from a separate partition,
+not from a discovered embedded blob in this application capture. The precise
+SPL offset is found at runtime; it is not hardcoded in the inspected scanner.
+Capturing that AIC image is now the highest-value next decoder artifact.
+The SDK's generic AIC header supports encryption/signing fields, but its AES
+option does NOT identify the unrelated LUM0 payload encryption scheme.
+
+Normal MIDI analysis foothold
+0x40013b2e handles NC70 requests, checks version2, sequence, opcode and declared
+payload length; opcodes over255 are rejected. It dispatches via registered
+handlers and fallback groups, then constructs replies. Registration targets
+and individual effects still need tracing. The seven-bit unpack call is at
+0x4001403a ->0x40013674. Current named effect-string references are mostly UI;
+none is yet sufficient to label a PITCH or reverb DSP routine.
+
+Known-plaintext decoding probes
+Exact 1.10 package payload and captured image both have length667648, but
+are different. Package trailer aaf9cdb8 does not equal plaintext CRC32 in either
+byte order (CRC32=e87b316a). Opaque header16 is not plaintext MD5.
+Using known public app-derived root/SAPF/AC6F material, tested18 bounded
+candidates: HMAC-SHA512 XOR with nonce=opaque16 and counters0/1; AES128/256
+CBC/CTR with IV=opaque16. None reproduced the exact64-byte plaintext prefix.
+This rules out those exact alignment/key/mode hypotheses only. It does not
+identify encryption, prove key independence, or exclude header/padding/layout
+changes between package input and on-flash plaintext. No brute-force search.
+Literal LUM0, standard AES S-box prefix, SHA256 round-constant prefix,
+ChaCha string and known publisher public key were absent from both segments.
+These are bounded literal scans, not proof cryptographic code is absent.
+
+Next concrete work
+Trace opcode handler registration and all partition-read callers for a supported
+SPL export path. If unavailable, determine DFU cursor bounds and whether any
+read-only partition selection mechanism exists before further physical capture.
+Capture SPL/updater, validate AIC header/length, disassemble at declared RAM
+address, and trace LUM0 header parsing through transformation and verification.
+In parallel, map audio processing calls from the stream callback rather than
+from UI effect names. Use the saved application image for DSP analysis now.
+
+Reproduction and source provenance
+Local scripts/results: analysis/direct-firmware/{xrefs.py,auipc-refs.json,
+known_plaintext.py,known-plaintext-results.json,partitions.json,
+seg0-strings.txt,seg1-strings.txt,seg1-thead-disassembly.txt}.
+SDK checkout: research/luban-lite, pinned77fbe30dd2de366fae702ece84e1694153d94591.
+Sparse checkout initially hit unavailable git-lfs; source files were retrieved
+with LFS filters disabled. No LFS binary was used as evidence.
+Primary sources:
+https://github.com/artinchip/luban-lite/blob/77fbe30dd2de366fae702ece84e1694153d94591/kernel/rt-thread/components/fal/inc/fal_def.h
+https://github.com/artinchip/luban-lite/blob/77fbe30dd2de366fae702ece84e1694153d94591/kernel/rt-thread/components/fal/src/fal_partition.c
+https://github.com/artinchip/luban-lite/blob/77fbe30dd2de366fae702ece84e1694153d94591/bsp/common/include/aic_image.h

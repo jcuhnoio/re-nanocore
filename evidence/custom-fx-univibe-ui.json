@@ -1,0 +1,257 @@
+{
+  "firmware": "1.10",
+  "scope": "MOD10-only four controls and native2state enum",
+  "source": "tools/custom_fx/vibe_ui.S",
+  "code": "tools/custom_fx/vibe_ui_code.json",
+  "control_order": [
+    "SPEED",
+    "DEPTH",
+    "LEVEL",
+    "MODE"
+  ],
+  "defaults": [
+    0.35,
+    0.8,
+    0.5,
+    0
+  ],
+  "references": {
+    "0x40072036": {
+      "end": "0x400720ae",
+      "external_decoded_references": [
+        {
+          "source": "0x4006b6fe",
+          "target": "0x40072036"
+        }
+      ],
+      "halfword_aligned_pointer_literals": []
+    },
+    "0x40027606": {
+      "end": "0x40027652",
+      "external_decoded_references": [],
+      "halfword_aligned_pointer_literals": []
+    },
+    "0x4001a956": {
+      "end": "0x4001a95a",
+      "external_decoded_references": [
+        {
+          "source": "0x4001aaea",
+          "target": "0x4001a956"
+        },
+        {
+          "source": "0x4001e36a",
+          "target": "0x4001a956"
+        }
+      ],
+      "halfword_aligned_pointer_literals": []
+    }
+  },
+  "tests": {
+    "enum_cases": 912,
+    "enum_states": 2,
+    "enum_output_values": [
+      0,
+      1000
+    ],
+    "count_cases": 760,
+    "label_cases": 12,
+    "default_lengths_tested": 13,
+    "format_cases": [
+      {
+        "index": 0,
+        "value": 0,
+        "rendered": [
+          [
+            "%ld",
+            0
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 0.35,
+        "rendered": [
+          [
+            "%ld",
+            35
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 0.499,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 0.5,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 0,
+        "value": 1,
+        "rendered": [
+          [
+            "%ld",
+            100
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0,
+        "rendered": [
+          [
+            "%ld",
+            0
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0.35,
+        "rendered": [
+          [
+            "%ld",
+            35
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0.499,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 0.5,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 1,
+        "value": 1,
+        "rendered": [
+          [
+            "%ld",
+            100
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0,
+        "rendered": [
+          [
+            "%ld",
+            0
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0.35,
+        "rendered": [
+          [
+            "%ld",
+            35
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0.499,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 0.5,
+        "rendered": [
+          [
+            "%ld",
+            50
+          ]
+        ]
+      },
+      {
+        "index": 2,
+        "value": 1,
+        "rendered": [
+          [
+            "%ld",
+            100
+          ]
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0,
+        "rendered": [
+          "CHORUS"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0.35,
+        "rendered": [
+          "CHORUS"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0.499,
+        "rendered": [
+          "CHORUS"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 0.5,
+        "rendered": [
+          "VIBRATO"
+        ]
+      },
+      {
+        "index": 3,
+        "value": 1,
+        "rendered": [
+          "VIBRATO"
+        ]
+      }
+    ],
+    "scope": "Native patched code, enum conversions and branches execute; memset/strcmp/printf boundaries emulated; no display device observed",
+    "physical_ui_verified": false
+  },
+  "physical_ui_verified": false,
+  "evidence_sources": {
+    "defaults": "ev_020051dcb710ed59fcd3cd32ffdf18745e2b71c13ff14eb08d6cfd0791e25392",
+    "labels": "ev_4df9a305b2edcbb59949554b7b3e8eaa932e3c80036f1e0c511577b205648496",
+    "count": "ev_35f6f431b86fd09b71c657b1a216d961aaae7a349705b4b22e9673411666f29a",
+    "formatter": "ev_b8dae8dcb172ebeceb6534989107edd17e98bead1a66e5ae35d18c461c3315a5",
+    "enum": "ev_f07dc5e857ae1c3e7595e0b31c92694ae761127f1c43feb26aacdf600f78916f"
+  }
+}

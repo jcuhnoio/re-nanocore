@@ -1,0 +1,400 @@
+{
+  "date": "2026-11-12",
+  "method": "Physical temporary application reader captured SPL/updater; updater disassembly recovered SHA256 XOR stream; offline signatures, CRC and FIT hashes validated.",
+  "stream": {
+    "algorithm": "SHA256(key32 || nonce16 || LE64(block_index)), XOR in 32-byte blocks",
+    "nonce_header_offset": 20,
+    "key_hex": "125a6c3e9bc107a4d2ff348955aae119c7425d2b800f6397182c4e713bd5e8f0",
+    "decoder_va": "0x40305e82",
+    "key_va": "0x40313f58"
+  },
+  "local_artifacts": {
+    "spl-partition.bin": {
+      "bytes": 155648,
+      "sha256": "2c254261882452a9fb0ace73f8547616dbff5f767dd57d25c2a06282fed6cf1f"
+    },
+    "updater.bin": {
+      "bytes": 99704,
+      "sha256": "de791095f93db777697023037a6a407e2e2dd68fa929cab7687d8264cd774e09"
+    },
+    "os-partition-backup.bin": {
+      "bytes": 868352,
+      "sha256": "575a3666c684b98bd3dfd1842e12afac458ecbecd2b20b30d626bb3f0fe8d289"
+    },
+    "flash-restore-readback.bin": {
+      "bytes": 868352,
+      "sha256": "575a3666c684b98bd3dfd1842e12afac458ecbecd2b20b30d626bb3f0fe8d289"
+    },
+    "spl_reader.bin": {
+      "bytes": 252,
+      "sha256": "208b30f02c148275fda2e73ddcfc0a2885ff0c9b1a957df2ebc20d8c1cc11647"
+    },
+    "firmware-1.10-spl-reader.bin": {
+      "bytes": 667648,
+      "sha256": "91f993e195c1181528f0aa29067ffe98c578ccdaf3a8726636af6837df61f5c9"
+    }
+  },
+  "restore": {
+    "mode": "restore",
+    "bytes": 868352,
+    "sha256": "575a3666c684b98bd3dfd1842e12afac458ecbecd2b20b30d626bb3f0fe8d289",
+    "exact_match": true,
+    "finalization_sent": false
+  },
+  "runtime": {
+    "enumeration": {
+      "data": {
+        "devices": [
+          {
+            "dfu": false,
+            "display_name": "Nanocore",
+            "kind": "nanocore",
+            "midi": true,
+            "runtime_pid": 4865
+          }
+        ]
+      },
+      "success": true
+    },
+    "successful_native_reads": 49,
+    "total_native_reads": 49,
+    "preset_count": 40,
+    "presets_matching_pre_patch_backup": 40,
+    "acoustic_check_performed": false
+  },
+  "releases": [
+    {
+      "display_version": "1.04",
+      "fw_version": 65540,
+      "product_id": 0,
+      "package_sha256": "dd7b70f59824c5ded2cecaa4f124f212132a91d378409857bfe4b0baafd7c9d7",
+      "core_signature_verified": true,
+      "footer_present": false,
+      "footer_signature_verified": false,
+      "nonce_hex": "bf7a097ce6243b57a7bf0c2b35385629",
+      "payload_size": 643072,
+      "payload_sha256": "96f66fb7129807acfc8276ac8db8f5c3377015461656f78a130da162e2eed622",
+      "payload_crc32": "a8621400",
+      "payload_crc32_verified": true,
+      "container_fit_version_match": true,
+      "fit": {
+        "dtb_size": 2048,
+        "description": "Artinchip Luban-lite",
+        "image_version": "1.04",
+        "timestamp": 1783906388,
+        "entry_address": 1073741824
+      },
+      "segments": [
+        {
+          "name": "seg0",
+          "offset": 2048,
+          "size": 16384,
+          "load_address": 805568512,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "ed1c4d1a",
+            "md5": "75acb3b52f1c7d603b99525ed26e22e4"
+          }
+        },
+        {
+          "name": "seg1",
+          "offset": 18432,
+          "size": 624184,
+          "load_address": 1073741824,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "f948cec3",
+            "md5": "087481691c51f15ad9547c712b12810e"
+          }
+        }
+      ]
+    },
+    {
+      "display_version": "1.05",
+      "fw_version": 66816,
+      "product_id": 4865,
+      "package_sha256": "ce60609d771380522ad8dfabca48c76046b9e9a5d225bc3d2c5e380668c2a19f",
+      "core_signature_verified": true,
+      "footer_present": true,
+      "footer_signature_verified": true,
+      "nonce_hex": "0c2f31eb16bff77a40aae591a0f2683e",
+      "payload_size": 636928,
+      "payload_sha256": "a08e68af01bf86db463819b26c7ae301ebb60df404186e42e3f1bdcdae0d3ac9",
+      "payload_crc32": "28c52ac5",
+      "payload_crc32_verified": true,
+      "container_fit_version_match": true,
+      "fit": {
+        "dtb_size": 2048,
+        "description": "Artinchip Luban-lite",
+        "image_version": "1.05",
+        "timestamp": 1784705910,
+        "entry_address": 1073741824
+      },
+      "segments": [
+        {
+          "name": "seg0",
+          "offset": 2048,
+          "size": 17024,
+          "load_address": 805568512,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "62ee3251",
+            "md5": "b8de14788623e9de4d3fc083843e0be3"
+          }
+        },
+        {
+          "name": "seg1",
+          "offset": 20480,
+          "size": 616264,
+          "load_address": 1073741824,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "1d8e0af1",
+            "md5": "3c667682a1813e306b7d0b99c555ba8a"
+          }
+        }
+      ]
+    },
+    {
+      "display_version": "1.06",
+      "fw_version": 67072,
+      "product_id": 4865,
+      "package_sha256": "27696dc4a8027220060dd1ffce6fad128946e4a54bc3fd1fb938d7256d4f2acd",
+      "core_signature_verified": true,
+      "footer_present": true,
+      "footer_signature_verified": true,
+      "nonce_hex": "b487e67d009bba3e8921901f52b82d4d",
+      "payload_size": 649216,
+      "payload_sha256": "7c48f2e87fb3f9664d809bfbfebcba8ec89637e57fe07b5c962c25f435815982",
+      "payload_crc32": "6489b00d",
+      "payload_crc32_verified": true,
+      "container_fit_version_match": true,
+      "fit": {
+        "dtb_size": 2048,
+        "description": "Artinchip Luban-lite",
+        "image_version": "1.06",
+        "timestamp": 1785118503,
+        "entry_address": 1073741824
+      },
+      "segments": [
+        {
+          "name": "seg0",
+          "offset": 2048,
+          "size": 17024,
+          "load_address": 805568512,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "33f27fe0",
+            "md5": "93820b77e8e651068620ff9a76ce331d"
+          }
+        },
+        {
+          "name": "seg1",
+          "offset": 20480,
+          "size": 627120,
+          "load_address": 1073741824,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "6273e3d4",
+            "md5": "c455fbbfa8ace26865d74de6739eadfd"
+          }
+        }
+      ]
+    },
+    {
+      "display_version": "1.07",
+      "fw_version": 67328,
+      "product_id": 4865,
+      "package_sha256": "08c0ff14d5dfd84cf0ac5bce68c8cf45e0e771986f61f58c0fab47f5f5a5147f",
+      "core_signature_verified": true,
+      "footer_present": true,
+      "footer_signature_verified": true,
+      "nonce_hex": "cc7adbf8ba5298caf50f5e110a68c229",
+      "payload_size": 649216,
+      "payload_sha256": "a357e643a429e86c634f420815d0498ed7eb877a3454e908b86810275512ec30",
+      "payload_crc32": "bd85d6e8",
+      "payload_crc32_verified": true,
+      "container_fit_version_match": true,
+      "fit": {
+        "dtb_size": 2048,
+        "description": "Artinchip Luban-lite",
+        "image_version": "1.07",
+        "timestamp": 1785300950,
+        "entry_address": 1073741824
+      },
+      "segments": [
+        {
+          "name": "seg0",
+          "offset": 2048,
+          "size": 17024,
+          "load_address": 805568512,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "f576c412",
+            "md5": "3a491f6d120a454f8fd906ffc7d41375"
+          }
+        },
+        {
+          "name": "seg1",
+          "offset": 20480,
+          "size": 627832,
+          "load_address": 1073741824,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "1a875af3",
+            "md5": "441ba659fa6dd77aa683d3eff77cf1ba"
+          }
+        }
+      ]
+    },
+    {
+      "display_version": "1.10",
+      "fw_version": 69632,
+      "product_id": 4865,
+      "package_sha256": "c69e30b384d7c67a54c2b618a82bb3150b92fb7f2c1fd6c447e296547514770c",
+      "core_signature_verified": true,
+      "footer_present": true,
+      "footer_signature_verified": true,
+      "nonce_hex": "c8686958260e8689dc589b2f59c72e56",
+      "payload_size": 667648,
+      "payload_sha256": "ed84c017176e6f41e07089af43031a3ca7a9a695a6c0e0ca30f9c1d743e7b82c",
+      "payload_crc32": "b8cdf9aa",
+      "payload_crc32_verified": true,
+      "container_fit_version_match": true,
+      "fit": {
+        "dtb_size": 2048,
+        "description": "Artinchip Luban-lite",
+        "image_version": "1.10",
+        "timestamp": 1786677761,
+        "entry_address": 1073741824
+      },
+      "segments": [
+        {
+          "name": "seg0",
+          "offset": 2048,
+          "size": 32772,
+          "load_address": 805568512,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "e976d7ea",
+            "md5": "cf70f8a7ee3a8a467a586c41316a79ee"
+          }
+        },
+        {
+          "name": "seg1",
+          "offset": 36864,
+          "size": 630568,
+          "load_address": 1073741824,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "c56072be",
+            "md5": "e6cd9f7405f4e630a6dbc59b0dd3bb50"
+          }
+        }
+      ],
+      "readback_comparison": {
+        "exact_payload_match": false,
+        "equal_size": true,
+        "differing_byte_offsets": [
+          78,
+          79
+        ],
+        "segment_bytes_match": true,
+        "decoded_timestamp": 1786677761,
+        "readback_timestamp": 1786699840
+      }
+    },
+    {
+      "display_version": "1.11",
+      "fw_version": 69896,
+      "product_id": 4865,
+      "package_sha256": "07cbb169bec3a792931c83bde6da2664f58ad5156d5e26fa4daacac373060195",
+      "core_signature_verified": true,
+      "footer_present": true,
+      "footer_signature_verified": true,
+      "nonce_hex": "6b4e3448a7b91157684e9512823ca838",
+      "payload_size": 688128,
+      "payload_sha256": "688aae0ddba602d24e4c3f186a4019928c491c1ab37bc3f6e75f101471436497",
+      "payload_crc32": "7420215b",
+      "payload_crc32_verified": true,
+      "container_fit_version_match": false,
+      "fit": {
+        "dtb_size": 2048,
+        "description": "Artinchip Luban-lite",
+        "image_version": "1.11b",
+        "timestamp": 1789706867,
+        "entry_address": 1073741824
+      },
+      "segments": [
+        {
+          "name": "seg0",
+          "offset": 2048,
+          "size": 46788,
+          "load_address": 805568512,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "078cf693",
+            "md5": "500f120a157281661910dbd8bcc70f41"
+          }
+        },
+        {
+          "name": "seg1",
+          "offset": 49152,
+          "size": 638792,
+          "load_address": 1073741824,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "ceac579b",
+            "md5": "c8240e4a4253bd041e9e8f1c5f00a799"
+          }
+        }
+      ]
+    },
+    {
+      "display_version": "1.12",
+      "fw_version": 70152,
+      "product_id": 4865,
+      "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+      "core_signature_verified": true,
+      "footer_present": true,
+      "footer_signature_verified": true,
+      "nonce_hex": "1e88dddc9c8c217d975315d1ed671ada",
+      "payload_size": 727040,
+      "payload_sha256": "17ce4dc1fb0e58f3966ddb30349cd79122cad3b5a54e6e3bd69e8466b48bfe40",
+      "payload_crc32": "af09ed43",
+      "payload_crc32_verified": true,
+      "container_fit_version_match": true,
+      "fit": {
+        "dtb_size": 2048,
+        "description": "Artinchip Luban-lite",
+        "image_version": "1.12",
+        "timestamp": 1792638056,
+        "entry_address": 1073741824
+      },
+      "segments": [
+        {
+          "name": "seg0",
+          "offset": 2048,
+          "size": 50692,
+          "load_address": 805568512,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "439efb66",
+            "md5": "39d756b5ddf02ff1564473de6289e8a1"
+          }
+        },
+        {
+          "name": "seg1",
+          "offset": 53248,
+          "size": 673088,
+          "load_address": 1073741824,
+          "entry_address": 1073741824,
+          "hashes_verified": {
+            "crc32": "5eef65f1",
+            "md5": "1d3b8531e3dc0882aeaffbcbbb4a4af9"
+          }
+        }
+      ]
+    }
+  ]
+}

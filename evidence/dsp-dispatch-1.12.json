@@ -1,0 +1,72 @@
+{
+  "firmware": "1.12",
+  "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "seg1_sha256": "baf59b393f845beede0af7c6c7887d7a4e03a00a23caaa27eab6c0e9c39ef4d6",
+  "table_address": "0x4009f168",
+  "entry_bytes": 8,
+  "dispatcher": "0x4005e044",
+  "evidence_id": "ev_f37a576475c22c9fd635a3889eb353dd8d38f9a12f980a6270ba9fb3d3ee3b9b",
+  "entries": [
+    {
+      "kind": 0,
+      "processor": "0x0",
+      "flags": 0
+    },
+    {
+      "kind": 1,
+      "processor": "0x400741b8",
+      "flags": 1
+    },
+    {
+      "kind": 2,
+      "processor": "0x4005f2c4",
+      "flags": 1
+    },
+    {
+      "kind": 3,
+      "processor": "0x30043fd4",
+      "flags": 3
+    },
+    {
+      "kind": 4,
+      "processor": "0x40071cfe",
+      "flags": 3
+    },
+    {
+      "kind": 5,
+      "processor": "0x40066cee",
+      "flags": 1
+    },
+    {
+      "kind": 6,
+      "processor": "0x40066fb4",
+      "flags": 1
+    },
+    {
+      "kind": 7,
+      "processor": "0x40069738",
+      "flags": 1
+    },
+    {
+      "kind": 8,
+      "processor": "0x4006ca50",
+      "flags": 1
+    },
+    {
+      "kind": 9,
+      "processor": "0x40069738",
+      "flags": 1
+    },
+    {
+      "kind": 10,
+      "processor": "0x40068d96",
+      "flags": 1
+    },
+    {
+      "kind": 11,
+      "processor": "0x0",
+      "flags": 0
+    }
+  ],
+  "flags_basis": "Dispatcher bit0 chooses input buffer reuse; bit1 permits mono-to-stereo expansion when chain option +0x861 is set. These are inferred routing semantics, not vendor flag names."
+}

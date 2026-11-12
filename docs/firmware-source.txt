@@ -1,0 +1,102 @@
+Update — 2026-11-12 (vendor ISA confirmed)
+The exact SDK toolchain identifies the missing legacy P/T-Head instructions.
+All 245 examined unknown words round-trip through its assembler. The latest
+REA export has 2,645 functions and ZERO bad-instruction truncations (previously
+56); 22 opaque-operation functions and other warnings remain. See
+vendor-instruction-set.txt and analysis/source-firmware-1.10-legacy-p.
+The earlier pass and its counts below are retained as historical evidence.
+
+NanoCore 1.10 decompilation and naming — 2026-11-12
+
+Output
+Local analysis/source-firmware-1.10/firmware.c contains 141,566 lines of C-like
+REA/Ghidra output. functions/ contains one file per discovered function; index.json
+links every file to its address, REA Evidence ID, digest and warnings.
+2,641 functions returned pseudocode. We assigned 36 function names and seven
+data names. Seven routines have reviewed parameter/local-variable replacements.
+The names and rationale are tracked in evidence/firmware-source-names.json.
+
+This is an initial source reconstruction, not recovered original source or a
+buildable firmware project. Naming and type reconstruction remain ongoing.
+The complete function inventory is the analyzer's observed coverage, not proof
+that every executable byte was discovered. 906 functions retain warnings;
+56 contain bad-instruction/truncated control flow, and 22 contain opaque custom
+operations. These categories can overlap. Types, register arguments, indirect
+call signatures and data/code boundaries still need review. In particular,
+fal_partition_read's generated call omits an argument retained in the machine
+register; the pseudocode is not a substitute for ABI-aware assembly review.
+
+REA execution
+The installed REA skill was available, but the active client had no registered
+REA tools or decompiler engine. We ran REA 6.7.0 through its public MCP stdio
+launcher from an owned Python process, with Ghidra 12.1.4 and JDK 21 in the
+ignored workspace toolchain. No Codex configuration was changed. Ghidra's native
+Apple Silicon decompiler was built from its shipped C++ source. Complete REA
+Evidence is retained in analysis/rea-1.10/evidence.json. The final session was
+closed after export; names survive in the seeded ELF, ledger and source tree.
+
+Analysis image
+The decoder's original ELF has synthetic e_flags=0. We created a separate copy
+with RVC + double-float ABI flags (5), supported by observed fa0 double-precision
+arguments, fsd/fld preservation at 0x40000bc0, and the Luban-lite d13x e907fdp
+configuration (-mabi=ilp32d). This is analyst-inferred metadata, not an original
+vendor ELF header. Function/data symbols were added to another analysis copy.
+All original PT_LOAD bytes and mappings were checked unchanged. Raw firmware
+and the original analysis ELF remain unchanged.
+
+Instruction support
+Stock Ghidra emitted opaque custom0 operations for common T-Head instructions,
+losing real pointer arithmetic and memory transfers. A workspace-local SLEIGH
+extension now supplies 31 RV32 instruction constructors for add-shift,
+bit extraction, conditional moves, multiply-accumulate and indexed/update loads
+and stores. 1,380 deterministic emulation cases checked the translated register
+and memory effects, including signed updates and extraction boundaries.
+This is a custom processor model, not the stock/verified REA language profile.
+REA's profile digest does not capture the SLEIGH modification; the separate SLA
+and SINC hashes in evidence/firmware-source.json identify the actual language.
+Packed-DSP instructions at opcode 0x77 are among the remaining gaps. For example,
+0x40013048 currently truncates dfu_find_updater_image; its later assembly must
+still be consulted. We did not invent C semantics for unresolved instructions.
+
+Named entry points
+  0x40000000 firmware_entry
+  0x40000004 runtime_startup
+  0x400031dc memset
+  0x40003288 strcmp
+  0x400050d6 memcpy
+  0x40006df2 fal_partition_get_flash
+  0x40006efa fal_partition_find
+  0x40006f5e fal_partition_read
+  0x40012b30 read_u32_le
+  0x40012f62 dfu_find_updater_image
+  0x40013674 nc_sysex_unpack_7bit
+  0x40013750 nc_register_opcode_handler
+  0x40013760 nc_register_message_listener
+  0x40013b2e nc_dispatch_request
+
+Opcode registration supplied 22 more handler identities; preset name/chunk,
+readiness, AMP slot/chunk and IR slot roles also correlate with the previously
+captured host protocol. Unconfirmed semantics remain names such as
+nc_handle_opcode_49. Eleven indirect handlers were absent from default function
+discovery; explicit symbol seeds now include all 22. Function counts changed
+from 2,587 (stock model), to 2,657 (T-Head subset), to 2,641 (named/seeding pass)
+as code discovery and boundaries changed. These are not coverage percentages.
+
+Reproduce and continue
+See tools/firmware_source/README.txt. The tools retain a backup of the local
+processor specification, seed analysis symbols, drive public REA MCP tools,
+export all discovered pseudocode and preserve comments/string literals while
+renaming reviewed identifiers. Two helper tests check byte/mapping preservation
+and safe identifier replacement. Firmware-derived C stays local/ignored; tracked
+files contain tools, naming records, hashes and coverage summaries.
+
+Next naming work should start from the 56 bad-instruction functions and exact
+packed-DSP instruction semantics, followed by audio task/callback identification.
+Use the existing name ledger to preserve confirmed work. Do not rename a DSP
+routine from a nearby UI effect string alone. No device commands were sent in
+this pass, and no audio-output behavior was tested.
+
+Primary instruction/SDK sources
+https://github.com/llvm/llvm-project/blob/llvmorg-19.1.7/llvm/lib/Target/RISCV/RISCVInstrInfoXTHead.td
+https://github.com/T-head-Semi/thead-extension-spec/blob/master/xtheadmemidx/lwia.adoc
+https://github.com/artinchip/luban-lite/blob/77fbe30dd2de366fae702ece84e1694153d94591/bsp/artinchip/sys/d13x/rtconfig.py

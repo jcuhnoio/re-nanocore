@@ -1,0 +1,1045 @@
+{
+  "firmware": "1.12",
+  "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "raw_counts": [
+    4,
+    12,
+    1,
+    1,
+    8,
+    9,
+    8,
+    3,
+    2,
+    4,
+    0
+  ],
+  "mod_picker_ids": [
+    0,
+    11,
+    1,
+    12,
+    2,
+    17,
+    4,
+    10,
+    3
+  ],
+  "effects": [
+    {
+      "block": 0,
+      "family": "FX1",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "GATE",
+      "processor": "0x40069738",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 0,
+      "family": "FX1",
+      "selector_slot": 1,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "AUTO GATE",
+      "processor": "0x40069738",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 0,
+      "family": "FX1",
+      "selector_slot": 2,
+      "subtype": 2,
+      "normalized_subtype": 2,
+      "name": "NG+COM",
+      "processor": "0x40069738",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 0,
+      "family": "FX1",
+      "selector_slot": 3,
+      "subtype": 3,
+      "normalized_subtype": 3,
+      "name": "COMP",
+      "processor": "0x40069738",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "Drive model slot 30",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 1,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "Drive model slot 31",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 2,
+      "subtype": 2,
+      "normalized_subtype": 2,
+      "name": "Drive model slot 32",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 3,
+      "subtype": 3,
+      "normalized_subtype": 3,
+      "name": "Drive model slot 33",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 4,
+      "subtype": 4,
+      "normalized_subtype": 4,
+      "name": "Drive model slot 34",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 5,
+      "subtype": 5,
+      "normalized_subtype": 5,
+      "name": "Drive model slot 35",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 6,
+      "subtype": 6,
+      "normalized_subtype": 6,
+      "name": "Drive model slot 36",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 7,
+      "subtype": 7,
+      "normalized_subtype": 7,
+      "name": "Drive model slot 37",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 8,
+      "subtype": 8,
+      "normalized_subtype": 8,
+      "name": "PITCH",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 9,
+      "subtype": 9,
+      "normalized_subtype": 9,
+      "name": "ENV WAH",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 10,
+      "subtype": 10,
+      "normalized_subtype": 10,
+      "name": "WAH",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 1,
+      "family": "FX2",
+      "selector_slot": 11,
+      "subtype": 11,
+      "normalized_subtype": 11,
+      "name": "MOTION WAH",
+      "processor": "0x4006ca50",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 2,
+      "family": "AMP",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "AMP model",
+      "processor": "0x400741b8",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 3,
+      "family": "CAB",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "CAB / IR",
+      "processor": "0x4005f2c4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "BBD",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 1,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "DIGITAL",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 2,
+      "subtype": 2,
+      "normalized_subtype": 2,
+      "name": "DUCK",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 3,
+      "subtype": 3,
+      "normalized_subtype": 3,
+      "name": "ICE",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 4,
+      "subtype": 4,
+      "normalized_subtype": 4,
+      "name": "REVERSE",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 5,
+      "subtype": 5,
+      "normalized_subtype": 5,
+      "name": "LOFI",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 6,
+      "subtype": 6,
+      "normalized_subtype": 6,
+      "name": "SMEAR",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 4,
+      "family": "DEL",
+      "selector_slot": 7,
+      "subtype": 7,
+      "normalized_subtype": 7,
+      "name": "MOD",
+      "processor": "0x40066cee",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "CHORUS",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 1,
+      "subtype": 11,
+      "normalized_subtype": 11,
+      "name": "CHORUS II",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 2,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "PHASER",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 3,
+      "subtype": 12,
+      "normalized_subtype": 12,
+      "name": "PHASER II",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 4,
+      "subtype": 2,
+      "normalized_subtype": 2,
+      "name": "FLANGER",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 5,
+      "subtype": 17,
+      "normalized_subtype": 17,
+      "name": "JET FLANGER",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 6,
+      "subtype": 4,
+      "normalized_subtype": 4,
+      "name": "VIBRATO",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 7,
+      "subtype": 10,
+      "normalized_subtype": 10,
+      "name": "VELVET VIBRATO",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "selector_slot": 8,
+      "subtype": 3,
+      "normalized_subtype": 3,
+      "name": "TREMOLO",
+      "processor": "0x40071cfe",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "ROOM",
+      "processor": "0x30043fd4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 1,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "PLATE",
+      "processor": "0x30043fd4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 2,
+      "subtype": 2,
+      "normalized_subtype": 2,
+      "name": "HALL",
+      "processor": "0x30043fd4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 3,
+      "subtype": 3,
+      "normalized_subtype": 3,
+      "name": "CONCERT",
+      "processor": "0x30043fd4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 4,
+      "subtype": 4,
+      "normalized_subtype": 2,
+      "name": "HALL",
+      "processor": "0x30043fd4",
+      "status": "selector-alias",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 5,
+      "subtype": 5,
+      "normalized_subtype": 5,
+      "name": "SHIMMER",
+      "processor": "0x30043fd4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 6,
+      "subtype": 6,
+      "normalized_subtype": 6,
+      "name": "CLOUD",
+      "processor": "0x30043fd4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "selector_slot": 7,
+      "subtype": 7,
+      "normalized_subtype": 7,
+      "name": "SPRING",
+      "processor": "0x30043fd4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 7,
+      "family": "EQ",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "EQ3",
+      "processor": "0x40066fb4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 7,
+      "family": "EQ",
+      "selector_slot": 1,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "EQ6",
+      "processor": "0x40066fb4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 7,
+      "family": "EQ",
+      "selector_slot": 2,
+      "subtype": 2,
+      "normalized_subtype": 2,
+      "name": "EQ8",
+      "processor": "0x40066fb4",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 8,
+      "family": "GAT",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "GATE",
+      "processor": "0x40069738",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 8,
+      "family": "GAT",
+      "selector_slot": 1,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "AUTO GATE",
+      "processor": "0x40069738",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "selector_slot": 0,
+      "subtype": 0,
+      "normalized_subtype": 0,
+      "name": "VOLUME",
+      "processor": "0x40068d96",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "selector_slot": 1,
+      "subtype": 1,
+      "normalized_subtype": 1,
+      "name": "PAN",
+      "processor": "0x40068d96",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "selector_slot": 2,
+      "subtype": 2,
+      "normalized_subtype": 2,
+      "name": "WIDTH",
+      "processor": "0x40068d96",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "selector_slot": 3,
+      "subtype": 3,
+      "normalized_subtype": 3,
+      "name": "WAH",
+      "processor": "0x40068d96",
+      "status": "selector-entry",
+      "basis": "Counts40025c82, picker40025d1e/40025d2c, normalization40025ca4 and names40025d92; runtime availability not physically exercised."
+    }
+  ],
+  "dormant_labels": [
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 5,
+      "name": "CHORUS",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 6,
+      "name": "CHORUS",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 7,
+      "name": "CHORUS",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 8,
+      "name": "PULSE VIBE",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 9,
+      "name": "MOTION WAH",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 13,
+      "name": "FLANGER II",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 14,
+      "name": "CHORUS III",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 15,
+      "name": "CHORUS",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 16,
+      "name": "PHASER III",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 5,
+      "family": "MOD",
+      "subtype": 18,
+      "name": "RING MOD",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 6,
+      "family": "REV",
+      "subtype": 4,
+      "name": "CLOUD",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 4,
+      "name": "PITCH",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 5,
+      "name": "VOLUME",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 6,
+      "name": "VOLUME",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 7,
+      "name": "VOLUME",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 8,
+      "name": "COMB FILTER",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 9,
+      "name": "HAAS",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 10,
+      "name": "TAPE STOP",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    },
+    {
+      "block": 9,
+      "family": "EXP",
+      "subtype": 11,
+      "name": "BITCRUSH",
+      "status": "label-present-not-exposed-by-reviewed-selector"
+    }
+  ],
+  "synth_metadata": [
+    {
+      "voice": 0,
+      "name": "Analog Synth",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 1,
+      "name": "Strings",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 2,
+      "name": "Pad",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 3,
+      "name": "Choir",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 4,
+      "name": "Brass",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 5,
+      "name": "Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 6,
+      "name": "Flute",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 7,
+      "name": "Lead",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 8,
+      "name": "Bass",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 9,
+      "name": "Pluck",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 10,
+      "name": "Poly Saw",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 11,
+      "name": "Supersaw",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 12,
+      "name": "Square Sub",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 13,
+      "name": "Fuzz Synth",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 14,
+      "name": "Fold Pluck",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 15,
+      "name": "Sync Lead",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 16,
+      "name": "Talkbox",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 17,
+      "name": "Shimmer Pad",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 18,
+      "name": "Solina",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 19,
+      "name": "Accordion",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 20,
+      "name": "Harmonica",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 21,
+      "name": "Cello",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 22,
+      "name": "Sitar",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 23,
+      "name": "Glockenspiel",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 24,
+      "name": "Tonewheel",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 25,
+      "name": "Octave Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 26,
+      "name": "Gospel Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 27,
+      "name": "Leslie Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 28,
+      "name": "Pipe Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 29,
+      "name": "Full Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 30,
+      "name": "Pipe Flute",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 31,
+      "name": "Pipe Trumpet",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 32,
+      "name": "Farfisa",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 33,
+      "name": "Vox Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 34,
+      "name": "Theatre Organ",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 35,
+      "name": "Harmonium",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 36,
+      "name": "Arp Saw",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 37,
+      "name": "Arp Pluck",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 38,
+      "name": "Arp Bell",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 39,
+      "name": "Arp Chip",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 40,
+      "name": "Arp Marimba",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 41,
+      "name": "Arp Pedal",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 42,
+      "name": "Arp Glass",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 43,
+      "name": "Trance Gate",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 44,
+      "name": "PWM Brass",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 45,
+      "name": "FM E-Piano",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 46,
+      "name": "FM Bass",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 47,
+      "name": "Ring Mod",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 48,
+      "name": "Formant",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 49,
+      "name": "Sync Bass",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 50,
+      "name": "Wavetable",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 51,
+      "name": "Additive",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 52,
+      "name": "Grain Cloud",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 53,
+      "name": "Blown Pipe",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 54,
+      "name": "Comb String",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 55,
+      "name": "Phase Dist",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 56,
+      "name": "Sub Bass",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 57,
+      "name": "Noise Pluck",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 58,
+      "name": "Clarinet",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    },
+    {
+      "voice": 59,
+      "name": "Acid Gate",
+      "status": "metadata-only; selector count zero and no chain callback established"
+    }
+  ],
+  "limitations": [
+    "Selector entries include aliases and shared algorithms; not a count of independent DSP implementations.",
+    "AMP, IR and drive data are external assets; their complete sounds cannot be recovered from firmware code alone.",
+    "Additional MOD labels can have code but are not all exposed by this selector.",
+    "SYN names alone do not prove executable synth effects in1.12."
+  ]
+}

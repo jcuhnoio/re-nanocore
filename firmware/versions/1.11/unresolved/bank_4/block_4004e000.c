@@ -1,0 +1,1088 @@
+/* NanoCore 1.11 analysis module: unresolved/bank_4/block_4004e000.c
+ * C-like decompilation, not buildable original source.
+ * See README.rst and manifest.json for provenance and limitations.
+ */
+
+/* NanoCore 1.11, address 0x4004e144.
+ * REA evidence: ev_967b0de9174b11dd67db8013194ffb0bc0f61bd984c1fca052dd86987ca5b71d
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e144(undefined4 param_1,int param_2,int param_3,int *param_4,int *param_5,
+                     undefined4 param_6,code *param_7)
+
+{
+  int iVar1;
+  undefined2 uStack_7c;
+  undefined1 uStack_7a;
+  undefined4 uStack_78;
+  ushort uStack_74;
+  undefined1 auStack_70 [16];
+  int local_60 [4];
+  undefined1 auStack_50 [16];
+  undefined1 auStack_40 [24];
+  
+  uStack_7c = *(undefined2 *)(param_2 + 0x48);
+  uStack_7a = *(undefined1 *)(param_2 + 0x4a);
+  uStack_78 = *(undefined4 *)(param_3 + 0x20);
+  uStack_74 = uStack_74 & 0xfe00 | (ushort)*(undefined4 *)(param_3 + 0x24) & 0x1ff;
+  if (*(int *)(param_3 + 0x1c) == 0) {
+LAB_ram_4004e1c8:
+    FUN_ram_4000304c(auStack_70,param_6,0x10);
+    FUN_ram_4004a3ec(auStack_70,-*param_5,-param_5[1]);
+    if (param_4 == (int *)0x0) {
+      param_4 = local_60;
+    }
+    *param_4 = -0x1fffffff;
+    param_4[1] = -0x1fffffff;
+    param_4[2] = -0x1fffffff;
+    param_4[3] = -0x1fffffff;
+    while( true ) {
+      iVar1 = FUN_ram_4004f6b6(param_3,auStack_70,param_4);
+      FUN_ram_4000304c(auStack_50,param_4,0x10);
+      FUN_ram_4004a3ec(auStack_50,*param_5,param_5[1]);
+      if (iVar1 != 1) break;
+      iVar1 = FUN_ram_4004a406(auStack_40,param_6,auStack_50);
+      if (iVar1 != 0) {
+        (*param_7)(param_1,param_2,param_3,&uStack_7c,auStack_50,auStack_40);
+      }
+    }
+  }
+  else {
+    if (param_4 != (int *)0x0) {
+      if (*param_4 != -0x1fffffff) goto LAB_ram_4004e1c8;
+    }
+    (*param_7)(param_1,param_2,param_3,&uStack_7c,param_5,param_6);
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e240.
+ * REA evidence: ev_5daa7c1dbbf64d57858fdc63ef38e851a4228b7cb637c5e218dfdc95ec75dd19
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e240(int param_1)
+
+{
+  thunk_FUN_ram_4000504c(param_1,0,0x68);
+  *(undefined4 *)(param_1 + 0x30) = 0x100;
+  *(undefined4 *)(param_1 + 0x34) = 0x100;
+  *(ushort *)(param_1 + 0x4c) = *(ushort *)(param_1 + 0x4c) & 0xef00 | 0x10ff;
+  *(undefined4 *)(param_1 + 0x5c) = 0xe0000001;
+  *(undefined2 *)(param_1 + 0x48) = 0;
+  *(undefined1 *)(param_1 + 0x4a) = 0;
+  *(undefined4 *)(param_1 + 0x14) = 0x68;
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e290.
+ * REA evidence: ev_a146fb24a2c5f8a2c48155f2e4ffb3a51433f7025e42d9972db39bfdf823f71b
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+int FUN_ram_4004e290(byte *param_1)
+
+{
+  int iVar1;
+  
+  if (param_1 == (byte *)0x0) {
+    iVar1 = 3;
+  }
+  else {
+    iVar1 = 1;
+    if (0x5f < (byte)(*param_1 - 0x20)) {
+      return (uint)(*param_1 >> 7) << 1;
+    }
+  }
+  return iVar1;
+}
+
+
+/* NanoCore 1.11, address 0x4004e2b4.
+ * REA evidence: ev_8308778292f6fe936190b39d46ee5eb60ccbeb401041cc7b47cdff99b39bcf51
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e2b4(int param_1,int param_2,undefined4 param_3,int param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  uint uVar3;
+  uint uVar4;
+  int iVar5;
+  int iStack_8c;
+  int iStack_88;
+  int iStack_84;
+  int iStack_80;
+  undefined1 auStack_7c [16];
+  undefined1 auStack_6c [16];
+  undefined1 auStack_5c [60];
+  
+  if (param_4 != 0) {
+    iVar1 = FUN_ram_4004f5fc(auStack_5c,*(undefined4 *)(param_2 + 0x1c),0);
+    if (iVar1 == 1) {
+      uVar3 = (uint)*(ushort *)(param_2 + 0x24);
+      uVar4 = (uint)*(ushort *)(param_2 + 0x26);
+      FUN_ram_4000304c(&iStack_8c,param_3,0x10);
+      FUN_ram_4004a3a8(&iStack_8c,uVar3);
+      FUN_ram_4004a3b2(&iStack_8c,uVar4);
+      iVar1 = iStack_8c;
+      iVar5 = uVar3 + iStack_8c;
+      FUN_ram_4000304c(auStack_7c,&DAT_ram_40093884,0x10);
+      while( true ) {
+        if (*(int *)(*(int *)(param_1 + 8) + 0xc) < iStack_88) break;
+        while( true ) {
+          if (*(int *)(*(int *)(param_1 + 8) + 8) < iStack_8c) break;
+          iVar2 = FUN_ram_4004a406(auStack_6c,&iStack_8c);
+          if (iVar2 != 0) {
+            FUN_ram_4004e144(param_1,param_2,auStack_5c,auStack_7c,&iStack_8c,auStack_6c,param_4);
+          }
+          iStack_8c = iStack_8c + uVar3;
+          iStack_84 = iStack_84 + uVar3;
+        }
+        iStack_88 = iStack_88 + uVar4;
+        iStack_80 = iStack_80 + uVar4;
+        iStack_8c = iVar1;
+        iStack_84 = iVar5 + -1;
+      }
+      FUN_ram_4004f6ca(auStack_5c);
+    }
+    return;
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e384.
+ * REA evidence: ev_0bba6516bb53712f52d6d926d5eb58eb543f3aaea68b490e1767c3f1748d8032
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e384(int *param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
+                     undefined4 param_7)
+
+{
+  int iVar1;
+  int local_40;
+  int iStack_3c;
+  int iStack_38;
+  int iStack_34;
+  int iStack_30;
+  int iStack_2c;
+  int iStack_28;
+  int iStack_24;
+  
+  if (((param_4 == 0) && (param_5 == 0x100)) && (param_6 == 0x100)) {
+    *param_1 = 0;
+    param_1[1] = 0;
+    param_1[2] = param_2 + -1;
+    param_1[3] = param_3 + -1;
+  }
+  else {
+    local_40 = 0;
+    iStack_3c = 0;
+    iStack_34 = 0;
+    iStack_30 = 0;
+    iStack_38 = param_2;
+    iStack_2c = param_3;
+    iStack_28 = param_2;
+    iStack_24 = param_3;
+    FUN_ram_4004ab44(&local_40,param_4,param_5,param_6,param_7,1);
+    FUN_ram_4004ab44(&iStack_38,param_4,param_5,param_6,param_7,1);
+    FUN_ram_4004ab44(&iStack_30,param_4,param_5,param_6,param_7,1);
+    FUN_ram_4004ab44(&iStack_28,param_4,param_5,param_6,param_7,1);
+    iVar1 = iStack_30;
+    if (iStack_28 <= iStack_30) {
+      iVar1 = iStack_28;
+    }
+    if (iStack_38 < iVar1) {
+      iVar1 = iStack_38;
+    }
+    if (local_40 < iVar1) {
+      iVar1 = local_40;
+    }
+    *param_1 = iVar1;
+    if (iStack_28 < iStack_30) {
+      iStack_28 = iStack_30;
+    }
+    if (iStack_28 < iStack_38) {
+      iStack_28 = iStack_38;
+    }
+    if (iStack_28 < local_40) {
+      iStack_28 = local_40;
+    }
+    param_1[2] = iStack_28 + -1;
+    iVar1 = iStack_2c;
+    if (iStack_24 <= iStack_2c) {
+      iVar1 = iStack_24;
+    }
+    if (iStack_34 < iVar1) {
+      iVar1 = iStack_34;
+    }
+    if (iStack_3c < iVar1) {
+      iVar1 = iStack_3c;
+    }
+    param_1[1] = iVar1;
+    if (iStack_24 < iStack_2c) {
+      iStack_24 = iStack_2c;
+    }
+    if (iStack_24 < iStack_34) {
+      iStack_24 = iStack_34;
+    }
+    if (iStack_24 < iStack_3c) {
+      iStack_24 = iStack_3c;
+    }
+    param_1[3] = iStack_24 + -1;
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e49c.
+ * REA evidence: ev_5d097a62c4785ac367c17a5f814da8a26a58dfa3c61600d678fff9e4aa427a4a
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e49c(undefined4 param_1,int param_2,int *param_3)
+
+{
+  undefined2 uVar1;
+  undefined2 uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  
+  iVar3 = FUN_ram_4004d4d2(param_1,param_3);
+  uVar4 = FUN_ram_4005ab20(0x68);
+  *(undefined4 *)(iVar3 + 0x4c) = uVar4;
+  thunk_FUN_ram_400050c6(uVar4,param_2,0x68);
+  iVar6 = param_3[3];
+  *(undefined4 *)(iVar3 + 4) = 5;
+  iVar7 = param_3[1];
+  iVar5 = param_3[2];
+  uVar1 = *(undefined2 *)(param_2 + 0x30);
+  iVar8 = *param_3;
+  uVar4 = *(undefined4 *)(param_2 + 0x2c);
+  uVar2 = *(undefined2 *)(param_2 + 0x34);
+  *(undefined4 *)(iVar3 + 0x48) = 0;
+  FUN_ram_4004e384(iVar3 + 0x18,(iVar5 - iVar8) + 1,(iVar6 - iVar7) + 1,uVar4,uVar1,uVar2,
+                   param_2 + 0x40);
+  FUN_ram_4004a3ec(iVar3 + 0x18,*param_3,param_3[1]);
+  *(undefined1 *)(*(int *)(param_2 + 0x1c) + 0x34) = 1;
+  FUN_ram_4004d6fe(param_1,iVar3);
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e524.
+ * REA evidence: ev_99251333e2a18d7ce1999e3c68625c9315917d53d962d63c0a135bae9130819c
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e524(undefined4 param_1,int param_2,int *param_3)
+
+{
+  undefined2 uVar1;
+  int iVar2;
+  int iVar3;
+  int iVar4;
+  int iVar5;
+  undefined4 uVar6;
+  int iVar7;
+  int iVar8;
+  
+  if ((*(int *)(param_2 + 0x1c) != 0) && (2 < *(byte *)(param_2 + 0x4c))) {
+    iVar2 = FUN_ram_4005ab20(0x68);
+    thunk_FUN_ram_400050c6(iVar2,param_2,0x68);
+    iVar3 = FUN_ram_4004f5ea(*(undefined4 *)(iVar2 + 0x1c),iVar2 + 0x20);
+    if (iVar3 != 1) {
+      FUN_ram_4005ab56(iVar2);
+      return;
+    }
+    iVar3 = FUN_ram_4004d4d2(param_1,param_3);
+    iVar5 = param_3[3];
+    *(undefined4 *)(iVar3 + 4) = 4;
+    iVar7 = param_3[1];
+    iVar4 = param_3[2];
+    uVar1 = *(undefined2 *)(param_2 + 0x30);
+    iVar8 = *param_3;
+    uVar6 = *(undefined4 *)(param_2 + 0x2c);
+    *(int *)(iVar3 + 0x4c) = iVar2;
+    FUN_ram_4004e384(iVar3 + 0x18,(iVar4 - iVar8) + 1,(iVar5 - iVar7) + 1,uVar6,uVar1,
+                     *(undefined2 *)(param_2 + 0x34),param_2 + 0x40);
+    FUN_ram_4004a3ec(iVar3 + 0x18,*param_3,param_3[1]);
+    FUN_ram_4004d6fe(param_1,iVar3);
+    return;
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e5da.
+ * REA evidence: ev_21a56783f75db623355d219b9827e7cb3be2f70e3858a3b5c3e4313b6dce25a0
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e5da(int param_1,int param_2,int *param_3,int param_4)
+
+{
+  int iVar1;
+  int iStack_7c;
+  int iStack_78;
+  int iStack_74;
+  int iStack_70;
+  undefined1 auStack_6c [16];
+  undefined1 auStack_5c [72];
+  
+  if (param_4 != 0) {
+    iStack_78 = param_3[1];
+    iStack_74 = param_3[2];
+    iStack_7c = *param_3;
+    iStack_70 = param_3[3];
+    if (((*(int *)(param_2 + 0x2c) != 0) || (*(uint *)(param_2 + 0x30) != 0x100)) ||
+       (*(uint *)(param_2 + 0x34) != 0x100)) {
+      FUN_ram_4004e384(&iStack_7c,(iStack_74 - iStack_7c) + 1,(iStack_70 - iStack_78) + 1,
+                       *(int *)(param_2 + 0x2c),*(uint *)(param_2 + 0x30) & 0xffff,
+                       *(uint *)(param_2 + 0x34) & 0xffff,param_2 + 0x40);
+      iStack_7c = iStack_7c + *param_3;
+      iStack_78 = iStack_78 + param_3[1];
+      iStack_74 = iStack_74 + *param_3;
+      iStack_70 = iStack_70 + param_3[1];
+    }
+    iVar1 = FUN_ram_4004a406(auStack_6c,&iStack_7c,*(undefined4 *)(param_1 + 8));
+    if ((iVar1 != 0) &&
+       (iVar1 = FUN_ram_4004f5fc(auStack_5c,*(undefined4 *)(param_2 + 0x1c),0), iVar1 == 1)) {
+      FUN_ram_4004e144(param_1,param_2,auStack_5c,0,param_3,auStack_6c,param_4);
+      FUN_ram_4004f6ca(auStack_5c);
+    }
+    return;
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e694.
+ * REA evidence: ev_8a586d26ad7f8a5ffb2bfad47d9237892d888fdc232138d13135e7d2373594ae
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+bool FUN_ram_4004e694(uint param_1)
+
+{
+  if (((((0x1f < param_1) && (param_1 != 0x61c)) && (1 < param_1 - 0x115f)) &&
+      ((3 < param_1 - 0x180b && (4 < param_1 - 0x200b)))) &&
+     ((7 < param_1 - 0x2028 && ((0x10 < param_1 - 0x205f && (param_1 != 0xfeff)))))) {
+    return param_1 == 0xf8ff;
+  }
+  return true;
+}
+
+
+/* NanoCore 1.11, address 0x4004e702.
+ * REA evidence: ev_761500f4331de765d463ac58daf49f0a3ea31314ba97a696fe592ceae143142a
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e702(int param_1)
+
+{
+  undefined4 uVar1;
+  
+  thunk_FUN_ram_4000504c(param_1,0,0x54);
+  *(undefined1 *)(param_1 + 0x48) = 0xff;
+  *(undefined ***)(param_1 + 0x20) = &PTR_LAB_ram_40012e96_ram_40094b68;
+  *(undefined4 *)(param_1 + 0x24) = 0xffff;
+  *(undefined4 *)(param_1 + 0x28) = 0xffff;
+  *(undefined4 *)(param_1 + 0x2c) = 0;
+  *(undefined2 *)(param_1 + 0x30) = 0;
+  uVar1 = FUN_ram_4004b7e2(5);
+  *(char *)(param_1 + 0x32) = (char)uVar1;
+  *(char *)(param_1 + 0x33) = (char)((uint)uVar1 >> 8);
+  *(char *)(param_1 + 0x34) = (char)((uint)uVar1 >> 0x10);
+  *(undefined1 *)(param_1 + 0x49) = 0;
+  *(undefined4 *)(param_1 + 0x14) = 0x54;
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e760.
+ * REA evidence: ev_a017b378501b9a8142c59cf82a1d81bfca51167241b25d84933b47ecb0683592
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+undefined4 FUN_ram_4004e760(int param_1)
+
+{
+  if (*(int *)(param_1 + 4) == 3) {
+    return *(undefined4 *)(param_1 + 0x4c);
+  }
+  return 0;
+}
+
+
+/* NanoCore 1.11, address 0x4004e770.
+ * REA evidence: ev_4f369f1844de8cd353e23518612b468eaca72bf401489e9969ba3e4e80c473f4
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e770(undefined4 param_1)
+
+{
+  thunk_FUN_ram_4000504c(param_1,0,0x1c);
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e778.
+ * REA evidence: ev_356f1a0e0e6bfbc675958ddcf4cf2ba793a4006fa555bea93a69d41ad8eb1a0d
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004e778(undefined4 param_1,int param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  
+  if (*(byte *)(param_2 + 0x48) < 3) {
+    return;
+  }
+  if (((*(char **)(param_2 + 0x1c) != (char *)0x0) && (**(char **)(param_2 + 0x1c) != '\0')) &&
+     (*(int *)(param_2 + 0x20) != 0)) {
+    iVar1 = FUN_ram_4004d4d2(param_1,param_3);
+    uVar2 = FUN_ram_4005ab20(0x54);
+    *(undefined4 *)(iVar1 + 0x4c) = uVar2;
+    thunk_FUN_ram_400050c6(uVar2,param_2,0x54);
+    *(undefined4 *)(iVar1 + 4) = 3;
+    if ((*(byte *)(param_2 + 0x4c) & 0x40) != 0) {
+      iVar3 = *(int *)(iVar1 + 0x4c);
+      uVar2 = FUN_ram_4005ac36(*(undefined4 *)(param_2 + 0x1c));
+      *(undefined4 *)(iVar3 + 0x1c) = uVar2;
+    }
+    FUN_ram_4004d6fe(param_1,iVar1);
+    return;
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004e7fc.
+ * REA evidence: ev_a572733142fd253993f35d87d48e759370bd809e37220946b837b7f1d26b0b41
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+/* WARNING: Removing unreachable block (ram,0x4004eb7c) */
+/* WARNING: Removing unreachable block (ram,0x4004eb90) */
+/* WARNING: Removing unreachable block (ram,0x4004e914) */
+/* WARNING: Removing unreachable block (ram,0x4004e9ea) */
+
+void FUN_ram_4004e7fc(int param_1,int param_2,int *param_3,code *param_4)
+
+{
+  bool bVar1;
+  char cVar2;
+  char *pcVar3;
+  undefined4 uVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  uint uVar11;
+  int *piVar12;
+  int iVar13;
+  int iVar14;
+  int iVar15;
+  int iVar16;
+  int iVar17;
+  uint uVar18;
+  uint uVar19;
+  int iVar20;
+  uint uVar21;
+  int iStack_114;
+  int iStack_110;
+  int iStack_10c;
+  uint uStack_e0;
+  undefined4 uStack_dc;
+  undefined4 uStack_d8;
+  undefined1 auStack_d4 [16];
+  int iStack_c4;
+  int iStack_c0;
+  uint uStack_bc;
+  int iStack_b8;
+  int iStack_b4;
+  int iStack_b0;
+  int iStack_ac;
+  int iStack_a8;
+  int iStack_a4;
+  undefined4 uStack_a0;
+  undefined4 uStack_9c;
+  undefined4 uStack_98;
+  int iStack_8c;
+  undefined1 uStack_88;
+  int *piStack_84;
+  int *piStack_80;
+  int *piStack_7c;
+  undefined2 uStack_78;
+  undefined1 uStack_76;
+  undefined1 uStack_75;
+  int iStack_74;
+  int aiStack_70 [8];
+  undefined1 uStack_50;
+  undefined1 auStack_4f [27];
+  
+  iVar5 = *(int *)(param_2 + 0x20);
+  iVar7 = FUN_ram_4004a406(auStack_d4,param_3,*(undefined4 *)(param_1 + 8));
+  if (iVar7 == 0) {
+    return;
+  }
+  cVar2 = *(char *)(param_2 + 0x4a);
+  if ((*(byte *)(param_2 + 0x4b) & 1) == 0) {
+    iVar7 = (param_3[2] - *param_3) + 1;
+  }
+  else {
+    FUN_ram_4004c488(aiStack_70,*(undefined4 *)(param_2 + 0x1c),*(undefined4 *)(param_2 + 0x20),
+                     *(undefined4 *)(param_2 + 0x3c),*(undefined4 *)(param_2 + 0x38),0x1fffffff);
+    iVar7 = aiStack_70[0];
+  }
+  iVar17 = *(int *)(iVar5 + 0xc);
+  piVar12 = *(int **)(param_2 + 0x50);
+  iVar13 = *(int *)(param_2 + 0x38) + iVar17;
+  iVar14 = *(int *)(param_2 + 0x40);
+  iVar20 = *param_3;
+  iVar6 = 0;
+  iStack_110 = param_3[1] + *(int *)(param_2 + 0x44);
+  if (((piVar12 != (int *)0x0) && (*(int *)(param_2 + 0x44) == 0)) && (iStack_110 < 0)) {
+    uVar11 = piVar12[2] - iStack_110 >> 0x1f;
+    if ((0x200 - iVar13) * 2 < (int)((piVar12[2] - iStack_110 ^ uVar11) - uVar11)) {
+      *piVar12 = -1;
+    }
+    iVar6 = 0;
+    if (-1 < *piVar12) {
+      iStack_110 = iStack_110 + piVar12[1];
+      iVar6 = *piVar12;
+    }
+  }
+  iVar8 = FUN_ram_4004c1e2(*(int *)(param_2 + 0x1c) + iVar6,iVar5,*(undefined4 *)(param_2 + 0x3c),
+                           iVar7,0,*(undefined1 *)(param_2 + 0x4b));
+  iVar8 = iVar8 + iVar6;
+  while (iVar15 = iVar17 + iStack_110, iStack_110 = iStack_110 + iVar13,
+        iVar15 < *(int *)(*(int *)(param_1 + 8) + 4)) {
+    iVar15 = FUN_ram_4004c1e2(*(int *)(param_2 + 0x1c) + iVar8,iVar5,*(undefined4 *)(param_2 + 0x3c)
+                              ,iVar7,0,*(undefined1 *)(param_2 + 0x4b));
+    piVar12 = *(int **)(param_2 + 0x50);
+    if (((piVar12 != (int *)0x0) && (-0x401 < iStack_110)) && (*piVar12 < 0)) {
+      iVar6 = param_3[1];
+      *piVar12 = iVar8;
+      piVar12[1] = iStack_110 - iVar6;
+      piVar12[2] = iVar6;
+    }
+    pcVar3 = (char *)(*(int *)(param_2 + 0x1c) + iVar8);
+    iVar6 = iVar8;
+    iVar8 = iVar15 + iVar8;
+    if (*pcVar3 == '\0') {
+      return;
+    }
+  }
+  if (cVar2 == '\x02') {
+    iVar17 = FUN_ram_4004c426(*(int *)(param_2 + 0x1c) + iVar6,iVar8 - iVar6,iVar5,
+                              *(undefined4 *)(param_2 + 0x3c));
+    iVar17 = (((param_3[2] - *param_3) + 1) - iVar17) / 2;
+  }
+  else {
+    if (cVar2 != '\x03') goto LAB_ram_4004e91a;
+    iVar17 = FUN_ram_4004c426(*(int *)(param_2 + 0x1c) + iVar6,iVar8 - iVar6,iVar5,
+                              *(undefined4 *)(param_2 + 0x3c));
+    iVar17 = ((param_3[2] - *param_3) + 1) - iVar17;
+  }
+  iVar20 = iVar20 + iVar17;
+LAB_ram_4004e91a:
+  uVar18 = *(uint *)(param_2 + 0x24);
+  uVar19 = *(uint *)(param_2 + 0x28);
+  uVar11 = uVar18;
+  if (uVar19 < uVar18) {
+    uVar11 = uVar19;
+    uVar19 = uVar18;
+  }
+  FUN_ram_4004e770(&iStack_8c);
+  uStack_75 = *(undefined1 *)(param_2 + 0x48);
+  piStack_80 = &iStack_c4;
+  uStack_78 = *(undefined2 *)(param_2 + 0x2c);
+  uStack_76 = *(undefined1 *)(param_2 + 0x2e);
+  FUN_ram_4004ee54(aiStack_70);
+  uStack_50 = *(undefined1 *)(param_2 + 0x48);
+  iStack_10c = (int)*(char *)(iVar5 + 0x16);
+  if (iStack_10c == 0) {
+    iStack_10c = 1;
+  }
+  do {
+    iVar17 = iStack_110 - iVar13;
+    iVar15 = *(int *)(param_2 + 0x1c);
+    if (*(char *)(iVar15 + iVar6) == '\0') break;
+    uStack_e0 = 0;
+    iVar20 = iVar14 + iVar20;
+    iVar16 = iStack_110 + -1;
+    iStack_114 = iVar20;
+    while (uStack_e0 < (uint)(iVar8 - iVar6)) {
+      uVar18 = 0;
+      if ((uVar11 != 0xffff) && (uVar19 != 0xffff)) {
+        uVar18 = (**(code **)(gp + -0x38))(*(undefined4 *)(param_2 + 0x1c),uStack_e0 + iVar6);
+      }
+      FUN_ram_4004c3e6(iVar15 + iVar6,&uStack_dc,&uStack_d8,&uStack_e0);
+      iVar9 = FUN_ram_40059926(iVar5,uStack_dc,uStack_d8);
+      iStack_c4 = iStack_114;
+      uVar21 = (iStack_114 + iVar9) - 1;
+      iStack_c0 = iVar17;
+      uStack_bc = uVar21;
+      iStack_b8 = iVar16;
+      if ((uint)(iVar8 - iVar6) <= uStack_e0) {
+        if ((*(uint *)(param_2 + 0x4c) & 1) != 0) {
+          uStack_a0 = ((*(int *)(iVar5 + 0xc) + iVar17) - *(int *)(iVar5 + 0x10)) -
+                      (int)*(char *)(iVar5 + 0x15);
+          uStack_98 = uStack_a0 + iStack_10c + -1;
+          iStack_a4 = iVar20;
+          uStack_9c = uVar21;
+          FUN_ram_4000304c(auStack_4f,param_2 + 0x2c,3);
+          (*param_4)(param_1,0,aiStack_70,&iStack_a4);
+        }
+        if ((*(uint *)(param_2 + 0x4c) & 2) != 0) {
+          uStack_a0 = ((*(int *)(iVar5 + 0xc) - *(int *)(iVar5 + 0x10)) * 2) / 3 + iVar17 +
+                      (int)*(char *)(iVar5 + 0x16) / 2;
+          uStack_98 = uStack_a0 + iStack_10c + -1;
+          iStack_a4 = iVar20;
+          uStack_9c = uVar21;
+          FUN_ram_4000304c(auStack_4f,param_2 + 0x2c,3);
+          (*param_4)(param_1,0,aiStack_70,&iStack_a4);
+        }
+      }
+      if (((uVar11 == 0xffff) || (uVar19 == 0xffff)) || ((uVar18 < uVar11 || (uVar19 <= uVar18)))) {
+        uStack_78 = *(undefined2 *)(param_2 + 0x2c);
+        uStack_76 = *(undefined1 *)(param_2 + 0x2e);
+      }
+      else {
+        FUN_ram_4000304c(&uStack_78,param_2 + 0x2f,3);
+        FUN_ram_4000304c(auStack_4f,param_2 + 0x32,3);
+        (*param_4)(param_1,0,aiStack_70,&iStack_c4);
+      }
+      uVar4 = uStack_dc;
+      iVar10 = FUN_ram_4004e694(uStack_dc);
+      if (iVar10 == 0) {
+        FUN_ram_4005987a(iVar5,&iStack_a4,uVar4,0);
+        uVar18 = uStack_9c & 0xffff;
+        if ((uVar18 != 0) && (uStack_a0 >> 0x10 != 0)) {
+          iStack_b4 = uStack_9c._2_2_ + iStack_114;
+          iStack_ac = (uStack_a0 >> 0x10) + iStack_b4 + -1;
+          iStack_b0 = (((*(int *)(iVar5 + 0xc) - *(int *)(iVar5 + 0x10)) + iVar17) - uVar18) -
+                      (int)(short)uStack_98;
+          iStack_a8 = uVar18 + iStack_b0 + -1;
+          iVar10 = FUN_ram_4004a742(&iStack_b4,*(undefined4 *)(param_1 + 8),0);
+          if ((iVar10 == 0) ||
+             (iVar10 = FUN_ram_4004a742(piStack_80,*(undefined4 *)(param_1 + 8),0), iVar10 == 0)) {
+            if (iStack_a4 == 0) {
+              uStack_88 = 0;
+            }
+            else {
+              iVar10 = 0;
+              if ((byte)(uStack_98._2_1_ - 1U) < 8) {
+                iVar10 = FUN_ram_4004dbec(iStack_74,0,uStack_a0._2_2_,uStack_9c & 0xffff,0);
+                if (iVar10 == 0) {
+                  if (iStack_74 != 0) {
+                    FUN_ram_4004dc4e();
+                  }
+                  uVar18 = uStack_9c & 0xffff;
+                  if (uVar18 * (uStack_a0 >> 0x10) < 0x40) {
+                    uVar18 = uVar18 << 1;
+                  }
+                  iVar10 = FUN_ram_4004daf8(uStack_a0 >> 0x10,uVar18,0xe,0);
+                  *(undefined2 *)(iVar10 + 6) = (undefined2)uStack_9c;
+                  iStack_74 = iVar10;
+                }
+              }
+              iStack_8c = FUN_ram_40059874(&iStack_a4,uVar4,iVar10);
+              uStack_88 = 0;
+              if (iStack_8c != 0) {
+                uStack_88 = uStack_98._2_1_;
+              }
+            }
+            piStack_84 = &iStack_b4;
+            piStack_7c = &iStack_a4;
+            (*param_4)(param_1,&iStack_8c,0,0);
+            if ((iStack_a4 != 0) && (*(code **)(iVar5 + 8) != (code *)0x0)) {
+              (**(code **)(iVar5 + 8))(iVar5,&iStack_a4);
+            }
+          }
+        }
+      }
+      if (iVar9 != 0) {
+        iStack_114 = iStack_114 + iVar9 + *(int *)(param_2 + 0x3c);
+      }
+    }
+    iVar17 = FUN_ram_4004c1e2(*(int *)(param_2 + 0x1c) + iVar8,iVar5,*(undefined4 *)(param_2 + 0x3c)
+                              ,iVar7,0,*(undefined1 *)(param_2 + 0x4b));
+    iVar20 = *param_3;
+    if (cVar2 == '\x02') {
+      iVar6 = FUN_ram_4004c426(*(int *)(param_2 + 0x1c) + iVar8,iVar17,iVar5,
+                               *(undefined4 *)(param_2 + 0x3c));
+      iVar6 = (((param_3[2] - *param_3) + 1) - iVar6) / 2;
+LAB_ram_4004e9ee:
+      iVar20 = iVar20 + iVar6;
+    }
+    else if (cVar2 == '\x03') {
+      iVar6 = FUN_ram_4004c426(*(int *)(param_2 + 0x1c) + iVar8,iVar17,iVar5,
+                               *(undefined4 *)(param_2 + 0x3c));
+      iVar6 = ((param_3[2] - *param_3) + 1) - iVar6;
+      goto LAB_ram_4004e9ee;
+    }
+    bVar1 = iStack_110 <= *(int *)(*(int *)(param_1 + 8) + 0xc);
+    iVar6 = iVar8;
+    iVar8 = iVar8 + iVar17;
+    iStack_110 = iStack_110 + iVar13;
+  } while (bVar1);
+  if (iStack_74 != 0) {
+    FUN_ram_4004dc4e();
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004ed44.
+ * REA evidence: ev_34e0d9d0c075267e1d3b56adb7980c7c1414985e9d0ad6a27c655cca153df98d
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004ed44(undefined4 param_1)
+
+{
+  thunk_FUN_ram_4000504c(param_1,0,0x30);
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004ed4e.
+ * REA evidence: ev_818726039f24eec6ea0e7d03728f9d7820efe9b74c7eac1faaaf02218e31e0ab
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004ed4e(int param_1,undefined4 *param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int *piVar4;
+  
+  iVar1 = FUN_ram_4004ad1e(*(undefined1 *)(param_1 + 0x14));
+  if (iVar1 != 0) {
+    iVar1 = FUN_ram_4004d4d2(param_1,param_1 + 4);
+    uVar2 = FUN_ram_4005ab20(0x30);
+    *(undefined4 *)(iVar1 + 0x4c) = uVar2;
+    thunk_FUN_ram_400050c6(uVar2,param_2,0x30);
+    piVar4 = *(int **)(iVar1 + 0x4c);
+    *(undefined4 *)(iVar1 + 4) = 9;
+    piVar4[4] = param_1;
+    if ((*piVar4 != 0) && (iVar3 = FUN_ram_40043b92(*piVar4,0x80000), iVar3 != 0)) {
+      FUN_ram_40043aac(*piVar4,0x80000);
+      FUN_ram_40044b50(*param_2,0x1d,iVar1);
+      FUN_ram_40043fd6(*piVar4,0x80000);
+    }
+    FUN_ram_4004d6fe(param_1,iVar1);
+    return;
+  }
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004edea.
+ * REA evidence: ev_3c0fd2bbe8f6b086980e41c757fa9af89429d0d09bbf0ed61968cb7770d99fc2
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004edea(int param_1)
+
+{
+  thunk_FUN_ram_4000504c(param_1,0,0x70);
+  *(undefined1 *)(param_1 + 0x2d) = 0xff;
+  *(undefined1 *)(param_1 + 0x2e) = 2;
+  *(undefined4 *)(param_1 + 0x20) = 0xffffffff;
+  *(undefined2 *)(param_1 + 0x24) = 0xffff;
+  *(undefined1 *)(param_1 + 0x26) = 0xff;
+  *(undefined1 *)(param_1 + 0x3b) = 0xff;
+  *(undefined1 *)(param_1 + 0x6c) = 0xff;
+  *(undefined ***)(param_1 + 0x34) = &PTR_LAB_ram_40012e96_ram_40094b68;
+  *(undefined4 *)(param_1 + 0x58) = 0xff;
+  *(undefined1 *)(param_1 + 0x29) = 0;
+  *(undefined2 *)(param_1 + 0x2a) = 0;
+  *(undefined2 *)(param_1 + 0x3e) = 0;
+  *(undefined1 *)(param_1 + 0x40) = 0;
+  *(ushort *)(param_1 + 0x48) = *(ushort *)(param_1 + 0x48) & 0xe000 | 0xfff;
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004ee54.
+ * REA evidence: ev_bd30d5dc6348e170b48446079920e5a90c762604175ba4fe06de3cd3fd5a22d7
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004ee54(int param_1)
+
+{
+  thunk_FUN_ram_4000504c(param_1,0,0x30);
+  *(undefined1 *)(param_1 + 0x20) = 0xff;
+  *(undefined4 *)(param_1 + 0x14) = 0x30;
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004ee7a.
+ * REA evidence: ev_64f85e305e1791c86e309995256ad3d6d35b08b35daf782589d330ee7eff133f
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004ee7a(int param_1)
+
+{
+  thunk_FUN_ram_4000504c(param_1,0,0x2c);
+  *(ushort *)(param_1 + 0x28) = *(ushort *)(param_1 + 0x28) & 0xe000 | 0xfff;
+  *(undefined4 *)(param_1 + 0x14) = 0x2c;
+  return;
+}
+
+
+/* NanoCore 1.11, address 0x4004eeac.
+ * REA evidence: ev_16d872656710b13e1e35fa643e0d377ad3675a18f1289b6ade1b718e3534d759
+ * Decompiled C-like analysis; not original or buildable source.
+ * All decompiler warnings retained.
+ */
+
+void FUN_ram_4004eeac(undefined4 param_1,int param_2,int *param_3)
+
+{
+  byte bVar1;
+  bool bVar2;
+  bool bVar3;
+  bool bVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  int *piVar8;
+  undefined4 uVar9;
+  uint uVar10;
+  uint uVar11;
+  byte bVar12;
+  int iStack_54;
+  int iStack_50;
+  undefined1 auStack_4c [4];
+  ushort uStack_48;
+  ushort uStack_46;
+  int iStack_40;
+  int iStack_3c;
+  int iStack_38;
+  int iStack_34;
+  
+  bVar2 = false;
+  if ((((*(int *)(param_2 + 0x5c) != 0) && (2 < *(byte *)(param_2 + 0x6c))) &&
+      (bVar2 = true, *(int *)(param_2 + 0x5c) == 1)) &&
+     ((*(int *)(param_2 + 0x68) < 1 && (*(int *)(param_2 + 0x60) == 0)))) {
+    bVar2 = *(int *)(param_2 + 100) != 0;
+  }
+  bVar1 = *(byte *)(param_2 + 0x20);
+  bVar3 = false;
+  if (2 < *(byte *)(param_2 + 0x3b)) {
+    bVar3 = *(int *)(param_2 + 0x30) != 0;
+  }
+  uVar11 = 0;
+  if ((2 < *(byte *)(param_2 + 0x48)) && (*(int *)(param_2 + 0x44) != 0)) {
+    uVar11 = ((*(byte *)(param_2 + 0x49) ^ 0x20) & 0x3f) >> 5;
+  }
+  bVar4 = false;
+  if (2 < *(byte *)(param_2 + 0x58)) {
+    bVar4 = *(int *)(param_2 + 0x50) != 0;
+  }
+  bVar12 = 0;
+  if (bVar1 == 0xff) {
+    bVar12 = 1;
+    if ((*(byte *)(param_2 + 0x2f) & 7) != 0) {
+      for (uVar10 = 0; uVar10 < *(byte *)(param_2 + 0x2e); uVar10 = uVar10 + 1) {
+        if (*(char *)(param_2 + 0x27 + uVar10 * 5) != -1) {
+          bVar12 = 0;
+          goto LAB_ram_4004ef62;
+        }
+      }
+      bVar12 = 1;
+    }
+  }
+LAB_ram_4004ef62:
+  if (bVar2) {
+    iVar5 = FUN_ram_4004d4d2(param_1,param_3);
+    iVar6 = FUN_ram_4005ab20(0x38);
+    uVar9 = *(undefined4 *)(param_2 + 0x68);
+    *(int *)(iVar5 + 0x4c) = iVar6;
+    iVar7 = iVar5 + 0x18;
+    FUN_ram_4004a3d2(iVar7,uVar9);
+    FUN_ram_4004a3d2(iVar7,*(undefined4 *)(param_2 + 0x5c));
+    FUN_ram_4004a3ec(iVar7,*(undefined4 *)(param_2 + 0x60),*(undefined4 *)(param_2 + 100));
+    FUN_ram_4000304c(iVar6,param_2,0x1c);
+    *(undefined4 *)(iVar6 + 0x14) = 0x38;
+    *(undefined4 *)(iVar6 + 0x1c) = *(undefined4 *)(param_2 + 0x1c);
+    FUN_ram_4000304c(iVar6 + 0x20,param_2 + 0x59,3);
+    *(undefined4 *)(iVar6 + 0x24) = *(undefined4 *)(param_2 + 0x5c);
+    *(undefined4 *)(iVar6 + 0x28) = *(undefined4 *)(param_2 + 0x68);
+    *(undefined1 *)(iVar6 + 0x34) = *(undefined1 *)(param_2 + 0x6c);
+    *(undefined4 *)(iVar6 + 0x2c) = *(undefined4 *)(param_2 + 0x60);
+    *(undefined4 *)(iVar6 + 0x30) = *(undefined4 *)(param_2 + 100);
+    *(byte *)(iVar6 + 0x35) = *(byte *)(iVar6 + 0x35) & 0xfe | bVar12;
+    *(undefined4 *)(iVar5 + 4) = 2;
+    FUN_ram_4004d6fe(param_1,iVar5);
+  }
+  if (2 < bVar1) {
+    FUN_ram_4000304c(&iStack_40,param_3,0x10);
+    if (1 < *(int *)(param_2 + 0x44)) {
+      if ((0xfc < *(byte *)(param_2 + 0x48)) && (*(int *)(param_2 + 0x1c) != 0)) {
+        iVar5 = *(int *)(param_2 + 0x48);
+        iStack_40 = iStack_40 - ((iVar5 << 0x15) >> 0x1f);
+        iStack_3c = iStack_3c - ((iVar5 << 0x16) >> 0x1f);
+        iStack_38 = iStack_38 + ((iVar5 << 0x14) >> 0x1f);
+        iStack_34 = iStack_34 + ((iVar5 << 0x17) >> 0x1f);
+      }
+    }
+    iVar5 = FUN_ram_4004d4d2(param_1,&iStack_40);
+    iVar6 = FUN_ram_4005ab20(0x30);
+    FUN_ram_4004ee54();
+    *(int *)(iVar5 + 0x4c) = iVar6;
+    FUN_ram_4000304c(iVar6,param_2,0x1c);
+    *(undefined4 *)(iVar6 + 0x14) = 0x30;
+    *(undefined4 *)(iVar6 + 0x1c) = *(undefined4 *)(param_2 + 0x1c);
+    FUN_ram_4000304c(iVar6 + 0x21,param_2 + 0x21,3);
+    FUN_ram_4000304c(iVar6 + 0x24,param_2 + 0x24,0xc);
+    *(undefined1 *)(iVar6 + 0x20) = *(undefined1 *)(param_2 + 0x20);
+    *(undefined4 *)(iVar5 + 4) = 0;
+    FUN_ram_4004d6fe(param_1,iVar5);
+  }
+  if (bVar3) {
+    uVar10 = FUN_ram_4004e290(*(undefined4 *)(param_2 + 0x30));
+    if (uVar10 < 2) {
+      iVar5 = FUN_ram_4004f5ea(*(undefined4 *)(param_2 + 0x30),auStack_4c);
+      if (iVar5 != 1) goto LAB_ram_4004f22a;
+      piVar8 = param_3;
+      if (*(char *)(param_2 + 0x3d) == '\0') {
+        iStack_38 = uStack_48 - 1;
+        iStack_34 = uStack_46 - 1;
+        iStack_40 = 0;
+        iStack_3c = 0;
+        FUN_ram_4004a7d8(param_3,&iStack_40,9,0,0);
+        piVar8 = &iStack_40;
+      }
+      iVar5 = FUN_ram_4004d4d2(param_1,piVar8);
+      iVar6 = FUN_ram_4005ab20(0x68);
+      FUN_ram_4004e240();
+      *(int *)(iVar5 + 0x4c) = iVar6;
+      FUN_ram_4000304c(iVar6,param_2,0x1c);
+      *(undefined4 *)(iVar6 + 0x14) = 0x68;
+      *(undefined4 *)(iVar6 + 0x1c) = *(undefined4 *)(param_2 + 0x30);
+      *(undefined1 *)(iVar6 + 0x4c) = *(undefined1 *)(param_2 + 0x3b);
+      *(undefined2 *)(iVar6 + 0x48) = *(undefined2 *)(param_2 + 0x38);
+      *(undefined1 *)(iVar6 + 0x4a) = *(undefined1 *)(param_2 + 0x3a);
+      *(undefined1 *)(iVar6 + 0x4b) = *(undefined1 *)(param_2 + 0x3c);
+      *(byte *)(iVar6 + 0x4d) =
+           *(byte *)(iVar6 + 0x4d) & 0xdf | (*(byte *)(param_2 + 0x3d) & 1) << 5;
+      FUN_ram_4000304c(iVar6 + 0x20,auStack_4c,0xc);
+      *(undefined4 *)(iVar5 + 4) = 4;
+    }
+    else {
+      if (uVar10 == 3) goto LAB_ram_4004f22a;
+      thunk_FUN_ram_4000504c(auStack_4c,0,0xc);
+      FUN_ram_4004c488(&iStack_54,*(undefined4 *)(param_2 + 0x30),*(undefined4 *)(param_2 + 0x34),0,
+                       0,0x1fffffff,0);
+      iStack_38 = iStack_54 + -1;
+      iStack_34 = iStack_50 + -1;
+      iStack_40 = 0;
+      iStack_3c = 0;
+      FUN_ram_4004a7d8(param_3,&iStack_40,9,0,0);
+      iVar5 = FUN_ram_4004d4d2(param_1,&iStack_40);
+      iVar6 = FUN_ram_4005ab20(0x54);
+      FUN_ram_4004e702();
+      *(int *)(iVar5 + 0x4c) = iVar6;
+      FUN_ram_4000304c(iVar6,param_2,0x1c);
+      *(undefined4 *)(iVar6 + 0x14) = 0x54;
+      *(undefined2 *)(iVar6 + 0x2c) = *(undefined2 *)(param_2 + 0x38);
+      *(undefined1 *)(iVar6 + 0x2e) = *(undefined1 *)(param_2 + 0x3a);
+      *(undefined4 *)(iVar6 + 0x20) = *(undefined4 *)(param_2 + 0x34);
+      *(undefined4 *)(iVar6 + 0x1c) = *(undefined4 *)(param_2 + 0x30);
+      *(undefined4 *)(iVar5 + 4) = 3;
+    }
+    FUN_ram_4004d6fe(param_1,iVar5);
+  }
+LAB_ram_4004f22a:
+  if (uVar11 != 0) {
+    iVar5 = FUN_ram_4004d4d2(param_1,param_3);
+    uVar9 = FUN_ram_4005ab20(0x2c);
+    *(undefined4 *)(iVar5 + 0x4c) = uVar9;
+    iVar6 = FUN_ram_4000304c(uVar9,param_2,0x1c);
+    *(undefined4 *)(iVar6 + 0x14) = 0x2c;
+    *(undefined4 *)(iVar6 + 0x1c) = *(undefined4 *)(param_2 + 0x1c);
+    *(undefined2 *)(iVar6 + 0x20) = *(undefined2 *)(param_2 + 0x3e);
+    *(undefined1 *)(iVar6 + 0x22) = *(undefined1 *)(param_2 + 0x40);
+    *(undefined1 *)(iVar6 + 0x28) = *(undefined1 *)(param_2 + 0x48);
+    *(undefined4 *)(iVar6 + 0x24) = *(undefined4 *)(param_2 + 0x44);
+    *(byte *)(iVar6 + 0x29) =
+         *(byte *)(iVar6 + 0x29) & 0xe0 | (byte)((uint)*(undefined4 *)(param_2 + 0x48) >> 8) & 0x1f;
+    *(undefined4 *)(iVar5 + 4) = 1;
+    FUN_ram_4004d6fe(param_1,iVar5);
+  }
+  if (bVar4) {
+    FUN_ram_4000304c(&iStack_40,param_3,0x10);
+    FUN_ram_4004a3d2(&iStack_40,*(int *)(param_2 + 0x50) + *(int *)(param_2 + 0x54));
+    iVar5 = FUN_ram_4004d4d2(param_1,&iStack_40);
+    iVar6 = FUN_ram_4005ab20(0x2c);
+    uVar9 = *(undefined4 *)(param_2 + 0x50);
+    *(int *)(iVar5 + 0x4c) = iVar6;
+    FUN_ram_4004a3d2(iVar5 + 0x18,uVar9);
+    FUN_ram_4004a3d2(iVar5 + 0x18,*(undefined4 *)(param_2 + 0x54));
+    FUN_ram_4000304c(iVar6,param_2,0x1c);
+    *(undefined4 *)(iVar6 + 0x14) = 0x2c;
+    iVar7 = *(int *)(param_2 + 0x1c);
+    if (iVar7 != 0x7fff) {
+      iVar7 = iVar7 + *(int *)(param_2 + 0x50) + *(int *)(param_2 + 0x54);
+    }
+    *(int *)(iVar6 + 0x1c) = iVar7;
+    *(undefined2 *)(iVar6 + 0x20) = *(undefined2 *)(param_2 + 0x4a);
+    *(undefined1 *)(iVar6 + 0x22) = *(undefined1 *)(param_2 + 0x4c);
+    *(undefined1 *)(iVar6 + 0x28) = *(undefined1 *)(param_2 + 0x58);
+    *(undefined4 *)(iVar6 + 0x24) = *(undefined4 *)(param_2 + 0x50);
+    *(byte *)(iVar6 + 0x29) = *(byte *)(iVar6 + 0x29) & 0xe0 | 0xf;
+    *(undefined4 *)(iVar5 + 4) = 1;
+    FUN_ram_4004d6fe(param_1,iVar5);
+  }
+  return;
+}
+
+

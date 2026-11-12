@@ -1,0 +1,30 @@
+{
+  "firmware": "1.12",
+  "baseline_functions": 2720,
+  "named_baseline_functions": 49,
+  "supplemental_entrypoints": 4,
+  "names_ledger": "evidence/firmware-source-names-1.12.json",
+  "organized_manifest_sha256": "67c71608b71b14e7dd985774d1d99d12058c1ee05f220de47a7c94ee92849c30",
+  "supplemental_index_sha256": "e6886ae9e269a405369290fd94b0fc7c93dd304c7079ec7ff8c2a0d85ffc6240",
+  "historical_comparison_manifest": "analysis/dsp-1.12/pre-dissection-tree/manifest.json",
+  "scope": [
+    "DSP chain boundary",
+    "classic chorus subtype0",
+    "FX2 drive subtypes0..7 and shared model runtime"
+  ],
+  "unresolved": [
+    "other effect algorithms",
+    "per-drive-slot model coefficients/topology",
+    "audio equivalence",
+    "real-time execution budget",
+    "modified firmware loading/recovery"
+  ],
+  "device_operations": false,
+  "validation": {
+    "source_tool_tests_passed": 14,
+    "baseline_function_hashes_verified": 8052,
+    "supplemental_function_hashes_verified": 4,
+    "layout_header": "clang -std=c11 -fsyntax-only passed; all static offset assertions passed",
+    "runtime_audio_validation": false
+  }
+}

@@ -11,3 +11,13 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m unittest discover -s tools/nanocore_dfu -p test_uploader.py -v
+      - run: python -m pip install -r tools/firmware_decode/requirements.txt
+      - run: python -m unittest discover -s tools/firmware_decode -p test_decode.py -v
+      - run: python -m unittest discover -s tools/firmware_source -p 'test_*.py' -v
+      - run: python tools/firmware_source/organize_source.py --output firmware --verify
+      - run: python tools/firmware_source/organize_source.py --output firmware/versions/1.11 --verify
+      - run: python tools/firmware_source/organize_source.py --output firmware/versions/1.12 --verify
+      - run: python tools/firmware_source/build_effects.py --output firmware/versions/1.12/effects --verify
+      - run: cc -std=c11 -Wall -Wextra -Werror -fsyntax-only firmware/versions/1.12/effects/catalog.c
+      - run: python -m unittest discover -s tools/custom_fx -p 'test_*.py' -v
+      - run: make -C firmware/custom-fx test

@@ -1,0 +1,81 @@
+{
+  "firmware": "1.12",
+  "basis": "Focused seeded entry points; separate coverage, may overlap baseline bodies. Do not add discovery counts.",
+  "names_sha256": "c3f768636d57bcd8b96af130a8f11f7f79990a876e98fc8d6d694971f4156708",
+  "functions": [
+    {
+      "address": "0x40071cfe",
+      "name": "nc_mod_process_dispatch",
+      "file": "40071cfe_nc_mod_process_dispatch.c",
+      "evidence_id": "ev_6fc593ea6ad1feab6d2b5a3d4d750060fb54d51001f72eec6565e4408d9de88b",
+      "target": {
+        "name": "firmware.elf",
+        "digest": {
+          "sha256": "6c4fbfe2887bd2d809527eb9c84105cf9ba0dd3b26cf2b78571e203d95c869da"
+        },
+        "local_path": "/Users/juno/nanocore/analysis/dsp-1.12/firmware.elf",
+        "format": "elf",
+        "architecture": "riscv"
+      },
+      "source_export": "analysis/rea-1.12-dsp/results/01000-export-0x40071cfe.json",
+      "sha256": "97154efc685e461a8eb0dea8f98c264f01e27d2ce973b47f9b53b8081303f9be",
+      "warnings": []
+    },
+    {
+      "address": "0x4006dc08",
+      "name": "nc_mod_process_general",
+      "file": "4006dc08_nc_mod_process_general.c",
+      "evidence_id": "ev_375fa617cf7ec4ea228a4d42d173940dd93767a02a6336256630d793c19a9146",
+      "target": {
+        "name": "firmware.elf",
+        "digest": {
+          "sha256": "6c4fbfe2887bd2d809527eb9c84105cf9ba0dd3b26cf2b78571e203d95c869da"
+        },
+        "local_path": "/Users/juno/nanocore/analysis/dsp-1.12/firmware.elf",
+        "format": "elf",
+        "architecture": "riscv"
+      },
+      "source_export": "analysis/rea-1.12-dsp/results/01001-export-0x4006dc08.json",
+      "sha256": "f39decd235c7c5a119325fe243a0deacf92825f1c5db3cdc8e879d48b2c56850",
+      "warnings": [
+        "/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */"
+      ]
+    },
+    {
+      "address": "0x40066cee",
+      "name": "nc_dsp_kind_5_process",
+      "file": "40066cee_nc_dsp_kind_5_process.c",
+      "evidence_id": "ev_116f5aba31b2e312646c8dc8406e25141a0b9b2e04da70b79f9a791fe47eccf3",
+      "target": {
+        "name": "table-firmware.elf",
+        "digest": {
+          "sha256": "3cb0b9c2b862df7a555524bddf7c8b86fcd82eb4f80f9ee2debc9744bf2aa068"
+        },
+        "local_path": "/Users/juno/nanocore/analysis/dsp-1.12/table-firmware.elf",
+        "format": "elf",
+        "architecture": "riscv"
+      },
+      "source_export": "analysis/rea-1.12-dsp-table/results/01001-export-0x40066cee.json",
+      "sha256": "db7f5c1f29912bc8ffe2a9651b700c687fe7c5d4a692955a07df6ce93d0f8624",
+      "warnings": []
+    },
+    {
+      "address": "0x40068d96",
+      "name": "nc_dsp_kind_10_process",
+      "file": "40068d96_nc_dsp_kind_10_process.c",
+      "evidence_id": "ev_5eea139c3be64c48745bcef18d913a0bc802a566aabebde04ae1c19275f8298c",
+      "target": {
+        "name": "table-firmware.elf",
+        "digest": {
+          "sha256": "3cb0b9c2b862df7a555524bddf7c8b86fcd82eb4f80f9ee2debc9744bf2aa068"
+        },
+        "local_path": "/Users/juno/nanocore/analysis/dsp-1.12/table-firmware.elf",
+        "format": "elf",
+        "architecture": "riscv"
+      },
+      "source_export": "analysis/rea-1.12-dsp-table/results/01002-export-0x40068d96.json",
+      "sha256": "b1edfaaab64c5287a8c388b3e2c6fd68ff9045492e6114aaae16d9bd2dee7ccf",
+      "warnings": []
+    }
+  ]
+}

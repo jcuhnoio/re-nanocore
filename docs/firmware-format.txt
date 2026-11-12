@@ -1,3 +1,6 @@
+Update — 2026-11-12: Full decoding and modified-application execution are now
+validated; see firmware-decoding.txt. Earlier open questions below are historical.
+
 NanoCore LUM0 / FMUC — inspected firmware1.12
 
 Identity

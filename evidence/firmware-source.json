@@ -1,0 +1,211 @@
+{
+  "target": {
+    "name": "firmware-named.elf",
+    "digest": {
+      "sha256": "8922a2e8d977154602eb0a8a6264f6f80949da829add4da2efb5dd7e604d70a3"
+    },
+    "local_path": "/Users/juno/nanocore/analysis/rea-1.10/firmware-named.elf",
+    "format": "elf",
+    "architecture": "riscv"
+  },
+  "inventory_evidence_id": "ev_fe037ed310efdb893a9e81127f10f0064a2b96ed697829d04b9554838d3ddcf8",
+  "functions_discovered": 2645,
+  "decompiled": 2645,
+  "unavailable": 0,
+  "reviewed_function_names": 36,
+  "functions_with_warnings": 881,
+  "functions_with_bad_instructions": 0,
+  "functions_with_opaque_custom_operations": 22,
+  "date": "2026-11-12",
+  "rea_version": "6.7.0",
+  "ghidra_version": "12.1.4",
+  "custom_processor_language": true,
+  "elf_adaptation": {
+    "source": "analysis/decoded-firmware-1.10/firmware.elf",
+    "source_sha256": "4237111e74ad45e178ed2877baafdd40d435d0918f807c8f32488ddcb0f1cc93",
+    "adapted_sha256": "395f2cec290afd7011305185b9e3005b4a2ae690175f92d3f26c01d08cf85185",
+    "changed_bytes": [
+      36
+    ],
+    "e_flags": 5,
+    "interpretation": "RVC + double-float ABI, inferred from fsd/fld preservation and double argument/return in fa0 at 0x40000bc0, plus SDK d13x ilp32d configuration; synthetic metadata only; all segment bytes unchanged."
+  },
+  "emulation_validation": {
+    "passed": 3780,
+    "total": 3780
+  },
+  "opcode_handlers": [
+    {
+      "opcode": 64,
+      "handler": "0x40012a2a",
+      "callsite": "0x40012aa2",
+      "analyzed": true
+    },
+    {
+      "opcode": 65,
+      "handler": "0x400129fa",
+      "callsite": "0x40012ab2",
+      "analyzed": true
+    },
+    {
+      "opcode": 72,
+      "handler": "0x400129ca",
+      "callsite": "0x40012ac2",
+      "analyzed": true
+    },
+    {
+      "opcode": 66,
+      "handler": "0x4001299a",
+      "callsite": "0x40012ad2",
+      "analyzed": true
+    },
+    {
+      "opcode": 67,
+      "handler": "0x4001296a",
+      "callsite": "0x40012ae2",
+      "analyzed": true
+    },
+    {
+      "opcode": 68,
+      "handler": "0x4001293a",
+      "callsite": "0x40012af2",
+      "analyzed": true
+    },
+    {
+      "opcode": 69,
+      "handler": "0x4001290a",
+      "callsite": "0x40012b02",
+      "analyzed": true
+    },
+    {
+      "opcode": 70,
+      "handler": "0x400128da",
+      "callsite": "0x40012b12",
+      "analyzed": true
+    },
+    {
+      "opcode": 73,
+      "handler": "0x400128aa",
+      "callsite": "0x40012b26",
+      "analyzed": true
+    },
+    {
+      "opcode": 53,
+      "handler": "0x4008b6ec",
+      "callsite": "0x4008eb40",
+      "analyzed": true
+    },
+    {
+      "opcode": 54,
+      "handler": "0x4008addc",
+      "callsite": "0x4008eb50",
+      "analyzed": true
+    },
+    {
+      "opcode": 55,
+      "handler": "0x400876b6",
+      "callsite": "0x4008eb60",
+      "analyzed": true
+    },
+    {
+      "opcode": 57,
+      "handler": "0x4008a640",
+      "callsite": "0x4008eb70",
+      "analyzed": true
+    },
+    {
+      "opcode": 56,
+      "handler": "0x40087c44",
+      "callsite": "0x4008eb80",
+      "analyzed": true
+    },
+    {
+      "opcode": 58,
+      "handler": "0x40087844",
+      "callsite": "0x4008eb90",
+      "analyzed": true
+    },
+    {
+      "opcode": 59,
+      "handler": "0x4008d91c",
+      "callsite": "0x4008eba0",
+      "analyzed": true
+    },
+    {
+      "opcode": 85,
+      "handler": "0x4008ba94",
+      "callsite": "0x4008ebc2",
+      "analyzed": true
+    },
+    {
+      "opcode": 86,
+      "handler": "0x4008a9f4",
+      "callsite": "0x4008ebd2",
+      "analyzed": true
+    },
+    {
+      "opcode": 87,
+      "handler": "0x40087706",
+      "callsite": "0x4008ebe2",
+      "analyzed": true
+    },
+    {
+      "opcode": 89,
+      "handler": "0x4008a28c",
+      "callsite": "0x4008ebf2",
+      "analyzed": true
+    },
+    {
+      "opcode": 90,
+      "handler": "0x40087b30",
+      "callsite": "0x4008ec02",
+      "analyzed": true
+    },
+    {
+      "opcode": 91,
+      "handler": "0x400883d4",
+      "callsite": "0x4008ec16",
+      "analyzed": true
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "analysis/rea-1.10/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/RISCV/data/languages/riscv.ilp32d.sla",
+      "bytes": 82236,
+      "sha256": "77b481bd10c527182cf12a64ba400e24f56476f37e36b89bf3a0afc279d34edd"
+    },
+    {
+      "path": "analysis/rea-1.10/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/RISCV/data/languages/riscv.reg.sinc",
+      "bytes": 44906,
+      "sha256": "f6effc4eed31fc8177dbd3a5908e8a978c56ed7cc3e4df1748bbfdf4603797a7"
+    },
+    {
+      "path": "analysis/rea-1.10/toolchain/ghidra_12.1.4_PUBLIC/Ghidra/Processors/RISCV/data/languages/nanocore-thead.sinc",
+      "bytes": 8949,
+      "sha256": "690dea16ffaaa18899f3e4efc621b2359ed30f5e55fe7a56d4be787072bfb94c"
+    },
+    {
+      "path": "analysis/rea-1.10-legacy-p/evidence.json",
+      "bytes": 19342380,
+      "sha256": "ed94ad0c1ed058ce0540a97127fa708e2aad76c6e694f4ee5d8b0c31eb5e0d87"
+    },
+    {
+      "path": "analysis/source-firmware-1.10-legacy-p/firmware.c",
+      "bytes": 4229134,
+      "sha256": "ff41a2565f10e91a17a86251c4a0451075159783218d9db09d816537a9959dd6"
+    }
+  ],
+  "limitations": [
+    "SDK config and instruction matches support a T-Head RV32 IM AFDC + legacy P/XThead profile, not an exact chip SKU.",
+    "245 sites are bounded linear-disassembly observations, not complete instruction coverage or runtime observations.",
+    "45 modeled instruction constructors are a subset, not a complete processor emulator.",
+    "22 functions still contain opaque custom operations; 881 functions retain decompiler warnings.",
+    "REA profile digest excludes local language modifications; use separately recorded processor hashes."
+  ],
+  "vendor_isa_receipt": "evidence/vendor-isa.json",
+  "previous_pass": {
+    "functions": 2641,
+    "bad_instruction_functions": 56,
+    "emulation_cases": 1380
+  }
+}

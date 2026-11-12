@@ -1,0 +1,100 @@
+{
+  "firmware_version": "1.11",
+  "functions": {
+    "0x40000000": {
+      "name": "firmware_entry",
+      "file": "boot/startup.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40000000; data/callee runtime equivalence is not asserted."
+    },
+    "0x400050c6": {
+      "name": "memcpy",
+      "file": "runtime/memory.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x400050d6; data/callee runtime equivalence is not asserted."
+    },
+    "0x40003278": {
+      "name": "strcmp",
+      "file": "runtime/memory.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x40003288; data/callee runtime equivalence is not asserted."
+    },
+    "0x400031cc": {
+      "name": "memset",
+      "file": "runtime/memory.c",
+      "basis": "Unique exact native body and range-shape match to reviewed 1.10 0x400031dc; data/callee runtime equivalence is not asserted."
+    },
+    "0x4002de68": {
+      "name": "nc_midi_control_change",
+      "file": "protocol/control_change.c",
+      "basis": "Reviewed MIDI status dispatch and new CC43/44 selector branch; compare 1.10 4002d05e."
+    },
+    "0x400282ae": {
+      "name": "nc_midi_dispatch_message",
+      "file": "protocol/midi_stream.c",
+      "basis": "Dispatches MIDI status nibbles, channels, CC, program change and NRPN data."
+    },
+    "0x40028672": {
+      "name": "nc_midi_parse_stream",
+      "file": "protocol/midi_stream.c",
+      "basis": "Consumes bytes with running status, F0/F7 SysEx and realtime handling."
+    },
+    "0x4002da2e": {
+      "name": "nc_submit_slot_command",
+      "file": "protocol/control_change.c",
+      "basis": "Passes two-byte selector payload from CC43/44 to application command processing."
+    },
+    "0x4002a45c": {
+      "name": "nc_radio_uart5_init",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Creates uart5_rx worker and u5 synchronization objects; radio control sends through this transport."
+    },
+    "0x40029d8e": {
+      "name": "nc_radio_uart_write",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Serialized device writes, five zero-write retries and TX counters."
+    },
+    "0x40029e36": {
+      "name": "nc_radio_send_control_frame",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Frames control payload as type 3 and sends it through UART writer."
+    },
+    "0x4002ab6c": {
+      "name": "nc_radio_send_control_if_ready",
+      "file": "bluetooth/uart_transport.c",
+      "basis": "Tests UART handle before forwarding control payload; decompiler omits forwarded arguments."
+    },
+    "0x4002b100": {
+      "name": "nc_radio_send_enable_command",
+      "file": "bluetooth/control.c",
+      "basis": "Sends payload bytes [2, boolean(enable)] through control framing; radio meaning inferred from shutdown call chain."
+    },
+    "0x4002ca46": {
+      "name": "nc_radio_set_enabled",
+      "file": "bluetooth/control.c",
+      "basis": "Resets command state then submits radio enable/disable command."
+    },
+    "0x4002cacc": {
+      "name": "nc_radio_retry_disable_during_shutdown",
+      "file": "bluetooth/control.c",
+      "basis": "Called newly from power-off wait loop; initializes UART, requires ready handle, sends disable every 500 RTOS ms."
+    },
+    "0x4003f7fe": {
+      "name": "nc_poweroff_wait_loop",
+      "file": "power/shutdown.c",
+      "basis": "Shutdown GPIO/display sequence followed by power-button wait; adds radio disable retries versus 1.10."
+    },
+    "0x4002532c": {
+      "name": "nc_effect_name",
+      "file": "audio/effect_metadata.c",
+      "basis": "Returns effect names by block/subtype and display style."
+    },
+    "0x40025606": {
+      "name": "nc_effect_parameter_name",
+      "file": "audio/effect_metadata.c",
+      "basis": "Returns parameter-name tables by effect/subtype, parameter and display style."
+    },
+    "0x400268fa": {
+      "name": "nc_format_effect_parameter",
+      "file": "audio/effect_metadata.c",
+      "basis": "Formats normalized parameters; pitch coarse uses 24*x-12, fine uses 2*x-1."
+    }
+  }
+}

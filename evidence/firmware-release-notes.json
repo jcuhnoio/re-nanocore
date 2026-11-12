@@ -1,0 +1,19 @@
+{
+  "url": "https://www.livtramusic.com/downloads?device=NANOCORE",
+  "retrieved": "2026-11-12",
+  "html_sha256": "ab4c616ce97febcd2768bc379af975cbd4a8384d41ffac0bbfeef99bf52cb4e9",
+  "notes": {
+    "1.11": [
+      "Fixed BT still advertising when the device is powered off but still plugged in.",
+      "Fixed MIDI CC 43 and CC 44 not responding for AMP and IR switching.",
+      "Reduced Pitch effect latency.",
+      "Fixed clicking when switching FX2 Drive."
+    ],
+    "1.12": [
+      "Updated Spring Reverb: Offers Decay, PreDelay, Crossover, Tone and Mix controls.",
+      "Expanded Duck Delay: Added Sensitivity, Depth, Attack and Release controls for finer adjustment of the ducking response.",
+      "Extended Pitch Range: Coarse adjustment now spans \u221224 to +24 semitones, retaining \u00b11-semitone Fine adjustment and improving low-note tracking.",
+      "Added CAB/IR Output Level: Independently adjust and save the cabinet simulation\u2019s output level alongside Low Cut and High Cut."
+    ]
+  }
+}

@@ -1,0 +1,63 @@
+NanoCore1.10 UniVibe UI patch
+============================
+
+This changes only the MOD10 Velvet slot to four controls ordered SPEED, DEPTH,
+LEVEL, MODE. The DSP receives these as parameters0..3. The first three display
+0..100 knob percentages, not Hz or dB. MODE displays CHORUS/VIBRATO and uses the
+native two-state enum path for physical encoder movement. The thresholds remain
+<0.5=CHORUS and >=0.5=VIBRATO for normalized values from other input paths.
+New selection defaults are[0.35,0.8,0.5,0]. Existing saved preset values are not
+migrated by this patch and can retain their old semantics until reset/reselected.
+
+Patch sites
+-----------
+0x40072036..0x400720ae:120byte dedicated Velvet-defaults function becomes bounded
+float default writer, count helper and two private label strings. Native call
+4006b6fe reaches only its entry. No observed external interior code references
+or halfword-aligned literal pointers into the old body in either loaded segment.
+
+0x400263d6:4byte MOD count branch jumps to helper. Original condition was shared
+by MOD8 andMOD10. Helper returns4 forMOD10, preserves5 forMOD8, and resumes the
+original path for every other subtype. Native count function400262d0 is otherwise
+unchanged, including alternate presentation modes and aliases.
+
+0x40094914 and0x40094640:first four pointers of private MOD10 uppercase/titlecase
+label tables redirect to SPEED/DEPTH/LEVEL/MODE. Existing shared strings remain
+untouched; SPEED and MODE reside in the new defaults body.
+
+0x40027606..0x40027652:76byte dedicated MOD10 formatter branch replaced with
+percentage formatting for indices0..2 and native snprintf("%s",choice) forMODE.
+This removes the old exponential Hz display, which does not match custom DSP.
+
+0x4001a956:4byte enum-metadata function entry becomesJAL to0x400725c0. Helper only
+handles block5/index3 when active subtype byte30069b99 equals10. It emits the
+native20byte descriptor{u32kind=1,floatmin=0,floatmax=1,u32table=0,u32count=0}.
+Other cases replay the displaced addi sp,-32;sw s0,24(sp), then resume4001a95a.
+The new helper occupies68bytes at400725c0; the package builder must embed it in
+the reserved processor tail without overlap with the DSP code.
+
+Native encoder4001e2e0 calls this metadata provider and steps enum indices.
+Native normalized-parameter quantizer4001aaa2 uses the same provider.
+Native helpers40019eb0/40019eee/40019fb0 report two states and map to0/1000
+integer normalized values. The retained source exports are pseudocode; native
+execution checks corroborate field widths and behavior.
+
+Validation and reproducibility
+------------------------------
+Assembly:tools/custom_fx/vibe_ui.S and vibe_ui.ld.
+Retained bytes/provenance:tools/custom_fx/vibe_ui_code.json.
+Rebuild with python3 tools/custom_fx/build_vibe_ui.py --output NEW_DIRECTORY,
+using the existing Xuantie toolchain and Docker image. Compare its code JSON
+sections with the tracked file before replacing it. Source/linker hashes are
+checked by test_vibe_ui.py.
+
+Run analysis/decoder-capture/venv/bin/python tools/custom_fx/check_vibe_ui_target.py
+OUTPUT_JSON for the local Unicorn checks against retained1.10firmware. Tests
+execute patched native functions; exact integer hooks emulate addsl/lrw/lrbu.
+memset and strcmp are modeled at boundaries, and snprintf arguments are captured.
+The checks establish chosen format strings/values, not physical screen rendering.
+760count comparisons,912enum comparisons,12labelcalls,13bounded default lengths,
+20formatter cases and native enum conversion tests passed. Integer/FP callee-save
+registers and stack are checked after each native function. Every non-target
+block/subtype case in the declared grids retains its original count/enum result.
+No device operation is performed by any UI test or helper builder.

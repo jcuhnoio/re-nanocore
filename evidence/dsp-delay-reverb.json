@@ -1,0 +1,892 @@
+{
+  "firmware": "1.12",
+  "package_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "functions": [
+    {
+      "address": "0x40066cee",
+      "proposed_name": "nc_delay_dispatch",
+      "module": "dsp_delay",
+      "basis": "Kind 5 callback; fast path subtype 3 to Ice",
+      "evidence_path": "analysis/rea-1.12-effects/results/03492-export-0x40066cee.json",
+      "evidence_id": "ev_2a4fc7d27133cc9dd54f3353bb78c5eb77dd16f37f678f04c44c666d3e2bea9c"
+    },
+    {
+      "address": "0x40061c98",
+      "proposed_name": "nc_delay_process_variants",
+      "module": "dsp_delay",
+      "basis": "Branches on subtype 0..7; shared parameter mapping and ring-buffer DSP",
+      "evidence_path": "analysis/rea-1.12-effects/results/03484-export-0x40061c98.json",
+      "evidence_id": "ev_8661649e9ecf6c47abd5053931faeea6bf9c753010af9fa4375d3b389a7668a7"
+    },
+    {
+      "address": "0x40060b4c",
+      "proposed_name": "nc_delay_ice_process",
+      "module": "dsp_delay",
+      "basis": "Subtype 3 fast and general paths converge here",
+      "evidence_path": "analysis/rea-1.12-effects/results/03483-export-0x40060b4c.json",
+      "evidence_id": "ev_780c4330f028f9a89cd6c9a7573d423bad6e6e09a8ebf83211cc10d74a909415"
+    },
+    {
+      "address": "0x40065e48",
+      "proposed_name": "nc_delay_init",
+      "module": "dsp_delay",
+      "basis": "Initializes sample rate, external buffers and state",
+      "evidence_path": "analysis/rea-1.12-effects/results/03491-export-0x40065e48.json",
+      "evidence_id": "ev_845f4e5542f4a00b69fe3664c3fe6e4bd47170a5aeff0cfec20a3af627a95f25"
+    },
+    {
+      "address": "0x40065c3e",
+      "proposed_name": "nc_delay_reset",
+      "module": "dsp_delay",
+      "basis": "Clears delay state and buffers through supplied callback",
+      "evidence_path": "analysis/rea-1.12-effects/results/03490-export-0x40065c3e.json",
+      "evidence_id": "ev_e4aa0f291e5d3dc7e9fa94f2aa9da8f7e1f29a0acf412e4efe972d790c33e667"
+    },
+    {
+      "address": "0x40065bd4",
+      "proposed_name": "nc_delay_default_parameters",
+      "module": "dsp_delay",
+      "basis": "Default parameter table writer",
+      "evidence_path": "analysis/rea-1.12-effects/results/03489-export-0x40065bd4.json",
+      "evidence_id": "ev_b0f38a4293c57690bab628b946df04a90bccb47b6253c84cb65dafa66bea26ed"
+    },
+    {
+      "address": "0x4006066c",
+      "proposed_name": "nc_delay_bypass_copy",
+      "module": "dsp_delay",
+      "basis": "Copies mono/stereo or averages stereo to mono",
+      "evidence_path": "analysis/rea-1.12-effects/results/03481-export-0x4006066c.json",
+      "evidence_id": "ev_ec35bd382d05a70960ffd14df79fe160ae2e6aae11ef1974da0f49c932c3c05f"
+    },
+    {
+      "address": "0x4006070c",
+      "proposed_name": "nc_delay_configure_smear_filters",
+      "module": "dsp_delay",
+      "basis": "Called from Smear branch; computes biquad coefficients",
+      "evidence_path": "analysis/rea-1.12-effects/results/03482-export-0x4006070c.json",
+      "evidence_id": "ev_932da0c47d480b58613a4d154388b715f8713e3aef4d16759d269092e4325038"
+    },
+    {
+      "address": "0x30043fd4",
+      "proposed_name": "nc_reverb_dispatch",
+      "module": "dsp_reverb",
+      "basis": "RAM callback: routes subtype to algorithm, applies dry/wet mix",
+      "evidence_path": "analysis/rea-1.12-effects/results/01013-export-0x30043fd4.json",
+      "evidence_id": "ev_d10afc24ffbb7164cfa52a4995eca5c185527cfe01328838aa758383a92181ef"
+    },
+    {
+      "address": "0x40073170",
+      "proposed_name": "nc_reverb_apply_parameters",
+      "module": "dsp_reverb",
+      "basis": "Cached parameter update; routes to subtype setters",
+      "evidence_path": "analysis/rea-1.12-effects/results/03545-export-0x40073170.json",
+      "evidence_id": "ev_c55ceae7f16d3e8066cb6668e12cb8b5f1b3d4f7cb6dab4c9e862e9e135faf9c"
+    },
+    {
+      "address": "0x40073b48",
+      "proposed_name": "nc_reverb_init",
+      "module": "dsp_reverb",
+      "basis": "Clears 0x74c68 state bytes; sets sample rate and invalid subtype",
+      "evidence_path": "analysis/rea-1.12-effects/results/03547-export-0x40073b48.json",
+      "evidence_id": "ev_a4e264c7c7835b49f6ecd052370d631e2162e298610b4602e7dc1af435815c37"
+    },
+    {
+      "address": "0x40073bb0",
+      "proposed_name": "nc_reverb_select_subtype",
+      "module": "dsp_reverb",
+      "basis": "Constructs subtype; copies Spring executable blob",
+      "evidence_path": "analysis/rea-1.12-effects/results/03548-export-0x40073bb0.json",
+      "evidence_id": "ev_f92c6d72fe8bef5eaa27e20a10863af1a9b435abc8cdd596a684a4cc2c0251bf"
+    },
+    {
+      "address": "0x40073d9e",
+      "proposed_name": "nc_reverb_reset",
+      "module": "dsp_reverb",
+      "basis": "Routes reset to selected subtype",
+      "evidence_path": "analysis/rea-1.12-effects/results/03550-export-0x40073d9e.json",
+      "evidence_id": "ev_0dfa07b33729de3a0e3a72512955efc1111ef88611b6402330aed885f21b974e"
+    },
+    {
+      "address": "0x40073e58",
+      "proposed_name": "nc_reverb_default_parameters",
+      "module": "dsp_reverb",
+      "basis": "Default parameter table writer",
+      "evidence_path": "analysis/rea-1.12-effects/results/03551-export-0x40073e58.json",
+      "evidence_id": "ev_d4743062e51f4786044fc00147dc56060c9c83b6146382e33abb6cc2326a6004"
+    },
+    {
+      "address": "0x300445ac",
+      "proposed_name": "nc_reverb_room_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/01014-export-0x300445ac.json",
+      "evidence_id": "ev_fa52e96b383bc19554695a6cacfec0bbac5a3ea57862f5ead17587e1fb890b3a"
+    },
+    {
+      "address": "0x40082250",
+      "proposed_name": "nc_reverb_room_init",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03603-export-0x40082250.json",
+      "evidence_id": "ev_dce74fb9ebcdea7bea0872c67d5d6069551aff6f15f17e90e77faf909bcdbb80"
+    },
+    {
+      "address": "0x40082360",
+      "proposed_name": "nc_reverb_room_reset",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03604-export-0x40082360.json",
+      "evidence_id": "ev_dab1ac45bf01f819b9d6623aa45fd45d7ec7816faa94a65a0cc31cb519aa9e7b"
+    },
+    {
+      "address": "0x40082726",
+      "proposed_name": "nc_reverb_room_set_parameter_1",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03605-export-0x40082726.json",
+      "evidence_id": "ev_ef50aca751350aa39e7f59053f384298971d5671e0c161b81abe8b43c834f074"
+    },
+    {
+      "address": "0x400827ae",
+      "proposed_name": "nc_reverb_room_set_parameter_2",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03607-export-0x400827ae.json",
+      "evidence_id": "ev_1bfa0545d2ec8d5e95cf4e42a76cb2c6923eb207a6edc89871a2b9330580316c"
+    },
+    {
+      "address": "0x40082752",
+      "proposed_name": "nc_reverb_room_set_parameter_3",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03606-export-0x40082752.json",
+      "evidence_id": "ev_a96d381c34e2c0349f52794033c1de3f21ff7f57a7fb1fd4c8ec3b527507bff0"
+    },
+    {
+      "address": "0x400827d8",
+      "proposed_name": "nc_reverb_room_set_parameter_4",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03608-export-0x400827d8.json",
+      "evidence_id": "ev_7964b069954a92b6f54fb991c772eec9886aab2706c6ed3c0070ef30e849bfe1"
+    },
+    {
+      "address": "0x4008076c",
+      "proposed_name": "nc_reverb_room_helper_4008076c",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03601-export-0x4008076c.json",
+      "evidence_id": "ev_3ec7dc457b600c1778131d1e5ccf24b89fbda302334c8c141c9763b7be1a8d48"
+    },
+    {
+      "address": "0x40080f38",
+      "proposed_name": "nc_reverb_room_helper_40080f38",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03602-export-0x40080f38.json",
+      "evidence_id": "ev_25f85b1e573dae4dbe2d198885877cddd237d9fd16c44e584f5d2a9a4b7b8190"
+    },
+    {
+      "address": "0x4007fec8",
+      "proposed_name": "nc_reverb_plate_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03600-export-0x4007fec8.json",
+      "evidence_id": "ev_e0edb7347ebb7c34868e0c165e6bb50dc10d3e7ce1db0c976043b7a3c59b10c4"
+    },
+    {
+      "address": "0x4007fba4",
+      "proposed_name": "nc_reverb_plate_init",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03597-export-0x4007fba4.json",
+      "evidence_id": "ev_924d3d008d25562aae7354d8f94a05fac4eccd799867cbadbb5ed92a719acb9c"
+    },
+    {
+      "address": "0x4007fc84",
+      "proposed_name": "nc_reverb_plate_reset",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03599-export-0x4007fc84.json",
+      "evidence_id": "ev_9e07437f15da02d761c42220b51f54e67e2f41c9190082c94c657d8250224a3a"
+    },
+    {
+      "address": "0x4007fc48",
+      "proposed_name": "nc_reverb_plate_configure",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03598-export-0x4007fc48.json",
+      "evidence_id": "ev_d1a6a0dfc0accd2e01eeb698b74f7a8b118f9d53b450a9b9831bf96c0346cb3f"
+    },
+    {
+      "address": "0x4007eae0",
+      "proposed_name": "nc_reverb_plate_helper_4007eae0",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03596-export-0x4007eae0.json",
+      "evidence_id": "ev_52ac080bf490db11a6a072fba89a4a9bf76a313097a19a0b7b883d0730f06690"
+    },
+    {
+      "address": "0x4007db8c",
+      "proposed_name": "nc_reverb_hall_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03595-export-0x4007db8c.json",
+      "evidence_id": "ev_bb6da165546fe274af93e13c651164c16e184cec8dd375c9321f6e401a79b183"
+    },
+    {
+      "address": "0x4007d834",
+      "proposed_name": "nc_reverb_hall_init",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03592-export-0x4007d834.json",
+      "evidence_id": "ev_2e8717128812372f5dd8339d08551061036089bb70841a3e9c8cb8b307597155"
+    },
+    {
+      "address": "0x4007d944",
+      "proposed_name": "nc_reverb_hall_reset",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03594-export-0x4007d944.json",
+      "evidence_id": "ev_03c355d216e5fc087d0b20f9a95ac912f0b2267c9c72056e8e13e5a6a95631bf"
+    },
+    {
+      "address": "0x4007d8f0",
+      "proposed_name": "nc_reverb_hall_configure",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03593-export-0x4007d8f0.json",
+      "evidence_id": "ev_96fe449023d6c93af1eaa699bfce34e7b388d3dfff16627731039cf941ab0d5a"
+    },
+    {
+      "address": "0x4007c9ec",
+      "proposed_name": "nc_reverb_hall_helper_4007c9ec",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03591-export-0x4007c9ec.json",
+      "evidence_id": "ev_822fbc1c4cc3ab560ffde3e297c237303dbd026239e26d050cfa502a37995fb1"
+    },
+    {
+      "address": "0x4007b7b0",
+      "proposed_name": "nc_reverb_concert_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03590-export-0x4007b7b0.json",
+      "evidence_id": "ev_1eae681fc87fabc0a3516715e9d13822968db5091601f7f705863057bc9966c3"
+    },
+    {
+      "address": "0x4007b514",
+      "proposed_name": "nc_reverb_concert_init",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03587-export-0x4007b514.json",
+      "evidence_id": "ev_21fd77d1694947689f9a6e14417b96517dad96a61a69f7504bc3e527cae708db"
+    },
+    {
+      "address": "0x4007b5ec",
+      "proposed_name": "nc_reverb_concert_reset",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03589-export-0x4007b5ec.json",
+      "evidence_id": "ev_d3c006402f4d28c8a4b50465c1df77dd1db52de13413e579187552afde24ae74"
+    },
+    {
+      "address": "0x4007b5b8",
+      "proposed_name": "nc_reverb_concert_configure",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03588-export-0x4007b5b8.json",
+      "evidence_id": "ev_737d92ff9b1b5a846ab706195ce5436b0295f03be9e59645f5da4663f9beaff5"
+    },
+    {
+      "address": "0x4007a4b4",
+      "proposed_name": "nc_reverb_concert_helper_4007a4b4",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03586-export-0x4007a4b4.json",
+      "evidence_id": "ev_5d32e7f7dbcd7aa37116bb4160e1f45382b7571e10b4ae645c0f8caf3bc412c8"
+    },
+    {
+      "address": "0x30045b78",
+      "proposed_name": "nc_reverb_shimmer_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/01015-export-0x30045b78.json",
+      "evidence_id": "ev_49455c8811d06985c51fb897dc66c0642997d430fb80855f4007a081cc3153c9"
+    },
+    {
+      "address": "0x40083e34",
+      "proposed_name": "nc_reverb_shimmer_init",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03610-export-0x40083e34.json",
+      "evidence_id": "ev_ebb57243ad18ee30d8365acfd056845a4c7065877dbeb2ab1d5855af2a33d179"
+    },
+    {
+      "address": "0x40083f80",
+      "proposed_name": "nc_reverb_shimmer_reset",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03612-export-0x40083f80.json",
+      "evidence_id": "ev_1bcc563697994928cdc92a1c3c7afe71bd6dcbe3956e25356c6c5e6326881611"
+    },
+    {
+      "address": "0x40083f32",
+      "proposed_name": "nc_reverb_shimmer_configure",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03611-export-0x40083f32.json",
+      "evidence_id": "ev_2e5da3a1976ee997444bf897485e7ae8a6e15eb8135e35f35731fe0f9bf040e4"
+    },
+    {
+      "address": "0x4008281c",
+      "proposed_name": "nc_reverb_shimmer_helper_4008281c",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03609-export-0x4008281c.json",
+      "evidence_id": "ev_4cd5a388dcd073f90a6d3e2d4b8e17489b127f325a107ac1fd4c446ac5e25925"
+    },
+    {
+      "address": "0x30042d7e",
+      "proposed_name": "nc_reverb_cloud_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/01011-export-0x30042d7e.json",
+      "evidence_id": "ev_d417493c60f3b0a9dfc19a86d216e9982e5a7528c2706375030d8da0a25a1227"
+    },
+    {
+      "address": "0x4005d850",
+      "proposed_name": "nc_reverb_cloud_init",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03462-export-0x4005d850.json",
+      "evidence_id": "ev_d4932f49dffd1cf18d585ddd93326016ca56286c4d5f0ddb227cb812959aec1f"
+    },
+    {
+      "address": "0x4005dd98",
+      "proposed_name": "nc_reverb_cloud_set_sample_rate",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03463-export-0x4005dd98.json",
+      "evidence_id": "ev_83fb4a15a5a0bf71ba77ce7bffa3e7d9ebf89520bc4b4c36f4aef6c479ec8a09"
+    },
+    {
+      "address": "0x4005ddbc",
+      "proposed_name": "nc_reverb_cloud_prepare",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03464-export-0x4005ddbc.json",
+      "evidence_id": "ev_b198b4ea4f6af5814f499761f03f47a3aec72b8d51bb61b19691f1aae775d5dd"
+    },
+    {
+      "address": "0x4005dde4",
+      "proposed_name": "nc_reverb_cloud_reset",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03466-export-0x4005dde4.json",
+      "evidence_id": "ev_d61975cd9fa073e48f809d39f9f7958fc2a275934cc96c48d2c1ba2b35c60afe"
+    },
+    {
+      "address": "0x4005ddc4",
+      "proposed_name": "nc_reverb_cloud_configure",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03465-export-0x4005ddc4.json",
+      "evidence_id": "ev_85a4fbd99acb1d8eaed2ad5b210e4920864b7cafe4d17225d7ba9239bf4c8e9b"
+    },
+    {
+      "address": "0x30041298",
+      "proposed_name": "nc_reverb_cloud_helper_30041298",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/01009-export-0x30041298.json",
+      "evidence_id": "ev_884e716c04306d5183a6ba6bfe82d5041bd812446252e6da9da973326ce0d56d"
+    },
+    {
+      "address": "0x300419ae",
+      "proposed_name": "nc_reverb_cloud_helper_300419ae",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/01010-export-0x300419ae.json",
+      "evidence_id": "ev_f68da04a49c4d058ef94e6cd57b0ed3ccd383bb24ff539d25eadf333747ff349"
+    },
+    {
+      "address": "0x4005c670",
+      "proposed_name": "nc_reverb_cloud_helper_4005c670",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03461-export-0x4005c670.json",
+      "evidence_id": "ev_304ceaaeff4767238dab20a22fe329cfe88616934c2c76f5a3424e5055cd45c6"
+    },
+    {
+      "address": "0x400a29c8",
+      "proposed_name": "nc_reverb_spring_copied_kernel",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03727-export-0x400a29c8.json",
+      "evidence_id": "ev_e64aafffc1c4d16592683f4ed8d9efe72a15fe23282c56a45f4753ebe2112077"
+    },
+    {
+      "address": "0x40095476",
+      "proposed_name": "nc_reverb_spring_init",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03704-export-0x40095476.json",
+      "evidence_id": "ev_75be3a8d01c1ec4eba5d8df829423d9ca91dd14b20b7828d036daa77e0573c86"
+    },
+    {
+      "address": "0x4009547e",
+      "proposed_name": "nc_reverb_spring_reset",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03705-export-0x4009547e.json",
+      "evidence_id": "ev_87ac2a0974048aee66fa1594657dc486ed06143b1c629053711c968548a5226c"
+    },
+    {
+      "address": "0x40094f12",
+      "proposed_name": "nc_reverb_spring_set_decay",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03700-export-0x40094f12.json",
+      "evidence_id": "ev_6fa43786e2071128d9f96412e3f37b65b1429302b34c834ad6c685dc08dadf18"
+    },
+    {
+      "address": "0x40095044",
+      "proposed_name": "nc_reverb_spring_set_crossover",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03701-export-0x40095044.json",
+      "evidence_id": "ev_6848a8e47ba3f209ee60b8863db2b38e5f4fe93d65c1f865ea3e7113571e539f"
+    },
+    {
+      "address": "0x40095452",
+      "proposed_name": "nc_reverb_spring_set_tone",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03703-export-0x40095452.json",
+      "evidence_id": "ev_7c9acecd1a88dd830987bfe91569cc0505a5a4bb679334ba77cd37d6cfc14d67"
+    },
+    {
+      "address": "0x400a1540",
+      "proposed_name": "nc_reverb_spring_copy_samples",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03710-export-0x400a1540.json",
+      "evidence_id": "ev_16872cf1ced48ca4370c5a268b9ccf33703fd3107ef3517f76f3c9361868ee07"
+    },
+    {
+      "address": "0x400a15ac",
+      "proposed_name": "nc_reverb_spring_exchange_samples",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03711-export-0x400a15ac.json",
+      "evidence_id": "ev_5d5b34b0dd1a03af68c48cb77f3ab2c042cbca13eaf33fc15dd2bf675e7880d7"
+    },
+    {
+      "address": "0x400a1628",
+      "proposed_name": "nc_reverb_spring_ring_read",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03712-export-0x400a1628.json",
+      "evidence_id": "ev_515c566eabd73383f3b4c08f31f96f4d4a4e406e4e4241dcc4e893ed626e775e"
+    },
+    {
+      "address": "0x400a1688",
+      "proposed_name": "nc_reverb_spring_ring_write",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03713-export-0x400a1688.json",
+      "evidence_id": "ev_88cfe7da183947bf10f3aaa60791781559a17d1a602bde0045597d89e0f5ca65"
+    },
+    {
+      "address": "0x400a1704",
+      "proposed_name": "nc_reverb_spring_ring_exchange",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03714-export-0x400a1704.json",
+      "evidence_id": "ev_e996931f6b65fd8061ae9789c3ef9f22699b1cadd4abbe7f8db8536ac04a6b98"
+    },
+    {
+      "address": "0x400a1790",
+      "proposed_name": "nc_reverb_spring_biquad_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03715-export-0x400a1790.json",
+      "evidence_id": "ev_bb8b9185668d0094411034d47f2c66720241b0da271cb35b0f45b0a83a9c930f"
+    },
+    {
+      "address": "0x400a1b1c",
+      "proposed_name": "nc_reverb_spring_allpass_ring_process",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03720-export-0x400a1b1c.json",
+      "evidence_id": "ev_69a3c76a99c256751a08c24506b314101f2b65ec4f1d9cc680715428fed78b30"
+    },
+    {
+      "address": "0x400a2370",
+      "proposed_name": "nc_reverb_spring_fir_interpolate",
+      "module": "dsp_reverb",
+      "basis": "Call path from subtype dispatcher / lifecycle setter; helper roles inferred from retained arithmetic",
+      "evidence_path": "analysis/rea-1.12-effects/results/03724-export-0x400a2370.json",
+      "evidence_id": "ev_b5dbc8da3021d3813685d2221df211a76fbf4d83b33014e7db283aacd5d1b21a"
+    },
+    {
+      "address": "0x400a1dac",
+      "proposed_name": "nc_reverb_spring_helper_400a1dac",
+      "module": "dsp_reverb",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "evidence_path": "analysis/rea-1.12-effects/results/03722-export-0x400a1dac.json",
+      "evidence_id": "ev_fc95189acbb2360406f00e3cfce207d78350d5bc392523615913a71de1b3ed32"
+    },
+    {
+      "address": "0x400a19cc",
+      "proposed_name": "nc_reverb_spring_helper_400a19cc",
+      "module": "dsp_reverb",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "evidence_path": "analysis/rea-1.12-effects/results/03718-export-0x400a19cc.json",
+      "evidence_id": "ev_fb330b65fcf94a70fcf52ecda933352ae6034fdb268505ac2e510225cb1aef04"
+    },
+    {
+      "address": "0x400a26b8",
+      "proposed_name": "nc_reverb_spring_helper_400a26b8",
+      "module": "dsp_reverb",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "evidence_path": "analysis/rea-1.12-effects/results/03726-export-0x400a26b8.json",
+      "evidence_id": "ev_d8dd7792fec4ffccf49aa47bdbbd30075545fa5ba061e328f6b81fe0941d171c"
+    },
+    {
+      "address": "0x400a1e4c",
+      "proposed_name": "nc_reverb_spring_helper_400a1e4c",
+      "module": "dsp_reverb",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "evidence_path": "analysis/rea-1.12-effects/results/03723-export-0x400a1e4c.json",
+      "evidence_id": "ev_46eb5f8438cdc4c5855154de311184b4f0c1f0324059be34480bc4b04660d1f2"
+    },
+    {
+      "address": "0x400a2630",
+      "proposed_name": "nc_reverb_spring_helper_400a2630",
+      "module": "dsp_reverb",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "evidence_path": "analysis/rea-1.12-effects/results/03725-export-0x400a2630.json",
+      "evidence_id": "ev_86fe2cb536baf3805fd3abed248500a254dbce1564184a34d9052505cc7d0b57"
+    },
+    {
+      "address": "0x400a1868",
+      "proposed_name": "nc_reverb_spring_helper_400a1868",
+      "module": "dsp_reverb",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "evidence_path": "analysis/rea-1.12-effects/results/03717-export-0x400a1868.json",
+      "evidence_id": "ev_d97a90835d63c25bc65994ef9b345c9c887e88b57c56059e2ebe4ad7adf7271c"
+    },
+    {
+      "address": "0x400a17d8",
+      "proposed_name": "nc_reverb_spring_helper_400a17d8",
+      "module": "dsp_reverb",
+      "basis": "Direct callee closure inside copied Spring blob; semantic role not yet established",
+      "evidence_path": "analysis/rea-1.12-effects/results/03716-export-0x400a17d8.json",
+      "evidence_id": "ev_96b66b57854c0e12da945376700bad98017f0496488200b5760599172297d59a"
+    },
+    {
+      "address": "0x400a1ba4",
+      "proposed_name": "nc_reverb_spring_allpass_cascade",
+      "module": "dsp_reverb",
+      "basis": "Repeated all-pass recurrence over staged state",
+      "evidence_path": "analysis/rea-1.12-effects/results/03721-export-0x400a1ba4.json",
+      "evidence_id": "ev_8cbbe13633019ab798c70dce8af1cfa38076bd1c841e3ed97a4779615884ede7"
+    },
+    {
+      "address": "0x400a1a80",
+      "proposed_name": "nc_reverb_spring_allpass_exchange",
+      "module": "dsp_reverb",
+      "basis": "Delay/input exchange: v=x+g*old; delay=v; output=old-g*v",
+      "evidence_path": "analysis/rea-1.12-effects/results/03719-export-0x400a1a80.json",
+      "evidence_id": "ev_43bfb7021729f5b422293b62cbb66214658b54e60fba7834e46117a2847dc666"
+    }
+  ],
+  "effects": [
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 0,
+      "name": "BBD",
+      "parameters": [
+        "DELAY",
+        "FBK",
+        "AGE",
+        "MIX"
+      ],
+      "processor": "0x40061c98",
+      "branch": "param_8 == 0",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 1,
+      "name": "Digital",
+      "parameters": [
+        "TIME",
+        "FBK",
+        "MIX"
+      ],
+      "processor": "0x40061c98",
+      "branch": "param_8 == 1",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 2,
+      "name": "Duck",
+      "parameters": [
+        "TIME",
+        "FBK",
+        "SENS",
+        "DEPTH",
+        "ATK",
+        "REL",
+        "FILTER",
+        "MIX"
+      ],
+      "processor": "0x40061c98",
+      "branch": "param_8 == 2",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 3,
+      "name": "Ice",
+      "parameters": [
+        "TIME",
+        "FBK",
+        "INTVL",
+        "MIX"
+      ],
+      "processor": "0x40060b4c",
+      "branch": "param_8 == 3",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 4,
+      "name": "Reverse",
+      "parameters": [
+        "TIME",
+        "FBK",
+        "MIX"
+      ],
+      "processor": "0x40061c98",
+      "branch": "param_8 == 4",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 5,
+      "name": "Lofi",
+      "parameters": [
+        "TIME",
+        "FBK",
+        "BITS",
+        "LOFI",
+        "MIX"
+      ],
+      "processor": "0x40061c98",
+      "branch": "param_8 == 5",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 6,
+      "name": "Smear",
+      "parameters": [
+        "TIME",
+        "FBK",
+        "SMEAR",
+        "FILTER",
+        "MIX"
+      ],
+      "processor": "0x40061c98",
+      "branch": "param_8 == 6",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "delay",
+      "ui_block": 4,
+      "internal_kind": 5,
+      "subtype": 7,
+      "name": "Mod",
+      "parameters": [
+        "TIME",
+        "FBK",
+        "MDEPTH",
+        "MRATE",
+        "MIX"
+      ],
+      "processor": "0x40061c98",
+      "branch": "param_8 == 7",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 0,
+      "canonical_subtype": 0,
+      "name": "Room",
+      "parameters": [
+        "DECAY",
+        "PREDLY",
+        "TONE",
+        "MOD",
+        "MIX"
+      ],
+      "processor": "0x300445ac",
+      "branch": "canonical subtype 0",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 1,
+      "canonical_subtype": 1,
+      "name": "Plate",
+      "parameters": [
+        "DECAY",
+        "PREDLY",
+        "TONE",
+        "MOD",
+        "MIX"
+      ],
+      "processor": "0x4007fec8",
+      "branch": "canonical subtype 1",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 2,
+      "canonical_subtype": 2,
+      "name": "Hall",
+      "parameters": [
+        "DECAY",
+        "PREDLY",
+        "TONE",
+        "LFDAMP",
+        "MIX"
+      ],
+      "processor": "0x4007db8c",
+      "branch": "canonical subtype 2",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 3,
+      "canonical_subtype": 3,
+      "name": "Concert",
+      "parameters": [
+        "DECAY",
+        "PREDLY",
+        "HFDAMP",
+        "MOD",
+        "MIX"
+      ],
+      "processor": "0x4007b7b0",
+      "branch": "canonical subtype 3",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 4,
+      "canonical_subtype": 2,
+      "name": "Hall alias",
+      "parameters": [
+        "DECAY",
+        "PREDLY",
+        "TONE",
+        "LFDAMP",
+        "MIX"
+      ],
+      "processor": "0x4007db8c",
+      "branch": "canonical subtype 2",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 5,
+      "canonical_subtype": 5,
+      "name": "Shimmer",
+      "parameters": [
+        "DECAY",
+        "PREDLY",
+        "TONE",
+        "PITCH",
+        "MIX"
+      ],
+      "processor": "0x30045b78",
+      "branch": "canonical subtype 5",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 6,
+      "canonical_subtype": 6,
+      "name": "Cloud",
+      "parameters": [
+        "DECAY",
+        "TONE",
+        "MDEPTH",
+        "MRATE",
+        "MIX"
+      ],
+      "processor": "0x30042d7e",
+      "branch": "canonical subtype 6",
+      "status": "decompiled; float ABI and output behavior need validation"
+    },
+    {
+      "family": "reverb",
+      "ui_block": 6,
+      "internal_kind": 3,
+      "subtype": 7,
+      "canonical_subtype": 7,
+      "name": "Spring",
+      "parameters": [
+        "DECAY",
+        "PREDLY",
+        "XOVER",
+        "TONE",
+        "MIX"
+      ],
+      "processor": "0x400a29c8",
+      "branch": "canonical subtype 7",
+      "status": "decompiled; copied entry recovered"
+    }
+  ],
+  "missing_entries": [],
+  "notes": [
+    "Seven distinct reverb algorithms: subtype 4 canonicalizes to Hall (2) before UI name and DSP selection.",
+    "Spring copied kernel entry 0x400a29c8 = source 0x400a1540 + 0x1488; blob length 0x24ea.",
+    "Function role names are analyst annotations, not recovered original symbols.",
+    "C exports retain decompiler float-width/ABI defects and are not verified buildable implementations."
+  ]
+}

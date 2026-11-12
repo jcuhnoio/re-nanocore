@@ -1,0 +1,133 @@
+NanoCore 1.12 DSP architecture — first implementation pass
+=========================================================
+
+Scope: offline dissection of the existing firmware, starting with chorus and
+FX2 drive. This is not a claim that all effects or an injection ABI are solved.
+Detailed algorithms are in dsp-chorus.txt and dsp-drive.txt. No firmware writes
+or physical device commands are part of this pass.
+
+Observed processing chain
+-------------------------
+4000e9f0 initializes the audio engine and creates the audblk worker 4000b698.
+The worker drains a bounded queued block index and calls 40009d20. That routine
+converts/mixes audio and invokes 4005ff2c, which forwards to 4005e044. The latter
+is the central effect-chain processor. It selects an active parameter bank,
+walks ten order entries, checks per-node enable/skip state, looks up a processor
+by internal kind, prepares smoothed parameters, and makes an indirect call.
+
+The binary dispatch table is at 4009f168, with 8-byte entries. Extract it with:
+
+  python3 tools/firmware_source/dsp_dispatch.py --output evidence/dsp-dispatch-1.12.json
+
+Internal kind   Native callback   Flags   Scope established in this pass
+0               00000000          0       null
+1               400741b8          1       shared model/drive processing
+2               4005f2c4          1       wrapper; full algorithm not traced
+3               30043fd4          3       RAM-resident callback; not dissected
+4               40071cfe          3       modulation family (includes chorus)
+5               40066cee          1       wrapper; full algorithm not traced
+6               40066fb4          1       callback; full algorithm not traced
+7               40069738          1       dynamics candidate; not fully traced
+8               4006ca50          1       FX2 wrapper, including model drive
+9               40069738          1       reuses kind7 callback
+10              40068d96          1       wrapper; full algorithm not traced
+11              00000000          0       null
+
+Kinds are NOT the user-facing effect block or subtype numbers. Multiple effects
+share processors. A display label alone is insufficient to name a DSP kernel.
+Bit0 influences input/output buffer aliasing. Bit1 allows mono expansion into
+stereo when chain option +0x861 is enabled. These are inferred flag meanings.
+
+Callback boundary
+-----------------
+The indirect invocation is at 4005e29c. Native assembly stores the channel-mode
+value at stack+0 and a pointer to a one-byte result at stack+4, then jalr t6.
+The working ten-argument contract is:
+
+  process(state, inL, inR, outL, outR, frames,
+          float_parameters, subtype, input_channel_mode, &output_channel_mode)
+
+The first eight arguments are integer/pointer arguments in a0..a7. The last two
+are stack arguments. Right buffers can be NULL, and input/output can alias.
+Do not assume an output mode above one is impossible: the dispatcher checks it.
+This contract has not been validated by running replacement code on the device.
+
+Sample storage is 32-bit float in the traced DSP routines. Ghidra sometimes
+prints undefined8 or ulonglong at four-byte sample strides because of its
+floating-register model. Those types must NOT be copied into a replacement.
+Native flw/fsw and address increments take precedence over recovered C types.
+The audio initialization configures 0xac44 (44100) Hz. The outer audio routine
+chunks its chain call to at most 0x40 (64) frames; this is a local call-site
+observation, not a claim that every internal routine always receives 64 frames.
+
+Parameter banks and state lifetime
+----------------------------------
+The manager is at 3004ee20. It has two 0x308-byte banks; its active selector byte
+is at +0x860. 4005faaa returns the active bank, 4005fa8e the inactive one, and
+4005fac2 compares selected node metadata/parameters, increments revision fields
+and flips the selector. Persistent DSP state is stored separately, by pointer.
+
+Each bank starts with ten order bytes. Nodes start at +0x0c with stride 0x4c.
+Relative to a node:
+
+  +00 uint32 internal processor kind
+  +04 uint8 subtype
+  +05 uint8 enabled
+  +06 two unresolved bytes
+  +08 twelve float parameter slots (0x30 bytes)
+  +38 twelve bytes of additional metadata (not fully decoded)
+  +44 uint32 target address of persistent DSP state
+  +48 uint32 revision
+
+A skip mask is at bank+0x304. The node initializer is 4005feca. Changing a bank
+is not equivalent to constructing/resetting an algorithm's persistent state.
+The chain also caches parameters outside the banks and smooths changes; a
+replacement must account for these conventions and initialization paths.
+
+firmware/versions/1.12/include/dsp_layout.h gives a checked byte-layout and an
+explicitly provisional callback typedef. Host syntax/layout checks verify only
+the declared offsets, not correctness of an injected effect.
+
+Evidence and limits
+-------------------
+Dispatcher REA evidence:
+ev_f37a576475c22c9fd635a3889eb353dd8d38f9a12f980a6270ba9fb3d3ee3b9b
+Node initializer:
+ev_f3791a0a87a71a3e80880607356d575acc517c306316aa22c4c6e28d69a410c5
+Audio initializer:
+ev_601ab4b8b706f06b48645bdbc6fa8a5d5a6df2e4de7d132c64728b29c26cb301
+Worker:
+ev_6c3d64e90a2eb461cd1d684dc8cff682eb00056732e1b854314111508666d4d8
+
+Use the per-function source headers/retained REA export for canonical evidence
+IDs if copying records. Native call-site proof is retained locally in
+analysis/dsp-1.12/callback-callsite.asm. Machine-readable dispatch evidence
+records the package and segment hashes.
+
+Following the indirect table revealed entry points absent from the original
+automatic function inventory. Focused seeds recover these as supplemental
+exports. Seeded analysis can change overlapping function boundaries; do not
+sum its discovery count with the baseline or silently treat overlapping bodies
+as new independent functions. Supplemental exports retain separate provenance.
+
+Next implementation work
+------------------------
+For chorus, reproduce and measure the algorithm offline using the recovered
+state, constants and interpolation, then compare to actual pedal output.
+For drive, recover the model payload/kernel contract; a generic soft-clipper
+would be a different implementation, not an explanation of the existing one.
+For both, verify precise register conventions, state allocation/reset and
+worst-case processing time before redirecting the dispatch table. Modified
+image authentication/loading and tested recovery remain separate unresolved
+requirements for a usable replacement firmware.
+
+Subsequent all-effect source pass
+--------------------------------
+The first-pass uncertainties above have been narrowed: kind2 is CAB/IR, kind3
+is reverb, kind5 is delay, kind6 is EQ, kind7/9 are dynamics, and kind10 is
+expression processing. The complete exposed-family C export is now at
+firmware/versions/1.12/effects/. Its manifest/INDEX cover all selector entries
+and the recovered copied Spring callback. The original function counts are
+historical snapshots; overlapping focused decompilations must not be added
+together as independent recovered functions. ABI repair and audio validation
+still remain before this becomes a compilable replacement.
