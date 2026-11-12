@@ -1,0 +1,333 @@
+{
+  "date": "2026-11-12",
+  "purpose": "Offline optimization after failed physical audition",
+  "device_flashed": false,
+  "hardware_timing_pass": false,
+  "feature_contract": [
+    "Independent dry, -2, -1, +1, +2 gains",
+    "0\u20132000 ms spectral attack",
+    "Prototype dry processing modes including filter and detune",
+    "No reduced FFT/window/peak limit or dropped voices"
+  ],
+  "additional_latency_samples": 128,
+  "additional_latency_ms_44100": 2.9024943310657596,
+  "host_scheduled": {
+    "pending_job_resets": 4,
+    "control_transition_events": 128,
+    "cases": 96,
+    "bitwise_delayed_samples": 1572864,
+    "added_latency_samples": 128,
+    "max_error": 0,
+    "direct_bytes": 53568,
+    "scheduled_bytes": 61760
+  },
+  "host_direct": {
+    "bitwise_samples": 1048576,
+    "max_error": 0,
+    "sample_rates": [
+      8000,
+      44100,
+      48000,
+      96000
+    ],
+    "inplace_and_separate": true,
+    "varying_all_voice_levels_and_dry_modes": true
+  },
+  "comparisons": {
+    "tone": {
+      "mean_reduction_percent": 17.901561366494768,
+      "steady_mean_reduction_percent": 16.110714236761503,
+      "peak_reduction_percent": 57.26422898006742,
+      "delayed_rv32_bitwise_samples": 3968
+    },
+    "noise": {
+      "mean_reduction_percent": 16.43382769370986,
+      "steady_mean_reduction_percent": 14.53976400138599,
+      "peak_reduction_percent": 56.514870393201555,
+      "delayed_rv32_bitwise_samples": 3968
+    }
+  },
+  "reports": {
+    "previous_tone": {
+      "elf": "analysis/octave-platform-probe/rom-O2.elf",
+      "elf_sha256": "4e8dfe32cc09af6212564d22a1f951147886f3b42529b826d255c9ed598d1eb3",
+      "units": "executed instructions, NOT cycles",
+      "synthesis_window_sha256": "1af3ed285079ae74d95657cc3c6fcd89a58c722a37bebabacf0cd443fb10675f",
+      "fixture": "two-tone",
+      "instance_bytes": 53444,
+      "sample_rate": 48000,
+      "block_frames": 64,
+      "init_instructions": 53323,
+      "control_instructions": 443,
+      "reset_instructions": 32396,
+      "mean_instructions_per_block": 560820.84375,
+      "max_instructions_per_block": 1124290,
+      "max_observed_stack_bytes": 400,
+      "instruction_count_crosschecked": false,
+      "max_abs_output": 0.0318562351167202,
+      "vendor_emulation": {
+        "mvnez": 2,
+        "addsl": 887170,
+        "extu": 65536,
+        "lrhu": 480
+      },
+      "limits": [
+        "Unicorn instruction counts are not CPU cycles or physical timing",
+        "64-frame calls are synthetic harness blocks, not an established device DMA or ISR deadline",
+        "Basic-block count with exact integer/load-store semantics for executed T-Head custom operations",
+        "Full linked vendor libm/libc executes; no math function stubs",
+        "Finite deterministic fixture does not establish a worst-case deadline bound"
+      ],
+      "steady_window_blocks": [
+        16,
+        63
+      ],
+      "steady_mean_instructions": 565413.5833333334
+    },
+    "direct_tone": {
+      "elf": "analysis/octave-optimization-v3/build-final/optimized.elf",
+      "elf_sha256": "7618d8e1f7f9468fd486753c23562a1d5bc83c04258aafd0927988f8d55a349d",
+      "units": "executed instructions, NOT cycles",
+      "synthesis_window_sha256": "1af3ed285079ae74d95657cc3c6fcd89a58c722a37bebabacf0cd443fb10675f",
+      "fixture": "two-tone",
+      "instance_bytes": 53568,
+      "sample_rate": 48000,
+      "block_frames": 64,
+      "init_instructions": 53357,
+      "control_instructions": 443,
+      "reset_instructions": 32399,
+      "mean_instructions_per_block": 462166.546875,
+      "max_instructions_per_block": 922476,
+      "max_observed_stack_bytes": 336,
+      "instruction_count_crosschecked": false,
+      "max_abs_output": 0.0318562351167202,
+      "vendor_emulation": {
+        "mvnez": 2,
+        "addsl": 910133,
+        "extu": 65536,
+        "lrhu": 98592
+      },
+      "limits": [
+        "Unicorn instruction counts are not CPU cycles or physical timing",
+        "64-frame calls are synthetic harness blocks, not an established device DMA or ISR deadline",
+        "Basic-block count with exact integer/load-store semantics for executed T-Head custom operations",
+        "Full linked vendor libm/libc executes; no math function stubs",
+        "Finite deterministic fixture does not establish a worst-case deadline bound"
+      ],
+      "steady_window_blocks": [
+        16,
+        63
+      ],
+      "steady_mean_instructions": 465491.9375
+    },
+    "scheduled_tone": {
+      "elf": "analysis/octave-optimization-v3/build-final/scheduled.elf",
+      "elf_sha256": "c53f9749d95e29ed9f06b0f43d2acaea768ac5214bae52dd054cb2fb58b44647",
+      "units": "executed instructions, NOT cycles",
+      "synthesis_window_sha256": "1af3ed285079ae74d95657cc3c6fcd89a58c722a37bebabacf0cd443fb10675f",
+      "fixture": "two-tone",
+      "instance_bytes": 61760,
+      "sample_rate": 48000,
+      "block_frames": 64,
+      "init_instructions": 62574,
+      "control_instructions": 443,
+      "reset_instructions": 38544,
+      "mean_instructions_per_block": 460425.15625,
+      "max_instructions_per_block": 480474,
+      "max_observed_stack_bytes": 304,
+      "instruction_count_crosschecked": false,
+      "max_abs_output": 0.0318562351167202,
+      "vendor_emulation": {
+        "mvnez": 64,
+        "addsl": 890653,
+        "extu": 65536,
+        "lrhu": 96532
+      },
+      "limits": [
+        "Unicorn instruction counts are not CPU cycles or physical timing",
+        "64-frame calls are synthetic harness blocks, not an established device DMA or ISR deadline",
+        "Basic-block count with exact integer/load-store semantics for executed T-Head custom operations",
+        "Full linked vendor libm/libc executes; no math function stubs",
+        "Finite deterministic fixture does not establish a worst-case deadline bound"
+      ],
+      "steady_window_blocks": [
+        16,
+        63
+      ],
+      "steady_mean_instructions": 474321.4166666667
+    },
+    "previous_noise": {
+      "elf": "analysis/octave-platform-probe/rom-O2.elf",
+      "elf_sha256": "4e8dfe32cc09af6212564d22a1f951147886f3b42529b826d255c9ed598d1eb3",
+      "units": "executed instructions, NOT cycles",
+      "synthesis_window_sha256": "1af3ed285079ae74d95657cc3c6fcd89a58c722a37bebabacf0cd443fb10675f",
+      "fixture": "noise",
+      "instance_bytes": 53444,
+      "sample_rate": 48000,
+      "block_frames": 64,
+      "init_instructions": 53323,
+      "control_instructions": 443,
+      "reset_instructions": 32396,
+      "mean_instructions_per_block": 606824.734375,
+      "max_instructions_per_block": 1233693,
+      "max_observed_stack_bytes": 400,
+      "instruction_count_crosschecked": false,
+      "max_abs_output": 0.01515529491007328,
+      "vendor_emulation": {
+        "mvnez": 2,
+        "addsl": 970925,
+        "extu": 65536,
+        "lrhu": 108320
+      },
+      "limits": [
+        "Unicorn instruction counts are not CPU cycles or physical timing",
+        "64-frame calls are synthetic harness blocks, not an established device DMA or ISR deadline",
+        "Basic-block count with exact integer/load-store semantics for executed T-Head custom operations",
+        "Full linked vendor libm/libc executes; no math function stubs",
+        "Finite deterministic fixture does not establish a worst-case deadline bound"
+      ],
+      "steady_window_blocks": [
+        16,
+        63
+      ],
+      "steady_mean_instructions": 620134.2916666666
+    },
+    "scheduled_noise": {
+      "elf": "analysis/octave-optimization-v3/build-final/scheduled.elf",
+      "elf_sha256": "c53f9749d95e29ed9f06b0f43d2acaea768ac5214bae52dd054cb2fb58b44647",
+      "units": "executed instructions, NOT cycles",
+      "synthesis_window_sha256": "1af3ed285079ae74d95657cc3c6fcd89a58c722a37bebabacf0cd443fb10675f",
+      "fixture": "noise",
+      "instance_bytes": 61760,
+      "sample_rate": 48000,
+      "block_frames": 64,
+      "init_instructions": 62574,
+      "control_instructions": 443,
+      "reset_instructions": 38544,
+      "mean_instructions_per_block": 507100.203125,
+      "max_instructions_per_block": 536473,
+      "max_observed_stack_bytes": 304,
+      "instruction_count_crosschecked": false,
+      "max_abs_output": 0.01515529491007328,
+      "vendor_emulation": {
+        "mvnez": 64,
+        "addsl": 966719,
+        "extu": 65536,
+        "lrhu": 200340
+      },
+      "limits": [
+        "Unicorn instruction counts are not CPU cycles or physical timing",
+        "64-frame calls are synthetic harness blocks, not an established device DMA or ISR deadline",
+        "Basic-block count with exact integer/load-store semantics for executed T-Head custom operations",
+        "Full linked vendor libm/libc executes; no math function stubs",
+        "Finite deterministic fixture does not establish a worst-case deadline bound"
+      ],
+      "steady_window_blocks": [
+        16,
+        63
+      ],
+      "steady_mean_instructions": 529968.2291666666
+    }
+  },
+  "limits": [
+    "Executed instructions are not physical cycles or a deadline guarantee",
+    "64 blocks of each fixture; not exhaustive worst-case coverage",
+    "Scheduled parity uses constant parameters; live parameter changes tested separately for call-size invariance and finite output",
+    "The scheduled core is 61760 bytes before adapter metadata and does not fit the failed build's 57344-byte ring allocations",
+    "The old three-control device adapter is retained as failed-test history, not the final control interface"
+  ],
+  "source_sha256": {
+    "firmware/custom-fx/octave/shared_core.h": "8b278daf5f24dc5d818f108eaeb110e3ed3f1a678d367ceeca5f6709383d3d78",
+    "tools/custom_fx/octave_probe.cpp": "a0e557c2e9631a8b2f5ef56301cf1b791c9d04e711ccc82de12ce2d88f6a1e9a"
+  },
+  "dry_routing_decision": "User explicitly chose prototype always-smoothed dry behavior",
+  "build_variants": {
+    "baseline": {
+      "compile_flags": [
+        "-march=rv32imafdcpzpsfoperand_xtheade",
+        "-mabi=ilp32d",
+        "-Os",
+        "-std=c++14",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-exceptions",
+        "-fno-rtti",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-msmall-data-limit=0",
+        "-mno-relax",
+        "-ffp-contract=off",
+        "-fstack-usage",
+        "-DNC_OCTAVE_BASELINE"
+      ],
+      "size_output": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n   9624\t      0\t      0\t   9624\t   2598\t/out/baseline.o\n  19048\t   1072\t      4\t  20124\t   4e9c\t/out/baseline.elf\n",
+      "undefined_object_symbols": [
+        "         U atan2f",
+        "         U expf",
+        "         U memcpy",
+        "         U memset",
+        "         U powf",
+        "         U sqrtf",
+        "         U tanf"
+      ],
+      "elf_sha256": "7cd78e06019ee0349e9869e579e8439a477146380f8c4bc36db3a0e128808de2"
+    },
+    "optimized": {
+      "compile_flags": [
+        "-march=rv32imafdcpzpsfoperand_xtheade",
+        "-mabi=ilp32d",
+        "-O2",
+        "-std=c++14",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-exceptions",
+        "-fno-rtti",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-msmall-data-limit=0",
+        "-mno-relax",
+        "-ffp-contract=off",
+        "-fstack-usage",
+        "-fno-math-errno"
+      ],
+      "size_output": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n  24128\t      0\t      0\t  24128\t   5e40\t/out/optimized.o\n  33272\t   1072\t      4\t  34348\t   862c\t/out/optimized.elf\n",
+      "undefined_object_symbols": [
+        "         U atan2f",
+        "         U expf",
+        "         U memset",
+        "         U powf",
+        "         U tanf"
+      ],
+      "elf_sha256": "7618d8e1f7f9468fd486753c23562a1d5bc83c04258aafd0927988f8d55a349d"
+    },
+    "scheduled": {
+      "compile_flags": [
+        "-march=rv32imafdcpzpsfoperand_xtheade",
+        "-mabi=ilp32d",
+        "-O2",
+        "-std=c++14",
+        "-ffreestanding",
+        "-fno-builtin",
+        "-fno-exceptions",
+        "-fno-rtti",
+        "-ffunction-sections",
+        "-fdata-sections",
+        "-msmall-data-limit=0",
+        "-mno-relax",
+        "-ffp-contract=off",
+        "-fstack-usage",
+        "-fno-math-errno",
+        "-DNC_OCTAVE_SCHEDULED"
+      ],
+      "size_output": "   text\t   data\t    bss\t    dec\t    hex\tfilename\n  24192\t      0\t      0\t  24192\t   5e80\t/out/scheduled.o\n  33336\t   1072\t      4\t  34412\t   866c\t/out/scheduled.elf\n",
+      "undefined_object_symbols": [
+        "         U atan2f",
+        "         U expf",
+        "         U memset",
+        "         U powf",
+        "         U tanf"
+      ],
+      "elf_sha256": "c53f9749d95e29ed9f06b0f43d2acaea768ac5214bae52dd054cb2fb58b44647"
+    }
+  }
+}

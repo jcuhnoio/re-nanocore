@@ -96,3 +96,11 @@ OS produced an exact 868,352-byte readback matching SHA256
 d9cb9a7252f51a72580b8e0fb51b5a0e88dc8e93f9441e5d81078864fcfbd634.
 The updater accepted manifestation/reboot. No SPL or preset erase was performed.
 After boot, the normal runtime reported ready and returned the active preset.
+
+Follow-up offline work
+---------------------
+The full-feature core now has an optional four-job schedule and further exact
+arithmetic optimizations. It retains independent octave gains and the user's
+chosen always-smoothed dry attack. See the custom-fx/octave README and
+evidence/octave-scheduled-optimization.json for tested reductions and limits.
+This version was not flashed; the pedal remains on restored UniVibe 1.12.

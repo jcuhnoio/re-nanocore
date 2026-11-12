@@ -161,8 +161,17 @@ preflash backup is retained locally for direct-DFU rollback.
 `physical measurements <evidence/octave-device-1.12.json>`_,
 `feasibility findings <docs/octave-nanocore-feasibility.txt>`_, and
 `buildable candidate <firmware/custom-fx/octave/README.rst>`_ document the work.
-Next work is reducing average DSP cost and spreading spectral work across audio
-blocks, then measuring again under controlled input and varied full chains.
+A subsequent offline pass adds table-based lookups, specialized FFT stages and
+a four-job schedule per spectral frame. With all four voices and attack retained,
+the tested steady instruction workload falls 14.5–16.1%, and peak 64-frame
+workload falls about 57%. Scheduling adds 128 samples (2.90 ms at 44.1 kHz).
+This is not a hardware timing pass, and the pedal remains on working UniVibe.
+See `scheduled-core evidence <evidence/octave-scheduled-optimization.json>`_.
+The final controls must expose independent -2/-1/+1/+2 levels, attack and dry
+processing; the failed three-control fixed-blend adapter is not the final UI.
+The user chose to retain the prototype's always-smoothed dry attack behavior.
+Next work is further average-cost reduction, allocation/UI integration and
+bounded physical profiling before another full-chain audition.
 The accepted Octave Studio checkout remains unchanged.
 
 Current result

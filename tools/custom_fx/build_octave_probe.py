@@ -12,8 +12,10 @@ def build(destination):
  # Hypothetical review address only: linked size exceeds the stock pitch cluster.
  (out/'probe.ld').write_text('ENTRY(core_process)\nSECTIONS { . = 0x40077364; .text : { *(.text*) *(.rodata*) *(.srodata*) } .data : { *(.data*) *(.sdata*) } .bss : { *(.bss*) *(.sbss*) *(COMMON) } /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) } }\n')
  report={'purpose':'offline code-size and emulation probe; no device operations','flashable':False,'compiler':run('g++',['--version']).splitlines()[0],'flags':FLAGS,'variants':{}}
- for name in ['baseline','optimized']:
-  flags=[('-O2' if name=='optimized' and flag=='-Os' else flag) for flag in FLAGS]+(['-DNC_OCTAVE_BASELINE'] if name=='baseline' else ['-fno-math-errno'])
+ report['source_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [ROOT/'firmware/custom-fx/octave/shared_core.h',ROOT/'tools/custom_fx/octave_probe.cpp']}
+ for name in ['baseline','optimized','scheduled']:
+  flags=[('-O2' if name!='baseline' and flag=='-Os' else flag) for flag in FLAGS]+(['-DNC_OCTAVE_BASELINE'] if name=='baseline' else ['-fno-math-errno'])
+  if name=='scheduled': flags+=['-DNC_OCTAVE_SCHEDULED']
   run('g++',flags+['-c','/work/tools/custom_fx/octave_probe.cpp','-o',f'/out/{name}.o'])
   run('g++',FLAGS[:2]+['-nostdlib',f'-Wl,-T,/out/probe.ld,-Map,/out/{name}.map,--no-relax',f'/out/{name}.o','-lm','-lc','-lgcc','-o',f'/out/{name}.elf'])
   (out/f'{name}.asm').write_text(run('objdump',['-d',f'/out/{name}.elf']))

@@ -6,7 +6,11 @@ namespace implementation = octave_shared;
 #include "../../firmware/custom-fx/octave/shared_core.h"
 namespace implementation = octave_shared_optimized;
 #endif
+#ifdef NC_OCTAVE_SCHEDULED
+using Core=implementation::Core<2048,1024,false,true>;
+#else
 using Core=implementation::Core<2048,1024>;
+#endif
 void* operator new(__SIZE_TYPE__,void* p) noexcept {return p;}
 extern "C" unsigned core_size(){return sizeof(Core);}
 extern "C" unsigned core_alignment(){return alignof(Core);}

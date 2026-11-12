@@ -25,7 +25,7 @@ int main(){
   P p;p.detuneCents=7;p.dryFx=3;p.resonance=2;
   size_t offset=0;int block=0;
   while(offset<x.size()){
-   if(block%57==0){p.attackMs=((block/57)%3==0)?0:650;p.outputDb=-9+float(block%6);p.cutoffHz=1000+float(block%9000);p.sub1=(block/57)%2?.3f:0;p.up1=(block/57)%3?.65f:0;p.sensitivity=block%101;p.thresholdDb=-60+float(block%20);}
+   if(block%57==0){p.attackMs=((block/57)%3==0)?0:650;p.outputDb=-9+float(block%6);p.cutoffHz=1000+float(block%9000);p.sub1=(block/57)%2?.3f:0;p.up1=(block/57)%3?.65f:0;p.sub2=(block/57)%4?.05f:0;p.up2=(block/57)%5?.35f:0;p.dryFx=(block/57)%4;p.resonance=(block/57)%4;p.sensitivity=block%101;p.thresholdDb=-60+float(block%20);}
    a.setParameters(p);b.setParameters(convert(p));
    if(block==320){a.reset();b.reset();}
    auto n=std::min<size_t>(rnd()%258,x.size()-offset);

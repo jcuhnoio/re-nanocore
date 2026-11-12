@@ -71,3 +71,54 @@ Build the retained original host reference for the integration comparison::
 The native wrapper test covers 4,096 samples, initialization/reset, canaries,
 register preservation, bypass and the non-PITCH trampoline. Its timer is stubbed;
 only the separately retained physical telemetry measures real processing time.
+
+Offline scheduling pass after the failed audition
+------------------------------------------------
+
+The core now uses shared full-wave cosine and bit-reversal tables, specialized
+FFT stages and explicitly expanded two-bin accumulation. Floating arithmetic
+order is retained. ``Core<2048,1024>`` is the direct version;
+``Core<2048,1024,false,true>`` enables scheduling. Four jobs run at offsets
+0/32/64/96 of each 128-sample hop: analysis, dry inverse, voice mapping, wet
+inverse. One additional hop of output buffering prevents consuming unfinished
+frames. This is cooperative work inside the existing process call, not a thread
+or preemptible callback.
+
+All four octave levels remain independent in Parameters. Attack, dry processing,
+cutoff, resonance, detune and output gain remain implemented. Per the user's
+choice, attack smooths the dry signal regardless of Dry FX mode, matching the
+prototype. Modes 0/1 retain the prototype's behavior; mode 2 also filters dry,
+and mode 3 adds its detune/chorus path. No voice count, peak limit or transform
+size was reduced. The old device.cpp/UI adapter is the failed three-control
+experiment; it still needs replacement with a validated full control interface.
+
+Direct state is now 53,568 bytes; scheduled state is 61,760 bytes. Shared linked
+scheduled text/constants total 33,336 bytes, plus 1,072 bytes initialized data
+and 4 bytes BSS for the offline probe. The scheduled core does NOT fit the old
+57,344-byte device ring allocations and must not be wired into that image as-is.
+
+Host verification covers 1,048,576 samples bit-for-bit against the original,
+including live voice-level/dry-mode transitions. Another 96 scheduled cases
+compare 1,572,864 delayed samples bit-for-bit across isolated voices, combined
+voices, dry modes, attack on/off and 44.1/48 kHz. Reset during each pending job
+and 128 parameter events across different call sizes also pass, including
+AddressSanitizer/UndefinedBehaviorSanitizer. Constant-parameter delayed parity
+does not claim identical timing of live parameter changes: spectral controls
+are captured at each frame boundary; output filters remain audio-rate.
+
+Reproduce scheduling tests and target probes from the repository root::
+
+  c++ -std=c++14 -O2 -ffp-contract=off -fno-exceptions -fno-rtti -fno-math-errno -fsanitize=address,undefined tools/custom_fx/check_octave_scheduled.cpp -o /tmp/check-octave-scheduled
+  /tmp/check-octave-scheduled
+  python3 tools/custom_fx/build_octave_probe.py --output analysis/NEW-SCHEDULED-PROBE
+  python3 tools/custom_fx/check_octave_target.py analysis/NEW-SCHEDULED-PROBE/scheduled.elf analysis/NEW-SCHEDULED-TONE.json 64
+  python3 tools/custom_fx/check_octave_target.py analysis/NEW-SCHEDULED-PROBE/scheduled.elf analysis/NEW-SCHEDULED-NOISE.json 64 noise
+
+Compared with the previous optimized core, steady instruction workload falls
+16.1% on the tone fixture and 14.5% on noise; measured maximum 64-frame workload
+falls 57.3%/56.5%. Both RV32 fixtures retain 3,968 bit-identical delayed output
+samples. Counts include real linked math routines but are not CPU cycles. See
+``evidence/octave-scheduled-optimization.json`` for hashes, sizes and limits.
+No firmware was flashed during this pass. More average-cost reduction, full
+control integration, larger state reservations and controlled physical timing
+are required before another audition. The public installer is unchanged.

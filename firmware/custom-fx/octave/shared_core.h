@@ -10,7 +10,7 @@
 namespace octave_shared_optimized {
 // Framework-free, mono, caller-owned DSP. No allocation, threads, file I/O or exceptions.
 // Symmetric Hann analysis; short synthesis has eight overlaps and dual normalization.
-// The nominal dry latency is Synthesis samples; wet onset/energy timing must be measured.
+// Nominal dry latency is Synthesis (+ one hop when scheduled); measure wet onset separately.
 // At most 256 spectral peaks are tracked. Band-wise swell is always integrated.
 struct Parameters {
     float dry = .65f, sub2 = .05f, sub1 = .3f, up1 = .65f, up2 = .35f;
@@ -19,17 +19,20 @@ struct Parameters {
     float sensitivity = 50, thresholdDb = -60, retriggerMs = 120, retriggerDepth = 75;
 };
 
-template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core {
+template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeSliced = false> class Core {
     static_assert(N >= 256 && (N & (N - 1)) == 0, "FFT length must be a power of two >=256");
     static_assert(Synthesis >= 64 && Synthesis <= N && (Synthesis & (Synthesis - 1)) == 0,
                   "Synthesis size must be a power of two between 64 and N");
     static constexpr int B = N / 2 + 1, H = Synthesis / 8, Mask = N - 1;
     static constexpr int Centre = N / 2;
+    static constexpr int WorkDelay = TimeSliced ? H : 0;
+    static constexpr int Overlap = TimeSliced ? 2 * Synthesis : Synthesis;
+    static_assert(!TimeSliced || Synthesis + H <= N, "scheduled dry delay exceeds input ring");
     float heldMagnitude[N / 2 + 1]{};
-    float dryOverlap[Synthesis]{};
+    float dryOverlap[Overlap]{};
     float swellAlpha = 1;
     static constexpr float Pi = 3.14159265358979323846f, Tau = 2 * Pi;
-    float input[N]{}, overlap[Synthesis]{}, real[B]{}, imag[B]{};
+    float input[N]{}, overlap[Overlap]{}, real[B]{}, imag[B]{};
     // Immutable quarter-wave twiddles reside in read-only storage, shared by instances.
     struct CosTable {
         float values[N / 4 + 1]{};
@@ -85,6 +88,14 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
     Filter wet, dry;
     int position = 0, hop = 0, chorusPosition = 0;
     Parameters parameters;
+    // Freeze frame controls while a scheduled frame is in flight. Audio-rate
+    // filtering/level smoothing still follows the live parameters.
+    int framePosition = 0, framePeakCount = 0;
+    int matchedPeak[StableBirths ? MaxPeaks : 1]{};
+    float frameCurrent[5]{}, frameTarget[5]{};
+    Parameters frameParameters;
+    int workStage = 0, workCountdown = 0;
+    float pendingLfo = 0;
     static float clamp(float x, float lo, float hi) { return x < lo ? lo : (x > hi ? hi : x); }
     static float finite(float x, float fallback) { return std::isfinite(x) ? x : fallback; }
     static float wrap(float x) { // phases are bounded to a few cycles by callers
@@ -92,22 +103,61 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
         const int whole = (int)(cycles + (cycles >= 0 ? .5f : -.5f));
         return x - whole * Tau;
     }
+    // Compile-time tables trade ~10 KB of shared read-only storage for fewer
+    // branches and integer operations in every transform and phase lookup.
+    struct FullCosTable {
+        float values[N]{};
+        constexpr FullCosTable() {
+            for (int i = 0; i < N; ++i) values[i] = cosineAt(i);
+        }
+    };
+    static constexpr FullCosTable fullCosTable{};
+    static float fastCosineAt(int i) { return fullCosTable.values[i & Mask]; }
+    struct ReverseTable {
+        std::uint16_t values[N / 2]{};
+        constexpr ReverseTable() {
+            for (int i = 0; i < N / 2; ++i) {
+                unsigned x = i, reversed = 0;
+                for (int n = N / 2; n > 1; n >>= 1) {
+                    reversed = (reversed << 1) | (x & 1); x >>= 1;
+                }
+                values[i] = reversed;
+            }
+        }
+    };
+    static constexpr ReverseTable reverseTable{};
     float cosLookup(float phase) const {
         float index = phase * (N / Tau);
         int a = (int)index;
         if (index < (float)a)
             --a;
         float f = index - a;
-        return cosineAt(a) + f * (cosineAt(a + 1) - cosineAt(a));
+        return fastCosineAt(a) + f * (fastCosineAt(a + 1) - fastCosineAt(a));
     }
-    float analysisWindow(int i) const { return .5f - .5f * cosineAt(i); }
+    float analysisWindow(int i) const { return .5f - .5f * fastCosineAt(i); }
+    template <int Length> void fftStage(bool inverse) {
+        constexpr int M = N / 2;
+        const int half = Length / 2, step = N / Length;
+        // Butterflies within one stage are independent. Hoist each twiddle
+        // out of the start loop without changing any floating arithmetic.
+        for (int j = 0; j < half; ++j) {
+            int k = j * step;
+            float wr = fastCosineAt(k), wi = (inverse ? 1.f : -1.f) * fastCosineAt(N / 4 - k);
+            for (int start = 0; start < M; start += Length) {
+                int a = start + j, b = a + half;
+                float tr = wr * real[b] - wi * imag[b], ti = wr * imag[b] + wi * real[b];
+                real[b] = real[a] - tr;
+                imag[b] = imag[a] - ti;
+                real[a] += tr;
+                imag[a] += ti;
+            }
+        }
+        if (Length < M) fftStage<(Length < M ? Length * 2 : Length)>(inverse);
+    }
     void complexFft(bool inverse) {
         constexpr int M = N / 2;
-        for (int i = 1, j = 0; i < M; ++i) {
-            int bit = M >> 1;
-            for (; j & bit; bit >>= 1)
-                j ^= bit;
-            j ^= bit;
+        for (int i = 1; i < M; ++i) {
+            const int j = reverseTable.values[i];
             if (i < j) {
                 float t = real[i];
                 real[i] = real[j];
@@ -117,23 +167,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
                 imag[j] = t;
             }
         }
-        for (int length = 2; length <= M; length <<= 1) {
-            const int half = length / 2, step = N / length;
-            // Butterflies within one stage are independent. Hoist each twiddle
-            // out of the start loop without changing any floating arithmetic.
-            for (int j = 0; j < half; ++j) {
-                int k = j * step;
-                float wr = cosineAt(k), wi = (inverse ? 1.f : -1.f) * cosineAt(N / 4 - k);
-                for (int start = 0; start < M; start += length) {
-                    int a = start + j, b = a + half;
-                    float tr = wr * real[b] - wi * imag[b], ti = wr * imag[b] + wi * real[b];
-                    real[b] = real[a] - tr;
-                    imag[b] = imag[a] - ti;
-                    real[a] += tr;
-                    imag[a] += ti;
-                }
-            }
-        }
+        fftStage<2>(inverse);
         if (inverse)
             for (int i = 0; i < M; ++i) {
                 real[i] /= M;
@@ -149,7 +183,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
             const int j = M - k;
             float ar = real[k], ai = imag[k], br = real[j], bi = imag[j];
             auto unpack = [&](int bin, float r, float i, float rr, float ii) {
-                float wr = cosineAt(bin), wi = -cosineAt(N / 4 - bin);
+                float wr = fastCosineAt(bin), wi = -fastCosineAt(N / 4 - bin);
                 float dr = r - rr, di = i + ii;
                 if (inverse) {
                     real[bin] = .5f * (r + rr - wr * di + wi * dr);
@@ -189,7 +223,10 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
             f.s2 = 0;
         return v2;
     }
-    void analyseAndSynthesize() {
+    void analyseFrame() {
+        framePosition = position;
+        frameParameters = parameters;
+        for (int i = 0; i < 5; ++i) { frameCurrent[i] = current[i]; frameTarget[i] = target[i]; }
         // Centre the Hann window at time zero before the FFT. Fractional spectral
         // interpolation otherwise cancels alternating-sign neighbouring bins.
         for (int i = 0; i < N; ++i) {
@@ -220,7 +257,6 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
                 frequency[peakCount - 1] = Tau * k / N + wrap(std::atan2(im, re) - expected) / H;
             }
         }
-        int matchedPeak[StableBirths ? MaxPeaks : 1]{};
         if (StableBirths) {
             // A new spectral peak must not borrow an unrelated sustained peak's
             // accumulated rotation. Require reciprocal nearest-neighbour matching.
@@ -262,31 +298,41 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
                 held = mag < held ? mag : held + swellAlpha * (mag - held);
                 magnitude[k] = mag > 1e-12f ? .05f + .95f * held / mag : 0;
             }
-            if (parameters.attackMs >= .1f && current[0] > 1e-7f) {
-                for (int k = 0; k < B; ++k) {
-                    real[k] *= magnitude[k];
-                    imag[k] *= magnitude[k];
-                }
-                realFft(true);
-                for (int j = 0; j < Synthesis; ++j) {
-                    int i = N - Synthesis + j;
-                    int index = (i + N - Centre) & Mask;
-                    float x = index & 1 ? imag[index / 2] : real[index / 2];
-                    dryOverlap[(position + j) & (Synthesis - 1)] += x * synthesisTable.values[j];
-                }
+        }
+        framePeakCount = peakCount;
+    }
+    void synthesizeDry() {
+        if (frameParameters.attackMs >= .1f && frameCurrent[0] > 1e-7f) {
+            for (int k = 0; k < B; ++k) {
+                real[k] *= magnitude[k];
+                imag[k] *= magnitude[k];
+            }
+            realFft(true);
+            for (int j = 0; j < Synthesis; ++j) {
+                int i = N - Synthesis + j;
+                int index = (i + N - Centre) & Mask;
+                float x = index & 1 ? imag[index / 2] : real[index / 2];
+                dryOverlap[(framePosition + WorkDelay + j) & (Overlap - 1)] += x * synthesisTable.values[j];
             }
         }
+    }
+    void clearSynthesis() {
         for (int i = 0; i < B; ++i) {
             real[i] = 0;
             imag[i] = 0;
         }
+    }
+    void synthesizeVoices(int firstVoice, int endVoice) {
+        const int peakCount = framePeakCount;
+        const auto &peaks = peakBins[peakBank];
+        const auto &previousPeaks = peakBins[1 - peakBank];
         const float ratios[] = {.25f, .5f, 2.f, 4.f};
-        for (int voice = 0; voice < 4; ++voice) {
-            if (target[voice + 1] == 0 && current[voice + 1] < 1e-7f)
+        for (int voice = firstVoice; voice < endVoice; ++voice) {
+            if (frameTarget[voice + 1] == 0 && frameCurrent[voice + 1] < 1e-7f)
                 continue;
             float ratio = ratios[voice];
             if (voice >= 2) {
-                float cents = parameters.detuneCents * cosLookup(lfo + (voice - 2) * 1.8f);
+                float cents = frameParameters.detuneCents * cosLookup(lfo + (voice - 2) * 1.8f);
                 float z = cents * (.69314718056f / 1200.f);
                 ratio *= 1 + z + .5f * z * z;
             }
@@ -314,8 +360,8 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
                 if (shift < (float)whole)
                     --whole;
                 float fraction = shift - whole;
-                float c = cosLookup(rotation) * current[voice + 1];
-                float si = cosLookup(rotation - Pi * .5f) * current[voice + 1];
+                float c = cosLookup(rotation) * frameCurrent[voice + 1];
+                float si = cosLookup(rotation - Pi * .5f) * frameCurrent[voice + 1];
                 for (int k = first; k <= last; ++k) {
                     float re = mappedMagnitude[k] * c - mappedFrequency[k] * si;
                     float im = mappedMagnitude[k] * si + mappedFrequency[k] * c;
@@ -324,21 +370,24 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
                         im *= magnitude[k];
                     }
                     // Fractional translation of the centred complex spectrum.
-                    for (int part = 0; part < 2; ++part) {
-                        int bin = k + whole + part;
-                        float weight = part ? fraction : 1 - fraction;
-                        // The negative-frequency region folds by conjugation.
+                    // Exactly two destinations; avoid a runtime part loop on
+                    // the embedded compiler while retaining accumulation order.
+                    auto addBin = [&](int bin, float weight) {
                         bool negative = bin < 0;
-                        if (negative)
-                            bin = -bin;
+                        if (negative) bin = -bin;
                         if (bin > 0 && bin < B - 1) {
                             real[bin] += re * weight;
                             imag[bin] += (negative ? -im : im) * weight;
                         }
-                    }
+                    };
+                    addBin(k + whole, 1 - fraction);
+                    addBin(k + whole + 1, fraction);
                 }
             }
         }
+    }
+    void finishFrame() {
+        const int peakCount = framePeakCount;
         previousPeakCount = peakCount;
         peakBank = 1 - peakBank;
         realFft(true);
@@ -346,13 +395,36 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
             int index = (i + N - Centre) & Mask;
             float x = index & 1 ? imag[index / 2] : real[index / 2];
             float window = synthesisTable.values[i - (N - Synthesis)];
-            overlap[(position + i - (N - Synthesis)) & (Synthesis - 1)] += x * window;
+            overlap[(framePosition + WorkDelay + i - (N - Synthesis)) & (Overlap - 1)] += x * window;
         }
-        lfo = wrap(lfo + Tau * (.2f + parameters.detuneCents * .025f) * H / sampleRate);
+        const float nextLfo = wrap(lfo + Tau * (.2f + frameParameters.detuneCents * .025f) * H / sampleRate);
+        if (TimeSliced) pendingLfo = nextLfo; else lfo = nextLfo;
+    }
+    void analyseAndSynthesize() {
+        analyseFrame();
+        synthesizeDry();
+        clearSynthesis();
+        synthesizeVoices(0, 4);
+        finishFrame();
+    }
+    // Four jobs per H-sample hop: analysis, dry inverse, voice mapping, wet
+    // inverse. The extra hop of output delay ensures every job finishes before
+    // its first output sample is consumed. This is an offline experiment, not
+    // a preemptible task or a measured hardware deadline guarantee.
+    void scheduledStep() {
+        if (workStage == 1) {
+            synthesizeDry(); clearSynthesis();
+        } else if (workStage == 2) {
+            synthesizeVoices(0, 4);
+        } else if (workStage == 3) {
+            finishFrame();
+        }
+        workStage = (workStage + 1) & 3;
+        workCountdown = workStage ? H / 4 : 0;
     }
 
   public:
-    static constexpr int fftSize = N, hopSize = H, latencySamples = Synthesis;
+    static constexpr int fftSize = N, hopSize = H, latencySamples = Synthesis + WorkDelay;
     void prepare(float sr) {
         sampleRate = clamp(finite(sr, 48000), 8000, 192000);
         smoothing = 1 - std::exp(-1.f / (sampleRate * .02f));
@@ -423,24 +495,26 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
             current[i] = target[i];
         wet = {};
         dry = {};
-        position = hop = chorusPosition = 0;
-        lfo = 0;
+        position = hop = 0;
+        chorusPosition = (512 - (WorkDelay & 511)) & 511;
+        workStage = workCountdown = 0;
+        lfo = pendingLfo = 0;
     }
     void process(const float *in, float *out, std::size_t samples) {
         // Arbitrary block lengths, including in-place operation and zero samples.
         for (std::size_t i = 0; i < samples; ++i) {
-            float x = clamp(finite(in[i], 0), -8, 8), delayed = input[(position + N - Synthesis) & Mask],
-                  wetSample = overlap[position & (Synthesis - 1)];
+            float x = clamp(finite(in[i], 0), -8, 8), delayed = input[(position + N - Synthesis - WorkDelay) & Mask],
+                  wetSample = overlap[position & (Overlap - 1)];
             input[position] = x;
-            overlap[position & (Synthesis - 1)] = 0;
+            overlap[position & (Overlap - 1)] = 0;
             for (int g = 0; g < 6; ++g)
                 current[g] += smoothing * (target[g] - current[g]);
             float swell = 1.f;
             float d = delayed;
             {
                 if (parameters.attackMs >= .1f)
-                    d = dryOverlap[position & (Synthesis - 1)];
-                dryOverlap[position & (Synthesis - 1)] = 0;
+                    d = dryOverlap[position & (Overlap - 1)];
+                dryOverlap[position & (Overlap - 1)] = 0;
             }
             chorus[chorusPosition] = d;
             if (parameters.dryFx == 3 && parameters.detuneCents > 0) {
@@ -459,13 +533,19 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false> class Core
                 d = lowpass(d, dry);
             out[i] = finite((current[0] * d + lowpass(wetSample * swell, wet)) * current[5], 0);
             position = (position + 1) & Mask;
+            if (TimeSliced && workStage && --workCountdown == 0) scheduledStep();
             if (++hop == H) {
                 hop = 0;
-                analyseAndSynthesize();
+                if (TimeSliced) {
+                    lfo = pendingLfo;
+                    analyseFrame(); workStage = 1; workCountdown = H / 4;
+                } else analyseAndSynthesize();
             }
         }
     }
 };
-template <int N, int S, bool Stable> constexpr typename Core<N, S, Stable>::CosTable Core<N, S, Stable>::cosTable;
-template <int N, int S, bool Stable> constexpr typename Core<N, S, Stable>::SynthesisTable Core<N, S, Stable>::synthesisTable;
+template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::CosTable Core<N, S, Stable, Sliced>::cosTable;
+template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::SynthesisTable Core<N, S, Stable, Sliced>::synthesisTable;
+template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::FullCosTable Core<N, S, Stable, Sliced>::fullCosTable;
+template <int N, int S, bool Stable, bool Sliced> constexpr typename Core<N, S, Stable, Sliced>::ReverseTable Core<N, S, Stable, Sliced>::reverseTable;
 } // namespace octave_shared_optimized

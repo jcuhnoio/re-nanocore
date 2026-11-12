@@ -1,6 +1,6 @@
 """Count linked Shared2048/1024 RV32 execution and preserve sample output.
 
-Usage: python check_octave_target.py LINKED_ELF REPORT_JSON [BLOCKS=32]
+Usage: python check_octave_target.py LINKED_ELF REPORT_JSON [BLOCKS=32] [two-tone|noise]
 Requires Unicorn. ELF must expose the core_size/core_init/core_parameters/
 core_reset/core_process C probe ABI and use the retained 0x40000000 load region.
 A 48kHz two-tone input, all four octave voices and 650ms swell are exercised.
@@ -31,7 +31,8 @@ def elf(path):
    if name:symbols[strings[name:strings.index(0,name)].decode()]=value
  return b,segments,symbols
 
-def run(path,blocks=32):
+def run(path,blocks=32,fixture="two-tone"):
+ if fixture not in ("two-tone", "noise"):raise ValueError("Unknown fixture")
  b,segments,s=elf(path);u=Uc(UC_ARCH_RISCV,UC_MODE_RISCV32)
  u.mem_map(0x40000000,0x200000);u.mem_map(0x30000000,0x200000)
  custom={}
@@ -119,14 +120,18 @@ def run(path,blocks=32):
  values=[.4,.5,.5,.5,.5,650.,6500.,0.,-9.]
  u.mem_write(params,struct.pack('<9f2i4f',*values,0,0,70.,-60.,80.,95.))
  controls=call('core_parameters',[state,params]);reset=call('core_reset',[state])
- counts=[];samples=[]
+ counts=[];samples=[];noise_seed=9273
  for n in range(blocks):
   x=[.2*math.sin((n*64+i)*.04)+.1*math.sin((n*64+i)*.071) for i in range(64)]
+  if fixture=='noise':
+   for i in range(64):
+    noise_seed=(noise_seed*1664525+1013904223)&0xffffffff
+    x[i]=.2*((noise_seed>>8)-8388608)/8388608
   u.mem_write(inp,struct.pack('<64f',*x));count,stackuse=call('core_process',[state,inp,out,64]);counts.append({'block':n,'instructions':count,'stack_observed':stackuse})
   samples.extend(struct.unpack('<64f',u.mem_read(out,256)))
   assert all(math.isfinite(x) for x in samples)
- report={'elf':str(path),'elf_sha256':hashlib.sha256(b).hexdigest(),'units':'executed instructions, NOT cycles','synthesis_window_sha256':window_sha,'instance_bytes':instance_size,'sample_rate':48000,'block_frames':64,'init_instructions':init[0],'control_instructions':controls[0],'reset_instructions':reset[0],'mean_instructions_per_block':sum(x['instructions'] for x in counts)/max(blocks,1),'max_instructions_per_block':max((x['instructions'] for x in counts),default=0),'max_observed_stack_bytes':max((x['stack_observed'] for x in counts),default=0),'counts':counts,'instruction_count_crosschecked':verify_counts,'max_abs_output':max(map(abs,samples),default=0),'vendor_emulation':custom_count,'limits':['Unicorn instruction counts are not CPU cycles or physical timing','64-frame calls are synthetic harness blocks, not an established device DMA or ISR deadline','Basic-block count with exact integer/load-store semantics for executed T-Head custom operations','Full linked vendor libm/libc executes; no math function stubs','Finite two-tone fixture is not a worst-case noise/maximum-peak stress test']}
+ report={'elf':str(path),'elf_sha256':hashlib.sha256(b).hexdigest(),'units':'executed instructions, NOT cycles','synthesis_window_sha256':window_sha,'fixture':fixture,'instance_bytes':instance_size,'sample_rate':48000,'block_frames':64,'init_instructions':init[0],'control_instructions':controls[0],'reset_instructions':reset[0],'mean_instructions_per_block':sum(x['instructions'] for x in counts)/max(blocks,1),'max_instructions_per_block':max((x['instructions'] for x in counts),default=0),'max_observed_stack_bytes':max((x['stack_observed'] for x in counts),default=0),'counts':counts,'instruction_count_crosschecked':verify_counts,'max_abs_output':max(map(abs,samples),default=0),'vendor_emulation':custom_count,'limits':['Unicorn instruction counts are not CPU cycles or physical timing','64-frame calls are synthetic harness blocks, not an established device DMA or ISR deadline','Basic-block count with exact integer/load-store semantics for executed T-Head custom operations','Full linked vendor libm/libc executes; no math function stubs','Finite deterministic fixture does not establish a worst-case deadline bound']}
  return report,samples
 if __name__=='__main__':
- report,samples=run(sys.argv[1],int(sys.argv[3]) if len(sys.argv)>3 else 32)
+ report,samples=run(sys.argv[1],int(sys.argv[3]) if len(sys.argv)>3 else 32,sys.argv[4] if len(sys.argv)>4 else 'two-tone')
  Path(sys.argv[2]).write_text(json.dumps(report,indent=2)+'\n');Path(sys.argv[2]+'.samples').write_bytes(struct.pack('<%df'%len(samples),*samples));print(json.dumps({k:v for k,v in report.items() if k!='counts'},indent=2))
