@@ -20,10 +20,27 @@ volatile std::uint32_t nc_octave_fault=0;
 volatile std::uint32_t nc_octave_budget_ticks=0;
 volatile std::uint32_t nc_octave_previous_overruns=0xffffffffu;
 }
+#ifndef NC_OCTAVE_BUDGET_PERCENT
+#define NC_OCTAVE_BUDGET_PERCENT 40
+#endif
+static_assert(NC_OCTAVE_BUDGET_PERCENT >= 40 && NC_OCTAVE_BUDGET_PERCENT <= 60, "invalid budget");
 static std::uint64_t ticks() {
     // Same native 64-bit timer used by the stock audio timing path.
     return reinterpret_cast<std::uint64_t(*)()>(0x40040028u)();
 }
+#ifdef NC_OCTAVE_PROFILE_JOBS
+extern "C" {
+volatile std::uint32_t nc_octave_job_max[9]={};
+volatile std::uint32_t nc_octave_job_calls[9]={};
+std::uint64_t nc_octave_job_begin(){return ticks();}
+void nc_octave_job_end(unsigned job, std::uint64_t start){
+    const auto elapsed=std::uint32_t(ticks()-start);
+    if(job>=9)return;
+    if(elapsed>nc_octave_job_max[job])nc_octave_job_max[job]=elapsed;
+    ++nc_octave_job_calls[job];
+}
+}
+#endif
 void* operator new(__SIZE_TYPE__,void* p) noexcept { return p; }
 namespace {
 constexpr std::uint32_t Magic=0x4f435431; // OCT1
@@ -104,7 +121,7 @@ extern "C" void nc_octave_process(void* family,const float* left,const float* ri
     nc_octave_previous_overruns=overruns;
     if(nc_octave_fault){bypass(left,right,outLeft,outRight,frames,stereo);return;}
     const std::uint64_t start=ticks();
-    nc_octave_budget_ticks=std::uint32_t(4000000.f*float(frames)/s->sampleRate*.4f);
+    nc_octave_budget_ticks=std::uint32_t(4000000.f*float(frames)/s->sampleRate*(NC_OCTAVE_BUDGET_PERCENT*.01f));
     if(bytes[0xe40]!=8){s->core.reset();++s->resets;}
     bytes[0xe40]=8;
     controls(s,p);

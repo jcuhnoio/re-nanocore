@@ -6,7 +6,12 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include "phase_math.h"
 
+#ifdef NC_OCTAVE_PROFILE_JOBS
+extern "C" std::uint64_t nc_octave_job_begin();
+extern "C" void nc_octave_job_end(unsigned, std::uint64_t);
+#endif
 namespace octave_shared_optimized {
 // Framework-free, mono, caller-owned DSP. No allocation, threads, file I/O or exceptions.
 // Symmetric Hann analysis; short synthesis uses hop-dependent dual normalization.
@@ -149,8 +154,13 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
             for (int start = 0; start < M; start += Length) {
                 int a = start + j, b = a + half;
                 float tr = wr * real[b] - wi * imag[b], ti = wr * imag[b] + wi * real[b];
-                real[b] = real[a] - tr;
-                imag[b] = imag[a] - ti;
+                // A half-length centred synthesis window consumes only the
+                // first half of the packed inverse time buffer. Prune only
+                // final outputs: all intermediate butterflies remain intact.
+                if (!(inverse && Length == M && Synthesis * 2 == N)) {
+                    real[b] = real[a] - tr;
+                    imag[b] = imag[a] - ti;
+                }
                 real[a] += tr;
                 imag[a] += ti;
             }
@@ -214,9 +224,11 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 const float u0r=fftProduct(w1r,p2r,w1i,p2i,true), u0i=fftProduct(w1r,p2i,w1i,p2r,false);
                 const float u1r=fftProduct(w2r,p3r,w2i,p3i,true), u1i=fftProduct(w2r,p3i,w2i,p3r,false);
                 real[a]=p0r+u0r; imag[a]=p0i+u0i;
-                real[c]=p0r-u0r; imag[c]=p0i-u0i;
                 real[b]=p1r+u1r; imag[b]=p1i+u1i;
-                real[d]=p1r-u1r; imag[d]=p1i-u1i;
+                if (!(inverse && Length * 2 == M && Synthesis * 2 == N)) {
+                    real[c]=p0r-u0r; imag[c]=p0i-u0i;
+                    real[d]=p1r-u1r; imag[d]=p1i-u1i;
+                }
             }
         }
         if (Length*2 < M) pairedFftStages<(Length*2<M ? Length*4 : Length)>(inverse);
@@ -241,7 +253,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
         pairedFftStages<2>(inverse);
 #endif
         if (inverse)
-            for (int i = 0; i < M; ++i) {
+            for (int i = 0; i < (Synthesis * 2 == N ? M / 2 : M); ++i) {
                 real[i] /= M;
                 imag[i] /= M;
             }
@@ -328,7 +340,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 float re = real[k] * mappedMagnitude[k] + imag[k] * mappedFrequency[k];
                 float im = imag[k] * mappedMagnitude[k] - real[k] * mappedFrequency[k];
                 float expected = Tau * (k % (N / H)) / (N / H);
-                frequency[peakCount - 1] = Tau * k / N + wrap(std::atan2(im, re) - expected) / H;
+                frequency[peakCount - 1] = Tau * k / N + wrap(phaseAngle(im, re) - expected) / H;
             }
         }
         if (StableBirths) {
@@ -430,7 +442,7 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                     // Cache the shared starting phase; each voice still applies
                     // its own ratio and keeps the original rounding order.
                     if (p >= birthPhaseCount) {
-                        birthPhase[p] = std::atan2(mappedFrequency[peak], mappedMagnitude[peak]);
+                        birthPhase[p] = phaseAngle(mappedFrequency[peak], mappedMagnitude[peak]);
                         birthPhaseCount = p + 1;
                     }
                     rotation = wrap((ratio - 1) * birthPhase[p]);
@@ -497,19 +509,25 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
     // a preemptible task or a measured hardware deadline guarantee.
     void scheduledStep() {
         if (N == 1024 && Synthesis == 512 && H == 128) {
-            // Capture at 0; analysis16, dry32, first quarter of -2 at48;
-            // remaining -2 at72, -1 at80, +1 at88, +2 at96, wet112.
+            // Capture at 0; analysis16, dry32, half -2 at48/72;
+            // -1 at80, +1 at88, +2 at96, wet112.
             // Previous-frame phase data stays immutable through all voice jobs.
+#ifdef NC_OCTAVE_PROFILE_JOBS
+            const auto jobStart = nc_octave_job_begin();
+#endif
             switch (workStage) {
             case 1: analyseCapturedFrame(); break;
             case 2: synthesizeDry(); clearSynthesis(); break;
-            case 3: synthesizeVoices(0, 1, 0, framePeakCount / 4); break;
-            case 4: synthesizeVoices(0, 1, framePeakCount / 4); break;
+            case 3: synthesizeVoices(0, 1, 0, framePeakCount / 2); break;
+            case 4: synthesizeVoices(0, 1, framePeakCount / 2); break;
             case 5: synthesizeVoices(1, 2); break;
             case 6: synthesizeVoices(2, 3); break;
             case 7: synthesizeVoices(3, 4); break;
             case 8: finishFrame(); break;
             }
+#ifdef NC_OCTAVE_PROFILE_JOBS
+            nc_octave_job_end(workStage, jobStart);
+#endif
             ++workStage;
             if (workStage == 9) workStage = 0;
             workCountdown = !workStage ? 0 : (workStage == 4 ? 24 :
@@ -643,7 +661,13 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                 if (TimeSliced) {
                     lfo = pendingLfo;
                     if (N == 1024 && Synthesis == 512 && H == 128) {
+#ifdef NC_OCTAVE_PROFILE_JOBS
+                        const auto jobStart = nc_octave_job_begin();
+#endif
                         captureFrame(); workStage = 1; workCountdown = H / 8;
+#ifdef NC_OCTAVE_PROFILE_JOBS
+                        nc_octave_job_end(0, jobStart);
+#endif
                     } else {
                         analyseFrame(); workStage = 1; workCountdown = H / 4;
                     }

@@ -355,3 +355,66 @@ queries and USB updater entry.
 
 The exact working UniVibe 1.12 OS was restored with full readback verification;
 normal runtime ready and preset reads passed without a manual power cycle.
+
+Profiled small-window experiments (2026-11-12)
+--------------------------------------------
+
+``--profile-jobs`` adds schema-3 bounded telemetry with maximum tick counts and
+call counts for capture, analysis, dry inverse, first/second halves of -2,
+-1, +1, +2, and wet inverse. The half/half schedule places jobs at samples
+0/16/32/48/72/80/88/96/112 within a hop. The default non-profiled build retains
+schema 2. These counters measure wall time, including any interruptions.
+
+``--budget-percent 50`` or ``60`` changes the experimental OCTAVE reservation;
+the default stays 40. It does not change the native deadline or disable either
+fault latch. Manual delay/reverb bypass on the measured preset released CPU
+headroom. It is not automatically enforced: this is not a public upload image.
+The longer fused-FFT and phase-math probes still tripped a guard, so brief
+successful operation must not be treated as sustained acceptance.
+
+``--fast-phase`` enables a separate phase approximation: reduce atan to
+|z| <= tan(pi/8), evaluate its alternating series through z^17, then restore
+quadrants. Signed axes and nonfinite inputs use libm. The default remains libm;
+this option does not enable global fast-math. ``check_octave_phase.cpp`` measures
+angular error and exceptional semantics. ``measure_octave_fft_error.cpp`` checks
+the complete audio path, including phase accumulation and parameter changes.
+Host measurements are not a proof of target timing or perceived equivalence.
+
+Half-length synthesis uses only the first half of the packed inverse FFT's
+final time buffer. The final butterflies now omit unused output differences
+and their stores, and normalization touches only consumed outputs. Every
+intermediate butterfly remains intact. Other synthesis geometries retain the
+complete transform. Both full-size and smaller-window independent reference
+corpora retain bit-identical output with exact arithmetic.
+
+Build the current diagnostic candidate offline (new output directory required)::
+
+    python3 tools/custom_fx/build_octave_device.py --output analysis/my-octave-build --fft-window 1024 --fft-experiment combined --fast-phase --budget-percent 60
+
+Omitting ``--profile-jobs`` removes per-job timing overhead, but keeps total
+OCTAVE timing, native overrun checks, and latched bypass. All eleven controls
+and always-smoothed dry attack remain. No build command accesses the device.
+
+Run the independent phase accuracy test::
+
+    clang++ -std=c++14 -O2 -ffp-contract=off -DNC_OCTAVE_FAST_PHASE -fsanitize=address,undefined tools/custom_fx/check_octave_phase.cpp -o /tmp/check-octave-phase
+    /tmp/check-octave-phase
+
+For the smaller audio comparison, copy the retained reference header to a
+scratch directory, replace its sole ``H = Synthesis / 8`` with ``H = 128``,
+and resolve its ``../embedded/Swell.h`` include to the retained absolute path.
+Do not edit the reference checkout. Compile ``measure_octave_fft_error.cpp``
+with ``REFERENCE_HEADER`` pointing to that copy, ``NC_OCTAVE_SMALL_FFT``,
+``NC_OCTAVE_FAST_PHASE``, ``NC_OCTAVE_FFT_FMA``, and
+``NC_OCTAVE_FFT_SPECIALIZED``, using ``-ffp-contract=off``. This compares against
+an independently implemented reference with the same geometry; it does not
+compare the smaller window against the original 2048/1024 sound.
+
+The pruned, non-profiled candidate completed 302.95 seconds (208,753 callbacks)
+with no fault and no native overrun on the recorded preset. Peak OCTAVE time
+was 869.5 us / 870.5 us allowed; full chain 1398.25 us / 1451 us deadline.
+This leaves only 1 us against the OCTAVE guard and is not robust worst-case
+acceptance. All voices and attack646ms were active; gate, delay and reverb off,
+amp/cab/MOD on. No confirmed live-guitar stress or audition was performed.
+The full image readback matched. Details and remaining limits are in
+``evidence/octave-profiled-small-1.12.json``.

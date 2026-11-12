@@ -122,7 +122,7 @@ lib=ctypes.CDLL(str(Path(sys.argv[2]).resolve()));lib.core_init.argtypes=[ctypes
 host=ctypes.create_string_buffer(61728);lib.core_init(host,ctypes.c_float(44100.))
 P=struct.pack('<9f2i4f',.65,.05,.3,.65,.35,0,6500,0,-9,0,0,50,-60,120,75)
 pbuf=ctypes.create_string_buffer(P);lib.core_parameters(host,pbuf);lib.core_reset(host)
-u.mem_write(params,struct.pack('<11f',.65,.05,.3,.65,.35,0,6350/17850,0,0,0,.5));errors=[]
+u.mem_write(params,struct.pack('<11f',.65,.05,.3,.65,.35,0,6350/17850,0,0,0,.5));errors=[];expected_ticks=[]
 f32=lambda x:ctypes.c_float(x).value
 for stereo,inplace in [(0,False),(1,True)]:
  call(0x4006c7ca,[family]);lib.core_reset(host);reference_delay=[0.]*128
@@ -132,7 +132,9 @@ for stereo,inplace in [(0,False),(1,True)]:
   mono=[f32(f32(a+b)*.5) if stereo else a for a,b in zip(l,rr)]
   u.mem_write(left,struct.pack('<64f',*l));u.mem_write(right,struct.pack('<64f',*rr))
   outleft=left if inplace else ol;outright=right if inplace else orr
+  timer_before=timer_calls
   call(0x4006b1c4,[family,left,right,outleft,outright,64,params,8,stereo,mode])
+  expected_ticks.append((timer_calls-timer_before-1)*timer_step)
   ibuf=(ctypes.c_float*64)(*mono);obuf=(ctypes.c_float*64)();lib.core_process(host,ibuf,obuf,64)
   reference_delay.extend(obuf);expected=reference_delay[:64];del reference_delay[:64]
   actual=struct.unpack('<64f',u.mem_read(outleft,256));error=max(abs(a-b) for a,b in zip(actual,expected));assert error<1e-6,error
@@ -141,7 +143,7 @@ for stereo,inplace in [(0,False),(1,True)]:
   if block%8==7:print('verified',stereo,block+1,'blocks',flush=True)
  assert u.mem_read(ring+statebytes,0x10000-statebytes+4)==b'\xa5'*(0x10000-statebytes+4)
  assert u.mem_read(family+0xe48,4)==b'\xa5'*4
-stats=struct.unpack('<7I',u.mem_read(symbols['nc_octave_stats'],28));assert stats[0]==64 and stats[1]==4096 and stats[2]==300 and stats[3]==19200 and stats[6]==1,stats
+stats=struct.unpack('<7I',u.mem_read(symbols['nc_octave_stats'],28));assert stats[0]==64 and stats[1]==4096 and stats[2]==max(expected_ticks) and stats[3]==sum(expected_ticks) and stats[6]==1,stats
 # A single overrun must latch bypass, including after reset/reinitialization.
 fault=symbols['nc_octave_fault'];timer_step=10000
 u.mem_write(left,struct.pack('<64f',*([.125]*64)));u.mem_write(right,struct.pack('<64f',*([-.25]*64)))

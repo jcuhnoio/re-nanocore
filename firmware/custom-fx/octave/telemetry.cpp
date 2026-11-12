@@ -4,8 +4,15 @@
 extern "C" volatile std::uint32_t nc_octave_stats[7];
 extern "C" std::uint32_t nc_octave_state_bytes();
 extern "C" volatile std::uint32_t nc_octave_fault,nc_octave_budget_ticks,nc_octave_previous_overruns;
+#ifdef NC_OCTAVE_PROFILE_JOBS
+extern "C" volatile std::uint32_t nc_octave_job_max[9],nc_octave_job_calls[9];
+#endif
 namespace {
+#ifdef NC_OCTAVE_PROFILE_JOBS
+std::uint32_t snapshot[54];
+#else
 std::uint32_t snapshot[36];
+#endif
 std::uint32_t word(std::uintptr_t a){return *reinterpret_cast<volatile std::uint32_t*>(a);}
 struct Response {const void* data;std::uint32_t length;};
 }
@@ -26,6 +33,10 @@ extern "C" int nc_octave_snapshot(std::uint32_t,const unsigned char*,std::uint32
  snapshot[30]=word(0x3004f72c);snapshot[31]=word(0x3005180c);
  snapshot[32]=nc_octave_fault;snapshot[33]=nc_octave_budget_ticks;
  snapshot[34]=nc_octave_previous_overruns;snapshot[35]=11;
+#ifdef NC_OCTAVE_PROFILE_JOBS
+ snapshot[1]=3;
+ for(unsigned i=0;i<9;++i){snapshot[36+i]=nc_octave_job_max[i];snapshot[45+i]=nc_octave_job_calls[i];}
+#endif
  out->data=snapshot;out->length=sizeof(snapshot);*status=0;return 1;
 }
 extern "C" __attribute__((naked)) void nc_octave_diagnostic(){

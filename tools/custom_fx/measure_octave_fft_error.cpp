@@ -1,5 +1,8 @@
 // Numerical characterization of opt-in FFT experiments; no perceptual acceptance implied.
-#include "../../firmware/custom-fx/octave/reference/experiments/SharedSwellCore.h"
+#ifndef REFERENCE_HEADER
+#define REFERENCE_HEADER "../../firmware/custom-fx/octave/reference/experiments/SharedSwellCore.h"
+#endif
+#include REFERENCE_HEADER
 #ifndef OPT_HEADER
 #define OPT_HEADER "../../firmware/custom-fx/octave/shared_core.h"
 #endif
@@ -8,8 +11,15 @@
 #include <cstdio>
 #include <cstring>
 #include <vector>
+#ifdef NC_OCTAVE_SMALL_FFT
+// Supply the independent reference with H=128 via REFERENCE_HEADER.
+using Base = octave_shared::Core<1024, 512>;
+using Opt = octave_shared_optimized::Core<1024, 512, false, false, 128>;
+static_assert(Base::hopSize == 128, "small reference must retain hop128");
+#else
 using Base = octave_shared::Core<2048, 1024>;
 using Opt = octave_shared_optimized::Core<2048, 1024>;
+#endif
 using P = octave_shared::Parameters;
 using Q = octave_shared_optimized::Parameters;
 static_assert(sizeof(P) == sizeof(Q), "parameters layout");

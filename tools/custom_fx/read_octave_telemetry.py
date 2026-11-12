@@ -1,5 +1,6 @@
 """Bounded read-only diagnostic; only use with the experimental octave image."""
 import ctypes as c,json,pathlib,time,queue,struct,hashlib
+from midi_frames import SysexStream
 
 import argparse
 p=argparse.ArgumentParser(description='Read bounded OCT? telemetry from the experimental octave firmware (macOS CoreMIDI). No writes or arbitrary memory reads.')
@@ -10,16 +11,14 @@ m=c.CDLL('/System/Library/Frameworks/CoreMIDI.framework/CoreMIDI');cf=c.CDLL('/S
 cf.CFStringCreateWithCString.argtypes=[c.c_void_p,c.c_char_p,c.c_uint32];cf.CFStringCreateWithCString.restype=c.c_void_p;cf.CFStringGetCString.argtypes=[c.c_void_p,c.c_void_p,c.c_long,c.c_uint32];cf.CFRelease.argtypes=[c.c_void_p]
 name=cf.CFStringCreateWithCString(None,b'NanoCore octave telemetry',0x08000100);key=cf.CFStringCreateWithCString(None,b'displayName',0x08000100)
 m.MIDIClientCreate.argtypes=[c.c_void_p,c.c_void_p,c.c_void_p,c.POINTER(c.c_uint32)];m.MIDIOutputPortCreate.argtypes=[c.c_uint32,c.c_void_p,c.POINTER(c.c_uint32)];m.MIDIObjectGetStringProperty.argtypes=[c.c_uint32,c.c_void_p,c.POINTER(c.c_void_p)];m.MIDISend.argtypes=[c.c_uint32,c.c_uint32,c.c_void_p]
-q=queue.Queue();stream=bytearray();CB=c.CFUNCTYPE(None,c.c_void_p,c.c_void_p,c.c_void_p)
+q=queue.Queue();stream=SysexStream();CB=c.CFUNCTYPE(None,c.c_void_p,c.c_void_p,c.c_void_p)
 @CB
 def callback(p,*args):
  addr=p+4
  for _ in range(c.c_uint32.from_address(p).value):
-  n=c.c_uint16.from_address(addr+8).value;stream.extend(c.string_at(addr+10,n));addr=(addr+10+n+3)&~3
- while 0xf0 in stream:
-  start=stream.index(0xf0);del stream[:start]
-  if 0xf7 not in stream:break
-  end=stream.index(0xf7);frame=bytes(stream[:end+1]);del stream[:end+1];q.put(frame)
+  n=c.c_uint16.from_address(addr+8).value
+  for frame in stream.feed(c.string_at(addr+10,n)):q.put(frame)
+  addr=(addr+10+n+3)&~3
 m.MIDIInputPortCreate.argtypes=[c.c_uint32,c.c_void_p,CB,c.c_void_p,c.POINTER(c.c_uint32)]
 client=c.c_uint32();inp=c.c_uint32();port=c.c_uint32();assert m.MIDIClientCreate(name,None,None,c.byref(client))==0
 assert m.MIDIInputPortCreate(client,name,callback,None,c.byref(inp))==0;assert m.MIDIOutputPortCreate(client,name,c.byref(port))==0
@@ -48,6 +47,7 @@ def unpack(data):
 
 seq=0
 names=['magic','schema','timer_hz','sample_rate','audio_block_frames','audio_calls','audio_frames','audio_min_ticks','audio_max_ticks','audio_budget_ticks','audio_over_budget','audio_sum_low','audio_sum_high','heap_start','heap_end','heap_total','heap_free','heap_high_water','octave_calls','octave_frames','octave_max_ticks','octave_sum_low','octave_sum_high','octave_last_ticks','octave_init_count','now_low','now_high','octave_state_bytes','ring1','ring2','fx2_state1','fx2_state2','octave_fault','octave_budget_ticks','octave_previous_overruns','octave_control_count']
+names += ['job_%d_max_ticks'%i for i in range(9)]+['job_%d_calls'%i for i in range(9)]
 def request():
  global seq
  seq+=1;payload=b'OCT?';inner=struct.pack('<BHHH',2,seq,0x39,len(payload))+payload
@@ -62,9 +62,9 @@ def request():
   if len(r)<8:continue
   version,rseq,op,status,n=struct.unpack('<BHHBH',r[:8])
   if rseq!=seq or op!=0x39:continue
-  if version!=2 or status!=0 or n not in (128,144) or len(r)!=8+n:raise ValueError('Octave telemetry unavailable: '+r.hex())
-  words=struct.unpack('<%dI'%(n//4),r[8:]);assert words[0]==0x4f435431 and (words[1],n) in ((1,128),(2,144))
-  report=dict(zip(names,words));report['host_time']=time.time();return report
+  if version!=2 or status!=0 or n not in (128,144,216) or len(r)!=8+n:raise ValueError('Octave telemetry unavailable: '+r.hex())
+  words=struct.unpack('<%dI'%(n//4),r[8:]);assert words[0]==0x4f435431 and (words[1],n) in ((1,128),(2,144),(3,216))
+  report=dict(zip(names,words));report['host_time']=time.time();report['midi_resyncs']=stream.resyncs;return report
  raise TimeoutError('No octave telemetry reply')
 try:
  rows=[]

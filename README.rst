@@ -208,6 +208,36 @@ zero native overruns but bypass after three calls. They still do not pass;
 see `schedule measurements <evidence/octave-balanced-small-1.12.json>`_.
 The accepted Octave Studio checkout remains unchanged.
 
+A subsequent hardware profiling pass measures nine individual DSP jobs and
+checks delay/reverb cost on the selected preset. Manually bypassing that delay
+recovered about 181 us per callback on average; this is preset-specific, not a
+universal bound. Diagnostic builds can reserve 50% or 60% for OCTAVE instead of
+the default 40%, while retaining the independent full-chain deadline latch.
+Raising this reservation is not an optimization or a larger hardware deadline.
+
+With all voices and attack active, fused FFT arithmetic and a half/half split
+of the -2 voice ran 8,645 callbacks before one full-chain overrun latched bypass.
+An optional range-reduced phase approximation extended the next probe to 28,287
+callbacks before the octave allowance tripped, with no additional full-chain
+overruns. Neither is a stability pass. The phase approximation measured below
+2.68e-7 radians error over nearly four million finite pairs; the combined audio
+experiment measured -97.2 dB relative RMS error against the independent reference.
+This is numerical characterization, not a listening verdict.
+
+The latest offline optimization prunes unused final inverse-FFT outputs for
+half-length synthesis windows. It preserves bit-identical audio across both
+1,048,576-sample independent reference corpora. Per-job profiling can be removed
+while retaining overall timing and overload protection. See
+`profiling and optimization evidence <evidence/octave-profiled-small-1.12.json>`_.
+The public UniVibe installer is unchanged; OCTAVE remains experimental.
+The pruned candidate completed **302.95 seconds / 208,753 callbacks** with all
+voices and attack active, zero faults and zero native overruns. Full-chain
+maximum was 1398.25 us against 1451 us. OCTAVE itself reached 869.5 us against
+870.5 us reserved: only 1 us of observed margin, so this is a recorded-config
+run, not a robust worst-case or listening acceptance. Guitar input and control
+stress have not yet been confirmed. Delay/reverb and the noise gate were off;
+amp, cabinet and MOD remained on. The exact image readback passed.
+
 Current result
 --------------
 

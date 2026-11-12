@@ -13,7 +13,7 @@ def build(destination, experiment="exact", window="2048"):
  # Hypothetical review address only: linked size exceeds the stock pitch cluster.
  (out/'probe.ld').write_text('ENTRY(core_process)\nSECTIONS { . = 0x40077364; .text : { *(.text*) *(.rodata*) *(.srodata*) } .data : { *(.data*) *(.sdata*) } .bss : { *(.bss*) *(.sbss*) *(COMMON) } /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) } }\n')
  report={'purpose':'offline code-size and emulation probe; no device operations','flashable':False,'fft_experiment':experiment,'fft_window':window,'compiler':run('g++',['--version']).splitlines()[0],'flags':FLAGS,'variants':{}}
- report['source_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [ROOT/'firmware/custom-fx/octave/shared_core.h',ROOT/'tools/custom_fx/octave_probe.cpp']}
+ report['source_sha256']={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest() for p in [ROOT/'firmware/custom-fx/octave/shared_core.h',ROOT/'firmware/custom-fx/octave/phase_math.h',ROOT/'tools/custom_fx/octave_probe.cpp']}
  for name in ['baseline','optimized','scheduled']:
   flags=[('-O2' if name!='baseline' and flag=='-Os' else flag) for flag in FLAGS]+(['-DNC_OCTAVE_BASELINE'] if name=='baseline' else ['-fno-math-errno'])
   if name!='baseline':
