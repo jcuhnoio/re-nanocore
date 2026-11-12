@@ -167,11 +167,21 @@ the tested steady instruction workload falls 14.5–16.1%, and peak 64-frame
 workload falls about 57%. Scheduling adds 128 samples (2.90 ms at 44.1 kHz).
 This is not a hardware timing pass, and the pedal remains on working UniVibe.
 See `scheduled-core evidence <evidence/octave-scheduled-optimization.json>`_.
-The final controls must expose independent -2/-1/+1/+2 levels, attack and dry
-processing; the failed three-control fixed-blend adapter is not the final UI.
+The adapter now exposes eleven controls: dry, independent -2/-1/+1/+2 levels,
+attack, low-pass, detune, dry FX, resonance and level. The native FX2 writer had
+a separate five-value cap; a subtype-specific patch now admits all eleven, with
+156 native bank-write cases tested. The device reads back all eleven values and
+accepts attack edits. Display pagination and preset save/recall still need
+physical validation. See `integration evidence <evidence/octave-full-controls-integration.json>`_.
 The user chose to retain the prototype's always-smoothed dry attack behavior.
-Next work is further average-cost reduction, allocation/UI integration and
-bounded physical profiling before another full-chain audition.
+A guarded hardware probe initialized two 61,824-byte instances in 65,536-byte
+allocations. It exceeded the reserved octave budget after two calls; the native
+chain recorded one missed deadline (1.81 ms against 1.45 ms). The new latch then
+bypassed octave processing, and MIDI, telemetry and USB updater entry remained
+responsive. The exact working UniVibe image was restored without a manual power
+cycle. See `guarded device result <evidence/octave-guarded-device-1.12.json>`_.
+Next work is further average-cost reduction and finer division of spectral jobs
+before another full-chain audition. The public installer is unchanged.
 The accepted Octave Studio checkout remains unchanged.
 
 Current result

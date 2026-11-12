@@ -47,7 +47,7 @@ def unpack(data):
  return bytes(out)
 
 seq=0
-names=['magic','schema','timer_hz','sample_rate','audio_block_frames','audio_calls','audio_frames','audio_min_ticks','audio_max_ticks','audio_budget_ticks','audio_over_budget','audio_sum_low','audio_sum_high','heap_start','heap_end','heap_total','heap_free','heap_high_water','octave_calls','octave_frames','octave_max_ticks','octave_sum_low','octave_sum_high','octave_last_ticks','octave_init_count','now_low','now_high','octave_state_bytes','ring1','ring2','fx2_state1','fx2_state2']
+names=['magic','schema','timer_hz','sample_rate','audio_block_frames','audio_calls','audio_frames','audio_min_ticks','audio_max_ticks','audio_budget_ticks','audio_over_budget','audio_sum_low','audio_sum_high','heap_start','heap_end','heap_total','heap_free','heap_high_water','octave_calls','octave_frames','octave_max_ticks','octave_sum_low','octave_sum_high','octave_last_ticks','octave_init_count','now_low','now_high','octave_state_bytes','ring1','ring2','fx2_state1','fx2_state2','octave_fault','octave_budget_ticks','octave_previous_overruns','octave_control_count']
 def request():
  global seq
  seq+=1;payload=b'OCT?';inner=struct.pack('<BHHH',2,seq,0x39,len(payload))+payload
@@ -62,8 +62,8 @@ def request():
   if len(r)<8:continue
   version,rseq,op,status,n=struct.unpack('<BHHBH',r[:8])
   if rseq!=seq or op!=0x39:continue
-  if version!=2 or status!=0 or n!=128 or len(r)!=136:raise ValueError('Octave telemetry unavailable: '+r.hex())
-  words=struct.unpack('<32I',r[8:]);assert words[0]==0x4f435431 and words[1]==1
+  if version!=2 or status!=0 or n not in (128,144) or len(r)!=8+n:raise ValueError('Octave telemetry unavailable: '+r.hex())
+  words=struct.unpack('<%dI'%(n//4),r[8:]);assert words[0]==0x4f435431 and (words[1],n) in ((1,128),(2,144))
   report=dict(zip(names,words));report['host_time']=time.time();return report
  raise TimeoutError('No octave telemetry reply')
 try:

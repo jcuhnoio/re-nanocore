@@ -7,6 +7,7 @@ from patch_image import extract_fit
 
 LOAD=0x40000000
 HOOKS={
+    'nc_octave_setter_gate': (0x4000bee6, '914763e33707'),
     'nc_octave_dispatch': (0x4006b1c4, '130101d52322912a'),
     'nc_octave_pitch_init': (0x4007876a, '397106de'),
     'nc_octave_pitch_reset': (0x40079596, '6307055e'),
@@ -40,5 +41,5 @@ def patches(image,symbols):
         old=bytes.fromhex(expected)
         add(address,old,jal(address,target)+b'\x01\x00'*((len(old)-4)//2),name)
     for address in ALLOCATIONS:
-        add(address,clui(10,2),clui(10,14),'Expand dedicated pitch ring allocation 8192 -> 57344 bytes; native failure checks retained')
+        add(address,clui(10,2),clui(10,16),'Expand dedicated pitch ring allocation 8192 -> 65536 bytes; native failure checks retained')
     return result

@@ -89,8 +89,8 @@ cutoff, resonance, detune and output gain remain implemented. Per the user's
 choice, attack smooths the dry signal regardless of Dry FX mode, matching the
 prototype. Modes 0/1 retain the prototype's behavior; mode 2 also filters dry,
 and mode 3 adds its detune/chorus path. No voice count, peak limit or transform
-size was reduced. The old device.cpp/UI adapter is the failed three-control
-experiment; it still needs replacement with a validated full control interface.
+size was reduced. At this offline checkpoint, device.cpp/UI still used the failed three-control
+experiment. The following integration pass replaces that interface.
 
 Direct state is now 53,568 bytes; scheduled state is 61,760 bytes. Shared linked
 scheduled text/constants total 33,336 bytes, plus 1,072 bytes initialized data
@@ -122,3 +122,52 @@ samples. Counts include real linked math routines but are not CPU cycles. See
 No firmware was flashed during this pass. More average-cost reduction, full
 control integration, larger state reservations and controlled physical timing
 are required before another audition. The public installer is unchanged.
+
+Full control integration and guarded hardware probe
+--------------------------------------------------
+
+``controls.h`` defines eleven normalized parameters; ``metadata.cpp`` supplies
+bounded names/value formatting. ``device.cpp`` now uses the scheduled core.
+Controls, in order: DRY, -2 OCT, -1 OCT, +1 OCT, +2 OCT, ATTACK, LOWPASS, DETUNE,
+DRY FX, RESON, LEVEL. Attack spans 0–2000 ms, low-pass 150–18000 Hz, detune
+0–30 cents; level 50% is unity after the prototype's fixed -9 dB output gain.
+The complete mapping/defaults are in ``evidence/octave-full-controls-integration.json``.
+
+The native parameter banks and UI paths allow twelve values, but the FX2
+writer at 0x4000bea8 separately rejected indices above four. The first guarded
+image revealed this when attack readback stayed zero. A gate at 0x4000bee6
+allows indices 0–10 only for subtype8, retaining locking, bank copy, defaults,
+publication and the original limits for every other subtype. Native-machine
+emulation executes 156 setter cases, including rejection and bank-swap checks.
+The label/format entry trampolines leave non-target paths intact; the internal
+enum hook preserves UniVibe's separate entry hook. All 11 values read back from
+the device; MIDI CC73 now updates ATTACK (tested value .323 = 646 ms).
+
+Each adapter instance is 61,824 bytes within a 65,536-byte ring allocation.
+The linked payload reserves 35,968 bytes before heap initialization; about
+1.38 MB of heap remained free in the hardware probe. Core processing allocates
+no memory. The old smaller ring allocation must never be used with this core.
+
+The experimental guard reserves 40% of the callback's nominal time for octave
+work and checks elapsed time after each 32 samples. It also watches the native
+full-chain overrun counter. A violation latches bypass globally until reboot;
+reset/preset changes do not rearm it. LEVEL's formatter shows CPU LIMIT when
+latched. Telemetry schema2 returns 144 bytes, including fault, budget and control
+count. It remains an exact-magic bounded read, preserving normal AMP reads.
+A single scheduled job cannot be interrupted; this limits repeated starvation,
+not the first late callback. The guard's reservation is stricter than the whole
+chain deadline and must not be confused with a hardware worst-case proof.
+
+The physical probe tripped fault1 after two calls (128 attempted samples).
+Maximum attempted octave time was 1048.75 us against a reserved 580.25 us.
+Native chain maximum was 1811.25 us against 1451 us, with one overrun. Subsequent
+snapshots showed audio callbacks continuing, no further overruns, no additional
+octave calls, and successful runtime/preset responses. USB DFU entry worked
+without a power cycle. The exact prior UniVibe OS was restored with complete
+readback and a successful ready/preset check. No listening claim is made.
+
+``evidence/octave-guarded-device-1.12.json`` records the probe and recovery.
+The overload latch works in this test, but real-time performance still fails.
+No public installer change was made. More average-cost reduction and finer
+spectral job scheduling are required. Physical page navigation and preset
+save/recall remain unverified; the test did not save a modified preset.

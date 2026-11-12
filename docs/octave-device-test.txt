@@ -1,7 +1,8 @@
 Experimental Octave Studio port — NanoCore 1.12
 ================================================
 
-The local audition build replaces FX2/PITCH (subtype 8) with OCTAVE.
+The initial local audition build replaces FX2/PITCH (subtype 8) with OCTAVE.
+The sections below retain that failed build; see the guarded follow-up at the end.
 UniVibe is retained. No second effect is removed. This is an experimental
 physical-device build, separate from the public UniVibe web installer.
 
@@ -104,3 +105,26 @@ arithmetic optimizations. It retains independent octave gains and the user's
 chosen always-smoothed dry attack. See the custom-fx/octave README and
 evidence/octave-scheduled-optimization.json for tested reductions and limits.
 This version was not flashed; the pedal remains on restored UniVibe 1.12.
+
+Guarded full-control follow-up
+-----------------------------
+The new adapter has eleven controls and two 65,536-byte state allocations.
+Testing found and fixed a separate five-parameter cap in the native FX2 writer;
+count/labels alone were insufficient. The device subsequently returned all eleven
+parameters and accepted attack changes. Native setter tests include 156 cases.
+
+A timer guard reserves 40% of the nominal callback time for octave work, checking
+after 32-sample chunks. It latches bypass on excess work or a native audio-overrun
+counter change, and remains latched across native effect resets. The CPU LIMIT
+value formatter and bounded schema2 telemetry expose the condition.
+
+On the device, two calls ran before fault1 latched. Attempted core maximum was
+1048.75 us versus 580.25 us reserved; full-chain maximum was 1811.25 us versus
+1451 us. One missed deadline occurred; subsequent telemetry showed no repeated
+overload and the runtime stayed responsive. This is a failed timing test, not
+an audition approval or a sustained benchmark. A running job is not preemptible.
+
+The known-working UniVibe image was restored and fully verified. Updater entry
+worked without a physical power cycle; normal ready/preset reads passed after
+rollback. See evidence/octave-full-controls-integration.json and
+evidence/octave-guarded-device-1.12.json. The public installer is unchanged.

@@ -11,7 +11,7 @@ def build(destination):
  flags=[('-O2' if x=='-Os' else x) for x in FLAGS]+['-fno-math-errno']
  script='ENTRY(nc_octave_dispatch)\nSECTIONS { . = 0x400a4540; .text : { *(.text*) *(.rodata*) *(.srodata*) } .data : { *(.data*) *(.sdata*) } .bss : { *(.bss*) *(.sbss*) *(COMMON) } /DISCARD/ : { *(.comment) *(.note*) *(.eh_frame*) } }\n'
  (out/'device.ld').write_text(script)
- sources=['device.cpp','telemetry.cpp','device_ui.S'];objects=[]
+ sources=['device.cpp','telemetry.cpp','metadata.cpp','device_ui.S'];objects=[]
  for source in sources:
   obj=f'/out/{source}.o';objects.append(obj)
   run('g++',flags+['-c','/work/firmware/custom-fx/octave/'+source,'-o',obj])
@@ -22,7 +22,7 @@ def build(destination):
  for line in run('nm',['-n','/out/device.elf']).splitlines():
   parts=line.split()
   if len(parts)==3:symbols[parts[2]]=int(parts[0],16)
- receipt={'firmware_version':'1.12','compiler':run('g++',['--version']).splitlines()[0],'flags':flags,'elf_sha256':hashlib.sha256((out/'device.elf').read_bytes()).hexdigest(),'symbols':symbols,'size':run('size',['/out/device.elf']),'source_sha256':{p:hashlib.sha256((ROOT/'firmware/custom-fx/octave'/p).read_bytes()).hexdigest() for p in sources+['shared_core.h']}}
+ receipt={'firmware_version':'1.12','compiler':run('g++',['--version']).splitlines()[0],'flags':flags,'elf_sha256':hashlib.sha256((out/'device.elf').read_bytes()).hexdigest(),'symbols':symbols,'size':run('size',['/out/device.elf']),'source_sha256':{p:hashlib.sha256((ROOT/'firmware/custom-fx/octave'/p).read_bytes()).hexdigest() for p in sources+['shared_core.h','controls.h']}}
  (out/'build.json').write_text(json.dumps(receipt,indent=2)+'\n');print(receipt['size'])
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True);a=p.parse_args();build(a.output)

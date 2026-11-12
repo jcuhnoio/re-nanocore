@@ -1,0 +1,164 @@
+{
+  "firmware_version": "1.12",
+  "target": "FX2 subtype8",
+  "elf_sha256": "37aecdcea51ad97b7bc0a8180698a8fb54b312040bebe82ba0c95f5843beecab",
+  "control_count": 11,
+  "native_capacity": 12,
+  "native_capacity_evidence": {
+    "parameter_get_set": [
+      "0x4001e91e",
+      "0x4001e962",
+      "0x4001ea16"
+    ],
+    "live_edit_index_check": "0x400240ec:case1 requires parameterIndex<12",
+    "dsp_bank_parameter_comparison": "0x4005fac2:48-byte parameter region per node",
+    "count_cap": "0x40026f60:mode1 caps at12",
+    "fx2_setter": "0x4000bee6:original index<=4 gate expanded to<=10 only when subtype at0x3004f730 is8"
+  },
+  "controls": [
+    {
+      "index": 0,
+      "label": "DRY",
+      "mapping": "0..1",
+      "default_normalized": 0.65
+    },
+    {
+      "index": 1,
+      "label": "-2 OCT",
+      "mapping": "0..1",
+      "default_normalized": 0.05
+    },
+    {
+      "index": 2,
+      "label": "-1 OCT",
+      "mapping": "0..1",
+      "default_normalized": 0.3
+    },
+    {
+      "index": 3,
+      "label": "+1 OCT",
+      "mapping": "0..1",
+      "default_normalized": 0.65
+    },
+    {
+      "index": 4,
+      "label": "+2 OCT",
+      "mapping": "0..1",
+      "default_normalized": 0.35
+    },
+    {
+      "index": 5,
+      "label": "ATTACK",
+      "mapping": "0..2000ms",
+      "default_normalized": 0
+    },
+    {
+      "index": 6,
+      "label": "LOWPASS",
+      "mapping": "150..18000Hz",
+      "default_normalized": 0.3557422969187675
+    },
+    {
+      "index": 7,
+      "label": "DETUNE",
+      "mapping": "0..30cents",
+      "default_normalized": 0
+    },
+    {
+      "index": 8,
+      "label": "DRY FX",
+      "mapping": "prototype modes0..3; attack always applies",
+      "default_normalized": 0
+    },
+    {
+      "index": 9,
+      "label": "RESON",
+      "mapping": "four resonance choices",
+      "default_normalized": 0
+    },
+    {
+      "index": 10,
+      "label": "LEVEL",
+      "mapping": "0..2; internal output gain -9dB",
+      "default_normalized": 0.5
+    }
+  ],
+  "dsp_validation": {
+    "elf_sha256": "37aecdcea51ad97b7bc0a8180698a8fb54b312040bebe82ba0c95f5843beecab",
+    "state_bytes": 61824,
+    "ring_allocation_bytes": 65536,
+    "native_fx2_initializer_and_reset": true,
+    "native_other_subtype_trampoline": true,
+    "disabled_stereo_bypass": true,
+    "inplace_stereo_and_mono": true,
+    "callee_saved_registers_and_canaries": true,
+    "compared_samples": 4096,
+    "reference_delay_samples": 128,
+    "overload_latch_checks": true,
+    "max_host_reference_error": 0.0,
+    "timer_stub_stats": [
+      64,
+      4096,
+      300,
+      19200,
+      0,
+      300,
+      1
+    ],
+    "limits": [
+      "Timer boundary stubbed; no physical cycles measured",
+      "Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute",
+      "No hardware operations"
+    ]
+  },
+  "ui_validation": {
+    "source_sha256": "d9cb9a7252f51a72580b8e0fb51b5a0e88dc8e93f9441e5d81078864fcfbd634",
+    "elf_sha256": "37aecdcea51ad97b7bc0a8180698a8fb54b312040bebe82ba0c95f5843beecab",
+    "ui_source_sha256": "50cd30419acf3005fd1c074914d18e33946f1a9ba3a6b2f0c2303a7d7a4f2e39",
+    "source_maps": {
+      "effect_name": "0x40025d92",
+      "parameter_labels": "0x4002607e",
+      "parameter_count": "0x40026e8a",
+      "format": "0x40027192",
+      "enum": "0x4001b3b2",
+      "defaults": "0x4006c932",
+      "amp_read": "0x4008f8ac",
+      "timer_hz": "0x4003fe7c",
+      "timer_ticks": "0x40040028",
+      "heap_free": "0x3004c228"
+    },
+    "count_cases": 760,
+    "labels": 33,
+    "defaults": 156,
+    "format": 44,
+    "enum": 1824,
+    "effect_name": 3,
+    "telemetry": 5,
+    "native_non_target_unchanged": true,
+    "stack_and_callee_saved_preserved": true,
+    "setter_cases": 156,
+    "label_fallbacks": 5436,
+    "format_fallbacks": 453,
+    "physical_operations": false,
+    "limits": "memset/strcmp/printf and MMIO timer boundaries emulated; no hardware timing established"
+  },
+  "guard": {
+    "budget_fraction": 0.4,
+    "timer_hz": 4000000,
+    "check_interval_samples": 32,
+    "fault1": "elapsed octave call work exceeds reserved budget",
+    "fault2": "native audio-overrun counter changes after first active call",
+    "latched_until_reboot": true,
+    "limitations": [
+      "Cannot interrupt an already-running DSP job",
+      "Frames counter counts attempted input frames, including a partially processed aborted block",
+      "Guard is a conservative admission limit, not proof of a full-chain missed deadline"
+    ]
+  },
+  "state_bytes": 61824,
+  "allocation_bytes_per_instance": 65536,
+  "live_findings": [
+    "First guarded image read all11 values but CC73 attack writes were rejected by the separate native FX2 setter cap",
+    "Corrected image adds a subtype-specific setter gate;156 native write cases pass with bank publication and boundary checks"
+  ]
+}

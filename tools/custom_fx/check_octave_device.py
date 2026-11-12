@@ -75,12 +75,12 @@ def special(uc,pc,size,_):
 def dispatch(uc,pc,size,data):
  if pc in custom:special(uc,pc,size,data)
 u.hook_add(UC_HOOK_CODE,dispatch)
-stack=0x301f0000;stop=0x401ff000;family=0x30010000;ring=0x30020000;left=0x30030000;right=0x30031000;ol=0x30032000;orr=0x30033000;params=0x30034000;mode=0x30035000;enable=0x30035004
+stack=0x301f0000;stop=0x401ff000;family=0x30010000;ring=0x30020000;left=0x30040000;right=0x30041000;ol=0x30042000;orr=0x30043000;params=0x30044000;mode=0x30045000;enable=0x30045004
 u.reg_write(r.UC_RISCV_REG_GP,0x3004c604);u.reg_write(r.UC_RISCV_REG_SP,stack);u.reg_write(r.UC_RISCV_REG_MSTATUS,0x6000)
-timer_calls=0
+timer_calls=0;timer_value=0;timer_step=100
 def timer(uc,pc,size,_):
- global timer_calls
- timer_calls+=1;uc.reg_write(r.UC_RISCV_REG_A0,timer_calls*100);uc.reg_write(r.UC_RISCV_REG_A1,0);uc.reg_write(r.UC_RISCV_REG_PC,uc.reg_read(r.UC_RISCV_REG_RA))
+ global timer_calls,timer_value
+ timer_calls+=1;timer_value+=timer_step;uc.reg_write(r.UC_RISCV_REG_A0,timer_value);uc.reg_write(r.UC_RISCV_REG_A1,0);uc.reg_write(r.UC_RISCV_REG_PC,uc.reg_read(r.UC_RISCV_REG_RA))
 u.hook_add(UC_HOOK_CODE,timer,begin=0x40040028,end=0x40040028)
 regs=[r.UC_RISCV_REG_GP,r.UC_RISCV_REG_TP]+[getattr(r,f'UC_RISCV_REG_S{i}') for i in range(12)]+[getattr(r,f'UC_RISCV_REG_FS{i}') for i in range(12)]
 def call(address,args=(),rate=None):
@@ -97,14 +97,14 @@ def call(address,args=(),rate=None):
  assert all(u.reg_read(k)==v for k,v in saved.items()),'callee save failure'
  return u.reg_read(r.UC_RISCV_REG_A0)
 call(symbols['nc_octave_state_bytes']);statebytes=u.reg_read(r.UC_RISCV_REG_A0)
-assert statebytes<=0xe000
+assert statebytes<=0x10000
 # Native FX2 initializer executes patched pitch_init; full mappedstockcode runs.
-u.mem_write(family-4,b'\xa5'*(0xe48+8));u.mem_write(ring-4,b'\xa5'*(0xe000+8));u.mem_write(enable,b'\x01')
+u.mem_write(family-4,b'\xa5'*(0xe48+8));u.mem_write(ring-4,b'\xa5'*(0x10000+8));u.mem_write(enable,b'\x01')
 call(0x4006c4de,[family,0,enable,ring,2048],44100.)
 assert int.from_bytes(u.mem_read(family+8,4),'little')==ring
 assert u.mem_read(ring,4)==b'1TCO'
 assert u.mem_read(family-4,4)==b'\xa5'*4 and u.mem_read(family+0xe48,4)==b'\xa5'*4
-assert u.mem_read(ring+statebytes,0xe000-statebytes+4)==b'\xa5'*(0xe000-statebytes+4)
+assert u.mem_read(ring+statebytes,0x10000-statebytes+4)==b'\xa5'*(0x10000-statebytes+4)
 # Non-PITCH nakedshim exactly replays original8bytes and restoresnativecontinuation.
 u.reg_write(r.UC_RISCV_REG_A7,9);u.reg_write(r.UC_RISCV_REG_S1,0x12345678)
 u.emu_start(0x4006b1c4,0x4006b1cc,count=10)
@@ -122,10 +122,10 @@ lib=ctypes.CDLL(str(Path(sys.argv[2]).resolve()));lib.core_init.argtypes=[ctypes
 host=ctypes.create_string_buffer(61728);lib.core_init(host,ctypes.c_float(44100.))
 P=struct.pack('<9f2i4f',.65,.05,.3,.65,.35,0,6500,0,-9,0,0,50,-60,120,75)
 pbuf=ctypes.create_string_buffer(P);lib.core_parameters(host,pbuf);lib.core_reset(host)
-u.mem_write(params,struct.pack('<3f',.65,0,.5));errors=[]
+u.mem_write(params,struct.pack('<11f',.65,.05,.3,.65,.35,0,6350/17850,0,0,0,.5));errors=[]
 f32=lambda x:ctypes.c_float(x).value
 for stereo,inplace in [(0,False),(1,True)]:
- call(0x4006c7ca,[family]);lib.core_reset(host)
+ call(0x4006c7ca,[family]);lib.core_reset(host);reference_delay=[0.]*128
  for block in range(32):
   l=[f32(.2*math.sin((block*64+i)*.04)) for i in range(64)]
   rr=[f32(.1*math.cos((block*64+i)*.071)) for i in range(64)]
@@ -134,12 +134,32 @@ for stereo,inplace in [(0,False),(1,True)]:
   outleft=left if inplace else ol;outright=right if inplace else orr
   call(0x4006b1c4,[family,left,right,outleft,outright,64,params,8,stereo,mode])
   ibuf=(ctypes.c_float*64)(*mono);obuf=(ctypes.c_float*64)();lib.core_process(host,ibuf,obuf,64)
-  actual=struct.unpack('<64f',u.mem_read(outleft,256));error=max(abs(a-b) for a,b in zip(actual,obuf));assert error<1e-6,error
+  reference_delay.extend(obuf);expected=reference_delay[:64];del reference_delay[:64]
+  actual=struct.unpack('<64f',u.mem_read(outleft,256));error=max(abs(a-b) for a,b in zip(actual,expected));assert error<1e-6,error
   if stereo:assert u.mem_read(outright,256)==u.mem_read(outleft,256)
   assert u.mem_read(mode,1)==bytes([stereo]);errors.append(error)
   if block%8==7:print('verified',stereo,block+1,'blocks',flush=True)
- assert u.mem_read(ring+statebytes,0xe000-statebytes+4)==b'\xa5'*(0xe000-statebytes+4)
+ assert u.mem_read(ring+statebytes,0x10000-statebytes+4)==b'\xa5'*(0x10000-statebytes+4)
  assert u.mem_read(family+0xe48,4)==b'\xa5'*4
-stats=struct.unpack('<7I',u.mem_read(symbols['nc_octave_stats'],28));assert stats[0]==64 and stats[1]==4096 and stats[2]==100 and stats[3]==6400 and stats[6]==1,stats
-report={'elf_sha256':hashlib.sha256(blob).hexdigest(),'state_bytes':statebytes,'ring_allocation_bytes':0xe000,'native_fx2_initializer_and_reset':True,'native_other_subtype_trampoline':True,'disabled_stereo_bypass':True,'inplace_stereo_and_mono':True,'callee_saved_registers_and_canaries':True,'compared_samples':4096,'max_host_reference_error':max(errors),'timer_stub_stats':list(stats),'limits':['Timer boundary stubbed; no physical cycles measured','Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute','No hardware operations']}
+stats=struct.unpack('<7I',u.mem_read(symbols['nc_octave_stats'],28));assert stats[0]==64 and stats[1]==4096 and stats[2]==300 and stats[3]==19200 and stats[6]==1,stats
+# A single overrun must latch bypass, including after reset/reinitialization.
+fault=symbols['nc_octave_fault'];timer_step=10000
+u.mem_write(left,struct.pack('<64f',*([.125]*64)));u.mem_write(right,struct.pack('<64f',*([-.25]*64)))
+call(0x4006b1c4,[family,left,right,left,right,64,params,8,1,mode])
+assert int.from_bytes(u.mem_read(fault,4),'little')==1
+assert u.mem_read(left,256)==struct.pack('<64f',*([.125]*64))
+assert u.mem_read(right,256)==struct.pack('<64f',*([-.25]*64))
+calls=timer_calls
+for _ in range(4):call(0x4006b1c4,[family,left,right,ol,orr,64,params,8,1,mode])
+assert timer_calls==calls
+call(0x4006c7ca,[family]);assert int.from_bytes(u.mem_read(fault,4),'little')==1
+call(symbols['nc_octave_pitch_init'],[family+8,ring,2048],44100.)
+assert int.from_bytes(u.mem_read(fault,4),'little')==1
+# Also stop when the native chain reports an overrun, even if core timing passed.
+u.mem_write(fault,bytes(4));timer_step=100
+u.mem_write(0x3004ab40,struct.pack('<I',1))
+call(0x4006b1c4,[family,left,right,ol,orr,64,params,8,1,mode])
+assert int.from_bytes(u.mem_read(fault,4),'little')==2 and timer_calls==calls
+print('PASS core overrun latch, full-chain overrun latch, stereo bypass and reset persistence')
+report={'elf_sha256':hashlib.sha256(blob).hexdigest(),'state_bytes':statebytes,'ring_allocation_bytes':0x10000,'native_fx2_initializer_and_reset':True,'native_other_subtype_trampoline':True,'disabled_stereo_bypass':True,'inplace_stereo_and_mono':True,'callee_saved_registers_and_canaries':True,'compared_samples':4096,'reference_delay_samples':128,'overload_latch_checks':True,'max_host_reference_error':max(errors),'timer_stub_stats':list(stats),'limits':['Timer boundary stubbed; no physical cycles measured','Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute','No hardware operations']}
 Path(sys.argv[4]).write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

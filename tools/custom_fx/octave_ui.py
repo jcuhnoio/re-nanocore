@@ -1,11 +1,5 @@
-"""Exact-build NanoCore 1.12 PITCH/FX2 subtype8 UI hooks; no device I/O.
-
-Three controls DRY, SWELL, LEVEL, all shown as percentages. SWELL100 means
-2000ms in the experimental DSP adapter. Native labels for other effects stay
-unchanged. Defaults gate is supplied by the linked device adapter:
-  a2!=a6: continue4006c94e; otherwise fill s1[0:s0] with .65/0/.5/zeros,
-  then jump4006c998 (native defaults epilogue). a6 is8 at the hook.
-Retained vendor disassembly: analysis/octave-runtime/ui-*.asm.
+"""Exact-build NanoCore 1.12 eleven-control octave metadata hooks.
+No device I/O. Internal enum hook preserves the separate UniVibe entry hook.
 """
 import struct
 from patch_image import extract_fit
@@ -49,17 +43,14 @@ def patches(image, symbols):
                               (0x40025f7a, '174507001305a577')]:
         add(address, expected, address_pair(address, sym('nc_octave_name')),
             'FX2 subtype8 display name OCTAVE')
-    labels = struct.pack('<3I', *(sym('nc_octave_' + x + '_label')
-                                  for x in ('dry', 'swell', 'level')))
-    for address, expected in [(0x4009bc90, 'c8a60940d0ab0940d8ab0940'),
-                              (0x4009b6bc, 'b4ac0940c8af0940f4ab0940')]:
-        add(address, expected, labels, 'Private subtype8 DRY/SWELL/LEVEL labels')
+    add(0x4002607e, '011122cc', jal(0x4002607e, sym('nc_octave_label_gate')),
+        'Private bounds-checked eleven-control labels; native fallback retained')
     add(0x40026ef2, '6318d700', jal(0x40026ef2, sym('nc_octave_count_gate')),
-        'Subtype8 count3; preserve delay callers of shared count3/4 path')
-    add(0x400276f4, '0dec53058420', jal(0x400276f4, 0x4002777e) + b'\x01\x00',
-        'Subtype8 uses existing native percentage formatter for all controls')
-    add(0x4001b420, '85471cc0', jal(0x4001b420, 0x4001b3da),
-        'Subtype8 DRY continuous control; remove native semitone enum for parameter0')
+        'Subtype8 count11; preserve delay callers of shared count3/4 path')
+    add(0x40027192, '5d71a2c4', jal(0x40027192, sym('nc_octave_format_gate')),
+        'Bounds-checked percent/ms/Hz/cents and dry/resonance mode formatting')
+    add(0x4001b41e, 'd5fc85471cc0', jal(0x4001b41e, sym('nc_octave_enum_gate')) + b'\x01\x00',
+        'FX2 subtype8 parameters8/9 four-state native enums; other controls continuous')
     add(0x4006c94a, '6306060b', jal(0x4006c94a, sym('nc_octave_defaults_gate')),
-        'Subtype8 defaults .65/0/.5; preserve shared drive defaults')
+        'Subtype8 eleven-control defaults; preserve shared drive defaults')
     return result

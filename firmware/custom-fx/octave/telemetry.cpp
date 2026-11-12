@@ -3,15 +3,16 @@
 #include <cstdint>
 extern "C" volatile std::uint32_t nc_octave_stats[7];
 extern "C" std::uint32_t nc_octave_state_bytes();
+extern "C" volatile std::uint32_t nc_octave_fault,nc_octave_budget_ticks,nc_octave_previous_overruns;
 namespace {
-std::uint32_t snapshot[32];
+std::uint32_t snapshot[36];
 std::uint32_t word(std::uintptr_t a){return *reinterpret_cast<volatile std::uint32_t*>(a);}
 struct Response {const void* data;std::uint32_t length;};
 }
 extern "C" int nc_octave_snapshot(std::uint32_t,const unsigned char*,std::uint32_t,Response* out,unsigned char* status){
  if(!status)return 0;
  if(!out){*status=1;return 1;}
- snapshot[0]=0x4f435431;snapshot[1]=1;
+ snapshot[0]=0x4f435431;snapshot[1]=2;
  snapshot[2]=reinterpret_cast<std::uint32_t(*)()>(0x4003fe7c)();
  snapshot[3]=word(0x3004f690);snapshot[4]=word(0x3004ac78);
  const std::uintptr_t audio[]={0x3004ab30,0x3004ab34,0x3004ab28,0x3004ab2c,0x3004ab3c,0x3004ab40,0x3004ab20,0x3004ab24};
@@ -23,6 +24,8 @@ extern "C" int nc_octave_snapshot(std::uint32_t,const unsigned char*,std::uint32
  snapshot[25]=static_cast<std::uint32_t>(tick);snapshot[26]=static_cast<std::uint32_t>(tick>>32);
  snapshot[27]=nc_octave_state_bytes();snapshot[28]=word(0x3004f728);snapshot[29]=word(0x30051808);
  snapshot[30]=word(0x3004f72c);snapshot[31]=word(0x3005180c);
+ snapshot[32]=nc_octave_fault;snapshot[33]=nc_octave_budget_ticks;
+ snapshot[34]=nc_octave_previous_overruns;snapshot[35]=11;
  out->data=snapshot;out->length=sizeof(snapshot);*status=0;return 1;
 }
 extern "C" __attribute__((naked)) void nc_octave_diagnostic(){

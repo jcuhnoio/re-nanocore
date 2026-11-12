@@ -1,16 +1,20 @@
 // NanoCore 1.12 experimental FX2/PITCH adapter. No heap allocation in processing.
 // Native addresses and hook bytes are guarded by tools/custom_fx/octave_hooks.py.
-#include "shared_core.h"
+#include "controls.h"
 #include <cstdint>
 #include <cstddef>
 
-using Core = octave_shared_optimized::Core<2048,1024>;
+using Core = octave_shared_optimized::Core<2048,1024,false,true>;
 using Parameters = octave_shared_optimized::Parameters;
 extern "C" {
 struct OctaveStats {
     std::uint32_t calls,frames,maxTicks,sumLow,sumHigh,lastTicks,initCount;
 };
 volatile OctaveStats nc_octave_stats={};
+// Latched until reboot: native resets/preset changes cannot repeatedly overload.
+volatile std::uint32_t nc_octave_fault=0;
+volatile std::uint32_t nc_octave_budget_ticks=0;
+volatile std::uint32_t nc_octave_previous_overruns=0xffffffffu;
 }
 static std::uint64_t ticks() {
     // Same native 64-bit timer used by the stock audio timing path.
@@ -20,38 +24,33 @@ void* operator new(__SIZE_TYPE__,void* p) noexcept { return p; }
 namespace {
 constexpr std::uint32_t Magic=0x4f435431; // OCT1
 constexpr std::size_t NativePitchBytes=0xd98;
-constexpr std::size_t RingBytes=0xe000;
+constexpr std::size_t RingBytes=0x10000;
 struct State {
     std::uint32_t magic;
     float sampleRate;
-    float controls[3];
+    float controls[nc_octave_controls::Count];
     float level;
     std::uint32_t validControls;
     std::uint32_t resets;
     Core core;
 };
-static_assert(offsetof(State,core)==32,"metadata offset changed");
+static_assert(offsetof(State,core)==64,"metadata offset changed");
 static_assert(sizeof(State)<=RingBytes,"expanded ring too small");
-static float bounded(float x,float fallback) {
-    return std::isfinite(x) ? (x<0?0:(x>1?1:x)) : fallback;
-}
 static State* stateFor(void* nativePitch) {
     if(!nativePitch)return nullptr;
     auto* s=*static_cast<State**>(nativePitch);
     return s && s->magic==Magic ? s : nullptr;
 }
 static void controls(State* s,const float* p) {
-    const float dry=p?bounded(p[0],.65f):.65f;
-    const float swell=p?bounded(p[1],0):0;
-    const float level=p?bounded(p[2],.5f):.5f;
-    if(s->validControls && s->controls[0]==dry && s->controls[1]==swell && s->controls[2]==level)return;
-    Parameters q;
-    q.dry=dry; q.attackMs=swell*2000;
-    q.sub2=.05f; q.sub1=.3f; q.up1=.65f; q.up2=.35f;
-    q.cutoffHz=6500; q.outputDb=-9; q.detuneCents=0; q.dryFx=0;
-    s->core.setParameters(q);
-    s->controls[0]=dry;s->controls[1]=swell;s->controls[2]=level;
-    s->level=2*level;s->validControls=1;
+    float next[nc_octave_controls::Count];bool changed=!s->validControls;
+    for(unsigned i=0;i<nc_octave_controls::Count;++i) {
+        next[i]=p?nc_octave_controls::bounded(p[i],i):nc_octave_controls::defaults[i];
+        changed=changed || next[i]!=s->controls[i];
+    }
+    if(!changed)return;
+    s->core.setParameters(nc_octave_controls::decode(next));
+    for(unsigned i=0;i<nc_octave_controls::Count;++i)s->controls[i]=next[i];
+    s->level=2*next[10];s->validControls=1;
 }
 static void bypass(const float* left,const float* right,float* outLeft,float* outRight,
                    std::uint32_t frames,std::uint32_t stereo) {
@@ -95,7 +94,13 @@ extern "C" void nc_octave_process(void* family,const float* left,const float* ri
     auto* enabled=family?*reinterpret_cast<std::uint8_t**>(bytes+4):nullptr;
     State* s=family?stateFor(bytes+8):nullptr;
     if(subtype!=8 || !enabled || !*enabled || !s){bypass(left,right,outLeft,outRight,frames,stereo);return;}
+    const auto overruns=*reinterpret_cast<volatile std::uint32_t*>(0x3004ab40u);
+    if(nc_octave_previous_overruns!=0xffffffffu && overruns!=nc_octave_previous_overruns)
+        nc_octave_fault=nc_octave_fault?nc_octave_fault:2;
+    nc_octave_previous_overruns=overruns;
+    if(nc_octave_fault){bypass(left,right,outLeft,outRight,frames,stereo);return;}
     const std::uint64_t start=ticks();
+    nc_octave_budget_ticks=std::uint32_t(4000000.f*float(frames)/s->sampleRate*.4f);
     if(bytes[0xe40]!=8){s->core.reset();++s->resets;}
     bytes[0xe40]=8;
     controls(s,p);
@@ -106,7 +111,20 @@ extern "C" void nc_octave_process(void* family,const float* left,const float* ri
             const float l=left[offset+i];
             mono[i]=stereo && right ? .5f*(l+right[offset+i]) : l;
         }
-        s->core.process(mono,mono,n);
+        // A job is not preemptible, but every 32 samples checks elapsed work.
+        // One over-budget job latches bypass; it cannot starve future callbacks.
+        for(std::uint32_t j=0;j<n;j+=32) {
+            const auto k=n-j<32?n-j:32;
+            s->core.process(mono+j,mono+j,k);
+            if(ticks()-start>nc_octave_budget_ticks) {
+                nc_octave_fault=1;break;
+            }
+        }
+        if(nc_octave_fault) {
+            bypass(left+offset,right?right+offset:nullptr,outLeft+offset,
+                   outRight?outRight+offset:nullptr,frames-offset,stereo);
+            break;
+        }
         for(std::uint32_t i=0;i<n;++i){
             const float y=mono[i]*s->level;
             outLeft[offset+i]=y;
