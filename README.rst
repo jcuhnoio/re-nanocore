@@ -152,8 +152,8 @@ allocations. About 1.4 MB of heap remains free on the tested preset.
 the measured chain averages 1.99 ms against a 1.45 ms budget; the octave alone
 averages 1.32 ms and peaks at 2.96 ms. These are physical timer measurements,
 not instruction estimates. The user reports that enabling OCTAVE effectively freezes the pedal.
-Treat this build as a failed experiment; do not install it. Recovery to the
-retained known-working UniVibe image is in progress.
+Treat this build as a failed experiment; do not install it. The exact pre-test UniVibe 1.12 image was restored with full readback
+verification after a physical power cycle.
 This experiment is not offered by the public UniVibe installer. The exact
 preflash backup is retained locally for direct-DFU rollback.
 

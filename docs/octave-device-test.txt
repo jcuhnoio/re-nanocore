@@ -87,3 +87,12 @@ message was sent, but Lupgrader did not enumerate; a physical power cycle has
 been requested before restoring the exact known-working UniVibe backup.
 Do not install this build. Future device experiments must bypass the expensive
 path on deadline failure and pass timing checks before interactive audition.
+
+Recovery completed
+------------------
+After the user power-cycled the pedal, USB DFU entry succeeded. The experimental
+image hash matched the expected live preflight. Restoring the entire known-good
+OS produced an exact 868,352-byte readback matching SHA256
+d9cb9a7252f51a72580b8e0fb51b5a0e88dc8e93f9441e5d81078864fcfbd634.
+The updater accepted manifestation/reboot. No SPL or preset erase was performed.
+After boot, the normal runtime reported ready and returned the active preset.

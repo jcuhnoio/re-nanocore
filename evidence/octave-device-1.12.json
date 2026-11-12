@@ -50,5 +50,26 @@
   ],
   "user_report": "Enabling effect effectively freezes pedal",
   "usable": false,
-  "recovery_status": "USB DFU entry did not enumerate; waiting for physical power cycle"
+  "recovery_status": "Exact known-working UniVibe 1.12 OS restored after physical power cycle",
+  "recovery": {
+    "input_sha256": "fab5355ed642825e2891365bd52b61a4956dd82bf59be8539eca5693346fb02d",
+    "output_sha256": "d9cb9a7252f51a72580b8e0fb51b5a0e88dc8e93f9441e5d81078864fcfbd634",
+    "bytes": 868352,
+    "erased_os_relative_sectors": [
+      0,
+      65536,
+      131072,
+      196608,
+      458752,
+      524288,
+      589824,
+      655360,
+      720896
+    ],
+    "exact_match": true,
+    "manifestation_status": "000000000800",
+    "action": "restore"
+  },
+  "recovery_runtime_ready": true,
+  "recovery_preset_read_success": true
 }
