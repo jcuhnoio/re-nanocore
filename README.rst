@@ -102,6 +102,27 @@ produces the browser delta (1.10 keeps its existing ``patch.json`` filename).
 These tools are under ``tools/custom_fx/`` and reuse the retained vendor toolchain;
 they never flash the device themselves.
 
+Physical stock 1.12 upgrade
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+On 2026-11-12 the archived ``firmware-archive/nanocore-1.12.fmu`` was verified
+against its publisher signatures, decrypted and checked for CRC/FIT integrity.
+A fresh complete OS backup matched the known UniVibe 1.10 image. The decoded
+stock 1.12 payload was written using the established OS-relative DFU route,
+preserving the bytes beyond the release payload. Full 868352-byte readback
+matched exactly; reboot returned normal MIDI enumeration and ``ready: true``.
+
+The active preset's MOD block changed from enabled variant10 to disabled
+variant0 on the first stock 1.12 runtime read; all preset contents and audio
+behavior have not been verified. The browser patch engine recognized this
+physical readback as stock1.12, generated the exact offline UniVibe payload and
+reversed it exactly in memory. The pedal was left on **stock1.12** for the browser
+installer test; this is not yet a physical1.12 UniVibe flash result.
+
+`Upgrade receipt <evidence/physical-stock-1.12-upgrade.json>`_ records the hashes,
+written sectors, runtime checks and local backup paths. Complete images remain
+local under ``analysis/custom-fx/stock-1.12-session/``.
+
 Current result
 --------------
 

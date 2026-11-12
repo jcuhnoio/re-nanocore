@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-12",
+  "action": "physical stock 1.12 upgrade from archived signed package",
+  "archive": "firmware-archive/nanocore-1.12.fmu",
+  "archive_sha256": "1093999538d2d74f61e60dffbad1ef765f8cde166819f1cddf1033690d2ca964",
+  "publisher_signature_verified": true,
+  "decoded_payload_sha256": "17ce4dc1fb0e58f3966ddb30349cd79122cad3b5a54e6e3bd69e8466b48bfe40",
+  "receipt": {
+    "input_sha256": "8d2fdbb5ccc9694a4dcf07dd79226493e75629ef9ef66898e850b837afa7b85d",
+    "output_sha256": "231d91e0c3543458b3237f49be68fbdde607836e9ceb249b69d9ae2d34216e0c",
+    "bytes": 868352,
+    "erased_os_relative_sectors": [
+      0,
+      65536,
+      131072,
+      196608,
+      262144,
+      327680,
+      393216,
+      458752,
+      524288,
+      589824,
+      655360,
+      720896
+    ],
+    "exact_match": true,
+    "manifestation_status": "000000000800",
+    "action": "stock-version-upgrade",
+    "version": "1.12"
+  },
+  "runtime_normal_usb": {
+    "data": {
+      "devices": [
+        {
+          "dfu": false,
+          "display_name": "Nanocore",
+          "kind": "nanocore",
+          "midi": true,
+          "runtime_pid": 4865
+        }
+      ]
+    },
+    "success": true
+  },
+  "runtime_ready": {
+    "data": {
+      "ready": true
+    },
+    "success": true
+  },
+  "active_preset_comparison": {
+    "activeSlot_before": 1,
+    "activeSlot_after": 1,
+    "mod_before": {
+      "enabled": true,
+      "params": [
+        0.3499999940395355,
+        0.800000011920929,
+        0.5,
+        0.0
+      ],
+      "variant": 10
+    },
+    "mod_after": {
+      "enabled": false,
+      "params": [
+        0.5,
+        0.5
+      ],
+      "variant": 0
+    },
+    "all_presets_verified": false
+  },
+  "browser_patch_offline_preflight": {
+    "input_kind": "stock",
+    "version": "1.12",
+    "input_sha256": "231d91e0c3543458b3237f49be68fbdde607836e9ceb249b69d9ae2d34216e0c",
+    "patched_sha256": "d9cb9a7252f51a72580b8e0fb51b5a0e88dc8e93f9441e5d81078864fcfbd634",
+    "matches_offline_patched_image": true,
+    "exact_restore": true,
+    "physical_patch_uploaded": false
+  },
+  "backup_local": "analysis/custom-fx/stock-1.12-session/backup/os-partition.bin",
+  "physical_readback_local": "analysis/custom-fx/stock-1.12-session/deploy/readback.bin",
+  "operation_script_local": "analysis/custom-fx/stock-1.12-session/upload_stock.py",
+  "limitations": [
+    "Stock 1.12 was flashed through established Python raw OS DFU route, not encrypted vendor package transfer",
+    "1.12 UniVibe patch recognized and prepared offline against physical readback but not yet uploaded",
+    "No audio listening or measurements performed"
+  ]
+}
