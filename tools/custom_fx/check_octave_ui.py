@@ -8,6 +8,8 @@ emulated. Timing and physical display/audio behavior are not established here.
 """
 import sys,json,struct,textwrap,os,hashlib
 from pathlib import Path
+from octave_test_ports import run_ported
+run_ported(__file__,Path(sys.argv[1]).parent if sys.argv[1].endswith(".elf") else Path(sys.argv[1]),globals())
 ROOT=Path(__file__).resolve().parents[2]
 os.chdir(ROOT)
 sys.path.insert(0,str(ROOT/'tools/custom_fx'))
@@ -175,7 +177,8 @@ s=s.replace('if pc in (0x40004f92,0x400031bc):',"""if pc==0x4002d6f8:
     uc.reg_write(r.UC_RISCV_REG_A0,0);uc.reg_write(r.UC_RISCV_REG_PC,uc.reg_read(r.UC_RISCV_REG_RA));return
    if pc in (0x40004f92,0x400031bc):""")
 exec(textwrap.dedent(s))
-block_name=struct.unpack_from('<I',new,0x9b358+4)[0]
+assert new.count(b'fx2\0')==1
+block_name=0x40000000+new.index(b'fx2\0')
 for index,value,want in [(0,.65,'65%'),(1,.05,'5%'),(2,.3,'30%'),(3,0.,'0%'),(4,1.,'100%'),(5,.5,'1000ms'),(6,.5,'9075Hz'),(7,.5,'15ct'),(8,1.,'DETUNE'),(9,1.,'PEAK'),(10,.5,'100%')]:
  u,fallback,st=run(new,0x4001cc7c,[block_name,8,index,0x30020000],value,memory={0x30020000:b'X'*32})
  assert st(0x30020000)==want,('native UI caller',index,st(0x30020000),want)

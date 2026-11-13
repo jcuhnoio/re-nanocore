@@ -1,9 +1,33 @@
-Multirate sub-octave experiment (firmware 1.12)
-============================================
+Multirate Octaver (firmware 1.12 release)
+=============================================
 
 Purpose: improve low-note sub-octaves without changing the auditioned upper
 octaves or processed dry. This is an experimental implementation, not a
 calibrated POG2 clone. See README.rst and evidence for deployment status.
+
+Current release recipe (offline)
+--------------------------------
+The browser bundle uses the accepted half-rate upper/dry implementation below.
+Only firmware 1.12 is supported for installation:
+
+python3 tools/custom_fx/build_octave_device.py --output NEW_BUILD_DIR \
+  --firmware-version 1.12 --fft-window 1024 --fft-experiment combined \
+  --budget-percent 60 --fast-phase --multirate-sub --half-rate-upper
+
+The abandoned 1.10/1.11 profiles are retained as research, not supported
+installation targets. A physical 1.11 test produced screen corruption despite
+passing offline tests; restoring 1.12 fixed the screen. Research profiles live in
+ tools/custom_fx/octave_versions.json and octave_package_versions.json.
+The 1.10 bridge preserves the native inline pitch buffer and appends a 64 KiB
+state region to both audited family allocations. The 1.11 port adapts its smaller
+native family layout. Neither port changes the accepted DSP algorithm.
+prepare_octave_image.py rejects a build whose version differs from its OS base.
+export_octave_web_patch.py exports the combined UniVibe/Octaver delta; the browser
+keeps the original full OS backup for exact restoration and effect switching.
+Full firmware images remain local. See README for physical validation status.
+
+The following sections retain the progression from the earlier full-rate upper
+experiment to the accepted half-rate build. The older 65% recipe is historical.
 
 Signal processing
 -----------------

@@ -50,10 +50,42 @@ function schema(p) {
     if (segments.some(s => r.offset < s.offset + s.size && s.offset < r.offset + r.size)) throw new Error('Header field overlaps segment.');
   return ranges;
 }
+// Extended FITs claim part of the old post-FIT space. Authenticate the complete
+// original/installed prefixes independently; never normalize that new code out.
+function extendedSchema(p) {
+  const integer=Number.isSafeInteger, digest=s=>typeof s==='string' && /^[0-9a-f]{64}$/.test(s);
+  if(p?.schemaVersion!==2 || p.firmwareVersion!=='1.12' || p.effect!=='UNIVIBE_OCTAVE' ||
+     ![p.osSize,p.stockFitSize,p.installedFitSize,p.protectedOffset].every(integer) ||
+     !(0<p.stockFitSize && p.stockFitSize<p.installedFitSize && p.installedFitSize<=p.protectedOffset && p.protectedOffset<=p.osSize) ||
+     !digest(p.stockNormalizedSha256) || !digest(p.installedNormalizedSha256) ||
+     p.timestamp?.size!==4 || !integer(p.timestamp.offset) || p.timestamp.offset<0 || p.timestamp.offset+4>p.stockFitSize ||
+     !Array.isArray(p.patches) || !p.patches.length || p.append?.offset!==p.stockFitSize)
+    throw Error('Unsupported extended patch manifest.');
+  const ranges=[p.timestamp];
+  for(const e of p.patches){
+    const a=hex(e.beforeHex),b=hex(e.afterHex);
+    if(a.length!==b.length || !integer(e.offset) || e.offset<0 || e.offset+a.length>p.stockFitSize ||
+       ranges.some(r=>e.offset<r.offset+r.size && r.offset<e.offset+a.length))throw Error('Invalid or overlapping extended patch.');
+    ranges.push({offset:e.offset,size:a.length});
+  }
+  if(hex(p.append.afterHex).length!==p.installedFitSize-p.stockFitSize)throw Error('Invalid appended payload.');
+}
+async function normalizedPrefix(image,size,timestamp){
+  const prefix=image.slice(0,size);prefix.fill(0,timestamp.offset,timestamp.offset+timestamp.size);
+  return sha256(prefix);
+}
 /** Throws for any unrecognized image, mixed patch, corrupt hash, or wrong size.
  * Accepts complete OS partitions only; timestamp and post-FIT tail may vary.
  */
 export async function validateImage(value, patch) {
+  if(patch?.schemaVersion===2){
+    extendedSchema(patch);const image=bytes(value);
+    if(image.length!==patch.osSize)throw Error(`Expected a complete ${patch.osSize}-byte OS partition.`);
+    for(const kind of ['stock','installed'])
+      if(await normalizedPrefix(image,patch[kind+'FitSize'],patch.timestamp)===patch[kind+'NormalizedSha256'])
+        return {kind,version:patch.firmwareVersion};
+    throw Error('Unknown or damaged extended firmware; nothing will be written.');
+  }
   const image = bytes(value), ranges = schema(patch);
   if (image.length !== patch.osSize) throw new Error(`Expected a complete ${patch.osSize}-byte OS partition.`);
   const normalized = image.slice(0, patch.fitSize);
@@ -72,7 +104,7 @@ export async function validateImage(value, patch) {
 export async function install(value, patch) {
   const image = bytes(value), state = await validateImage(image, patch), output = image.slice();
   if (state.kind === 'installed') return output;
-  for (const entry of [...patch.patches, ...patch.hashes]) output.set(hex(entry.afterHex), entry.offset);
+  for (const entry of [...patch.patches, ...(patch.hashes||[]), ...(patch.append?[patch.append]:[])]) output.set(hex(entry.afterHex), entry.offset);
   if ((await validateImage(output, patch)).kind !== 'installed') throw new Error('Patched firmware verification failed.');
   return output;
 }
@@ -96,9 +128,30 @@ export async function prepareRestore(current, backup, patch) {
 export async function identifyImage(value, patches) {
   const matches = [];
   for (const patch of patches) {
-    try { matches.push({...(await validateImage(value, patch)), patch}); }
+    try { matches.push({...(await validateImage(value, patch)), patch, effect:patch.effect||'UNIVIBE'}); }
     catch { /* Try another exact build; no writes happen during detection. */ }
   }
+  // The same authenticated stock image may be the source of distinct effects.
+  // Repeated manifests or conflicting versions/install identities stay errors.
+  if(matches.length>1 && matches.every(m=>m.kind==='stock' && m.version===matches[0].version) &&
+     new Set(matches.map(m=>m.effect)).size===matches.length)return matches.find(m=>m.effect==='UNIVIBE')||matches[0];
   if (matches.length !== 1) throw new Error('Unknown, damaged or ambiguous firmware. Supported exact builds: 1.10, 1.11 and 1.12; nothing will be written.');
   return matches[0];
+}
+
+/** Switching effects first reconstructs the exact saved stock OS, including any
+ * tail bytes claimed by an extended FIT. Never synthesize a stock backup. */
+export async function installSelected(current,patches,effect,originalBackup){
+  const state=await identifyImage(current,patches);
+  if(effect==='UNIVIBE_OCTAVE' && state.version!=='1.12')throw Error('The experimental Octaver requires firmware 1.12. Nothing was written. UniVibe alone supports this version.');
+  const candidates=patches.filter(p=>p.firmwareVersion===state.version && (p.effect||'UNIVIBE')===effect);
+  if(candidates.length!==1)throw Error('Selected effect is unavailable for this exact firmware.');
+  if(state.kind==='installed' && state.effect===effect)return bytes(current).slice();
+  let stock=current;
+  if(state.kind==='installed'){
+    if(!originalBackup)throw Error('Switching effects requires your original stock OS backup. Use a backup file or the browser where you installed.');
+    stock=await prepareRestore(current,originalBackup,state.patch);
+    stock.set(bytes(current).subarray(state.patch.timestamp.offset,state.patch.timestamp.offset+4),state.patch.timestamp.offset);
+  }
+  return install(stock,candidates[0]);
 }

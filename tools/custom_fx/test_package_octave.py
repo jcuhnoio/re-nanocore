@@ -15,6 +15,25 @@ def synthetic_elf(address=CODE_BASE,size=4):
     return bytes(blob)
 
 class OctavePackageTests(unittest.TestCase):
+    def test_version_layout_and_heap_ownership(self):
+        profiles=json.loads((ROOT/'tools/custom_fx/octave_package_versions.json').read_text())
+        for version,profile in profiles.items():
+            path=ROOT/f'analysis/decoder-capture/validated-releases/nanocore-{version}/firmware.bin'
+            if not path.exists():continue
+            with self.subTest(version=version):
+                source=path.read_bytes();original=source+bytes([0xa5])*(OS_SIZE-len(source))
+                base=int(profile['code_base'],0);elf=synthetic_elf(base)
+                offset=profile['segments'][1]['offset']+0x200
+                hooks={'schema_version':1,'firmware_version':version,'elf_sha256':hashlib.sha256(elf).hexdigest(),
+                       'patches':[{'offset':offset,'expected_hex':original[offset:offset+4].hex(),'replacement_hex':'82808280'}]}
+                target,report=package(original,elf,hooks)
+                self.assertEqual(report['code_base'],hex(base));self.assertEqual(report['firmware_version'],version)
+                self.assertEqual(target[PROTECTED_SECTOR:],original[PROTECTED_SECTOR:])
+                self.assertTrue(report['all_fit_hashes_verified'])
+                wrong=synthetic_elf(base+4);bad=copy.deepcopy(hooks);bad['elf_sha256']=hashlib.sha256(wrong).hexdigest()
+                with self.assertRaisesRegex(ValueError,'link address'):package(original,wrong,bad)
+                bad=copy.deepcopy(hooks);bad['firmware_version']='1.10' if version!='1.10' else '1.12'
+                with self.assertRaisesRegex(ValueError,'same-version'):package(original,elf,bad)
     def test_elf_padding_bss_and_ownership(self):
         data,sections=elf_payload(synthetic_elf())
         self.assertEqual(len(data),64);self.assertEqual(data[:4],b'\x02\x90'*2);self.assertEqual(data[4:],bytes(60))

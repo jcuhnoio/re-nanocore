@@ -70,3 +70,5 @@
 !/web/
 /web/node_modules/
 !/.github/workflows/pages.yml
+
+!/docs/investigation-history.rst

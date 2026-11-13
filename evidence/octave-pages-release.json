@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "supported_octaver_firmware": [
+    "1.12"
+  ],
+  "supported_univibe_firmware": [
+    "1.10",
+    "1.11",
+    "1.12"
+  ],
+  "work_in_progress": true,
+  "manifest_sha256": "b7727ef0eee856fb914e2888fc94ab94c4d2c4c5ec1695eee2d309b81026cae2",
+  "physical_test": {
+    "version": "1.12",
+    "receipt": {
+      "input_sha256": "8d4f4ca0bd8ef0b45d6ccb6e24ae2546359b11a6fb9fb07b6dc2f469dad54182",
+      "output_sha256": "8d4f4ca0bd8ef0b45d6ccb6e24ae2546359b11a6fb9fb07b6dc2f469dad54182",
+      "bytes": 868352,
+      "erased_os_relative_sectors": [],
+      "exact_match": true,
+      "manifestation_status": "000000000800"
+    },
+    "active_chain": "OCTAVE + amp + cab; ToneCommand closed; audio disconnected",
+    "duration_seconds": 60.05627107620239,
+    "octave_max_ticks": 2719,
+    "audio_max_ticks": 4354,
+    "audio_budget_ticks": 5804,
+    "audio_over_budget": 0,
+    "octave_fault": 0,
+    "timer_hz": 4000000
+  },
+  "restored_after_older_port_test": {
+    "exact_sha256": "8d4f4ca0bd8ef0b45d6ccb6e24ae2546359b11a6fb9fb07b6dc2f469dad54182",
+    "native_ready": true,
+    "user_screen_normal": true
+  },
+  "browser_tests": "Chrome with mocked USB: UniVibe all three versions; Octaver refusal without writes on 1.10/1.11; 1.12 install/switch/restore/interrupted recovery; audio-disconnect gating; desktop/mobile. Mock USB does not establish physical browser transport behavior.",
+  "prior_listening_evidence": "octave-half-rate-headroom-1.12.json",
+  "withdrawn_ports": "octave-pages-1.11-failure.json"
+}

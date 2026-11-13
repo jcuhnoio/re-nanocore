@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "firmware": "1.11",
+  "status": "failed hardware test; 1.10/1.11 Octaver support withdrawn",
+  "user_report": "Screen glitching; user selected UniVibe in MOD before recovery.",
+  "candidate_sha256": "adafd5f2ac85157cbc93ff4d21ddba05c9a4b8212a7914337e2315b468a2f929",
+  "exact_flash_readback": true,
+  "native_ready": true,
+  "octave_calls": [
+    0,
+    0,
+    0
+  ],
+  "audio_over_budget": [
+    0,
+    0,
+    0
+  ],
+  "octave_fault": [
+    0,
+    0,
+    0
+  ],
+  "univibe_readback": {
+    "slot_index": 5,
+    "variant": 10,
+    "enabled": false
+  },
+  "conclusion": "Display corruption was reported before OCTAVE processed audio. Exact readback and offline tests do not establish physical UI compatibility. Cause is not established.",
+  "recovery": {
+    "version": "1.12",
+    "sha256": "8d4f4ca0bd8ef0b45d6ccb6e24ae2546359b11a6fb9fb07b6dc2f469dad54182",
+    "exact_readback": true,
+    "native_ready": true,
+    "visual_confirmation": "User confirmed screen normal after restoring 1.12"
+  },
+  "local_artifacts": {
+    "physical-1.11/receipt.json": "2e1fa43cbc784ec1166881cc1a9a02ba8106d5a7315b06c2ebad8ace5b186843",
+    "runtime-1.11-glitch/reads.json": "76261f3252002de29d8c3b4495f099db209ed8b5d89519e7df9e26fc6e245205",
+    "telemetry-1.11-glitch.jsonl": "1ede4f6682fba457e4c4f17033a83b07140e6a1ec466f3f64f044718f4e18e0d",
+    "physical-restore-1.12/receipt.json": "877c58c122144bf6d66e4db025fe816adf8bd6478666baa3b60d8b1f2fc4ef41",
+    "runtime-restore-1.12/reads.json": "622c8da51c94733aa66e92afdf107503bf3db823c7dae64629c61805812771f0"
+  }
+}

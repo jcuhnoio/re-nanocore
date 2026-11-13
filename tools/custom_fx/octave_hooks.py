@@ -4,6 +4,7 @@ all changed native instructions are still guarded byte-for-byte.
 """
 import struct
 from patch_image import extract_fit
+from octave_versions import profile,map_address
 
 LOAD=0x40000000
 HOOKS={
@@ -27,7 +28,11 @@ def clui(rd,imm):
 
 def patches(image,symbols):
     fit=extract_fit(image)
-    if fit['image_version']!='1.12':raise ValueError('Octave device hooks require 1.12')
+    version='1.11' if fit['image_version']=='1.11b' else fit['image_version']
+    p=profile(version)
+    if version=='1.10':
+        from octave_110 import patches as patches110
+        return patches110(image,symbols)
     seg=next(s for s in fit['segments'] if s['load_address']==LOAD)
     result=[]
     def add(address,before,after,description):
@@ -38,8 +43,19 @@ def patches(image,symbols):
     for name,(address,expected) in HOOKS.items():
         target=symbols[name]
         if isinstance(target,str):target=int(target,0)
-        old=bytes.fromhex(expected)
+        old=bytes.fromhex(p['guard_bytes'][hex(address)])
+        address=map_address(address,version)
         add(address,old,jal(address,target)+b'\x01\x00'*((len(old)-4)//2),name)
     for address in ALLOCATIONS:
+        address=map_address(address,version)
         add(address,clui(10,2),clui(10,16),'Expand dedicated pitch ring allocation 8192 -> 65536 bytes; native failure checks retained')
     return result
+
+
+def diagnostic_patches(image,symbols):
+    fit=extract_fit(image);version='1.11' if fit['image_version']=='1.11b' else fit['image_version'];p=profile(version)
+    address=int(p['diagnostic_address'],16);expected=bytes.fromhex(p['guard_bytes']['0x4008f8ac'])
+    seg=next(s for s in fit['segments'] if s['load_address']==LOAD);offset=seg['offset']+address-LOAD
+    if image[offset:offset+len(expected)]!=expected:raise ValueError('Unexpected diagnostic prologue')
+    target=symbols['nc_octave_diagnostic'];target=int(target,0) if isinstance(target,str) else target
+    return [dict(address=hex(address),offset=offset,expected_hex=expected.hex(),replacement_hex=jal(address,target).hex(),description='Bounded OCT? diagnostics; native fallback retained')]

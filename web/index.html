@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f1e8">
-  <meta name="description" content="Install a custom UniVibe effect on your NanoCore. A local-first USB installer with firmware backup and restore.">
-  <title>UniVibe for NanoCore</title>
+  <meta name="description" content="Install UniVibe or an experimental octave bundle on your NanoCore, with local firmware backup and restore.">
+  <title>Custom effects for NanoCore</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,10 +16,10 @@
   <main class="wrap">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="tiny-dot"></span> CUSTOM EFFECT · NO. 001</p>
+        <p class="eyebrow"><span class="tiny-dot"></span> CUSTOM EFFECTS · WORK IN PROGRESS</p>
         <h1 id="hero-title">A new voice for<br>your NanoCore.</h1>
-        <p class="hero-description">That swirling, off-center pulse. Now on your pedal. Give your NanoCore a UniVibe with three simple controls and two distinct voices.</p>
-        <div class="hero-tags"><span>Replaces Velvet Vibrato</span><span>Firmware 1.10 / 1.11 / 1.12</span><span>1.12 confirmed working</span></div>
+        <p class="hero-description">Give your NanoCore a UniVibe, or add an experimental four-voice octaver with attack and dry processing. Choose your effects below.</p>
+        <div class="hero-tags"><span>UniVibe + optional octaver</span><span>Firmware 1.10 / 1.11 / 1.12</span><span>Experimental firmware</span></div>
       </div>
       <div class="pedal-scene" role="img" aria-label="Illustration of a NanoCore displaying the UniVibe effect, with speed, depth, and level controls">
         <span class="scene-orbit orbit-one"></span><span class="scene-orbit orbit-two"></span>
@@ -33,10 +33,23 @@
       </div>
     </section>
 
-    <section class="install-layout" aria-label="Install UniVibe">
+    <section class="install-layout" aria-label="Install custom effects">
       <div class="installer card">
-        <div class="card-heading"><div><p class="eyebrow">MAKE IT YOURS</p><h2>Meet your next modulation.</h2></div><span id="connection" class="connection">Not connected</span></div>
-        <p class="install-intro">Connect your NanoCore over USB. We’ll back up its firmware, install UniVibe, and verify the upload.</p>
+        <div class="card-heading"><div><p class="eyebrow">MAKE IT YOURS</p><h2>Make room for a new sound.</h2></div><span id="connection" class="connection">Not connected</span></div>
+        <p class="install-intro">Connect your NanoCore over USB. We’ll back up its firmware, install your selected effects, and verify the upload.</p>
+        <label class="effect-select-label" for="effectSelect">Choose your effects</label>
+        <select id="effectSelect" class="effect-select">
+          <option value="UNIVIBE">UniVibe</option>
+          <option value="UNIVIBE_OCTAVE">UniVibe + experimental Octaver (1.12 only)</option>
+        </select>
+        <p id="selectionDetail" class="selection-detail">Replaces Velvet Vibrato (MOD 10) with UNIVIBE. Other effect slots stay as they are.</p>
+        <div id="octaveWarning" class="work-in-progress" hidden>
+          <strong>Octaver is a work in progress.</strong>
+          <p>Adds dry, −2, −1, +1 and +2 octave levels, attack and dry processing. This is a custom POG-style effect, not an exact POG2 recreation. It replaces the stock Octaver/PITCH effect; UniVibe replaces Velvet Vibrato.</p>
+          <p>Requires firmware 1.12; 1.10 and 1.11 are not supported for Octaver. The 1.12 build has passed hardware timing and user listening tests. CPU overloads and audio glitches remain possible.</p>
+          <p><strong>Close ToneCommand while using the octaver.</strong> App-open timing spikes remain unresolved. Start with OCTAVE, amp and cab only. The upper/dry path has reduced high-frequency bandwidth.</p>
+        </div>
+        <label class="audio-confirmation"><input id="audioDisconnected" type="checkbox"><span>I have physically unplugged headphones and audio output cables from the NanoCore, and closed ToneCommand.<small>Entering update mode can produce a loud transient. Keep audio disconnected until the pedal finishes restarting.</small></span></label>
         <ol id="steps" class="steps" aria-label="Installation stages">
           <li data-phase="connect"><span class="step-number">1</span>Connect</li>
           <li data-phase="read"><span class="step-number">2</span>Backup</li>
@@ -49,7 +62,7 @@
           <progress id="progress" max="100" value="0" aria-label="Installation progress"></progress>
         </div>
         <p id="error" class="error" role="alert" hidden></p>
-        <button id="primary" class="button button-primary" type="button">Upload UniVibe <span aria-hidden="true">↗</span></button>
+        <button id="primary" class="button button-primary" type="button" disabled>Upload UniVibe <span aria-hidden="true">↗</span></button>
         <button id="reconnect" class="button button-primary" type="button" hidden>Connect bootloader</button>
         <button id="recovery" class="button button-primary" type="button" hidden>Recover interrupted upload</button>
         <div class="backup-actions"><button id="restore" class="text-button" type="button">Restore original</button><span aria-hidden="true">·</span><button id="importBackup" class="text-button" type="button">Use a backup file</button><a id="backupLink" class="text-button" download hidden>Download backup</a></div>
@@ -62,12 +75,13 @@
         <p class="eyebrow">THE SOUND</p>
         <h2 id="effect-title">Four ways to find<br>your sweet spot.</h2>
         <dl class="controls"><div><dt>Level</dt><dd>Set your output volume.</dd></div><div><dt>Speed</dt><dd>From a slow sway to a fast pulse.</dd></div><div><dt>Depth</dt><dd>Dial in the intensity of the swirl.</dd></div><div><dt>Chorus / Vibrato</dt><dd>Blend in your dry tone, or go all wet.</dd></div></dl>
+        <div class="octave-notes"><h3>Add four octaves.</h3><p>The optional octaver blends −2, −1, +1 and +2 voices with your dry tone. Shape their entrance with attack, then adjust lowpass, detune, dry processing, resonance and level.</p></div>
         <div class="replacement-note"><span class="note-symbol" aria-hidden="true">↔</span><p><strong>One slot. A different sound.</strong>UniVibe takes the place of <strong>Velvet Vibrato (MOD 10)</strong>. Presets using that effect will now use UniVibe. Adjust their existing parameter values to taste.</p></div>
       </aside>
     </section>
-    <section class="before-start" aria-labelledby="before-title"><h2 id="before-title">A few things before you plug in.</h2><div class="info-grid"><article><span class="info-number">01 / BROWSER</span><h3>Desktop Chrome or Edge</h3><p>The installer needs USB and MIDI permissions. Your browser will ask you to choose your NanoCore and may ask again when it enters update mode.</p></article><article><span class="info-number">02 / COMPATIBILITY</span><h3>Firmware 1.10, 1.11 &amp; 1.12</h3><p>The installer identifies your exact firmware and patches that version—no upgrade or downgrade. Unknown builds are rejected. Firmware 1.12 is confirmed working on a physical NanoCore: browser upload, verification and a user listening test completed successfully. Firmware 1.10 has also run on hardware; 1.11 remains checked offline only.</p></article><article><span class="info-number">03 / BACKUP</span><h3>Keep a copy. Come back anytime.</h3><p>A backup is saved locally before installation. Download it somewhere safe. Use Restore original to return to your saved firmware.</p></article></div></section>
+    <section class="before-start" aria-labelledby="before-title"><h2 id="before-title">A few things before you plug in.</h2><div class="info-grid"><article><span class="info-number">01 / BROWSER</span><h3>Desktop Chrome or Edge</h3><p>The installer needs USB and MIDI permissions. Your browser will ask you to choose your NanoCore and may ask again when it enters update mode.</p></article><article><span class="info-number">02 / COMPATIBILITY</span><h3>Firmware 1.10, 1.11 &amp; 1.12</h3><p>The installer identifies your exact firmware and patches that version—no upgrade or downgrade. Unknown builds are rejected. UniVibe has run on hardware with 1.10 and 1.12; 1.11 is checked offline only. The experimental octaver has been auditioned on 1.12 with ToneCommand closed. Octaver is available only for firmware 1.12. These are work-in-progress patches, not production firmware.</p></article><article><span class="info-number">03 / BACKUP</span><h3>Keep a copy. Come back anytime.</h3><p>A backup is saved locally before installation. Download it somewhere safe. Use Restore original to return to your saved firmware.</p></article></div></section>
   </main>
-  <footer class="site-footer wrap"><p>Built from curiosity. Made for your pedal.</p><nav aria-label="Footer"><a href="https://github.com/jcuhnoio/re-nanocore">Source ↗</a><a href="https://github.com/jcuhnoio/re-nanocore#readme">Documentation ↗</a></nav><small>Independent project. Not affiliated with NanoCore or MXR.</small></footer>
-  <script type="module" src="app.js?v=3"></script>
+  <footer class="site-footer wrap"><p>Built from curiosity. Made for your pedal.</p><nav aria-label="Footer"><a href="https://github.com/jcuhnoio/re-nanocore">Source ↗</a><a href="https://github.com/jcuhnoio/re-nanocore#readme">Documentation ↗</a></nav><small>Independent project. Not affiliated with NanoCore, MXR or Electro-Harmonix.</small></footer>
+  <script type="module" src="app.js?v=5"></script>
 </body>
 </html>

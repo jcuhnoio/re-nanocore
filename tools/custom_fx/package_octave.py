@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline exact1.12 OS packager for an appended octave payload plus reviewed hooks.
+"""Offline exact-build 1.10/1.11/1.12 OS packager for an appended octave payload plus reviewed hooks.
 
 Unlike the bounded effect patcher this deliberately extends seg1 and reserves its
 mapped RAM by moving heap1's initialized start pointer. No device operations.
@@ -24,7 +24,7 @@ HEADER_SHA = 'f389e88a9bd70594f35993425942d5c1c32076c4926605e9b9d3182d39766a29'
 def sha(data):return hashlib.sha256(data).hexdigest()
 def number(value):return int(value,0) if isinstance(value,str) else value
 
-def elf_payload(blob):
+def elf_payload(blob, code_base=CODE_BASE):
     require(blob[:7]==b'\x7fELF\x01\x01\x01','Expected ELF32 little-endian')
     require(struct.unpack_from('<HH',blob,16)==(2,243),'Expected executable RISC-V ELF')
     offset=struct.unpack_from('<I',blob,32)[0]
@@ -39,35 +39,39 @@ def elf_payload(blob):
         if not(s[2]&2) or not s[5]:continue
         name=names[s[0]:names.index(b'\0',s[0])].decode()
         require(name not in ('.init_array','.fini_array','.ctors','.dtors'), 'Runtime constructor/destructor unsupported')
-        require(s[3]>=CODE_BASE and s[3]+s[5]<0x40100000,'ELF section outside reviewed append region')
+        require(s[3]>=code_base and s[3]+s[5]<0x40100000,'ELF section outside reviewed append region')
         require(s[1]==8 or s[4]+s[5]<=len(blob),'Truncated ELF section')
         data=bytes(s[5]) if s[1]==8 else blob[s[4]:s[4]+s[5]]
         allocated.append({'name':name,'address':s[3],'size':s[5],'type':s[1],'flags':s[2],'data':data})
-    require(allocated and min(s['address'] for s in allocated)==CODE_BASE,'Wrong ELF link address')
+    require(allocated and min(s['address'] for s in allocated)==code_base,'Wrong ELF link address')
     allocated.sort(key=lambda s:s['address'])
     for a,b in zip(allocated,allocated[1:]):require(a['address']+a['size']<=b['address'],'Overlapping ELF sections')
     end=(max(s['address']+s['size'] for s in allocated)+63)&~63
-    result=bytearray(end-CODE_BASE)
-    for s in allocated:result[s['address']-CODE_BASE:s['address']-CODE_BASE+s['size']]=s['data']
+    result=bytearray(end-code_base)
+    for s in allocated:result[s['address']-code_base:s['address']-code_base+s['size']]=s['data']
     return bytes(result),[{k:v for k,v in s.items() if k!='data'} for s in allocated]
 
 def package(original, elf, hooks):
     require(len(original)==OS_SIZE,'Complete physical OS backup required')
     fit=extract_fit(original);locations=property_offsets(original)
-    require(fit['image_version']=='1.12' and fit['dtb_size']==2048,'Exact1.12 FIT required')
+    version={'1.10':'1.10','1.11b':'1.11','1.12':'1.12'}.get(fit['image_version'])
+    require(version is not None,'Unsupported octave firmware version')
+    profile=json.loads(Path(__file__).with_name('octave_package_versions.json').read_text())[version]
+    code_base=int(profile['code_base'],0);heap_address=int(profile['heap_start_address'],0)
+    require(fit['dtb_size']==profile['dtb_size'],'Unexpected FIT header size')
     segs=fit['segments'];require(len(segs)==2,'Unexpected segment count')
     s0,s1=segs
     identity=lambda s:(s['name'],s['offset'],s['size'],s['load_address'],s['entry_address'])
-    require(identity(s0)==('seg0',0x800,0xc604,0x30040000,0x40000000) and identity(s1)==('seg1',0xd000,0xa4540,0x40000000,0x40000000),'Unexpected1.12 memory layout')
-    require(sha(s0['data'])==SEG0_SHA and sha(s1['data']) in SEG1_SHA.values(),'Unknown firmware segments')
+    require(all(identity(s)==tuple(p[k] for k in ('name','offset','size','load_address','entry_address')) for s,p in zip(segs,profile['segments'])),'Unexpected exact-version memory layout')
+    require(sha(s0['data'])==profile['seg0_sha256'] and sha(s1['data']) in profile['seg1_sha256'].values(),'Unknown firmware segments')
     header=bytearray(original[:2048]);start,length=locations[('', 'timestamp')];header[start:start+length]=bytes(length)
     for (path,name),(start,length) in locations.items():
         if path.startswith('/images/') and name=='value':header[start:start+length]=bytes(length)
-    require(sha(header)==HEADER_SHA,'Unknown FIT header/layout')
-    require(hooks.get('schema_version')==1 and hooks.get('firmware_version')=='1.12','Expected reviewed1.12 hook plan')
+    require(sha(header)==profile['header_sha256'],'Unknown FIT header/layout')
+    require(hooks.get('schema_version')==1 and hooks.get('firmware_version')==version,'Expected reviewed same-version hook plan')
     require(hooks.get('elf_sha256')==sha(elf),'Hook plan must bind exact ELF SHA256')
-    payload,sections=elf_payload(elf)
-    heap_start=CODE_BASE+len(payload)
+    payload,sections=elf_payload(elf,code_base)
+    heap_start=code_base+len(payload)
     file_start=s1['offset']+s1['size'];file_end=file_start+len(payload)
     require(file_end<=PROTECTED_SECTOR,'Append would change protected final partial erase sector')
     require(heap_start<HEAP_END,'No heap remains')
@@ -89,9 +93,9 @@ def package(original, elf, hooks):
         require(any(s['offset']<=offset<offset+len(expected)<=s['offset']+s['size'] for s in segs),'Hook leaves original segments')
         patch(offset,expected,replacement,h.get('description','reviewed octave hook'))
     require(hooks.get('patches'),'Missing integration hooks')
-    heap_offset=s0['offset']+HEAP_START_ADDRESS-s0['load_address']
-    require(struct.unpack_from('<4I',original,heap_offset-8)==(1,0x4009c074,CODE_BASE,HEAP_END),'Heap descriptor differs')
-    patch(heap_offset,struct.pack('<I',CODE_BASE),struct.pack('<I',heap_start),'Reserve appended mapped code/data/BSS before heap1')
+    heap_offset=s0['offset']+heap_address-s0['load_address']
+    require(original[heap_offset-8:heap_offset+8].hex()==profile['heap_descriptor_hex'],'Heap descriptor differs')
+    patch(heap_offset,struct.pack('<I',code_base),struct.pack('<I',heap_start),'Reserve appended mapped code/data/BSS before heap1')
     patch(file_start,original[file_start:file_end],payload,'Append linked octave code/data and initialized zero BSS to seg1')
     size_offset,size_length=locations[('/images/seg1','data-size')];require(size_length==4,'Unexpected size field')
     patch(size_offset,struct.pack('>I',s1['size']),struct.pack('>I',heap_start-s1['load_address']),'Extend seg1 load extent through reserved payload')
@@ -109,7 +113,7 @@ def package(original, elf, hooks):
     require(target[PROTECTED_SECTOR:]==original[PROTECTED_SECTOR:],'Protected final sector changed')
     require(all(a==b or allowed[i] for i,(a,b) in enumerate(zip(original,target))),'Unaccounted modification')
     require(new_fit['segments'][1]['size']==heap_start-0x40000000,'New FIT extent mismatch')
-    report={'schema_version':1,'image_kind':'raw-os-fit-extended','firmware_version':'1.12','source_kind':next(k for k,v in SEG1_SHA.items() if sha(s1['data'])==v),'input_sha256':sha(original),'output_sha256':sha(target),'elf_sha256':sha(elf),'size':len(target),'code_base':hex(CODE_BASE),'old_heap_start':hex(CODE_BASE),'new_heap_start':hex(heap_start),'heap_end':hex(HEAP_END),'remaining_heap_span':HEAP_END-heap_start,'old_seg1_size':s1['size'],'new_seg1_size':new_fit['segments'][1]['size'],'appended_file_range':[file_start,file_end],'elf_sections':sections,'patches':records,'changed_ranges':changed_ranges(original,target),'all_fit_hashes_verified':True,'bytes_after_appended_region_preserved':True,'protected_final_sector_preserved':True,'publisher_signed':False,'device_tested':False,'limits':['Offline packaging/integrity only; integration hooks and runtime performance need independent validation','Heap descriptor reserve is static memory ownership, not live free-heap measurement']}
+    report={'schema_version':1,'image_kind':'raw-os-fit-extended','firmware_version':version,'source_kind':next(k for k,v in profile['seg1_sha256'].items() if sha(s1['data'])==v),'input_sha256':sha(original),'output_sha256':sha(target),'elf_sha256':sha(elf),'size':len(target),'code_base':hex(code_base),'old_heap_start':hex(code_base),'new_heap_start':hex(heap_start),'heap_end':hex(HEAP_END),'remaining_heap_span':HEAP_END-heap_start,'old_seg1_size':s1['size'],'new_seg1_size':new_fit['segments'][1]['size'],'appended_file_range':[file_start,file_end],'elf_sections':sections,'patches':records,'changed_ranges':changed_ranges(original,target),'all_fit_hashes_verified':True,'bytes_after_appended_region_preserved':True,'protected_final_sector_preserved':True,'publisher_signed':False,'device_tested':False,'limits':['Offline packaging/integrity only; integration hooks and runtime performance need independent validation','Heap descriptor reserve is static memory ownership, not live free-heap measurement']}
     return target,report
 
 if __name__=='__main__':

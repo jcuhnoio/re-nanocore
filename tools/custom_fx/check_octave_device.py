@@ -1,6 +1,8 @@
 """Usage: python check_octave_device.py DEVICE.elf REFERENCE.dylib DECODED_1.12.bin REPORT.json"""
 import sys,struct,json,math,ctypes,hashlib
 from pathlib import Path
+from octave_test_ports import run_ported
+run_ported(__file__,Path(sys.argv[1]).parent if sys.argv[1].endswith(".elf") else Path(sys.argv[1]),globals())
 sys.path.insert(0,str(Path('tools/custom_fx').resolve()))
 from check_octave_target import elf
 from octave_hooks import patches

@@ -22,22 +22,45 @@ export class WebUSBTransport {static async open(){return {close:async()=>{}}}}
 export class RawOS {
  constructor(t,{onProgress}){this.onProgress=onProgress;}
  async readPartition(){return window.live;}
- async program(o){if(await o.backupSaved(window.live)!==true)throw Error('No backup');if(window.failUpload){window.failUpload=false;window.live.fill(255,0,65536);throw Error('Simulated disconnect');}window.live=o.target.slice();const receipt={input_sha256:'test-input',output_sha256:'test-output',bytes:window.live.length,erased_os_relative_sectors:[0],exact_match:true};await o.onVerified(window.live,receipt);return receipt;}
+ async program(o){window.programCalls=(window.programCalls||0)+1;if(await o.backupSaved(window.live)!==true)throw Error('No backup');if(window.failUpload){window.failUpload=false;window.live.fill(255,0,65536);throw Error('Simulated disconnect');}window.live=o.target.slice();const receipt={input_sha256:'test-input',output_sha256:'test-output',bytes:window.live.length,erased_os_relative_sectors:[0],exact_match:true};await o.onVerified(window.live,receipt);return receipt;}
 }` }));
 await page.addInitScript(()=>{
-Object.defineProperty(navigator,'usb',{value:{getDevices:async()=>[{vendorId:0x33c3,productId:0x6678}]}});
-Object.defineProperty(navigator,'requestMIDIAccess',{value:async()=>({outputs:new Map()})});
+Object.defineProperty(navigator,'usb',{value:{getDevices:async()=>{window.usbCalls=(window.usbCalls||0)+1;return [{vendorId:0x33c3,productId:0x6678}];},requestDevice:async()=>{window.pickerCalls=(window.pickerCalls||0)+1;return {};}}});
+Object.defineProperty(navigator,'requestMIDIAccess',{value:async()=>{window.midiCalls=(window.midiCalls||0)+1;return {outputs:new Map()};}});
 });
 await page.goto('http://localhost:8765');
+if(!await page.locator('#primary').isDisabled())throw Error('Audio confirmation must gate upload');
+for(const id of ['primary','restore','recovery','reconnect']){
+ await page.evaluate(id=>document.getElementById(id).onclick(),id);
+ await page.getByText('Stopped',{exact:true}).waitFor();
+}
+if(await page.evaluate(()=>!!(window.usbCalls||window.midiCalls||window.pickerCalls||window.programCalls)))throw Error('Unchecked confirmation reached device APIs');
+const acknowledge=async()=>page.check('#audioDisconnected');
 for(const version of ['1.10','1.11','1.12']){
  await page.evaluate(async version=>{window.live=new Uint8Array(await(await fetch(`./fixture-${version}.bin`)).arrayBuffer());},version);
- await page.click('#primary');await page.getByText('UniVibe is ready.',{exact:true}).waitFor();
- if(!await page.locator('#backupLink').isVisible())throw Error('Missing backup');
- if(!((await page.locator('#backupLink').getAttribute('download')).includes(version)))throw Error('Wrong backup filename');
- await page.click('#restore');await page.getByText('Original firmware restored.',{exact:true}).waitFor();
+ for(const effect of (version==='1.12'?['UNIVIBE','UNIVIBE_OCTAVE','UNIVIBE']:['UNIVIBE'])){
+  await page.selectOption('#effectSelect',effect);
+  if((await page.locator('#octaveWarning').isVisible())!==(effect==='UNIVIBE_OCTAVE'))throw Error('Wrong WIP disclaimer visibility');
+  await acknowledge();await page.click('#primary');
+  await page.getByText(effect==='UNIVIBE'?'UniVibe is ready.':'UniVibe + Octaver are ready.',{exact:true}).waitFor();
+  if(!await page.locator('#primary').isDisabled())throw Error('Completed update must require fresh audio confirmation');
+  if(!await page.locator('#backupLink').isVisible())throw Error('Missing backup');
+  if(!((await page.locator('#backupLink').getAttribute('download')).includes(version)))throw Error('Wrong backup filename');
+ }
+ await acknowledge();await page.click('#restore');await page.getByText('Original firmware restored.',{exact:true}).waitFor();
  const match=await page.evaluate(async version=>{const original=new Uint8Array(await(await fetch(`./fixture-${version}.bin`)).arrayBuffer());return original.every((b,i)=>b===window.live[i]);},version);
  if(!match)throw Error('Restore mismatch '+version);
- await page.evaluate(()=>window.failUpload=true);await page.click('#primary');await page.locator('#error').waitFor();await page.locator('#recovery').waitFor();await page.click('#recovery');await page.getByText('Previous firmware recovered.',{exact:true}).waitFor();
+ if(version!=='1.12'){
+  const calls=await page.evaluate(()=>window.programCalls||0);
+  await page.selectOption('#effectSelect','UNIVIBE_OCTAVE');await acknowledge();await page.click('#primary');
+  await page.getByText('The experimental Octaver requires firmware 1.12. Nothing was written. UniVibe alone supports this version.',{exact:true}).waitFor();
+  if(await page.evaluate(()=>window.programCalls||0)!==calls)throw Error('Unsupported Octaver reached flash writer');
+  continue;
+ }
+ await page.selectOption('#effectSelect','UNIVIBE_OCTAVE');await acknowledge();
+ await page.evaluate(()=>window.failUpload=true);await page.click('#primary');await page.locator('#error').waitFor();await page.locator('#recovery').waitFor();
+ await page.click('#recovery');await page.getByText('Previous firmware recovered.',{exact:true}).waitFor();
+ await acknowledge();await page.click('#restore');await page.getByText('Original firmware restored.',{exact:true}).waitFor();
 }
 // Version-specific backups survive a later firmware version being installed.
 const backups=await page.evaluate(async()=>{const {get}=await import('./storage.js?v=2');return Promise.all(['1.10','1.11','1.12'].map(async v=>(await get('original-'+v))?.version));});
@@ -47,6 +70,6 @@ await page.setViewportSize({width:360,height:800});
 if(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');
 await page.screenshot({path:'analysis/web-installer/mobile.png',fullPage:true});
 if(errors.length)throw Error(errors.join('\n'));
-console.log('Chrome: all three versions install, backup, exact restore and interrupted recovery; independent backups; desktop/mobile; zero runtime errors');
+console.log('Chrome: audio-disconnect gate blocks all device entry points; UniVibe on all three versions; Octaver refusal without writes on 1.10/1.11; 1.12 bundle switching, backup, exact restore and interrupted bundle recovery; independent backups; desktop/mobile; zero runtime errors');
 } finally {await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

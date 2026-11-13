@@ -1,10 +1,24 @@
 import {WebUSBTransport,RawOS,USB_FILTER} from './dfu.js';
-import {validateImage,install,prepareRestore,sha256,identifyImage} from './firmware.js?v=3';
+import {installSelected,prepareRestore,sha256,identifyImage} from './firmware.js?v=5';
 import {get,put,recoveryTarget} from './storage.js?v=2';
 const $ = id => document.getElementById(id);
 let mode='install', busy=false, critical=false, imported=null, backupURL;
-const patchPromise=Promise.all(['patch.json','patch-1.11.json','patch-1.12.json'].map(path=>fetch('./'+path).then(r=>{if(!r.ok)throw Error('Could not load firmware patches; reload and try again.');return r.json();})));
+const patchPromise=Promise.all(['patch.json','patch-1.11.json','patch-1.12.json','octave-1.12.json'].map(path=>fetch('./'+path).then(r=>{if(!r.ok)throw Error('Could not load firmware patches; reload and try again.');return r.json();})));
 patchPromise.catch(()=>{});
+const supportsUSB=!!navigator.usb && !!navigator.requestMIDIAccess && isSecureContext;
+function requireAudioDisconnected(){
+  if(!$('audioDisconnected').checked)throw Error('Physically unplug headphones and audio output cables, close ToneCommand, then check the confirmation before continuing.');
+}
+function updateControls(){
+  for(const id of ['primary','restore','reconnect','recovery'])$(id).disabled=busy || !supportsUSB || !$('audioDisconnected').checked;
+  for(const id of ['importBackup','effectSelect','audioDisconnected'])$(id).disabled=busy;
+}
+function selectionChanged(){
+  const octave=$('effectSelect').value==='UNIVIBE_OCTAVE';
+  $('primary').textContent=octave?'Upload UniVibe + Octaver ↗':'Upload UniVibe ↗';
+  $('selectionDetail').textContent=octave?'Requires firmware 1.12. Installs UNIVIBE in place of Velvet Vibrato and OCTAVE in place of the stock Octaver/PITCH effect. Presets using either slot will use the new effect.':'Replaces Velvet Vibrato (MOD 10) with UNIVIBE. Other effect slots stay as they are.';
+  $('octaveWarning').hidden=!octave;
+}
 function status(text,detail=''){ $('status').textContent=text; $('detail').textContent=detail; }
 function progress({phase,completed,total}) {
   const stage={preflight:'read',complete:'ready'}[phase]||phase;
@@ -28,14 +42,15 @@ async function refresh(){
 }
 async function run(fn){
   if(busy)return; busy=true; $('error').hidden=true;
-  for(const id of ['primary','restore','importBackup','reconnect','recovery'])$(id).disabled=true;
-  try{await fn();}catch(e){$('error').textContent=e.message; $('error').hidden=false;status('Stopped', 'If an upload was interrupted, keep the pedal in Lupgrader mode and use Recover interrupted upload.');}
-  finally{critical=false;busy=false;for(const id of ['primary','restore','importBackup','reconnect','recovery'])$(id).disabled=false;await refresh().catch(()=>{});}
+  updateControls();
+  try{await fn();}catch(e){$('error').textContent=e.message; $('error').hidden=false;status('Stopped', critical?'If an upload was interrupted, keep the pedal in Lupgrader mode and use Recover interrupted upload.':'No upload completed. Check the message above before continuing.');}
+  finally{critical=false;busy=false;updateControls();await refresh().catch(()=>{});}
 }
 async function begin(nextMode){
+  requireAudioDisconnected();
   mode=nextMode;
-  if(!navigator.usb || !navigator.requestMIDIAccess || !isSecureContext)throw Error('Open this page in desktop Chrome or Edge over HTTPS (or localhost).');
-  if(mode==='restore' && !imported && !(await get('original')))throw Error('Use a backup file first, or use the browser where you installed UniVibe.');
+  if(!supportsUSB)throw Error('Open this page in desktop Chrome or Edge over HTTPS (or localhost).');
+  if(mode==='restore' && !imported && !(await get('original')))throw Error('Use a backup file first, or use the browser where you installed these effects.');
   const devices=await navigator.usb.getDevices();
   const boot=devices.filter(d=>d.vendorId===USB_FILTER.vendorId && d.productId===USB_FILTER.productId);
   if(boot.length===1)return upload(boot[0]);
@@ -50,22 +65,26 @@ async function begin(nextMode){
   status('Connect the bootloader','Click Connect bootloader and choose Livtra Lupgrader. If it is missing, allow MIDI SysEx and try Upload again.');
 }
 async function upload(device){
+  requireAudioDisconnected();
+  const requestedEffect=$('effectSelect').value;
   const patches=await patchPromise;
   const transport=await WebUSBTransport.open(device);
   $('connection').textContent='NanoCore · USB connected'; $('reconnect').hidden=true;
   try{
     const dfu=new RawOS(transport,{onProgress:progress});
     const current=await dfu.readPartition();
-    let target,patch,version;
+    let target,patch,version,effect;
     if(mode==='recover'){
       const pending=await get('pending');
       if(!pending?.active)throw Error('No interrupted upload saved in this browser.');
       ({patch,version}=await identifyImage(pending.current,patches));
-      await validateImage(pending.target,patch);
+      const recovered=await identifyImage(pending.target,patches);
+      if(recovered.version!==version)throw Error('Saved recovery firmware version does not match.');
+      effect=recovered.effect;
       target=recoveryTarget(current,pending);
     }else{
       const state=await identifyImage(current,patches);
-      ({patch,version}=state);
+      ({patch,version,effect}=state);
       if(mode==='restore'){
         const backup=imported||(await get('original-'+version))?.bytes||(await get('original'))?.bytes;
         if(!backup)throw Error(`No original ${version} backup saved. Use a matching backup file.`);
@@ -79,11 +98,13 @@ async function upload(device){
           const backup={bytes:current,sha256:await sha256(current),version};
           await put('original-'+version,backup);await put('original',backup);linkBackup(current,version);
         }
-        target=await install(current,patch);
+        const backup=imported||(await get('original-'+version))?.bytes||(await get('original'))?.bytes;
+        target=await installSelected(current,patches,requestedEffect,backup);
+        effect=requestedEffect;
       }
     }
     // Keep the previous recovery record intact until its replacement is durable.
-    const pending={active:true,current,target,mode,version,created:new Date().toISOString()};
+    const pending={active:true,current,target,mode,version,effect,created:new Date().toISOString()};
     if(mode!=='recover')await put('pending',pending);
     critical=true;
     const receipt=await dfu.program({expectedCurrent:current,target,
@@ -92,21 +113,28 @@ async function upload(device){
     });
     await put('pending',{...pending,active:false,receipt});
     if($('log'))$('log').textContent=JSON.stringify(receipt,null,2);
-    status(mode==='install'?'UniVibe is ready.':mode==='restore'?'Original firmware restored.':'Previous firmware recovered.',mode==='install'?'Find UNIVIBE in MOD, in place of Velvet Vibrato. Controls: speed, depth, level and chorus/vibrato.':'Every byte was verified. Your NanoCore is restarting.');
+    const octave=effect==='UNIVIBE_OCTAVE';
+    status(mode==='install'?(octave?'UniVibe + Octaver are ready.':'UniVibe is ready.'):mode==='restore'?'Original firmware restored.':'Previous firmware recovered.',
+      mode==='install'?(octave?'Find UNIVIBE in MOD and OCTAVE in the stock Octaver slot. Keep ToneCommand closed while using OCTAVE. Wait for the pedal to restart before reconnecting audio at low volume.':'Find UNIVIBE in MOD, in place of Velvet Vibrato. Controls: speed, depth, level and chorus/vibrato. Wait for the pedal to restart before reconnecting audio at low volume.'):'Every byte was verified. Wait for the pedal to restart before reconnecting audio at low volume.');
+    // A completed update may be followed by listening; require a fresh check next time.
+    $('audioDisconnected').checked=false;
     $('connection').textContent=`Firmware ${version} · verified`;
   }finally{await transport.close();}
 }
 $('primary').onclick=()=>run(()=>begin('install'));
 $('restore').onclick=()=>run(()=>begin('restore'));
 $('recovery').onclick=()=>run(()=>begin('recover'));
-$('reconnect').onclick=()=>run(async()=>upload(await navigator.usb.requestDevice({filters:[USB_FILTER]})));
+$('reconnect').onclick=()=>run(async()=>{requireAudioDisconnected();await upload(await navigator.usb.requestDevice({filters:[USB_FILTER]}));});
 $('importBackup').onclick=()=>$('backupFile').click();
 $('backupFile').onchange=()=>run(async()=>{
   const file=$('backupFile').files[0];if(!file)return;
   const bytes=new Uint8Array(await file.arrayBuffer());
   if((await identifyImage(bytes,await patchPromise)).kind!=='stock')throw Error('Choose an original stock 1.10, 1.11 or 1.12 OS backup.');
-  imported=bytes;status('Backup file ready','Click Restore original firmware to restore this backup.');
+  imported=bytes;status('Backup file ready','Use Restore original, or select effects and upload to switch from a known installation with this matching backup.');
 });
+$('effectSelect').onchange=selectionChanged;
+$('audioDisconnected').onchange=updateControls;
+selectionChanged();updateControls();
 addEventListener('beforeunload',e=>{if(critical){e.preventDefault();e.returnValue='';}});
 refresh().catch(e=>{$('error').hidden=false;$('error').textContent=`Local backup storage unavailable: ${e.message}`;});
-if(!navigator.usb){status('Desktop Chrome or Edge required','Open this page in a browser with WebUSB support.');$('primary').disabled=true;}
+if(!supportsUSB)status('Desktop Chrome or Edge required','Open this page in a browser with WebUSB and MIDI support over HTTPS.');
