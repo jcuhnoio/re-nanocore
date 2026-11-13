@@ -3,15 +3,16 @@
 #include <cstdint>
 extern "C" volatile std::uint32_t nc_octave_stats[7];
 extern "C" std::uint32_t nc_octave_state_bytes();
+extern "C" void nc_octave_guard_snapshot(std::uint32_t*);
 extern "C" volatile std::uint32_t nc_octave_fault,nc_octave_budget_ticks,nc_octave_previous_overruns;
 #ifdef NC_OCTAVE_PROFILE_JOBS
 extern "C" volatile std::uint32_t nc_octave_job_max[9],nc_octave_job_calls[9];
 #endif
 namespace {
 #ifdef NC_OCTAVE_PROFILE_JOBS
-std::uint32_t snapshot[54];
+std::uint32_t snapshot[66];
 #else
-std::uint32_t snapshot[36];
+std::uint32_t snapshot[48];
 #endif
 std::uint32_t word(std::uintptr_t a){return *reinterpret_cast<volatile std::uint32_t*>(a);}
 struct Response {const void* data;std::uint32_t length;};
@@ -19,7 +20,7 @@ struct Response {const void* data;std::uint32_t length;};
 extern "C" int nc_octave_snapshot(std::uint32_t,const unsigned char*,std::uint32_t,Response* out,unsigned char* status){
  if(!status)return 0;
  if(!out){*status=1;return 1;}
- snapshot[0]=0x4f435431;snapshot[1]=2;
+ snapshot[0]=0x4f435431;snapshot[1]=4;
  snapshot[2]=reinterpret_cast<std::uint32_t(*)()>(0x4003fe7c)();
  snapshot[3]=word(0x3004f690);snapshot[4]=word(0x3004ac78);
  const std::uintptr_t audio[]={0x3004ab30,0x3004ab34,0x3004ab28,0x3004ab2c,0x3004ab3c,0x3004ab40,0x3004ab20,0x3004ab24};
@@ -33,9 +34,10 @@ extern "C" int nc_octave_snapshot(std::uint32_t,const unsigned char*,std::uint32
  snapshot[30]=word(0x3004f72c);snapshot[31]=word(0x3005180c);
  snapshot[32]=nc_octave_fault;snapshot[33]=nc_octave_budget_ticks;
  snapshot[34]=nc_octave_previous_overruns;snapshot[35]=11;
+ nc_octave_guard_snapshot(snapshot+36);
 #ifdef NC_OCTAVE_PROFILE_JOBS
- snapshot[1]=3;
- for(unsigned i=0;i<9;++i){snapshot[36+i]=nc_octave_job_max[i];snapshot[45+i]=nc_octave_job_calls[i];}
+ snapshot[1]=5;
+ for(unsigned i=0;i<9;++i){snapshot[48+i]=nc_octave_job_max[i];snapshot[57+i]=nc_octave_job_calls[i];}
 #endif
  out->data=snapshot;out->length=sizeof(snapshot);*status=0;return 1;
 }

@@ -1,0 +1,76 @@
+Multirate sub-octave experiment (firmware 1.12)
+============================================
+
+Purpose: improve low-note sub-octaves without changing the auditioned upper
+octaves or processed dry. This is an experimental implementation, not a
+calibrated POG2 clone. See README.rst and evidence for deployment status.
+
+Signal processing
+-----------------
+Full-rate dry/+1/+2: existing 1024/512/H128 scheduled core.
+Quarter-rate -2/-1: 512/256/H64 scheduled core, with real DC contributions
+retained when shifted conjugate bins coincide at zero. Two halfband decimators
+and two polyphase interpolators connect the rates. Each halfband is 31 taps.
+Both sub voices share analysis and wet inverse transform. Controls retain all
+four voices, attack and the prototype's always-smoothed dry behavior.
+
+At 44.1 kHz the sub analysis covers 2048 original samples instead of 1024.
+Sub bandwidth decreases and sub latency increases; the 640-sample latency
+constant refers only to dry/upper, not the whole mixed output. Stationary
+harmonic residual measurements are not a substitute for plucks, slides,
+chords or listening. Extra delay between dry and sub voices needs auditioning.
+
+The adapter fits 64,608 bytes inside each 65,536-byte native ring allocation.
+No extra heap allocation occurs in the callback. The quarter-rate processor
+receives up to eight samples per call. Event masks preserve the exact sample
+clock and interpolation phases, including arbitrary/in-place block lengths.
+The fixed eight-tap loops are explicitly unrolled without changing arithmetic.
+Batching is bit-identical to the initial per-sample version in tests across
+44.1/48 kHz, all four dry modes and changing controls.
+
+Build and check (offline)
+-------------------------
+Requires the repository's retained Xuantie toolchain and Docker. Use a fresh
+output directory for every build:
+
+python3 tools/custom_fx/build_octave_device.py --output BUILD_DIR \
+  --fft-window 1024 --fft-experiment combined --budget-percent 65 \
+  --fast-phase --multirate-sub
+
+Host probe flags: -std=c++14 -O2 -ffp-contract=off plus
+NC_OCTAVE_FFT_FMA, NC_OCTAVE_FFT_SPECIALIZED, NC_OCTAVE_FAST_PHASE,
+NC_OCTAVE_SUB_DC, NC_OCTAVE_MULTIRATE_SUB, NC_OCTAVE_SCHEDULED.
+Build tools/custom_fx/octave_probe.cpp as a host shared library.
+Run check_octave_multirate.cpp and check_octave_guard.cpp with ASan/UBSan.
+measure_octave_bass.py accepts --library name=library --harmonics 6 --output DIR.
+
+Run check_octave_device.py against the built ELF, that host library and decoded
+1.12 image with --scheduled-reference. Run check_octave_ui.py with
+OCTAVE_UI_SOURCE pointing to the exact full known-working 1.12 OS backup.
+prepare_octave_image.py combines verified hooks with that backup. The result
+is specific to the captured 1.12 base; do not treat it as a generic updater.
+
+Timing policy and telemetry
+---------------------------
+Schema 4 appends timing excursion counters, trigger snapshots and recent miss
+counts to the previous telemetry. Schema 5 additionally includes job profiling;
+multirate builds reject job profiling because it would cover only one core.
+Only adjacent active callbacks attribute native chain misses to OCTAVE.
+Three misses in 64 active callbacks latch bypass; a severe chain miss above
+125% deadline or a self miss above the hard ceiling latches immediately.
+The latest build reserves 65% of the callback but retains the old hard ceiling:
+112.5% of the former 60% reservation, about 67.5% of the full deadline.
+Lower-budget builds retain their proportionally lower hard ceilings.
+Fault 1 displays CPU LIMIT; fault 2 displays CHAIN LIMIT. Both persist until
+reboot, including across preset changes and core resets. Tolerance of isolated
+misses does not imply they are inaudible or that the processor has more capacity.
+
+Physical testing
+----------------
+Keep headphones/output physically disconnected during every DFU transition.
+Previous tests produced a loud transient. Check expected current OS hash,
+save preflight image, verify the complete target readback before reboot, then
+check native readiness before configuration. Do not erase SPL or preset data.
+Log runtime configuration and telemetry; distinguish cumulative boot maxima
+from measurements attributable to the tested active chain. Listening begins
+only after flashing is finished. Do not save test settings over user presets.

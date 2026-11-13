@@ -12,7 +12,7 @@ extern "C" int nc_octave_format(unsigned,unsigned,unsigned index,char* out,unsig
     const char* text="";char digits[24];
     if(index<11) {
         value=nc_octave_controls::bounded(value,index);
-        if(nc_octave_fault) {text="CPU LIMIT";}
+        if(nc_octave_fault) {text=nc_octave_fault==2?"CHAIN LIMIT":"CPU LIMIT";}
         else if(index==8) {
             static const char* const modes[]={"SMOOTH","SMOOTH","FILTER","DETUNE"};
             text=modes[nc_octave_controls::choice(value)];

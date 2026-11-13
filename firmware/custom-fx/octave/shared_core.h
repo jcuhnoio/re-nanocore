@@ -470,6 +470,11 @@ template <int N = 1024, int Synthesis = N, bool StableBirths = false, bool TimeS
                     auto addBin = [&](int bin, float weight) {
                         bool negative = bin < 0;
                         if (negative) bin = -bin;
+#ifdef NC_OCTAVE_SUB_DC
+                        // Positive/negative conjugate contributions coincide
+                        // at DC. Retain their real sum for downward shifts.
+                        if (voice < 2 && bin == 0) real[0] += 2 * re * weight;
+#endif
                         if (bin > 0 && bin < B - 1) {
                             real[bin] += re * weight;
                             imag[bin] += (negative ? -im : im) * weight;

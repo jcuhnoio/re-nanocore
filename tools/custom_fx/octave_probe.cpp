@@ -6,7 +6,10 @@ namespace implementation = octave_shared;
 #include "../../firmware/custom-fx/octave/shared_core.h"
 namespace implementation = octave_shared_optimized;
 #endif
-#if defined(NC_OCTAVE_SMALL_FFT) && !defined(NC_OCTAVE_BASELINE)
+#if defined(NC_OCTAVE_MULTIRATE_SUB)
+#include "../../firmware/custom-fx/octave/multirate_core.h"
+using Core=octave_shared_optimized::MultirateCore;
+#elif defined(NC_OCTAVE_SMALL_FFT) && !defined(NC_OCTAVE_BASELINE)
 #ifdef NC_OCTAVE_SCHEDULED
 using Core=implementation::Core<1024,512,false,true,128>;
 #else

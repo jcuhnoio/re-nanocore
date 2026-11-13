@@ -193,7 +193,7 @@ for idx in range(11):
 for fault in (1,2):
  for idx in range(11):
   u,fallback,st=run(new,0x4001cc7c,[block_name,8,idx,0x30020000],.5,memory={symbols['nc_octave_fault']:struct.pack('<I',fault)})
-  assert st(0x30020000)=='CPU LIMIT',('fault visible on every control',fault,idx)
+  assert st(0x30020000)==('CHAIN LIMIT' if fault==2 else 'CPU LIMIT'),('fault visible on every control',fault,idx)
   assert fallback==[],('fault text overwritten',fault,idx,fallback)
 print('PASS native on-device formatter caller11, fault display22 and parameter service11')
 print('PASS count cases',n,'labels33 defaults156 formatter44 enum1824; callee-saved registers and stack retained')
@@ -214,11 +214,11 @@ for payload,length in [(b'OCT?',4),(b'OCT!',4),(b'OCT?',3),(b'OCT?x',5),(b'ABCD'
  u,_,_=run(new,symbols['nc_octave_diagnostic'],[0x39,0x30010000,length,0x30011000,0x30012000],memory=mem)
  if payload==b'OCT?' and length==4:
   ptr,size=struct.unpack('<II',u.mem_read(0x30011000,8));data=struct.unpack('<%dI'%(size//4),u.mem_read(ptr,size))
-  assert (size,data[1])==((216,3) if 'nc_octave_job_max' in symbols else (144,2)) and data[35]==11 and data[0]==0x4f435431 and data[2]==4000000 and data[16]==123456
-  if size==216:assert data[36:45]==tuple(range(11,20)) and data[45:54]==tuple(range(21,30))
+  assert (size,data[1])==((264,5) if 'nc_octave_job_max' in symbols else (192,4)) and data[35]==11 and data[0]==0x4f435431 and data[2]==4000000 and data[16]==123456
+  if size==216:assert data[48:57]==tuple(range(11,20)) and data[57:66]==tuple(range(21,30))
   assert data[25:27]==(0x12345678,9) and bytes(u.mem_read(0x30012000,1))==b'\0'
  else:assert bytes(u.mem_read(0x30012000,1))==b'\xa5'
-print('PASS telemetry exact bounded schema2/3 response;4nonmatching requests preserveargs+nativeprologue; stack/callee-saved preserved')
+print('PASS telemetry exact bounded schema4/5 response;4nonmatching requests preserveargs+nativeprologue; stack/callee-saved preserved')
 for mode in range(3):
  u,_,st=run(new,0x40025d92,[1,8,mode]);assert st(u.reg_read(r.UC_RISCV_REG_A0))=='OCTAVE'
 print('PASS OCTAVE displayname all3styles')

@@ -36,6 +36,11 @@ def special(uc,pc,size,_):
   a=uc.reg_read(reg(rs1))|(uc.reg_read(reg(rs1+1))<<32);b=uc.reg_read(reg(rs2))|(uc.reg_read(reg(rs2+1))<<32)
   val=(a-b if w&0x02000000 else a+b)&0xffffffffffffffff
   uc.reg_write(reg(rd),val&0xffffffff);uc.reg_write(reg(rd+1),val>>32);name='sub64' if w&0x02000000 else 'add64'
+ elif w&0xfe00707f==0xde000077:
+  # RV32 WEXTI extracts a word from the rs1/rs1+1 register pair.
+  pair=uc.reg_read(reg(rs1))|(uc.reg_read(reg(rs1+1))<<32)
+  if rd:uc.reg_write(reg(rd),(pair>>rs2)&0xffffffff)
+  name='wexti'
  elif kind==0x100b:
   if rd:uc.reg_write(reg(rd),(uc.reg_read(reg(rs1))+(uc.reg_read(reg(rs2))<<shift))&0xffffffff)
   name='addsl'
@@ -119,13 +124,13 @@ assert u.mem_read(ol,16)==u.mem_read(left,16) and u.mem_read(orr,16)==u.mem_read
 assert u.mem_read(mode,1)==b'\x01';u.mem_write(enable,b'\x01')
 # Original reference core via retained CABI hostlibrary; adaptersettingsmatchprototype.
 lib=ctypes.CDLL(str(Path(sys.argv[2]).resolve()));lib.core_init.argtypes=[ctypes.c_void_p,ctypes.c_float];lib.core_parameters.argtypes=[ctypes.c_void_p,ctypes.c_void_p];lib.core_process.argtypes=[ctypes.c_void_p,ctypes.c_void_p,ctypes.c_void_p,ctypes.c_uint32];lib.core_reset.argtypes=[ctypes.c_void_p]
-host=ctypes.create_string_buffer(61728);lib.core_init(host,ctypes.c_float(44100.))
+host=ctypes.create_string_buffer(lib.core_size());lib.core_init(host,ctypes.c_float(44100.))
 P=struct.pack('<9f2i4f',.65,.05,.3,.65,.35,0,6500,0,-9,0,0,50,-60,120,75)
 pbuf=ctypes.create_string_buffer(P);lib.core_parameters(host,pbuf);lib.core_reset(host)
 u.mem_write(params,struct.pack('<11f',.65,.05,.3,.65,.35,0,6350/17850,0,0,0,.5));errors=[];expected_ticks=[]
 f32=lambda x:ctypes.c_float(x).value
 for stereo,inplace in [(0,False),(1,True)]:
- call(0x4006c7ca,[family]);lib.core_reset(host);reference_delay=[0.]*128
+ call(0x4006c7ca,[family]);lib.core_reset(host);reference_delay=[0.]*(0 if "--scheduled-reference" in sys.argv else 128)
  for block in range(32):
   l=[f32(.2*math.sin((block*64+i)*.04)) for i in range(64)]
   rr=[f32(.1*math.cos((block*64+i)*.071)) for i in range(64)]
@@ -144,6 +149,9 @@ for stereo,inplace in [(0,False),(1,True)]:
  assert u.mem_read(ring+statebytes,0x10000-statebytes+4)==b'\xa5'*(0x10000-statebytes+4)
  assert u.mem_read(family+0xe48,4)==b'\xa5'*4
 stats=struct.unpack('<7I',u.mem_read(symbols['nc_octave_stats'],28));assert stats[0]==64 and stats[1]==4096 and stats[2]==max(expected_ticks) and stats[3]==sum(expected_ticks) and stats[6]==1,stats
+soft=int.from_bytes(u.mem_read(symbols['nc_octave_budget_ticks'],4),'little')
+hard=int.from_bytes(u.mem_read(symbols['nc_octave_hard_budget_ticks'],4),'little')
+assert soft<=hard<=3917,(soft,hard) # 64 frames at44.1k: original hard ceiling retained
 # A single overrun must latch bypass, including after reset/reinitialization.
 fault=symbols['nc_octave_fault'];timer_step=10000
 u.mem_write(left,struct.pack('<64f',*([.125]*64)));u.mem_write(right,struct.pack('<64f',*([-.25]*64)))
@@ -157,11 +165,20 @@ assert timer_calls==calls
 call(0x4006c7ca,[family]);assert int.from_bytes(u.mem_read(fault,4),'little')==1
 call(symbols['nc_octave_pitch_init'],[family+8,ring,2048],44100.)
 assert int.from_bytes(u.mem_read(fault,4),'little')==1
-# Also stop when the native chain reports an overrun, even if core timing passed.
-u.mem_write(fault,bytes(4));timer_step=100
-u.mem_write(0x3004ab40,struct.pack('<I',1))
+# Native global counters are sampled only across adjacent active callbacks.
+# Clear emulator state to model a fresh boot; firmware offers no auto-reset.
+u.mem_write(fault,bytes(4));u.mem_write(symbols['nc_octave_guard_state'],bytes(72));timer_step=100
+u.mem_write(0x3004ab3c,struct.pack('<I',5804))
+u.mem_write(0x3004ab30,struct.pack('<I',100));u.mem_write(0x3004ab20,struct.pack('<I',10000));u.mem_write(0x3004ab40,bytes(4))
 call(0x4006b1c4,[family,left,right,ol,orr,64,params,8,1,mode])
-assert int.from_bytes(u.mem_read(fault,4),'little')==2 and timer_calls==calls
-print('PASS core overrun latch, full-chain overrun latch, stereo bypass and reset persistence')
-report={'elf_sha256':hashlib.sha256(blob).hexdigest(),'state_bytes':statebytes,'ring_allocation_bytes':0x10000,'native_fx2_initializer_and_reset':True,'native_other_subtype_trampoline':True,'disabled_stereo_bypass':True,'inplace_stereo_and_mono':True,'callee_saved_registers_and_canaries':True,'compared_samples':4096,'reference_delay_samples':128,'overload_latch_checks':True,'max_host_reference_error':max(errors),'timer_stub_stats':list(stats),'limits':['Timer boundary stubbed; no physical cycles measured','Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute','No hardware operations']}
+for step in range(1,4):
+ u.mem_write(0x3004ab30,struct.pack('<I',100+step));u.mem_write(0x3004ab20,struct.pack('<I',10000+step*5805));u.mem_write(0x3004ab40,struct.pack('<I',step))
+ calls=timer_calls
+ call(0x4006b1c4,[family,left,right,ol,orr,64,params,8,1,mode])
+ assert int.from_bytes(u.mem_read(fault,4),'little')==(2 if step==3 else 0)
+ assert (timer_calls==calls)==(step==3)
+assert int.from_bytes(u.mem_read(symbols['nc_octave_fault_chain_ticks'],4),'little')==5805
+assert int.from_bytes(u.mem_read(symbols['nc_octave_fault_audio_call'],4),'little')==103
+print('PASS hard core latch, repeated chain-miss latch, isolated miss tolerance, trigger snapshot and reset persistence')
+report={'elf_sha256':hashlib.sha256(blob).hexdigest(),'state_bytes':statebytes,'ring_allocation_bytes':0x10000,'native_fx2_initializer_and_reset':True,'native_other_subtype_trampoline':True,'disabled_stereo_bypass':True,'inplace_stereo_and_mono':True,'callee_saved_registers_and_canaries':True,'compared_samples':4096,'reference_delay_samples':0 if '--scheduled-reference' in sys.argv else 128,'overload_latch_checks':True,'max_host_reference_error':max(errors),'timer_stub_stats':list(stats),'limits':['Timer boundary stubbed; no physical cycles measured','Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute','No hardware operations']}
 Path(sys.argv[4]).write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

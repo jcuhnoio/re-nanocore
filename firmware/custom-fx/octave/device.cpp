@@ -1,10 +1,14 @@
 // NanoCore 1.12 experimental FX2/PITCH adapter. No heap allocation in processing.
 // Native addresses and hook bytes are guarded by tools/custom_fx/octave_hooks.py.
 #include "controls.h"
+#include "overload_guard.h"
 #include <cstdint>
 #include <cstddef>
 
-#ifdef NC_OCTAVE_SMALL_FFT
+#ifdef NC_OCTAVE_MULTIRATE_SUB
+#include "multirate_core.h"
+using Core = octave_shared_optimized::MultirateCore;
+#elif defined(NC_OCTAVE_SMALL_FFT)
 using Core = octave_shared_optimized::Core<1024,512,false,true,128>;
 #else
 using Core = octave_shared_optimized::Core<2048,1024,false,true>;
@@ -18,12 +22,24 @@ volatile OctaveStats nc_octave_stats={};
 // Latched until reboot: native resets/preset changes cannot repeatedly overload.
 volatile std::uint32_t nc_octave_fault=0;
 volatile std::uint32_t nc_octave_budget_ticks=0;
+volatile std::uint32_t nc_octave_hard_budget_ticks=0;
 volatile std::uint32_t nc_octave_previous_overruns=0xffffffffu;
+nc_octave_guard::Policy nc_octave_guard_state{};
+volatile std::uint32_t nc_octave_fault_self_ticks=0,nc_octave_fault_chain_ticks=0;
+volatile std::uint32_t nc_octave_fault_audio_call=0,nc_octave_fault_overruns=0;
+}
+extern "C" void nc_octave_guard_snapshot(std::uint32_t* out) {
+    const auto& g=nc_octave_guard_state;
+    out[0]=g.selfExcursions;out[1]=g.chainExcursions;out[2]=g.ignoredOverruns;
+    out[3]=nc_octave_hard_budget_ticks;
+    out[4]=nc_octave_fault_self_ticks;out[5]=nc_octave_fault_chain_ticks;
+    out[6]=nc_octave_fault_audio_call;out[7]=nc_octave_fault_overruns;
+    out[8]=g.lastChainTicks;out[9]=g.self.count;out[10]=g.chain.count;out[11]=g.gaps;
 }
 #ifndef NC_OCTAVE_BUDGET_PERCENT
 #define NC_OCTAVE_BUDGET_PERCENT 40
 #endif
-static_assert(NC_OCTAVE_BUDGET_PERCENT >= 40 && NC_OCTAVE_BUDGET_PERCENT <= 60, "invalid budget");
+static_assert(NC_OCTAVE_BUDGET_PERCENT >= 40 && NC_OCTAVE_BUDGET_PERCENT <= 65, "invalid budget");
 static std::uint64_t ticks() {
     // Same native 64-bit timer used by the stock audio timing path.
     return reinterpret_cast<std::uint64_t(*)()>(0x40040028u)();
@@ -116,12 +132,25 @@ extern "C" void nc_octave_process(void* family,const float* left,const float* ri
     State* s=family?stateFor(bytes+8):nullptr;
     if(subtype!=8 || !enabled || !*enabled || !s){bypass(left,right,outLeft,outRight,frames,stereo);return;}
     const auto overruns=*reinterpret_cast<volatile std::uint32_t*>(0x3004ab40u);
-    if(nc_octave_previous_overruns!=0xffffffffu && overruns!=nc_octave_previous_overruns)
-        nc_octave_fault=nc_octave_fault?nc_octave_fault:2;
+    const auto audioCalls=*reinterpret_cast<volatile std::uint32_t*>(0x3004ab30u);
     nc_octave_previous_overruns=overruns;
+    if(!nc_octave_fault) {
+        const auto sum=*reinterpret_cast<volatile std::uint32_t*>(0x3004ab20u);
+        const auto deadline=*reinterpret_cast<volatile std::uint32_t*>(0x3004ab3cu);
+        if(nc_octave_guard_state.observe(audioCalls,overruns,sum,deadline)) {
+            nc_octave_fault=2;
+            nc_octave_fault_self_ticks=nc_octave_stats.lastTicks;
+            nc_octave_fault_chain_ticks=nc_octave_guard_state.lastChainTicks;
+            nc_octave_fault_audio_call=audioCalls;
+            nc_octave_fault_overruns=overruns;
+        }
+    }
     if(nc_octave_fault){bypass(left,right,outLeft,outRight,frames,stereo);return;}
     const std::uint64_t start=ticks();
     nc_octave_budget_ticks=std::uint32_t(4000000.f*float(frames)/s->sampleRate*(NC_OCTAVE_BUDGET_PERCENT*.01f));
+    // A larger soft reservation must not increase the former 60% hard ceiling.
+    const auto hardBase=std::uint32_t(4000000.f*float(frames)/s->sampleRate*((NC_OCTAVE_BUDGET_PERCENT>60?60:NC_OCTAVE_BUDGET_PERCENT)*.01f));
+    nc_octave_hard_budget_ticks=nc_octave_guard::Policy::hardLimit(hardBase);
     if(bytes[0xe40]!=8){s->core.reset();++s->resets;}
     bytes[0xe40]=8;
     controls(s,p);
@@ -132,12 +161,12 @@ extern "C" void nc_octave_process(void* family,const float* left,const float* ri
             const float l=left[offset+i];
             mono[i]=stereo && right ? .5f*(l+right[offset+i]) : l;
         }
-        // A job is not preemptible, but every 32 samples checks elapsed work.
-        // One over-budget job latches bypass; it cannot starve future callbacks.
+        // Check the hard ceiling every 32 samples. Small isolated reservation
+        // excursions are counted at completion; three in 64 calls latch bypass.
         for(std::uint32_t j=0;j<n;j+=32) {
             const auto k=n-j<32?n-j:32;
             s->core.process(mono+j,mono+j,k);
-            if(ticks()-start>nc_octave_budget_ticks) {
+            if(ticks()-start>nc_octave_hard_budget_ticks) {
                 nc_octave_fault=1;break;
             }
         }
@@ -159,6 +188,13 @@ extern "C" void nc_octave_process(void* family,const float* left,const float* ri
     nc_octave_stats.lastTicks=last;
     if(last>nc_octave_stats.maxTicks)nc_octave_stats.maxTicks=last;
     nc_octave_stats.frames+=frames;++nc_octave_stats.calls;
+    if(nc_octave_guard_state.finish(last,nc_octave_budget_ticks,nc_octave_hard_budget_ticks) || nc_octave_fault) {
+        nc_octave_fault=1;
+        nc_octave_fault_self_ticks=last;
+        nc_octave_fault_chain_ticks=nc_octave_guard_state.lastChainTicks;
+        nc_octave_fault_audio_call=audioCalls;
+        nc_octave_fault_overruns=overruns;
+    }
 }
 extern "C" __attribute__((naked)) void nc_octave_dispatch() {
     // No stack use before dispatch: arguments9/10 stay at incoming sp+0/+4.

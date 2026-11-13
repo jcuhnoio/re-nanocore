@@ -255,6 +255,45 @@ physical run processed 41,367 callbacks without a fault or native overrun,
 with upper voices and attack at zero for the control test and delay/reverb off.
 On-pedal display and listening confirmation remain pending; no preset was saved.
 
+The next listening report isolated warbling/coarse pitch on low notes to the
+sub-octaves; the upper octaves sounded fine. A later timing snapshot showed a
+latched chain fault with only OCTAVE/amp/cab enabled: the recorded chain maximum
+was 1498.5 us against 1451 us. These accumulated counters cannot establish which
+earlier configuration caused that miss.
+
+An **offline multirate bass candidate** keeps the existing upper/dry processor
+and moves the two lower voices to a 512/256/H64 core at one quarter sample rate.
+This doubles their effective analysis duration. In a stationary six-harmonic
+low-E test, residual energy outside the expected harmonics dropped from
+-10.79 to -49.05 dB for -2 and from -13.29 to -54.98 dB for -1.
+All sixteen upper-only comparison renders were bit-identical. This is synthetic
+evidence, not listening acceptance. The tradeoffs are longer sub-octave latency,
+reduced sub bandwidth and CPU cost that still needs physical measurement.
+Adapter state uses 64,608 of the existing 65,536 allocated bytes.
+
+The candidate also distinguishes CHAIN LIMIT from CPU LIMIT and records the
+triggering timing values. One small isolated miss no longer permanently bypasses
+the effect; three misses within 64 active callbacks, a chain miss above 125% of
+deadline, or exceeding the core's hard ceiling still latch bypass until reboot.
+The latest build reserves 65% of the callback but retains the former hard
+ceiling: 112.5% of the old 60% reservation (about 67.5% of the full deadline). Inactive intervals discard stale attribution. These changes do not
+create processing capacity or guarantee an isolated miss is inaudible.
+Host sanitizers, actual compiled native DSP/UI checks and packaging checks pass;
+the initial physical tests exposed repeated small self-budget excursions with
+all voices and attack active, despite no attributed chain deadline misses.
+Batching and unrolling the fixed halfband loops preserve the arithmetic, but
+small excursions persisted at a 60% reservation. The 65% revision was flashed
+with exact full readback and the original hard ceiling unchanged. A 120-second
+observation ended at 83,278 active callbacks with no latched fault, two isolated
+self-reservation excursions and 19 native deadline misses. OCTAVE maximum was
+947 us against a 943.25 us reservation and 979.25 us hard ceiling. The full chain
+maximum was 1772.25 us against 1451 us. Chain order changed during the run and
+one observation gap was recorded. This is **not glitch-free or worst-case
+validation**; listening acceptance and further CPU work remain pending. See `offline bass evidence
+<evidence/octave-multirate-bass-offline-1.12.json>`_, `device evidence
+<evidence/octave-multirate-bass-device-1.12.json>`_ and
+`build/test notes <docs/octave-multirate-bass.txt>`_.
+
 Current result
 --------------
 
