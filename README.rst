@@ -240,6 +240,19 @@ amp, cabinet and MOD remained on. The exact image readback passed.
 A later read in the same run reached **509.47 seconds / 351,058 callbacks**,
 still with zero faults or native overruns and the same timing maxima.
 
+On-device testing then exposed incorrect displayed units and apparently inactive
+controls. Runtime readback confirmed the user's upper-voice controls were zero,
+but the overload guard had latched bypass after a deadline miss while delay was
+enabled. Separately, the custom formatter returned 1 while the native caller
+requires 0 for success, causing stock formatting to overwrite the custom text.
+The fix returns the native success code, displays LEVEL as actual 0–200% gain,
+and exposes CPU LIMIT on every OCTAVE control when latched. New tests execute
+the real on-device formatter caller and all eleven native parameter writes,
+including DSP bank publication; testing only the leaf helpers had missed this.
+See `control/format findings <evidence/octave-control-format-fix-1.12.json>`_.
+The corrected image is built and validated offline; physical installation and
+control/listening confirmation are pending.
+
 Current result
 --------------
 

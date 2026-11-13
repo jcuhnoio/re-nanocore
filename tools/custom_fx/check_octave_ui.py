@@ -97,9 +97,11 @@ for idx in range(11):
   if idx==5:want=f'{int(val*2000+.5)}ms'
   if idx==6:want=f'{int(150+val*17850+.5)}Hz'
   if idx==7:want=f'{int(val*30+.5)}ct'
+  if idx==10:want=f'{int(val*200+.5)}%'
   if idx==8:want=['SMOOTH','SMOOTH','FILTER','DETUNE'][int(val*3+.5)]
   if idx==9:want=['LOW','MEDIUM','HIGH','PEAK'][int(val*3+.5)]
   assert st(0x30020000)==want,(idx,val,st(0x30020000),want)
+  assert u.reg_read(r.UC_RISCV_REG_A0)==0,(idx,'native formatter success must be zero')
 # All capacities, including empty, stay inside the caller's output buffer.
 for size in range(9):
  u,_,_=run(new,0x40027192,[1,8,6,0x30020000,size,0],1.,memory={0x30020000:b'X'*32})
@@ -166,6 +168,34 @@ for block in range(8):
    b,rb,_=run(new,0x40027192,[block,subtype,idx,0x30020000,64,0],.5)
    assert ra==rb and a.reg_read(r.UC_RISCV_REG_A0)==b.reg_read(r.UC_RISCV_REG_A0)
    format_fallbacks+=1
+# Execute the actual on-device formatter caller, not only the leaf hook.
+# Localization strings are irrelevant to the custom formatter; preserve the
+# native block lookup and success/fallback branch, stub only string retrieval.
+s=s.replace('if pc in (0x40004f92,0x400031bc):',"""if pc==0x4002d6f8:
+    uc.reg_write(r.UC_RISCV_REG_A0,0);uc.reg_write(r.UC_RISCV_REG_PC,uc.reg_read(r.UC_RISCV_REG_RA));return
+   if pc in (0x40004f92,0x400031bc):""")
+exec(textwrap.dedent(s))
+block_name=struct.unpack_from('<I',new,0x9b358+4)[0]
+for index,value,want in [(0,.65,'65%'),(1,.05,'5%'),(2,.3,'30%'),(3,0.,'0%'),(4,1.,'100%'),(5,.5,'1000ms'),(6,.5,'9075Hz'),(7,.5,'15ct'),(8,1.,'DETUNE'),(9,1.,'PEAK'),(10,.5,'100%')]:
+ u,fallback,st=run(new,0x4001cc7c,[block_name,8,index,0x30020000],value,memory={0x30020000:b'X'*32})
+ assert st(0x30020000)==want,('native UI caller',index,st(0x30020000),want)
+ assert fallback==[],('unexpected stock formatter overwrite',index,fallback)
+ assert bytes(u.mem_read(0x30020018,8))==b'X'*8
+# On-device parameter service: writes UI state, then the actual DSP setter.
+for idx in range(11):
+ bank=bytearray(0x864+4);struct.pack_into('<I',bank,0x13c,8);bank[0x140]=8;bank[0x864:]=b'GUAR'
+ mem={0x3004ee20:bytes(bank),0x3004f730:b'\x08',0x3004f72c:struct.pack('<I',0x30010000)}
+ u,_,_=run(new,0x40023784,[1,idx],.375,memory=mem)
+ assert u.reg_read(r.UC_RISCV_REG_A0)==0,('parameter service',idx)
+ assert bytes(u.mem_read(0x3006b830+(12+idx)*4,4))==struct.pack('<f',.375)
+ assert bytes(u.mem_read(0x3004ee20+0x308+0x144+idx*4,4))==struct.pack('<f',.375)
+ assert bytes(u.mem_read(0x3004ee20+0x864,4))==b'GUAR'
+for fault in (1,2):
+ for idx in range(11):
+  u,fallback,st=run(new,0x4001cc7c,[block_name,8,idx,0x30020000],.5,memory={symbols['nc_octave_fault']:struct.pack('<I',fault)})
+  assert st(0x30020000)=='CPU LIMIT',('fault visible on every control',fault,idx)
+  assert fallback==[],('fault text overwritten',fault,idx,fallback)
+print('PASS native on-device formatter caller11, fault display22 and parameter service11')
 print('PASS count cases',n,'labels33 defaults156 formatter44 enum1824; callee-saved registers and stack retained')
 # Telemetry integration: execute exact linked code, stub only the MMIO timer.
 s=s.replace('if pc in (0x40004f92,0x400031bc):','''if pc==0x40040028:
@@ -192,4 +222,4 @@ print('PASS telemetry exact bounded schema2/3 response;4nonmatching requests pre
 for mode in range(3):
  u,_,st=run(new,0x40025d92,[1,8,mode]);assert st(u.reg_read(r.UC_RISCV_REG_A0))=='OCTAVE'
 print('PASS OCTAVE displayname all3styles')
-output.write_text(json.dumps({'source_sha256':hashlib.sha256(raw).hexdigest(),'elf_sha256':hashlib.sha256(elf_path.read_bytes()).hexdigest(),'ui_source_sha256':hashlib.sha256(Path('firmware/custom-fx/octave/device_ui.S').read_bytes()).hexdigest(),'source_maps':{'effect_name':'0x40025d92','parameter_labels':'0x4002607e','parameter_count':'0x40026e8a','format':'0x40027192','enum':'0x4001b3b2','defaults':'0x4006c932','amp_read':'0x4008f8ac','timer_hz':'0x4003fe7c','timer_ticks':'0x40040028','heap_free':'0x3004c228'},'count_cases':760,'labels':33,'defaults':156,'format':44,'enum':1824,'effect_name':3,'telemetry':5,'native_non_target_unchanged':True,'stack_and_callee_saved_preserved':True,'setter_cases':setter_cases,'label_fallbacks':label_fallbacks,'format_fallbacks':format_fallbacks,'physical_operations':False,'limits':'memset/strcmp/printf and MMIO timer boundaries emulated; no hardware timing established'},indent=2)+'\n')
+output.write_text(json.dumps({'source_sha256':hashlib.sha256(raw).hexdigest(),'elf_sha256':hashlib.sha256(elf_path.read_bytes()).hexdigest(),'ui_source_sha256':hashlib.sha256(Path('firmware/custom-fx/octave/device_ui.S').read_bytes()).hexdigest(),'source_maps':{'effect_name':'0x40025d92','parameter_labels':'0x4002607e','parameter_count':'0x40026e8a','format':'0x40027192','enum':'0x4001b3b2','defaults':'0x4006c932','amp_read':'0x4008f8ac','timer_hz':'0x4003fe7c','timer_ticks':'0x40040028','heap_free':'0x3004c228'},'count_cases':760,'labels':33,'defaults':156,'format':44,'enum':1824,'effect_name':3,'telemetry':5,'native_non_target_unchanged':True,'stack_and_callee_saved_preserved':True,'setter_cases':setter_cases,'native_formatter_caller_cases':11,'native_parameter_service_cases':11,'native_fault_display_cases':22,'label_fallbacks':label_fallbacks,'format_fallbacks':format_fallbacks,'physical_operations':False,'limits':'memset/strcmp/printf and MMIO timer boundaries emulated; no hardware timing established'},indent=2)+'\n')

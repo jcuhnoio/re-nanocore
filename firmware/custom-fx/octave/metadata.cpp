@@ -8,11 +8,11 @@ extern "C" const char* nc_octave_label(unsigned,unsigned,unsigned index,unsigned
     return index<11?labels[index]:"";
 }
 extern "C" int nc_octave_format(unsigned,unsigned,unsigned index,char* out,unsigned size,const void*,float value) {
-    if(!out||!size)return 0;
+    if(!out||!size)return -1;
     const char* text="";char digits[24];
     if(index<11) {
         value=nc_octave_controls::bounded(value,index);
-        if(index==10 && nc_octave_fault) {text="CPU LIMIT";}
+        if(nc_octave_fault) {text="CPU LIMIT";}
         else if(index==8) {
             static const char* const modes[]={"SMOOTH","SMOOTH","FILTER","DETUNE"};
             text=modes[nc_octave_controls::choice(value)];
@@ -24,6 +24,7 @@ extern "C" int nc_octave_format(unsigned,unsigned,unsigned index,char* out,unsig
             if(index==5){number=unsigned(value*2000.f+.5f);suffix="ms";}
             if(index==6){number=unsigned(150.f+value*17850.f+.5f);suffix="Hz";}
             if(index==7){number=unsigned(value*30.f+.5f);suffix="ct";}
+            if(index==10){number=unsigned(value*200.f+.5f);}
             char reverse[8];unsigned n=0,j=0;
             do {reverse[n++]=char('0'+number%10);number/=10;} while(number);
             while(n)digits[j++]=reverse[--n];
@@ -32,5 +33,7 @@ extern "C" int nc_octave_format(unsigned,unsigned,unsigned index,char* out,unsig
         }
     }
     unsigned i=0;while(i+1<size && text[i]){out[i]=text[i];++i;}out[i]=0;
-    return index<11;
+    // Native UI caller treats zero as success. Returning one makes it
+    // overwrite this text using the original pitch-effect formatter.
+    return index<11?0:-1;
 }
