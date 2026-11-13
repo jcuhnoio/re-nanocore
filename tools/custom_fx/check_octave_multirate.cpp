@@ -23,6 +23,7 @@ int main(){
   assert(std::memcmp(y.data(),z.data(),y.size()*sizeof(float))==0);
   for(float v:y)assert(std::isfinite(v));samples+=y.size();
  }
+#ifndef NC_OCTAVE_HALF_RATE_UPPER
  // Sub-only processing cannot leak into an upper-only render.
  for(int voice=0;voice<3;++voice){
   MultirateCore a;octave_shared_optimized::Core<1024,512,false,true,128>b;
@@ -33,10 +34,16 @@ int main(){
   float x[64],y[64],z[64];
   for(int n=0;n<128;++n){for(int i=0;i<64;++i)x[i]=.2f*std::sin((n*64+i)*.01174f);a.process(x,y,64);b.process(x,z,64);assert(std::memcmp(y,z,sizeof(y))==0);}
  }
+#endif
  for(int offset=0;offset<256;++offset){
   MultirateCore used,fresh;used.prepare(44100);fresh.prepare(44100);
   float x[512],a[512],b[512];for(int i=0;i<512;++i)x[i]=.2f*std::sin(i*.02f);
   used.process(x,a,offset);used.reset();fresh.reset();used.process(x,a,512);fresh.process(x,b,512);assert(std::memcmp(a,b,sizeof(a))==0);
  }
- std::printf("{\"state_bytes\":%zu,\"block_inplace_control_samples\":%u,\"upper_and_dry_bitwise_cases\":3,\"reset_offsets\":256}\n",sizeof(MultirateCore),samples);
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+ const unsigned exactCases=0;
+#else
+ const unsigned exactCases=3;
+#endif
+ std::printf("{\"state_bytes\":%zu,\"block_inplace_control_samples\":%u,\"upper_and_dry_bitwise_cases\":%u,\"reset_offsets\":256}\n",sizeof(MultirateCore),samples,exactCases);
 }

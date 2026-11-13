@@ -74,3 +74,23 @@ check native readiness before configuration. Do not erase SPL or preset data.
 Log runtime configuration and telemetry; distinguish cumulative boot maxima
 from measurements attributable to the tested active chain. Listening begins
 only after flashing is finished. Do not save test settings over user presets.
+
+Half-rate upper/dry candidate
+-----------------------------
+--half-rate-upper (requires --multirate-sub) selects 512/256/H64 at half the
+device sample rate for upper voices and dry. The lower branch is unchanged.
+Both branches share the first halfband decimator. Upper output has its own
+interpolator. All four octave gains, attack and dry modes remain available.
+The new dry/upper path has a roughly 11 kHz bandwidth ceiling at44.1k and adds
+the resampling filters' delay. Core latencySamples excludes those filters.
+Its lowpass internally clamps to 9922.5 Hz at44.1k even when the current UI
+requests a higher value; the prototype control range has not yet been revised.
+
+The candidate returns to --budget-percent 60. For the retained 4096-sample
+native-code test with 650ms attack, average instruction count fell 38.74% and
+maximum callback count fell 29.56%. With attack off the reductions were 35.24%
+and 29.54%. Instruction counts do not measure physical timing. Native DSP
+matched the new host reference exactly; UI, guard and sanitizer checks passed.
+Sixteen sub-only harmonic renders were bit-identical to the preceding build.
+Upper output changes and requires listening acceptance. See README and
+evidence/octave-half-rate-headroom-1.12.json for hardware results.

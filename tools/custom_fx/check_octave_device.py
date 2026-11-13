@@ -77,7 +77,10 @@ def special(uc,pc,size,_):
   name='mvnez' if nonzero else 'mveqz'
  else:raise RuntimeError(f'Unsupported vendor instruction {w:08x} at {pc:08x}')
  uc.reg_write(r.UC_RISCV_REG_PC,pc+4);custom_count[name]=custom_count.get(name,0)+1
+instruction_count=0
 def dispatch(uc,pc,size,data):
+ global instruction_count
+ instruction_count+=1
  if pc in custom:special(uc,pc,size,data)
 u.hook_add(UC_HOOK_CODE,dispatch)
 stack=0x301f0000;stop=0x401ff000;family=0x30010000;ring=0x30020000;left=0x30040000;right=0x30041000;ol=0x30042000;orr=0x30043000;params=0x30044000;mode=0x30045000;enable=0x30045004
@@ -125,9 +128,10 @@ assert u.mem_read(mode,1)==b'\x01';u.mem_write(enable,b'\x01')
 # Original reference core via retained CABI hostlibrary; adaptersettingsmatchprototype.
 lib=ctypes.CDLL(str(Path(sys.argv[2]).resolve()));lib.core_init.argtypes=[ctypes.c_void_p,ctypes.c_float];lib.core_parameters.argtypes=[ctypes.c_void_p,ctypes.c_void_p];lib.core_process.argtypes=[ctypes.c_void_p,ctypes.c_void_p,ctypes.c_void_p,ctypes.c_uint32];lib.core_reset.argtypes=[ctypes.c_void_p]
 host=ctypes.create_string_buffer(lib.core_size());lib.core_init(host,ctypes.c_float(44100.))
-P=struct.pack('<9f2i4f',.65,.05,.3,.65,.35,0,6500,0,-9,0,0,50,-60,120,75)
+attack_ms=650. if '--attack-reference' in sys.argv else 0.
+P=struct.pack('<9f2i4f',.65,.05,.3,.65,.35,attack_ms,6500,0,-9,0,0,50,-60,120,75)
 pbuf=ctypes.create_string_buffer(P);lib.core_parameters(host,pbuf);lib.core_reset(host)
-u.mem_write(params,struct.pack('<11f',.65,.05,.3,.65,.35,0,6350/17850,0,0,0,.5));errors=[];expected_ticks=[]
+u.mem_write(params,struct.pack('<11f',.65,.05,.3,.65,.35,attack_ms/2000,6350/17850,0,0,0,.5));errors=[];expected_ticks=[];process_instructions=[]
 f32=lambda x:ctypes.c_float(x).value
 for stereo,inplace in [(0,False),(1,True)]:
  call(0x4006c7ca,[family]);lib.core_reset(host);reference_delay=[0.]*(0 if "--scheduled-reference" in sys.argv else 128)
@@ -137,8 +141,9 @@ for stereo,inplace in [(0,False),(1,True)]:
   mono=[f32(f32(a+b)*.5) if stereo else a for a,b in zip(l,rr)]
   u.mem_write(left,struct.pack('<64f',*l));u.mem_write(right,struct.pack('<64f',*rr))
   outleft=left if inplace else ol;outright=right if inplace else orr
-  timer_before=timer_calls
+  timer_before=timer_calls;instructions_before=instruction_count
   call(0x4006b1c4,[family,left,right,outleft,outright,64,params,8,stereo,mode])
+  process_instructions.append(instruction_count-instructions_before)
   expected_ticks.append((timer_calls-timer_before-1)*timer_step)
   ibuf=(ctypes.c_float*64)(*mono);obuf=(ctypes.c_float*64)();lib.core_process(host,ibuf,obuf,64)
   reference_delay.extend(obuf);expected=reference_delay[:64];del reference_delay[:64]
@@ -180,5 +185,5 @@ for step in range(1,4):
 assert int.from_bytes(u.mem_read(symbols['nc_octave_fault_chain_ticks'],4),'little')==5805
 assert int.from_bytes(u.mem_read(symbols['nc_octave_fault_audio_call'],4),'little')==103
 print('PASS hard core latch, repeated chain-miss latch, isolated miss tolerance, trigger snapshot and reset persistence')
-report={'elf_sha256':hashlib.sha256(blob).hexdigest(),'state_bytes':statebytes,'ring_allocation_bytes':0x10000,'native_fx2_initializer_and_reset':True,'native_other_subtype_trampoline':True,'disabled_stereo_bypass':True,'inplace_stereo_and_mono':True,'callee_saved_registers_and_canaries':True,'compared_samples':4096,'reference_delay_samples':0 if '--scheduled-reference' in sys.argv else 128,'overload_latch_checks':True,'max_host_reference_error':max(errors),'timer_stub_stats':list(stats),'limits':['Timer boundary stubbed; no physical cycles measured','Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute','No hardware operations']}
+report={'elf_sha256':hashlib.sha256(blob).hexdigest(),'state_bytes':statebytes,'ring_allocation_bytes':0x10000,'native_fx2_initializer_and_reset':True,'native_other_subtype_trampoline':True,'disabled_stereo_bypass':True,'inplace_stereo_and_mono':True,'callee_saved_registers_and_canaries':True,'compared_samples':4096,'attack_ms':attack_ms,'reference_delay_samples':0 if '--scheduled-reference' in sys.argv else 128,'overload_latch_checks':True,'max_host_reference_error':max(errors),'process_instruction_counts':process_instructions,'timer_stub_stats':list(stats),'limits':['Timer boundary stubbed; no physical cycles measured','Vendor integer instructions emulated; full DSP/math and native FX2 initializer execute','No hardware operations']}
 Path(sys.argv[4]).write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

@@ -34,43 +34,77 @@ struct Up2 {
     float odd()const{return ring[(position-7)&15];}
 };
 class MultirateCore {
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+    Core<512,256,false,true,64> upper;
+    Up2 upperUp;
+#else
     Core<1024,512,false,true,128> upper;
+#endif
     Core<512,256,false,true,64> lower;
     Down2 downHigh,downLow;Up2 upLow,upHigh;
 public:
     static constexpr int fftSize=1024,hopSize=128,latencySamples=640;
     // latencySamples describes dry/upper only; sub-octave latency is longer.
-    void prepare(float rate){upper.prepare(rate);lower.prepare(rate*.25f);setParameters({});reset();}
+    void prepare(float rate){
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+        upper.prepare(rate*.5f);
+#else
+        upper.prepare(rate);
+#endif
+        lower.prepare(rate*.25f);setParameters({});reset();
+    }
     void setParameters(Parameters p){
         auto high=p;high.sub1=high.sub2=0;upper.setParameters(high);
         auto low=p;low.dry=low.up1=low.up2=0;low.dryFx=0;lower.setParameters(low);
     }
-    void reset(){upper.reset();lower.reset();downHigh={};downLow={};upLow={};upHigh={};}
+    void reset(){upper.reset();lower.reset();downHigh={};downLow={};upLow={};upHigh={};
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+        upperUp={};
+#endif
+    }
     void process(const float* in,float* out,std::size_t count){
         while(count){
             const auto n=count<32?count:32;float source[32];
             for(unsigned i=0;i<n;++i)source[i]=in[i];
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+            float halves[16];unsigned countHalf=0;
+#else
             upper.process(source,out,n);
+#endif
             // Batch the quarter-rate callback without moving its sample clock.
             // Event masks preserve interpolation phases for arbitrary block sizes.
             float quarter[8];unsigned countLow=0,halfEvents=0,lowEvents=0;
             for(unsigned i=0;i<n;++i){
                 float half,low;
                 if(downHigh.push(source[i],half)){
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+                    halves[countHalf++]=half;
+#endif
                     halfEvents|=1u<<i;
                     if(downLow.push(half,low)){lowEvents|=1u<<i;quarter[countLow++]=low;}
                 }
             }
             lower.process(quarter,quarter,countLow);
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+            upper.process(halves,halves,countHalf);
+            unsigned nextHalf=0;
+#endif
             unsigned nextLow=0;
             for(unsigned i=0;i<n;++i){
                 float sub;
                 if(halfEvents&(1u<<i)){
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+                    upperUp.push(halves[nextHalf++]);out[i]=upperUp.even();
+#endif
                     if(lowEvents&(1u<<i)){
                         upLow.push(quarter[nextLow++]);sub=upLow.even();
                     }else sub=upLow.odd();
                     upHigh.push(sub);sub=upHigh.even();
-                }else sub=upHigh.odd();
+                }else {sub=upHigh.odd();
+#ifdef NC_OCTAVE_HALF_RATE_UPPER
+                    out[i]=upperUp.odd();
+#endif
+                }
                 out[i]+=sub;
             }
             in+=n;out+=n;count-=n;

@@ -294,6 +294,33 @@ validation**; listening acceptance and further CPU work remain pending. See `off
 <evidence/octave-multirate-bass-device-1.12.json>`_ and
 `build/test notes <docs/octave-multirate-bass.txt>`_.
 
+The next CPU-headroom experiment moves upper voices and processed dry to a
+half-rate 512/256/H64 core, retaining the quarter-rate subs and all controls.
+Native instruction counts fell 38.74% on average with attack active and 29.56%
+in the busiest tested callback; these are not physical cycle measurements.
+State shrank to 52,388 bytes. Sixteen sub-only renders remained bit-identical.
+Upper/dry bandwidth and latency change; the internal lowpass now caps around
+9.9 kHz at44.1k even if the current UI requests a higher cutoff.
+
+This image was flashed with exact full readback, using a 60% reservation.
+Its first physical run peaked at 645 us for OCTAVE, but a 2243.5 us full-chain
+spike latched the guard. A fresh-boot repeat also latched on a large self-timing
+spike; native deadline misses subsequently increased with OCTAVE bypassed.
+ToneCommand was running during both tests. This implicates additional runtime
+load but does not establish its cause. With ToneCommand closed, an isolation run and control sweeps are recorded
+below; the app-open spikes still need a separate root-cause investigation.
+Listening acceptance and worst-case validation remain pending. See `half-rate evidence
+<evidence/octave-half-rate-headroom-1.12.json>`_.
+
+The app-closed run completed **180.13 seconds / 124,771 active callbacks**,
+including 54 MIDI changes across dry, four octave gains and attack, with
+**zero native deadline misses, zero guard faults and zero self-budget
+excursions**. OCTAVE maximum was **667.5 us**; the complete OCTAVE/amp/cab
+chain peaked at **1210.75 us against 1451 us**, leaving **240.25 us (16.6%)**
+observed margin. ToneCommand stayed closed. No preset was saved. This is a
+recorded-configuration timing result, not a guarantee for arbitrary guitar
+signals, other effects or app activity; listening acceptance is pending.
+
 Current result
 --------------
 
