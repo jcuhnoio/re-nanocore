@@ -27,6 +27,9 @@ jobs:
         run: |
           mkdir _site
           cp web/index.html web/styles.css web/app.js web/storage.js web/dfu.js web/firmware.js web/patch*.json web/octave-1.12.json _site/
+          cp LICENSE _site/LICENSE.txt
+          cp LICENSE_SCOPE.md _site/LICENSE_SCOPE.md
+          cp firmware/custom-fx/octave/LICENSE _site/OCTAVE_LICENSE.txt
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

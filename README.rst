@@ -95,3 +95,13 @@ Vendor packages, full firmware images, device backups, model assets and
 proprietary toolchains remain local. Published evidence distinguishes static
 analysis, emulation, hardware readback and listening. Remaining work includes
 app-open stability, broader audio/CPU testing and further DSP reconstruction.
+
+License
+-------
+
+Original project code, custom effects and documentation are **MIT-licensed**,
+Copyright (c) 2026 **jcuhnoio and contributors**. Octave Studio is also
+jcuhnoio's work and remains MIT-licensed. Vendor firmware, decompiled code and
+vendor-derived portions of patches are excluded from this grant; existing
+third-party notices still apply. See `LICENSE <LICENSE>`_ and
+`license scope <LICENSE_SCOPE.md>`_.

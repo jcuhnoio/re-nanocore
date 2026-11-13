@@ -72,3 +72,6 @@
 !/.github/workflows/pages.yml
 
 !/docs/investigation-history.rst
+
+!/LICENSE
+!/LICENSE_SCOPE.md
