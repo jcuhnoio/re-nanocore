@@ -250,8 +250,10 @@ and exposes CPU LIMIT on every OCTAVE control when latched. New tests execute
 the real on-device formatter caller and all eleven native parameter writes,
 including DSP bank publication; testing only the leaf helpers had missed this.
 See `control/format findings <evidence/octave-control-format-fix-1.12.json>`_.
-The corrected image is built and validated offline; physical installation and
-control/listening confirmation are pending.
+The corrected image was flashed with exact readback verification. A short
+physical run processed 41,367 callbacks without a fault or native overrun,
+with upper voices and attack at zero for the control test and delay/reverb off.
+On-pedal display and listening confirmation remain pending; no preset was saved.
 
 Current result
 --------------

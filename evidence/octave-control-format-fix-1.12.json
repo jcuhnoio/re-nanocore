@@ -1,6 +1,6 @@
 {
   "date": "2026-11-13",
-  "status": "offline fix verified; deployment awaits physically disconnected audio output",
+  "status": "Flashed and exact readback verified; short physical runtime passed; user display/listening confirmation pending",
   "reported_symptoms": [
     "On-device control changes appear inaudible",
     "Displayed values and units mismatch labels"
@@ -453,5 +453,394 @@
     "No live DSP behavior change in this patch",
     "Delay/reverb bypass is still manual; presets can re-enable them",
     "Native UI/parameter tests emulate external boundaries; physical display and listening confirmation still pending"
-  ]
+  ],
+  "deployment": {
+    "input_sha256": "3a3127bf8ae394be0f4d1dad650207ea652cf1a5bd974f62b85181a65665022c",
+    "output_sha256": "c10565ba3ec9bc7aa40146b55241cc5c6a8e378ca470ba21bc9b49334d82253b",
+    "bytes": 868352,
+    "erased_os_relative_sectors": [
+      0,
+      65536,
+      131072,
+      196608,
+      458752,
+      720896
+    ],
+    "exact_match": true,
+    "manifestation_status": "000000000800"
+  },
+  "post_flash": {
+    "ready": [
+      {
+        "op": 16,
+        "args": {},
+        "seconds": 0.01831558346748352,
+        "response": {
+          "data": {
+            "devices": [
+              {
+                "dfu": false,
+                "display_name": "Nanocore",
+                "kind": "nanocore",
+                "midi": true,
+                "runtime_pid": 4865
+              }
+            ]
+          },
+          "success": true
+        }
+      },
+      {
+        "op": 153,
+        "args": {
+          "k": "nanocore"
+        },
+        "seconds": 0.0021117087453603745,
+        "response": {
+          "data": {
+            "ready": true
+          },
+          "success": true
+        }
+      },
+      {
+        "op": 40,
+        "args": {
+          "k": "nanocore"
+        },
+        "seconds": 0.0016749165952205658,
+        "response": {
+          "data": {
+            "activeSlot": 1,
+            "chainOrder": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "presetVolume": 83,
+            "slots": [
+              {
+                "enabled": true,
+                "params": [
+                  0.5,
+                  0.32100000977516174
+                ],
+                "variant": 1
+              },
+              {
+                "enabled": false,
+                "params": [
+                  0.5,
+                  0.5,
+                  0.800000011920929
+                ],
+                "variant": 0
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.8999999761581421,
+                  0.550000011920929,
+                  0.6000000238418579,
+                  0.6600000262260437,
+                  0.800000011920929
+                ],
+                "variant": 0
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.5299999713897705,
+                  0.5400000214576721,
+                  0.800000011920929
+                ],
+                "variant": 0
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.15000000596046448,
+                  0.40799999237060547,
+                  0.30000001192092896
+                ],
+                "variant": 1
+              },
+              {
+                "enabled": false,
+                "params": [
+                  0.5,
+                  0.5
+                ],
+                "variant": 0
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.07000000029802322,
+                  0.800000011920929,
+                  0.6000000238418579,
+                  0.0,
+                  0.44999998807907104
+                ],
+                "variant": 6
+              },
+              {
+                "enabled": false,
+                "params": [
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "variant": 0
+              }
+            ],
+            "version": 3
+          },
+          "success": true
+        }
+      }
+    ],
+    "configuration": [
+      {
+        "op": 16,
+        "args": {},
+        "seconds": 0.019355333410203457,
+        "response": {
+          "data": {
+            "devices": [
+              {
+                "dfu": false,
+                "display_name": "Nanocore",
+                "kind": "nanocore",
+                "midi": true,
+                "runtime_pid": 4865
+              }
+            ]
+          },
+          "success": true
+        }
+      },
+      {
+        "op": 153,
+        "args": {
+          "k": "nanocore"
+        },
+        "seconds": 0.0018937503919005394,
+        "response": {
+          "data": {
+            "ready": true
+          },
+          "success": true
+        }
+      },
+      {
+        "op": 40,
+        "args": {
+          "k": "nanocore"
+        },
+        "seconds": 0.0013712504878640175,
+        "response": {
+          "data": {
+            "activeSlot": 1,
+            "chainOrder": [
+              0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7
+            ],
+            "presetVolume": 83,
+            "slots": [
+              {
+                "enabled": true,
+                "params": [
+                  0.5,
+                  0.32100000977516174
+                ],
+                "variant": 1
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.6499999761581421,
+                  0.05000000074505806,
+                  0.30000001192092896,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.35574230551719666,
+                  0.0,
+                  0.0,
+                  0.0,
+                  0.5
+                ],
+                "variant": 8
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.8999999761581421,
+                  0.550000011920929,
+                  0.6000000238418579,
+                  0.6600000262260437,
+                  0.800000011920929
+                ],
+                "variant": 0
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.5299999713897705,
+                  0.5400000214576721,
+                  0.800000011920929
+                ],
+                "variant": 0
+              },
+              {
+                "enabled": true,
+                "params": [
+                  0.15000000596046448,
+                  0.40799999237060547,
+                  0.30000001192092896
+                ],
+                "variant": 1
+              },
+              {
+                "enabled": false,
+                "params": [
+                  0.5,
+                  0.5
+                ],
+                "variant": 0
+              },
+              {
+                "enabled": false,
+                "params": [
+                  0.07000000029802322,
+                  0.800000011920929,
+                  0.6000000238418579,
+                  0.0,
+                  0.44999998807907104
+                ],
+                "variant": 6
+              },
+              {
+                "enabled": false,
+                "params": [
+                  0.5,
+                  0.5,
+                  0.5,
+                  0.5
+                ],
+                "variant": 0
+              }
+            ],
+            "version": 3
+          },
+          "success": true
+        }
+      }
+    ],
+    "telemetry": {
+      "local_path": "analysis/custom-fx/octave-controls-audit/telemetry-active-fixed.jsonl",
+      "sha256": "166269205c79ef84f485f7d0285010f7d8b9d9639d8f8ec87a6341851e669b4e",
+      "readings": 60,
+      "first": {
+        "magic": 1329812529,
+        "schema": 2,
+        "timer_hz": 4000000,
+        "sample_rate": 44100,
+        "audio_block_frames": 128,
+        "audio_calls": 18626,
+        "audio_frames": 1192064,
+        "audio_min_ticks": 183,
+        "audio_max_ticks": 5332,
+        "audio_budget_ticks": 5804,
+        "audio_over_budget": 0,
+        "audio_sum_low": 33996616,
+        "audio_sum_high": 0,
+        "heap_start": 1074450752,
+        "heap_end": 1077936128,
+        "heap_total": 3485376,
+        "heap_free": 1372660,
+        "heap_high_water": 2114144,
+        "octave_calls": 324,
+        "octave_frames": 20736,
+        "octave_max_ticks": 2970,
+        "octave_sum_low": 697309,
+        "octave_sum_high": 0,
+        "octave_last_ticks": 1993,
+        "octave_init_count": 2,
+        "now_low": 317906575,
+        "now_high": 0,
+        "octave_state_bytes": 38276,
+        "ring1": 1074784972,
+        "ring2": 1074850536,
+        "fx2_state1": 1074916100,
+        "fx2_state2": 1075041520,
+        "octave_fault": 0,
+        "octave_budget_ticks": 3482,
+        "octave_previous_overruns": 0,
+        "octave_control_count": 11,
+        "host_time": 1794558577.4203289,
+        "midi_resyncs": 0
+      },
+      "last": {
+        "magic": 1329812529,
+        "schema": 2,
+        "timer_hz": 4000000,
+        "sample_rate": 44100,
+        "audio_block_frames": 128,
+        "audio_calls": 59669,
+        "audio_frames": 3818816,
+        "audio_min_ticks": 183,
+        "audio_max_ticks": 5332,
+        "audio_budget_ticks": 5804,
+        "audio_over_budget": 0,
+        "audio_sum_low": 210339340,
+        "audio_sum_high": 0,
+        "heap_start": 1074450752,
+        "heap_end": 1077936128,
+        "heap_total": 3485376,
+        "heap_free": 1372552,
+        "heap_high_water": 2114144,
+        "octave_calls": 41367,
+        "octave_frames": 2647488,
+        "octave_max_ticks": 2970,
+        "octave_sum_low": 95593694,
+        "octave_sum_high": 0,
+        "octave_last_ticks": 2450,
+        "octave_init_count": 2,
+        "now_low": 555505079,
+        "now_high": 0,
+        "octave_state_bytes": 38276,
+        "ring1": 1074784972,
+        "ring2": 1074850536,
+        "fx2_state1": 1074916100,
+        "fx2_state2": 1075041520,
+        "octave_fault": 0,
+        "octave_budget_ticks": 3482,
+        "octave_previous_overruns": 0,
+        "octave_control_count": 11,
+        "host_time": 1794558636.8182771,
+        "midi_resyncs": 0
+      }
+    },
+    "processed_callbacks": 41367,
+    "processed_audio_seconds": 60.03374149659864,
+    "octave_max_us": 742.5,
+    "chain_max_us": 1333.0,
+    "fault": 0,
+    "native_overruns": 0,
+    "note": "Upper voices and attack set to zero as requested for the control test. Delay/reverb manually off; gate, amp, cab, MOD on. No preset save; no listening or physical screen confirmation yet."
+  }
 }
