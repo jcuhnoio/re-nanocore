@@ -4,32 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f4f1e8">
-  <meta name="description" content="Install UniVibe or an experimental octave bundle on your NanoCore, with local firmware backup and restore.">
-  <title>Custom effects for NanoCore</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="description" content="Custom NanoCore effects by jcuhnoio. Install UniVibe or an experimental octave bundle on your NanoCore, with local firmware backup and restore.">
+  <title>jcuhnoio · NanoCore Mods</title>
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
   <header class="site-header wrap">
-    <a class="brand" href="./" aria-label="NanoCore Mods home"><span class="brand-mark" aria-hidden="true">n<span>↗</span></span> NANOCORE <span class="brand-light">/ MODS</span></a>
+    <a class="brand" href="./" aria-label="jcuhnoio — NanoCore Mods home"><span class="brand-mark" aria-hidden="true">n<span>↗</span></span> jcuhnoio <span class="brand-light">/ NANOCORE MODS</span></a>
     <a class="source-link" href="https://github.com/jcuhnoio/re-nanocore">Open source <span aria-hidden="true">↗</span></a>
   </header>
   <main class="wrap">
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-copy">
         <p class="eyebrow"><span class="tiny-dot"></span> CUSTOM EFFECTS · WORK IN PROGRESS</p>
+        <p class="creator-credit">A pedal experiment by <a href="https://github.com/jcuhnoio">jcuhnoio ↗</a></p>
         <h1 id="hero-title">A new voice for<br>your NanoCore.</h1>
         <p class="hero-description">Give your NanoCore a UniVibe, or add an experimental four-voice octaver with attack and dry processing. Choose your effects below.</p>
-        <div class="hero-tags"><span>UniVibe + optional octaver</span><span>Firmware 1.10 / 1.11 / 1.12</span><span>Experimental firmware</span></div>
+        <div class="hero-tags"><span>UniVibe · 1.10 / 1.11 / 1.12</span><span>Octaver · 1.12 only</span><span>Experimental firmware</span></div>
       </div>
-      <div class="pedal-scene" role="img" aria-label="Illustration of a NanoCore displaying the UniVibe effect, with speed, depth, and level controls">
+      <div class="pedal-scene effect-duo" role="img" aria-label="Two custom effect illustrations by jcuhnoio: green UniVibe with speed, depth, level and chorus/vibrato controls; orange POG-style Octaver with dry, minus two, minus one, plus one and plus two octave faders, attack and dry processing. Octaver requires firmware 1.12.">
         <span class="scene-orbit orbit-one"></span><span class="scene-orbit orbit-two"></span>
-        <div class="pedal">
-          <div class="pedal-top"><span>NANOCORE</span><span class="pedal-led"></span></div>
-          <div class="pedal-screen"><div class="screen-top"><span>MOD / 10</span><span>● ON</span></div><div class="screen-name">UNI<span>VIBE</span></div><svg class="wave" viewBox="0 0 240 48" fill="none" aria-hidden="true"><path d="M0 24C20 24 20 4 40 4S60 44 80 44S100 4 120 4S140 44 160 44S180 4 200 4S220 24 240 24" stroke="currentColor" stroke-width="2"/></svg><div class="screen-bottom"><span class="mode-active">CHORUS</span><span>VIBRATO</span></div></div>
+        <div class="effect-pedal vibe-pedal" aria-hidden="true">
+          <div class="effect-top"><span>01 / MODULATION</span><span class="pedal-led"></span></div>
+          <h3>UNI<span>VIBE</span></h3><p class="effect-subtitle">SWIRL / PULSE / MOVEMENT</p>
+          <svg class="effect-wave" viewBox="0 0 240 48" fill="none"><path d="M0 24C20 24 20 4 40 4S60 44 80 44S100 4 120 4S140 44 160 44S180 4 200 4S220 24 240 24" stroke="currentColor" stroke-width="2"/></svg>
           <div class="knob-row"><div><span class="knob knob-speed"></span><small>SPEED</small></div><div><span class="knob knob-depth"></span><small>DEPTH</small></div><div><span class="knob knob-level"></span><small>LEVEL</small></div></div>
-          <div class="pedal-bottom"><span>001 / CUSTOM</span><span class="footswitch"></span></div>
+          <div class="effect-mode"><span>CHORUS</span><i></i><span>VIBRATO</span></div>
+          <div class="effect-signature"><span>jcuhnoio</span><span class="footswitch"></span></div>
         </div>
-        <span class="scene-caption">A LITTLE MOVEMENT. A LOT OF CHARACTER.</span>
+        <div class="effect-pedal octave-pedal" aria-hidden="true">
+          <div class="effect-top"><span>02 / POLYPHONIC</span><span class="pedal-led"></span></div>
+          <h3>OCT<span>AVE</span></h3><p class="effect-subtitle">POG-STYLE / FOUR VOICES</p>
+          <div class="octave-faders">
+            <div><span class="fader" style="--position:38%"></span><small>DRY</small></div>
+            <div><span class="fader" style="--position:66%"></span><small>−2</small></div>
+            <div><span class="fader" style="--position:45%"></span><small>−1</small></div>
+            <div><span class="fader" style="--position:24%"></span><small>+1</small></div>
+            <div><span class="fader" style="--position:53%"></span><small>+2</small></div>
+          </div>
+          <div class="attack-strip"><span>ATTACK</span><svg viewBox="0 0 90 20" fill="none"><path d="M1 19C25 19 18 2 50 2H89" stroke="currentColor" stroke-width="2"/></svg><span>DRY FX</span></div>
+          <div class="effect-signature"><span>jcuhnoio<small>1.12 ONLY · EXPERIMENTAL</small></span><span class="footswitch"></span></div>
+        </div>
+        <span class="scene-caption">TWO NEW SOUNDS. ONE NANOCORE.</span>
       </div>
     </section>
 
@@ -81,7 +97,7 @@
     </section>
     <section class="before-start" aria-labelledby="before-title"><h2 id="before-title">A few things before you plug in.</h2><div class="info-grid"><article><span class="info-number">01 / BROWSER</span><h3>Desktop Chrome or Edge</h3><p>The installer needs USB and MIDI permissions. Your browser will ask you to choose your NanoCore and may ask again when it enters update mode.</p></article><article><span class="info-number">02 / COMPATIBILITY</span><h3>Firmware 1.10, 1.11 &amp; 1.12</h3><p>The installer identifies your exact firmware and patches that version—no upgrade or downgrade. Unknown builds are rejected. UniVibe has run on hardware with 1.10 and 1.12; 1.11 is checked offline only. The experimental octaver has been auditioned on 1.12 with ToneCommand closed. Octaver is available only for firmware 1.12. These are work-in-progress patches, not production firmware.</p></article><article><span class="info-number">03 / BACKUP</span><h3>Keep a copy. Come back anytime.</h3><p>A backup is saved locally before installation. Download it somewhere safe. Use Restore original to return to your saved firmware.</p></article></div></section>
   </main>
-  <footer class="site-footer wrap"><p>Built from curiosity. Made for your pedal.</p><nav aria-label="Footer"><a href="https://github.com/jcuhnoio/re-nanocore">Source ↗</a><a href="https://github.com/jcuhnoio/re-nanocore#readme">Documentation ↗</a></nav><small>Independent project. Not affiliated with NanoCore, MXR or Electro-Harmonix.</small></footer>
+  <footer class="site-footer wrap"><p>Made by <a class="footer-credit" href="https://github.com/jcuhnoio">jcuhnoio ↗</a>. Built for your pedal.</p><nav aria-label="Footer"><a href="https://github.com/jcuhnoio/re-nanocore">Source ↗</a><a href="https://github.com/jcuhnoio/re-nanocore#readme">Documentation ↗</a></nav><small>Independent project. Not affiliated with NanoCore, MXR or Electro-Harmonix.</small></footer>
   <script type="module" src="app.js?v=5"></script>
 </body>
 </html>
