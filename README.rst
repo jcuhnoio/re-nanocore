@@ -309,7 +309,8 @@ spike; native deadline misses subsequently increased with OCTAVE bypassed.
 ToneCommand was running during both tests. This implicates additional runtime
 load but does not establish its cause. With ToneCommand closed, an isolation run and control sweeps are recorded
 below; the app-open spikes still need a separate root-cause investigation.
-Listening acceptance and worst-case validation remain pending. See `half-rate evidence
+The user subsequently auditioned this build and reported that it sounds
+"pretty good". Worst-case validation remains pending. See `half-rate evidence
 <evidence/octave-half-rate-headroom-1.12.json>`_.
 
 The app-closed run completed **180.13 seconds / 124,771 active callbacks**,
@@ -319,7 +320,9 @@ excursions**. OCTAVE maximum was **667.5 us**; the complete OCTAVE/amp/cab
 chain peaked at **1210.75 us against 1451 us**, leaving **240.25 us (16.6%)**
 observed margin. ToneCommand stayed closed. No preset was saved. This is a
 recorded-configuration timing result, not a guarantee for arbitrary guitar
-signals, other effects or app activity; listening acceptance is pending.
+signals, other effects or app activity. The user confirmed this build sounds
+"pretty good" and approved committing and pushing it. ToneCommand-open
+timing spikes remain unresolved; this is not a claim of production stability.
 
 Current result
 --------------

@@ -92,5 +92,7 @@ maximum callback count fell 29.56%. With attack off the reductions were 35.24%
 and 29.54%. Instruction counts do not measure physical timing. Native DSP
 matched the new host reference exactly; UI, guard and sanitizer checks passed.
 Sixteen sub-only harmonic renders were bit-identical to the preceding build.
-Upper output changes and requires listening acceptance. See README and
+The user auditioned the installed half-rate build and reported "pretty good",
+then approved committing and pushing it. App-open timing spikes and worst-case
+validation remain unresolved. See README and
 evidence/octave-half-rate-headroom-1.12.json for hardware results.
