@@ -19,6 +19,10 @@ def address_pair(pc, target, rd=10):
 
 
 def patches(image, symbols):
+    from firmware_identity import identify_firmware
+    if identify_firmware(image) == "1.2":
+        from octave_ui_120 import patches as patches120
+        return patches120(image, symbols)
     fit = extract_fit(image)
     version='1.11' if fit['image_version']=='1.11b' else fit['image_version'];p=profile(version)
     mapped=lambda address:map_address(address,version)

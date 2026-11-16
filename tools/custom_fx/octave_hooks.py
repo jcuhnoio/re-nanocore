@@ -5,6 +5,7 @@ all changed native instructions are still guarded byte-for-byte.
 import struct
 from patch_image import extract_fit
 from octave_versions import profile,map_address
+from firmware_identity import identify_firmware
 
 LOAD=0x40000000
 HOOKS={
@@ -28,8 +29,11 @@ def clui(rd,imm):
 
 def patches(image,symbols):
     fit=extract_fit(image)
-    version='1.11' if fit['image_version']=='1.11b' else fit['image_version']
+    version=identify_firmware(image)
     p=profile(version)
+    if version=='1.2':
+        from octave_120 import patches as patches120
+        return patches120(image,symbols)
     if version=='1.10':
         from octave_110 import patches as patches110
         return patches110(image,symbols)
@@ -53,7 +57,7 @@ def patches(image,symbols):
 
 
 def diagnostic_patches(image,symbols):
-    fit=extract_fit(image);version='1.11' if fit['image_version']=='1.11b' else fit['image_version'];p=profile(version)
+    fit=extract_fit(image);version=identify_firmware(image);p=profile(version)
     address=int(p['diagnostic_address'],16);expected=bytes.fromhex(p['guard_bytes']['0x4008f8ac'])
     seg=next(s for s in fit['segments'] if s['load_address']==LOAD);offset=seg['offset']+address-LOAD
     if image[offset:offset+len(expected)]!=expected:raise ValueError('Unexpected diagnostic prologue')

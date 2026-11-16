@@ -30,11 +30,11 @@ class VibeUITests(unittest.TestCase):
         for a,b in zip(defaults,[.35,.8,.5,0]):self.assertAlmostEqual(a,b)
 
     def test_new_version_layout_and_provenance(self):
-        for version in ['1.11','1.12']:
+        for version in ['1.11','1.12','1.2']:
             config=version_config(version)
             code=json.loads(code_path(version).read_text())
             self.assertEqual(code['provenance']['firmware_version'],version)
-            self.assertEqual(code['provenance']['source_sha256'],hashlib.sha256(Path(__file__).with_name('vibe_ui_multi.S').read_bytes()).hexdigest())
+            self.assertEqual(code['provenance']['source_sha256'],hashlib.sha256(Path(__file__).with_name('vibe_ui_120.S' if version=='1.2' else 'vibe_ui_multi.S').read_bytes()).hexdigest())
             self.assertEqual(int(code['symbols']['defaults'],16)%4,0)
             for name,limit in [('.vibe_defaults',120),('.vibe_format',config['format_capacity']),('.vibe_enum',94)]:
                 self.assertLessEqual(len(bytes.fromhex(code['sections'][name]['hex'])),limit)

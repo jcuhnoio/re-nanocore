@@ -1,0 +1,77 @@
+Firmware 1.2 Octave controls: offline compatibility
+=================================================
+
+The eleven controls are DRY, -2 OCT, -1 OCT, +1 OCT, +2 OCT, ATTACK,
+LOWPASS, DETUNE, DRY FX, RESON and LEVEL. The prototype's always-smoothed
+dry behavior is retained. Dry FX selects the existing smooth/filter/detune
+processing choices; it does not disable attack smoothing.
+
+This is an offline port, not a claim of physical display or listening validation.
+Firmware 1.2's native engine is 48 kHz. The DSP adapter is documented separately.
+
+Why a new UI adapter was necessary
+---------------------------------
+
+The 1.2 compiler shares register-save/restore functions. Several UI entries now
+begin with `jal t0, __riscv_save_*`, rather than the inline stack frames in 1.12.
+An address-only substitution would corrupt the stack or resume through the wrong
+register. Entry fallbacks explicitly recreate t0=entry+4, then jump to the exact
+native save helper. Custom Octave paths run before any native frame is created.
+
+The native FX2 setter also changed. It now calls the subtype parameter-count
+function, so returning 11 for subtype 8 admits all controls without changing a
+hardcoded five-parameter bound. The native bank format already reserves 12 float
+parameters. Its exact bank selection, copy, parameter update and publication
+instructions are executed in the tests, with mutex/libc boundaries emulated.
+
+Reviewed native locations
+-------------------------
+
+0x4002a55e: effect name; fallback save helper 0x4000c3d4.
+0x4002a8bc: labels; fallback save helper 0x4000c3ba.
+0x4002b93a: UI count; fallback save helper 0x4000c3d4.
+0x4002bc20: formatter; fallback save helper 0x4000c3a4.
+0x4006adba: native FX2 parameter count used by the setter.
+0x4006ae0c: native FX2 defaults; null destination remains a no-op.
+0x40021576: enum descriptor entry; Octave hooks only the internal FX2 branch
+              at 0x4002166c. UniVibe's independent entry hook is preserved.
+0x40011f56: actual DSP-bank parameter setter.
+0x40020836: actual display formatter caller, with a 24-byte output buffer.
+0x40027afe: actual on-device parameter service, including UI state and DSP write.
+0x4007fb52: native diagnostic handler used for the bounded OCT? extension.
+
+The runtime slot-name table at 0x40089a9c identifies FX2 as slot 1 and MOD as slot 5.
+The runtime subtype array is 0x400b0ec0. These mappings were checked directly;
+visual chain position and display order are not assumed to be metadata families.
+The bank starts at 0x301038b8; each copy occupies 776 bytes, selection is at +0x860,
+and FX2 parameters are at +324. UI parameter state begins at 0x301118b8.
+
+Validation
+----------
+
+Run with the retained Unicorn virtualenv:
+
+ analysis/decoder-capture/venv/bin/python tools/custom_fx/check_octave_ui_120.py \
+   BUILD_DIR REPORT_JSON [PACKAGED_OS_PARTITION [UNIVIBE_BASELINE]]
+
+With a package, the harness requires exact native UI hook bytes from that
+package. ELF runtime sections model the loader's relocated payload; independent
+boot-relocation tests establish its copy, BSS zeroing and heap reservation.
+A combined package is compared with the standalone UniVibe baseline, so its
+intentional UniVibe metadata changes are distinguished from Octave changes.
+
+Coverage includes all eleven labels/defaults/units, short-buffer bounds, all
+four enum states and integer conversion, zero and out-of-range controls,
+non-target name/label/format comparisons, native setter publication, actual
+formatter/service callers, and stack plus integer/floating callee-save canaries.
+The combined test additionally checks UniVibe labels, mode enum, count and
+chorus/vibrato formatting. Diagnostic tests check magic length, null pointers,
+status, bounded schema and unchanged native fallback arguments/results.
+
+Exact case counts and build/package hashes are retained under
+analysis/compat-1.2/octave-ui/ and summarized in
+ evidence/firmware-1.2-octave-ui.json.
+
+No device operations were performed. Mutex/libc, localization, timer and native
+storage-read boundaries are emulated. These results do not establish real CPU
+headroom, physical screen stability, audio behavior or NAM-chain compatibility.

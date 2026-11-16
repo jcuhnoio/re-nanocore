@@ -1,0 +1,266 @@
+{
+  "schema_version": 1,
+  "scope": "Static authenticated artifact comparison; no device operations or physical timing",
+  "package_sha256": "0bf64603acca9d68167f3d9e5f4ebc2568c748101350008d1e6619ea4d2b103d",
+  "payload_sha256": "c45b9d874c051a861bbec6765a288f923e5afe766fcac50d45bf56b95b2a954a",
+  "external_version": "1.2",
+  "fit_version": "1.12",
+  "rate_selection": {
+    "engine_entry": "0x40014414",
+    "write_instruction_range": [
+      "0x40014632",
+      "0x4001463c"
+    ],
+    "rate_hz": 48000,
+    "global": "0x30104128",
+    "float_rate_constant": "0x400889d4",
+    "effect_initializer_setup": "0x400148e6",
+    "i2s_config_calls": [
+      {
+        "call": "0x40014c8a",
+        "target": "0x4003ff3e",
+        "sample_rate": 48000,
+        "multiplier": 256
+      },
+      {
+        "call": "0x40014c98",
+        "target": "0x4003ffd0",
+        "sample_rate": 48000,
+        "multiplier": 64
+      }
+    ],
+    "evidence_type": "vendor disassembly and constant bytes"
+  },
+  "clock_family": {
+    "new_selector": "0x4003fd3a",
+    "old_selector": "0x4003c248",
+    "hz_44100_family": 22579200,
+    "hz_other_family": 24576000,
+    "new_rea_evidence": "ev_dbf896f114f66b423ba03d921b39baf1544b3a07e4b47cb7ad99b85e9e380263",
+    "old_rea_evidence": "ev_b96947f2b115f2deebec1749c911eddb1451f99f94eac170c8c47cd692c15512",
+    "configured_mclk_hz": 12288000,
+    "configured_bclk_hz": 3072000,
+    "physical_measurement": false
+  },
+  "codec_extra_configuration": {
+    "instruction_range": [
+      "0x40014cf0",
+      "0x40014e38"
+    ],
+    "source_clock_range_hz": [
+      24000000,
+      25000000
+    ],
+    "ratio_calculation": "round((768000 * 2**32) / source_clock_hz)",
+    "at_24576000_hz": "0x08000000",
+    "final_registers": {
+      "0x03": "0x8053",
+      "0x1d": "0x200a"
+    },
+    "readback_registers": [
+      "0x03",
+      "0x1d",
+      "0x58"
+    ],
+    "checked_equal_registers": [
+      "0x03",
+      "0x1d"
+    ],
+    "interpretation": "Strongly consistent with explicit codec FLL programming; physical codec identity and bitfield names not independently confirmed in this pass",
+    "original_startup_tables_identical": true
+  },
+  "fast_memory": {
+    "itcm": {
+      "base": "0x30040000",
+      "enable_instruction": "0x4000005e",
+      "csr": "0x7f9 mitcmcr"
+    },
+    "dtcm": {
+      "base": "0x30060000",
+      "enable_instruction": "0x4000006e",
+      "csr": "0x7f8 mdtcmcr"
+    },
+    "old_startup_has_same_enable_sequence": false,
+    "dma_half_processor": {
+      "old": "0x40009d20",
+      "new": "0x30044580"
+    },
+    "worker": {
+      "old": "0x4000b698",
+      "new": "0x4001140a",
+      "new_call_site": "0x400114dc"
+    },
+    "vector_entry": {
+      "old": "0x40000580",
+      "new": "0x30046080"
+    },
+    "evidence_type": "vendor disassembly"
+  },
+  "callback_budget": {
+    "block_word": 128,
+    "block_word_new_address": "0x3008ab38",
+    "block_word_old_address": "0x3004ac78",
+    "half_divide_instruction": "0x300445f6",
+    "frames_per_half": 64,
+    "old_ms": 1.4512471655328798,
+    "new_ms": 1.3333333333333333,
+    "measured": false
+  },
+  "usb": {
+    "1.12": {
+      "configuration_address": "0x40099a1a",
+      "formats": [
+        {
+          "address": "0x40099a95",
+          "bytes_hex": "0b2402010202100144ac00",
+          "audio_type_i": {
+            "channels": 2,
+            "subframe_bytes": 2,
+            "bits": 16,
+            "rate_hz": 44100
+          }
+        },
+        {
+          "address": "0x40099ac9",
+          "bytes_hex": "0b2402010202100144ac00",
+          "audio_type_i": {
+            "channels": 2,
+            "subframe_bytes": 2,
+            "bits": 16,
+            "rate_hz": 44100
+          }
+        }
+      ],
+      "endpoints": [
+        {
+          "address": "0x40099aa0",
+          "bytes_hex": "09050209b800010000",
+          "endpoint": {
+            "address": "0x2",
+            "attributes": "0x9",
+            "max_packet": 184,
+            "synch_address": "0x0"
+          }
+        },
+        {
+          "address": "0x40099ad4",
+          "bytes_hex": "09058105b800010000",
+          "endpoint": {
+            "address": "0x81",
+            "attributes": "0x5",
+            "max_packet": 184,
+            "synch_address": "0x0"
+          }
+        },
+        {
+          "address": "0x40099b2c",
+          "bytes_hex": "090503024000000000",
+          "endpoint": {
+            "address": "0x3",
+            "attributes": "0x2",
+            "max_packet": 64,
+            "synch_address": "0x0"
+          }
+        },
+        {
+          "address": "0x40099b3a",
+          "bytes_hex": "090583024000000000",
+          "endpoint": {
+            "address": "0x83",
+            "attributes": "0x2",
+            "max_packet": 64,
+            "synch_address": "0x0"
+          }
+        }
+      ]
+    },
+    "1.2": {
+      "configuration_address": "0x40088bda",
+      "formats": [
+        {
+          "address": "0x40088c55",
+          "bytes_hex": "0b2402010202100180bb00",
+          "audio_type_i": {
+            "channels": 2,
+            "subframe_bytes": 2,
+            "bits": 16,
+            "rate_hz": 48000
+          }
+        },
+        {
+          "address": "0x40088c92",
+          "bytes_hex": "0b2402010202100180bb00",
+          "audio_type_i": {
+            "channels": 2,
+            "subframe_bytes": 2,
+            "bits": 16,
+            "rate_hz": 48000
+          }
+        }
+      ],
+      "endpoints": [
+        {
+          "address": "0x40088c60",
+          "bytes_hex": "09050205c400010082",
+          "endpoint": {
+            "address": "0x2",
+            "attributes": "0x5",
+            "max_packet": 196,
+            "synch_address": "0x82"
+          }
+        },
+        {
+          "address": "0x40088c70",
+          "bytes_hex": "090582110300010100",
+          "endpoint": {
+            "address": "0x82",
+            "attributes": "0x11",
+            "max_packet": 3,
+            "synch_address": "0x0"
+          }
+        },
+        {
+          "address": "0x40088c9d",
+          "bytes_hex": "09058105c400010000",
+          "endpoint": {
+            "address": "0x81",
+            "attributes": "0x5",
+            "max_packet": 196,
+            "synch_address": "0x0"
+          }
+        },
+        {
+          "address": "0x40088cf5",
+          "bytes_hex": "090503024000000000",
+          "endpoint": {
+            "address": "0x3",
+            "attributes": "0x2",
+            "max_packet": 64,
+            "synch_address": "0x0"
+          }
+        },
+        {
+          "address": "0x40088d03",
+          "bytes_hex": "090583024000000000",
+          "endpoint": {
+            "address": "0x83",
+            "attributes": "0x2",
+            "max_packet": 64,
+            "synch_address": "0x0"
+          }
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "No physical firmware 1.2 clock, latency, CPU-load or audio test.",
+    "Some new REA exports truncate at incorrectly classified non-returning compiler save helpers; those pseudocode exports are not a basis for complete engine claims.",
+    "NAM implementation details are covered by the separate model analysis."
+  ],
+  "local_artifacts": {
+    "analysis/version-1.2/audio/firmware.asm": "2de5b8dcdb0726601f9f70f7310b0400cb41d4579cfc58036b2d7992e3274712",
+    "analysis/version-1.2/audio/old-startup.asm": "9d61e87d2661c90f2fbbe92ac0519e150b2baa261a22bbc822554c0e316cc4e1",
+    "analysis/version-1.2/audio/parsed-data.json": "607681b75495850f7b760b10fa076b89fd6360a4803ed314a732558969bf3a08",
+    "analysis/version-1.2/audio/extract_audio_evidence.py": "c46006afc249e99b7a0bbcf60d273a670c026c5bf80ed5f7f37c89dd91421c07"
+  }
+}

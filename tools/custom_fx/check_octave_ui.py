@@ -9,6 +9,15 @@ emulated. Timing and physical display/audio behavior are not established here.
 import sys,json,struct,textwrap,os,hashlib
 from pathlib import Path
 from octave_test_ports import run_ported
+# Firmware1.2 changed native save helpers, bank setters and segment layout.
+# Its integration harness executes these actual functions rather than rewriting
+# the1.12 test's addresses.
+_build=Path(sys.argv[1]).parent if sys.argv[1].endswith('.elf') else Path(sys.argv[1])
+if json.loads((_build/'build.json').read_text()).get('firmware_version')=='1.2':
+    import runpy
+    sys.argv[1]=str(_build)
+    runpy.run_path(str(Path(__file__).with_name('check_octave_ui_120.py')),run_name='__main__')
+    raise SystemExit(0)
 run_ported(__file__,Path(sys.argv[1]).parent if sys.argv[1].endswith(".elf") else Path(sys.argv[1]),globals())
 ROOT=Path(__file__).resolve().parents[2]
 os.chdir(ROOT)

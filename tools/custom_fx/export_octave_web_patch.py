@@ -6,13 +6,14 @@ local. Bytes claimed by the enlarged FIT are restored only from a saved backup.
 import argparse,hashlib,json,sys
 from pathlib import Path
 from patch_image import extract_fit,property_offsets,OS_SIZE,changed_ranges
+from firmware_identity import identify_firmware
 PROTECTED=0xd0000
 sha=lambda b:hashlib.sha256(b).hexdigest()
 def export(stock,target):
     before,after=extract_fit(stock),extract_fit(target)
     assert len(target)==OS_SIZE and before['image_version']==after['image_version']
-    version={'1.10':'1.10','1.11b':'1.11','1.12':'1.12'}[before['image_version']]
-    if version!='1.12':raise ValueError('Only firmware 1.12 is supported for the Octaver web release')
+    version=identify_firmware(stock)
+    if version not in ('1.12','1.2'):raise ValueError('Only firmware 1.12 and 1.2 are supported for the Octaver web release')
     start,n=property_offsets(stock)[('','timestamp')];assert n==4
     old_size=len(stock);new_size=max(s['offset']+s['size'] for s in after['segments'])
     assert old_size<new_size<=PROTECTED
@@ -25,7 +26,7 @@ def export(stock,target):
             'afterHex':new[r['offset']:r['offset']+r['size']].hex()} for r in changed_ranges(old,new)]
     return {'schemaVersion':2,'firmwareVersion':version,'imageVersion':before['image_version'],
         'effect':'UNIVIBE_OCTAVE','replaces':['VELVET VIBRATO','OCTAVER'],
-        'workInProgress':True,'hardwareTested':version=='1.12',
+        'workInProgress':True,'hardwareTested':version in ('1.12','1.2'),
         'osSize':OS_SIZE,'stockFitSize':old_size,'installedFitSize':new_size,
         'protectedOffset':PROTECTED,'timestamp':{'offset':start,'size':4},
         'stockNormalizedSha256':normalized(stock),

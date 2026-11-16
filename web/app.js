@@ -1,9 +1,9 @@
 import {WebUSBTransport,RawOS,USB_FILTER} from './dfu.js';
-import {installSelected,prepareRestore,sha256,identifyImage} from './firmware.js?v=5';
+import {installSelected,prepareRestore,sha256,identifyImage} from './firmware.js?v=6';
 import {get,put,recoveryTarget} from './storage.js?v=2';
 const $ = id => document.getElementById(id);
 let mode='install', busy=false, critical=false, imported=null, backupURL;
-const patchPromise=Promise.all(['patch.json','patch-1.11.json','patch-1.12.json','octave-1.12.json'].map(path=>fetch('./'+path).then(r=>{if(!r.ok)throw Error('Could not load firmware patches; reload and try again.');return r.json();})));
+const patchPromise=Promise.all(['patch.json','patch-1.11.json','patch-1.12.json','octave-1.12.json','patch-1.2.json','octave-1.2.json'].map(path=>fetch('./'+path).then(r=>{if(!r.ok)throw Error('Could not load firmware patches; reload and try again.');return r.json();})));
 patchPromise.catch(()=>{});
 const supportsUSB=!!navigator.usb && !!navigator.requestMIDIAccess && isSecureContext;
 function requireAudioDisconnected(){
@@ -16,7 +16,7 @@ function updateControls(){
 function selectionChanged(){
   const octave=$('effectSelect').value==='UNIVIBE_OCTAVE';
   $('primary').textContent=octave?'Upload UniVibe + Octaver ↗':'Upload UniVibe ↗';
-  $('selectionDetail').textContent=octave?'Requires firmware 1.12. Installs UNIVIBE in place of Velvet Vibrato and OCTAVE in place of the stock Octaver/PITCH effect. Presets using either slot will use the new effect.':'Replaces Velvet Vibrato (MOD 10) with UNIVIBE. Other effect slots stay as they are.';
+  $('selectionDetail').textContent=octave?'Requires firmware 1.12 or 1.2. Installs UNIVIBE in place of Velvet Vibrato and OCTAVE in place of the stock Octaver/PITCH effect. Presets using either slot will use the new effect.':'Replaces Velvet Vibrato (MOD 10) with UNIVIBE. Other effect slots stay as they are.';
   $('octaveWarning').hidden=!octave;
 }
 function status(text,detail=''){ $('status').textContent=text; $('detail').textContent=detail; }
@@ -129,7 +129,7 @@ $('importBackup').onclick=()=>$('backupFile').click();
 $('backupFile').onchange=()=>run(async()=>{
   const file=$('backupFile').files[0];if(!file)return;
   const bytes=new Uint8Array(await file.arrayBuffer());
-  if((await identifyImage(bytes,await patchPromise)).kind!=='stock')throw Error('Choose an original stock 1.10, 1.11 or 1.12 OS backup.');
+  if((await identifyImage(bytes,await patchPromise)).kind!=='stock')throw Error('Choose an original stock 1.10, 1.11, 1.12 or 1.2 OS backup.');
   imported=bytes;status('Backup file ready','Use Restore original, or select effects and upload to switch from a known installation with this matching backup.');
 });
 $('effectSelect').onchange=selectionChanged;

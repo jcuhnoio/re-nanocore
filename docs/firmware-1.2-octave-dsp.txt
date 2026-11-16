@@ -1,0 +1,58 @@
+NanoCore 1.2 Octaver DSP port (offline)
+======================================
+
+The accepted 1.12 half-rate-upper / multirate-sub algorithm is retained and
+prepared at the native 48,000 Hz sample rate. This is an ABI and memory-layout
+port, not a claim of new hardware headroom. Four octave voices, attack-smoothed
+dry, Dry FX, resonance, low-pass and detune remain implemented. As in 1.12,
+stereo input is averaged to mono and the processed result copied to both outputs;
+bypass preserves the two original channels.
+
+Native mapping was read from analysis/version-1.2/audio/firmware.asm:
+
+  FX2 initializer  4006a9b0   family bytes e50, enable pointer +8, pitch +16
+  FX2 dispatch     40069820   subtype a7, stereo and output-mode on caller stack
+  Pitch initializer40075d9a   unchanged d98-byte native pitch object
+  Pitch reset      40076b8c   native family reset4006ac90 adds16
+  Pitch shift      400760e8   replaced by no-op as before
+  Subtype byte     family+e48
+  Allocations      40014468,40014480: 8192 -> 65536 bytes each
+  Ring pointers    301041c0,30104280
+  Family pointers  301041c4,30104284
+  Timing counter   4004393c   64-bit hardware counter
+  Timer frequency  40043790   returns4,000,000
+  Audio stats      3008a9e0   sum+0/+4,min+8,max+12,calls+16,frames+20,
+                             deadline+28,overruns+32
+  Rate/block words 30104128 / 3008ab38
+
+The native dispatcher now starts with __riscv_save_12, rather than an inline
+stack frame. The non-target trampoline reconstructs t0=40069824 and jumps to
+the original save helper4000c3a4. It leaves arguments9/10 on their incoming
+stack slots. Guarded patch branches in the40000000 region are within JAL range;
+original native helper calls into ITCM run unchanged in the emulator.
+
+Allocator40010666 explicitly passes heap id3 to400429b8. Enlarging the two
+existing pitch rings therefore does not take NAM's dedicated id2 DTCM heap.
+The 52,388-byte core state fits each65,536-byte ring. The code is linked after
+native external BSS at400cb880; the parent packaging workflow stages it below
+BSS, copies it before native startup, and reserves heap space. Do not append
+executable code directly at400a1f78: startup clears that region as native BSS.
+
+Native setter40011f56 obtains its limit from subtype count4006adba, which the
+UI port replaces for subtype8. The parameter bank has capacity12; no old
+hardcoded-five-value setter patch is used. See the separate UI test report for
+labels, formatting, defaults, bank publication and native service coverage.
+
+The bounded OCT? telemetry transport uses registered opcode39 handler4007fb52
+(registration400802b0..400802bc). Snapshot fields15..17 are zero placeholders:
+heap total/free/highwater have NOT been mapped or measured on1.2. Fields13/14
+report heap3 descriptor boundaries. Timer frequency, audio counters, effect
+statistics and fault-latch state retain their prior meanings.
+
+Offline validation executes the native initializer/reset, patched dispatch and
+compiled DSP in Unicorn with Xuantie integer instructions emulated. A separate
+host build of the accepted core supplies a48k numerical reference. Tests cover
+32/64-frame blocks, mono, in-place stereo, disabled bypass, 650ms attack, bounds
+canaries, callee-saved registers and persistent self/chain overload latches.
+Timer reads are stubbed: instruction counts are NOT real cycle measurements.
+Physical boot, actual CPU headroom, sound and coexistence with NAM remain untested.

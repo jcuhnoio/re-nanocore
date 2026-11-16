@@ -1,0 +1,60 @@
+UniVibe on NanoCore 1.2
+======================
+
+An offline-validated candidate now replaces Velvet Vibrato (MOD 10) with UNIVIBE,
+keeping SPEED, DEPTH, LEVEL and CHORUS/VIBRATO controls. Physical 1.2 verification
+is still pending. This does not establish audio quality or CPU headroom on hardware.
+
+The existing rate-aware C DSP needs no algorithm change for 48 kHz. Its 116-byte
+state fits the native 12,300-byte Velvet state. The linked code is 1,106 bytes,
+inside the native 1,366-byte processor at 0x400738ea. Separate stereo histories
+remain intact. The retained native caller at 0x4006b568 supplies the same nine
+arguments and context+0x142c8 state pointer as the previous API. The initializer
+at 0x4007377c writes the supplied rate to state + 0; reset at 0x40073810clears the
+custom initialization marker at state + 4, so re-selection reinitializes correctly.
+
+UI code required a real port. Compiler save/restore helpers and local register
+assignments changed. The MOD 10 formatter is 0x4002d196, not the superficially
+similar subtype 10 branch in another effect family. Native-path emulation caught
+that distinction before packaging. The 68-byte enum helper lives at 0x40073dfc,
+inside the replaced DSP body; the 68-byte formatting region needs 64 bytes. No
+shared string is rewritten and no additional effect is sacrificed.
+
+Validation
+----------
+
+* Native counts: 760 block/subtype/style cases; only MOD 10 becomes 4.
+* Native labels: 12 cases; defaults: 13 requested lengths with bounds checks.
+* Native formatting: 20 control/value cases plus 48 unchanged non-target cases.
+* Native enumeration: 912 comparisons, plus two-state conversion checks.
+* RV32 DSP versus host C: 8 cases across 44.1/48/8/96 kHz, mono/stereo/in-place,
+  4,096 frames per case, control transitions, reset, ABI preservation and canaries.
+  All output comparisons were exact in these runs.
+* The retained native initializer, reset and call preparation execute with the
+  patched DSP for 1,024 frames each in 48 kHz mono/stereo. Distinct stereo inputs
+  produce distinct outputs; host comparisons are exact. Only memset is stubbed.
+
+Build and reproduce (offline)
+-----------------------------
+
+  python3 tools/custom_fx/build_vibe_ui.py --version 1.2 --output NEW_UI_DIR
+  python3 tools/custom_fx/build.py --version 1.2 --output NEW_BUILD_DIR
+  python3 tools/custom_fx/package.py \
+    --input analysis/decoder-capture/validated-releases/nanocore-1.2/firmware.bin \
+    --build NEW_BUILD_DIR --effect univibe --label UNIVIBE --output NEW_PACKAGE_DIR
+
+The retained tools/custom_fx/vibe_ui_code-1.2.json is the assembler output used
+by packaging. Rebuilt UI bytes should match that file. Packaging rejects any FIT
+other than the exact decoded stock 1.2 SHA and checks every overwritten byte.
+Its stale internal FIT version says 1.12; that is not the release identity.
+
+Use analysis/decoder-capture/venv/bin/python for emulator scripts:
+check_vibe_ui_target.py OUTPUT_JSON 1.2; test_univibe_target.py BUILD HOST_LIBRARY;
+check_univibe_120.py --firmware PATCHED_FIT --shared HOST_LIBRARY --output OUTPUT_JSON.
+Compile HOST_LIBRARY from firmware/custom-fx/src/univibe.c with
+clang -shared -fPIC -O2 -ffp-contract=off.
+
+Evidence: evidence/firmware-1.2-univibe.json. Local candidate and detailed receipts:
+analysis/compat-1.2/univibe/package-v2 and analysis/compat-1.2/univibe/build.
+No device was flashed during this compatibility work. A fresh confirmation that
+audio is disconnected and ToneCommand closed remains required before DFU.

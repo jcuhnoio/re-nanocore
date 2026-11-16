@@ -14,12 +14,12 @@ in desktop Chrome or Edge. Choose:
 
 * **UniVibe** — replaces Velvet Vibrato (MOD 10) with level, speed, depth and
   a chorus/vibrato switch.
-* **UniVibe + experimental Octaver (1.12 only)** — also replaces the stock Octaver/PITCH
+* **UniVibe + experimental Octaver (1.12 / 1.2)** — also replaces the stock Octaver/PITCH
   slot with OCTAVE: dry, −2/−1/+1/+2 voices, attack and dry processing,
   lowpass, detune, resonance and level.
 
-The installer detects exact supported **1.10, 1.11 and 1.12** builds and patches
-that version. UniVibe supports all three; **Octaver requires 1.12**. It does
+The installer detects exact supported **1.10, 1.11, 1.12 and 1.2** builds and patches
+that version. UniVibe supports all four; **Octaver requires 1.12 or 1.2**. It does
 **not upgrade or downgrade** firmware. Unknown builds
 are rejected. Existing presets using a replaced slot use the new effect.
 
@@ -60,6 +60,9 @@ Validation
    * - 1.12
      - Browser upload, verification and audition
      - Physical flash/readback and audition
+   * - 1.2
+     - Physical bundle flash/readback and user confirmation
+     - Physical flash/readback, timing test and user confirmation
 
 Older Octaver ports were withdrawn after screen corruption during the 1.11
 hardware test. Restoring 1.12 returned the screen to normal.
@@ -74,6 +77,11 @@ The user reported that it sounds “pretty good.”
 
 Explore and build
 -----------------
+
+`Firmware 1.2 analysis <docs/firmware-1.2-analysis.txt>`_: 48 kHz, fast-memory
+changes and NAM A2 Lite. `Experimental 1.2 custom-effect ports
+<docs/firmware-1.2-custom-fx.txt>`_ are available in the Pages installer after physical readback, active-Octaver
+timing checks and user confirmation. NAM coexistence remains unverified.
 
 * `Decoding tools and usage <tools/firmware_decode/README.txt>`_ ·
   `decoder derivation <docs/firmware-decoding.txt>`_

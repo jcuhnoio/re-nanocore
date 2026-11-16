@@ -1,0 +1,43 @@
+{
+  "action": "stock1.2 baseline before custom effects",
+  "stock_device_tested": true,
+  "custom1_2_device_tested": false,
+  "authorization": "User confirmed audio disconnected, ToneCommand closed, and stock1.2 DFU transition",
+  "backup_sha256": "8d4f4ca0bd8ef0b45d6ccb6e24ae2546359b11a6fb9fb07b6dc2f469dad54182",
+  "upload": {
+    "input_sha256": "8d4f4ca0bd8ef0b45d6ccb6e24ae2546359b11a6fb9fb07b6dc2f469dad54182",
+    "output_sha256": "fbab87fc9a5cb729804392104f9bf4e20c92282799a57794cd13f52a68dc6129",
+    "bytes": 868352,
+    "erased_os_relative_sectors": [
+      0,
+      65536,
+      131072,
+      196608,
+      262144,
+      327680,
+      393216,
+      458752,
+      524288,
+      589824,
+      655360,
+      720896
+    ],
+    "exact_match": true,
+    "manifestation_status": "000000000800",
+    "action": "stock-version-upgrade",
+    "version": "1.2"
+  },
+  "protected_final_sector_unchanged": true,
+  "normal_usb_enumeration": true,
+  "usb_audio_sample_rate": 48000,
+  "runtime_ready": true,
+  "old_tonecommand_preset_snapshot": {
+    "success": false,
+    "error": "e",
+    "limitation": "Local older library cannot retrieve/decode stock1.2 snapshot; failure cause not fully established"
+  },
+  "screen_confirmation": "User confirmed screen looks good before custom flash",
+  "preset_write_commands_sent": false,
+  "next_candidate_sha256": "7c2656e9a65ddc204424f881b3f2f47b427d6ad63c6050b5e50cff2172284511",
+  "local_session": "analysis/compat-1.2/device-stock-session"
+}

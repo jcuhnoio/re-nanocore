@@ -1,0 +1,113 @@
+Firmware 1.2: UniVibe and POG-style Octaver compatibility
+======================================================
+
+Status: experimental ports. The combined 1.2 image has passed physical flash,
+full readback, startup and a one-minute active Octaver test at 48 kHz: no
+deadline misses or guard faults, with 16% margin at the recorded whole-chain
+peak. On 2026-11-16 the tester reported “works great” and authorized distribution.
+GitHub Pages now offers UniVibe and the combined bundle for exact firmware 1.2.
+The precise audition chain was not recorded; NAM coexistence remains unverified.
+
+What carries over
+-----------------
+UniVibe replaces Velvet Vibrato (MOD10), retaining SPEED, DEPTH, LEVEL and the
+CHORUS/VIBRATO switch. Its unchanged C DSP accepts the native sample rate and
+retains separate stereo state. The 1.2 native initializer, reset, call boundary,
+controls, defaults, labels and enum paths have been mapped and emulated.
+
+The Octaver replaces FX2/PITCH subtype8. It keeps the accepted 1.12 multirate
+algorithm: dry, -2/-1/+1/+2 voices, always-smoothed dry attack, dry processing,
+lowpass, detune, resonance and level. Upper/dry processing runs at 24 kHz and
+lower voices at 12 kHz when the new native engine supplies 48 kHz. It remains a
+mono effect: stereo input is folded down and the result duplicated to outputs.
+This is a POG-inspired implementation, not the original Electro-Harmonix DSP.
+
+The native effect-family layout and UI save/return conventions changed in 1.2.
+Separate 1.2 wrappers replay the correct native prologues. The actual native
+parameter setter now consults a subtype count function; patching that function
+allows all eleven controls without the old hardcoded setter gate. Shared UI
+paths are checked with both effects installed, including unrelated effects.
+
+Why the old installer cannot be reused unchanged
+------------------------------------------------
+The signed release says 1.2, but its internal FIT label still says 1.12. Routing
+uses the exact four-segment layout, followed by exact segment/header hashes and
+expected-instruction guards. A layout match alone is not an authenticity check.
+
+1.2 has four loaded segments instead of two. Its main initialized segment ends
+at 0x400a1f78, followed by native working buffers. Native code at 0x40025ec4 clears
+0x400a1f80..0x400cb868. Putting the Octaver at the initialized segment's end would
+therefore overwrite working state and later be erased by native initialization.
+
+The experimental packager appends a compact staging payload to seg3, preserving
+its four-segment format. A 64-byte reset shim at 0x400a1f80 copies the payload to
+0x400cb880, executes fence.i, then enters the original startup at 0x40006428.
+Only temporary registers t0-t3 are used. The original entry's argument/saved
+register handling is preserved. Native BSS clearing may then erase the staging
+copy without touching the runtime copy. Heap3's initialized start descriptor is
+advanced beyond the runtime payload. The DTCM NAM model heap (heap2) is unchanged.
+
+The packager verifies all segment checksums and hashes (CRC32/MD5), all guarded
+edits and the final FIT. It preserves bytes after the appended region, including
+the protected partial erase sector starting at OS offset 0xd0000. The reset shim
+and original entry are executed under RV32 emulation with exact payload and
+register comparisons. FIT loading and BSS memset are modeled; SPL and hardware
+cache behavior are not emulated. The combined image has now also passed physical readback and startup; this
+does not establish long-term stability or behavior across every preset.
+
+Performance limits
+------------------
+The unchanged Octaver is still linked in external executable RAM, not ITCM. Its
+48 kHz block budget is about 1.333 ms for 64 frames, versus 1.451 ms at 44.1 kHz.
+Native firmware's fast-memory improvements may free CPU time elsewhere, but
+the first one-minute 1.2 active-Octaver test recorded 16% minimum whole-chain
+margin (current chain only, other enabled slots not yet confirmed). NAM's memory pool is preserved;
+that does not establish enough CPU capacity to run NAM and the Octaver together.
+
+A bounded OCT? diagnostic path is ported for a future hardware timing test.
+Unmapped heap statistics are reported as zero placeholders, not measured zero
+free memory. Native fallback requests and null arguments are tested separately.
+The existing overload guard remains enabled. This work does not add output
+muting during DFU.
+
+Reproduce offline
+-----------------
+Use the retained decoded release at:
+  analysis/decoder-capture/validated-releases/nanocore-1.2/firmware.bin
+
+Build UniVibe and its version-specific UI with build.py/build_vibe_ui.py, then
+package.py, using --version 1.2. See firmware-1.2-univibe.txt for exact commands.
+
+Build the Octaver with:
+  python3 tools/custom_fx/build_octave_device.py \
+    --firmware-version 1.2 --output analysis/your-new-1.2-build \
+    --fft-window 1024 --fft-experiment combined --budget-percent 60 \
+    --fast-phase --multirate-sub --half-rate-upper
+
+Prepare a full OS input from the exact stock or allowlisted UniVibe image and a
+retained physical backup tail. Never infer that a synthetic padded image is a
+fresh device backup. Then:
+  python3 tools/custom_fx/prepare_octave_image.py \
+    --backup FULL_OS_INPUT --build analysis/your-new-1.2-build --output NEW_DIR
+
+Native tests require the retained vendor toolchain/Docker and Unicorn Python
+at analysis/decoder-capture/venv/bin/python. See the individual DSP/UI reports.
+  python -m unittest discover -s tools/custom_fx -p 'test_*.py'
+  python tools/custom_fx/check_octave_120_boot.py \
+    --image NEW_DIR/os-partition.bin --elf BUILD/device.elf --report REPORT.json
+
+Evidence and remaining hardware work
+------------------------------------
+The summary receipt is evidence/firmware-1.2-custom-fx.json. Detailed findings:
+  firmware-1.2-univibe.txt
+  firmware-1.2-octave-dsp.txt
+  firmware-1.2-octave-ui.txt
+
+Before any device test: obtain a fresh explicit DFU confirmation with audio
+physically disconnected and ToneCommand closed. Retain a current full backup
+and known-working 1.12 recovery image. First verify stock 1.2 startup, then test
+the custom image, screen/control behavior, readback integrity and timing before
+reconnecting audio at low volume. Do not overwrite user presets. Test a modest
+chain first, then native amp/cab and NAM separately. The published browser manifests reproduce the physical readback exactly; local
+installer tests cover version detection, switching, restore and protected-tail
+preservation. Further hardware tests should retain the same DFU precautions.

@@ -1,0 +1,36 @@
+{
+  "release": "1.2 custom effects Pages release",
+  "date": "2026-11-16",
+  "user_authorized_publication": true,
+  "user_listening_confirmation": "works great",
+  "work_in_progress": true,
+  "physical_combined_image_sha256": "7c2656e9a65ddc204424f881b3f2f47b427d6ad63c6050b5e50cff2172284511",
+  "browser_reproduces_physical_readback_exactly": true,
+  "browser_test_count": 36,
+  "browser_tests_passed": true,
+  "python_test_count": 33,
+  "python_tests_passed": true,
+  "checks": [
+    "Exact1.2 identification despite internal1.12 label",
+    "UniVibe-only and combined install",
+    "Switch both directions using original backup",
+    "Exact restore including previously claimed tail",
+    "Unknown/corrupt image rejection",
+    "Cross-version install/restore rejection",
+    "Protected final sector preservation",
+    "1.10/1.11 Octaver still rejected"
+  ],
+  "published_artifacts": {
+    "web/patch-1.2.json": "ed4b372e986274f7b90fc10c76401cc62eef433abc4c7a6b0e660096089bc078",
+    "web/octave-1.2.json": "a0152234d5b4663e893afe58be3adc188c341932087a365d4dfeb8b962e10ac3"
+  },
+  "full_vendor_images_published": false,
+  "limitations": [
+    "No worst-case CPU guarantee",
+    "NAM coexistence not verified",
+    "User audition chain not specified",
+    "Browser USB transfer not repeated for1.2; same tested DFU engine and exact physical target"
+  ],
+  "device_evidence": "evidence/firmware-1.2-custom-device.json",
+  "timing_evidence": "evidence/firmware-1.2-octave-active-device.json"
+}

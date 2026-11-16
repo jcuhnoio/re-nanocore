@@ -29,7 +29,7 @@ test('extended schema rejects overlap, malformed append and protected-sector wri
  }
  const p=structuredClone(patch);p.patches[0].afterHex='00000000';await assert.rejects(install(stock,p),/verification|damaged/);
 });
-for(const version of ['1.12'])test(`local ${version}: UniVibe ↔ bundle, stock restore, authentic payload, protected sector`,async t=>{
+for(const version of ['1.12','1.2'])test(`local ${version}: UniVibe ↔ bundle, stock restore, authentic payload, protected sector`,async t=>{
  const root=new URL('../../',import.meta.url);let stock,octave;
  try{stock=await readFile(new URL(`analysis/decoder-capture/validated-releases/nanocore-${version}/firmware.bin`,root));octave=JSON.parse(await readFile(new URL(`../octave-${version}.json`,import.meta.url),'utf8'));}
  catch(e){if(e.code==='ENOENT')return t.skip('Local firmware/port unavailable');throw e;}
@@ -62,4 +62,31 @@ for(const version of ['1.10','1.11'])test(`local ${version}: UniVibe supported, 
  const vibe=await installSelected(stock,[patch],'UNIVIBE');
  for(const current of [stock,vibe])await assert.rejects(installSelected(current,[patch],'UNIVIBE_OCTAVE',stock),/requires firmware 1.12/);
  assert.deepEqual(stock,before);assert.deepEqual(await prepareRestore(vibe,stock,patch),stock);
+});
+
+test('1.2 bundle installs and restores independently of the shared internal 1.12 label', async t=>{
+ const files=['patch.json','patch-1.11.json','patch-1.12.json','octave-1.12.json','patch-1.2.json','octave-1.2.json'];
+ const patches=await Promise.all(files.map(async f=>JSON.parse(await readFile(new URL('../'+f,import.meta.url),'utf8'))));
+ const patch=patches.find(p=>p.firmwareVersion==='1.2'&&p.effect==='UNIVIBE_OCTAVE');
+ assert.equal(patch.imageVersion,'1.12');
+ assert.equal(patch.hardwareTested,true);
+ assert.equal(patch.workInProgress,true);
+ let stock,live;
+ try {
+  stock=new Uint8Array(await readFile(new URL('../../analysis/compat-1.2/device-stock-session/deploy/readback.bin',import.meta.url)));
+  live=new Uint8Array(await readFile(new URL('../../analysis/compat-1.2/device-custom-session/deploy/readback.bin',import.meta.url)));
+ } catch(e) {if(e.code==='ENOENT')return t.skip('Physical readbacks intentionally remain local');throw e;}
+ assert.equal((await identifyImage(stock,patches)).version,'1.2');
+ const output=await installSelected(stock,patches,'UNIVIBE_OCTAVE');
+ assert.deepEqual(output,live);
+ assert.equal(await sha256(output),'7c2656e9a65ddc204424f881b3f2f47b427d6ad63c6050b5e50cff2172284511');
+ assert.deepEqual(await prepareRestore(live,stock,patch),stock);
+ for(const wrong of patches.filter(p=>p.firmwareVersion==='1.12'))await assert.rejects(validateImage(live,wrong));
+});
+
+test('1.2 extended schema works without vendor fixtures',async()=>{
+ const {stock,out,patch}=await fixture();patch.firmwareVersion='1.2';patch.imageVersion='1.12';
+ assert.equal((await identifyImage(stock,[patch])).version,'1.2');
+ assert.deepEqual(await installSelected(stock,[patch],'UNIVIBE_OCTAVE'),out);
+ assert.deepEqual(await prepareRestore(out,stock,patch),stock);
 });

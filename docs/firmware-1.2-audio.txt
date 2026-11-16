@@ -1,0 +1,98 @@
+NanoCore 1.2: 48 kHz audio and fast-memory changes
+=================================================
+
+Scope: static comparison of the authenticated 1.2 package with 1.12. No USB,
+DFU, audio playback or physical timing tests were performed for this analysis.
+The 1.2 package still carries an internal FIT image_version of 1.12; addresses
+below refer to the NEW package, not to the older 1.12 release. Its four-segment
+layout invalidates old two-segment custom-effect patch assumptions.
+
+48 kHz is selected throughout the engine, not just advertised to the host
+-----------------------------------------------------------------------
+At 0x40014632..0x4001463c, engine initialization stores integer 48000 in
+0x30104128. At 0x400148e6 it loads float 48000 from 0x400889d4 and supplies it
+to effect initializers. In 1.12 the analogous engine initialization stored
+44100 in 0x3004f690 and used float 44100 at 0x4009678c.
+
+At 0x40014c80..0x40014ca0, 1.2 requests:
+  I2S master-clock setup: 48000 Hz, multiplier 256, function 0x4003ff3e.
+  I2S serial-clock setup: 48000 Hz, multiplier 64, function 0x4003ffd0.
+  Shared audio-state sample-rate update: 48000 Hz, function 0x40029630.
+The first two retain the former clock-divider algorithm. Clock-family selector
+0x4003fd3a chooses 22.5792 MHz for 11025/22050/44100 and 24.576 MHz otherwise.
+That selector already existed in 1.12 at 0x4003c248. Thus the SoC clock driver
+already supported the 48 kHz clock family; the application now selects it.
+For the requested 48 kHz configuration, those multipliers imply 12.288 MHz MCLK
+and 3.072 MHz BCLK. These are configured values, not measurements at pins.
+
+The codec setup is more than a replacement constant. The first 72-byte startup
+register table is byte-identical between 1.12 (0x40096790) and 1.2 (0x400889d8).
+After applying it, new code at 0x40014cf0..0x40014e38 reads the peripheral clock,
+requires it to be in 24..25 MHz, computes round((768000 * 2^32)/clock), and writes
+codec register values including 3=0x0053, 4=0x1801, the computed fractional and
+integer fields in registers 10/11/6, 7=0x8010, 8=0xc000, 9=0x6940 and 30=0x2000.
+After a delay it writes 3=0x8053 and 29=0x200a, then reads registers 3,29,88 and
+rejects mismatches in the first two. At 24.576 MHz the computed value is
+0x08000000: integer field 8 and fractional field zero. This strongly indicates
+explicit codec FLL configuration. The register names/bit meanings have not
+been independently tied to a confirmed physical codec part in this pass.
+The older engine does not contain this additional programming sequence.
+
+USB audio changes with the engine
+---------------------------------
+Parsed complete USB configuration descriptors, rather than isolated byte hits:
+  1.12: configuration 0x40099a1a, 302 bytes.
+  1.2:  configuration 0x40088bda, 311 bytes.
+Both advertise stereo, 16-bit PCM in 2-byte subframes. Both playback and record
+format descriptors change their sole advertised rate from 44100 to 48000.
+New descriptors are at 0x40088c55 and 0x40088c92.
+
+Playback endpoint 0x02 changes attributes from 0x09 (adaptive isochronous) to
+0x05 (asynchronous isochronous), and its synchronization endpoint becomes 0x82.
+A new three-byte feedback endpoint 0x82, attributes 0x11, appears at 0x40088c70.
+Audio packet capacity grows from 184 to 196 bytes. Recording endpoint 0x81
+remains asynchronous with the enlarged capacity. The new rate getter at
+0x40016774 returns 48000 for audio endpoint IDs 0x02 and 0x81.
+This is consistent with native 48 kHz transport and host feedback following
+the device clock. Feedback runtime accuracy and long-duration USB stability
+remain unmeasured.
+
+Fast memory and the real-time budget
+------------------------------------
+New startup instructions explicitly enable instruction TCM at 0x30040000
+(CSR mitcmcr/0x7f9, write at 0x4000005e) and data TCM at 0x30060000
+(CSR mdtcmcr/0x7f8, write at 0x4000006e). The analogous 1.12 startup proceeds
+directly to BSS clearing at this point. New FIT load regions are:
+  0x30040000: 34160 initialized bytes, instruction TCM.
+  0x30060000:  6240 initialized bytes, data TCM.
+  0x30080000: 50220 initialized bytes, additional code/data region.
+  0x40000000: 663416 initialized bytes, main code/data region.
+These sizes describe initialized payloads, not memory capacity or BSS usage.
+
+The audio block worker remains in main code at 0x4001140a, but directly invokes
+the DMA-half processor at 0x30044580 in instruction TCM. The 1.12 equivalents
+were worker 0x4000b698 and DMA-half processor 0x40009d20, both in main code.
+The new vector entry is also in instruction TCM (0x30046080 versus 0x40000580).
+This establishes deliberate relocation of real-time code, not merely a guess
+based on four FIT segments. It plausibly improves latency and execution
+consistency; exact speedup and NAM-plus-effects headroom need physical timing.
+
+The configured DMA block word remains 128 (new 0x3008ab38; old 0x3004ac78).
+The half callback divides it by two: 64 frames. At 48 kHz the corresponding
+budget is 1.333333 ms, versus 1.451247 ms at 44.1 kHz: 8.125% less time per
+callback and 8.84% more callbacks per second. Raising sample rate consumes
+capacity; the fast-memory/engine changes are separate ways of recovering it.
+
+Evidence and limitations
+-------------------------
+See evidence/firmware-1.2-audio.json for source digests and instruction/data
+addresses. Local full disassembly and descriptor extraction are retained under
+analysis/version-1.2/audio/. REA directly corroborates the clock-family selector
+(ev_dbf896f114f66b423ba03d921b39baf1544b3a07e4b47cb7ad99b85e9e380263).
+Old clock selector evidence:
+ev_b96947f2b115f2deebec1749c911eddb1451f99f94eac170c8c47cd692c15512.
+Some new REA pseudocode is truncated because shared compiler register-save
+helpers were misclassified as not returning. Those exports are not treated as
+complete function analyses; the engine and FLL findings above use the retained
+vendor disassembly and parsed bytes instead. Seed names are analyst-provided,
+not recovered vendor symbols. No claim of physical 1.2 operation is made here.

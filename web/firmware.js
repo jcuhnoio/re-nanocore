@@ -18,7 +18,7 @@ export async function sha256(value) {
   return Array.from(new Uint8Array(result), b => b.toString(16).padStart(2, '0')).join('');
 }
 function schema(p) {
-  if (p?.schemaVersion !== 1 || !['1.10','1.11','1.12'].includes(p.firmwareVersion) ||
+  if (p?.schemaVersion !== 1 || !['1.10','1.11','1.12','1.2'].includes(p.firmwareVersion) ||
       !Number.isSafeInteger(p.osSize) || !Number.isSafeInteger(p.fitSize) ||
       p.fitSize <= 0 || p.fitSize > p.osSize || !p.segments?.length ||
       !p.patches?.length || !p.hashes?.length) throw new Error('Unsupported patch manifest.');
@@ -54,7 +54,7 @@ function schema(p) {
 // original/installed prefixes independently; never normalize that new code out.
 function extendedSchema(p) {
   const integer=Number.isSafeInteger, digest=s=>typeof s==='string' && /^[0-9a-f]{64}$/.test(s);
-  if(p?.schemaVersion!==2 || p.firmwareVersion!=='1.12' || p.effect!=='UNIVIBE_OCTAVE' ||
+  if(p?.schemaVersion!==2 || !['1.12','1.2'].includes(p.firmwareVersion) || p.effect!=='UNIVIBE_OCTAVE' ||
      ![p.osSize,p.stockFitSize,p.installedFitSize,p.protectedOffset].every(integer) ||
      !(0<p.stockFitSize && p.stockFitSize<p.installedFitSize && p.installedFitSize<=p.protectedOffset && p.protectedOffset<=p.osSize) ||
      !digest(p.stockNormalizedSha256) || !digest(p.installedNormalizedSha256) ||
@@ -135,7 +135,7 @@ export async function identifyImage(value, patches) {
   // Repeated manifests or conflicting versions/install identities stay errors.
   if(matches.length>1 && matches.every(m=>m.kind==='stock' && m.version===matches[0].version) &&
      new Set(matches.map(m=>m.effect)).size===matches.length)return matches.find(m=>m.effect==='UNIVIBE')||matches[0];
-  if (matches.length !== 1) throw new Error('Unknown, damaged or ambiguous firmware. Supported exact builds: 1.10, 1.11 and 1.12; nothing will be written.');
+  if (matches.length !== 1) throw new Error('Unknown, damaged or ambiguous firmware. Supported exact builds: 1.10, 1.11, 1.12 and 1.2; nothing will be written.');
   return matches[0];
 }
 
@@ -143,7 +143,7 @@ export async function identifyImage(value, patches) {
  * tail bytes claimed by an extended FIT. Never synthesize a stock backup. */
 export async function installSelected(current,patches,effect,originalBackup){
   const state=await identifyImage(current,patches);
-  if(effect==='UNIVIBE_OCTAVE' && state.version!=='1.12')throw Error('The experimental Octaver requires firmware 1.12. Nothing was written. UniVibe alone supports this version.');
+  if(effect==='UNIVIBE_OCTAVE' && !['1.12','1.2'].includes(state.version))throw Error('The experimental Octaver requires firmware 1.12 or 1.2. Nothing was written. UniVibe alone supports this version.');
   const candidates=patches.filter(p=>p.firmwareVersion===state.version && (p.effect||'UNIVIBE')===effect);
   if(candidates.length!==1)throw Error('Selected effect is unavailable for this exact firmware.');
   if(state.kind==='installed' && state.effect===effect)return bytes(current).slice();

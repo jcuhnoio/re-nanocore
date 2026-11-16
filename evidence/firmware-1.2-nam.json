@@ -1,0 +1,178 @@
+{
+  "package_sha256": "0bf64603acca9d68167f3d9e5f4ebc2568c748101350008d1e6619ea4d2b103d",
+  "scope": "static native instructions and exact upstream architecture fingerprint; no device operations",
+  "validator": "0x40077658",
+  "validator_rea_evidence": "ev_f637b03cd9a3cb50addda13185c7d0988f4f631a1cd99c0aff0ba9ce52cea363",
+  "packed_magic": "NA2L",
+  "model_sample_rate": 48000,
+  "weights": 1871,
+  "payload_bytes": 7484,
+  "blob_bytes": 7516,
+  "runtime_bytes": 115916,
+  "runtime_alignment": 32,
+  "block_frames": 64,
+  "prewarm_frames": 6400,
+  "dilations": [
+    1,
+    3,
+    7,
+    17,
+    41,
+    101,
+    239,
+    1,
+    3,
+    7,
+    17,
+    41,
+    101,
+    239,
+    1,
+    13,
+    1,
+    3,
+    7,
+    17,
+    41,
+    101,
+    239
+  ],
+  "kernel_sizes": [
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    15,
+    15,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6,
+    6
+  ],
+  "channels": 3,
+  "official_reference_commit": "d3189ed482ded880c128bf312941266c4fa5ceec",
+  "uncertainties": [
+    "Host converter not located",
+    "Numerical equivalence not tested",
+    "Physical CPU timing not measured"
+  ],
+  "validation": {
+    "scope": "Native validator and its CRC/helper code executed offline in Unicorn; two Xuantie instruction sites emulated. No firmware/device operations; synthetic weights, no model audio validation.",
+    "package_sha256": "0bf64603acca9d68167f3d9e5f4ebc2568c748101350008d1e6619ea4d2b103d",
+    "entry": "0x40077658",
+    "callee_saved_and_stack_preserved": true,
+    "metadata_output_guard_preserved": true,
+    "cases": {
+      "valid": {
+        "return": 0,
+        "metadata_hex": "0100200080bb00004f0700003c1d0000aca1c0ca01000000",
+        "custom_instructions": {
+          "0x40077634": "0x80e5460b",
+          "0x40077640": "0x7a78b"
+        }
+      },
+      "44100": {
+        "return": -3,
+        "metadata_hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+        "custom_instructions": {}
+      },
+      "wrong_weight_count": {
+        "return": -3,
+        "metadata_hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+        "custom_instructions": {}
+      },
+      "nan_weight_valid_crc": {
+        "return": -5,
+        "metadata_hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+        "custom_instructions": {
+          "0x40077634": "0x80e5460b",
+          "0x40077640": "0x7a78b"
+        }
+      },
+      "bad_crc": {
+        "return": -4,
+        "metadata_hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+        "custom_instructions": {
+          "0x40077634": "0x80e5460b",
+          "0x40077640": "0x7a78b"
+        }
+      },
+      "wrong_size": {
+        "return": -3,
+        "metadata_hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+        "custom_instructions": {}
+      },
+      "null_input": {
+        "return": -1,
+        "metadata_hex": "a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5",
+        "custom_instructions": {}
+      }
+    }
+  },
+  "files": {
+    "analysis/version-1.2/nam/check_validator.py": "dc4b60684a067adfe0a074f68eb9ae7050baff41ba9490275857b4dc719f6363",
+    "analysis/version-1.2/nam/validator-tests.json": "72fcbf4cad6c77a899bc79ff48c43b6495c3b5513939aef42c1108353e2e4c04",
+    "analysis/version-1.2/nam/a2_fast.h": "3268bda1bf580af7f9f269c8723bfc7424011d3a8430946c58d4993672074e58",
+    "analysis/version-1.2/nam/a2_fast.cpp": "772a772f76e4ae8233488238009271109cd30828cd938bd3eaf6443eda70ee48"
+  },
+  "functions": {
+    "0x40077658": "NA2L strict validator",
+    "0x4007761c": "reflected CRC32",
+    "0x4007779e": "required runtime allocation size including alignment",
+    "0x400777a6": "32-byte aligned runtime initialization",
+    "0x400778d8": "validate and load NA2L",
+    "0x400772b4": "float32 weight loader/reordering",
+    "0x40077880": "100x64 zero-input prewarm",
+    "0x40077948": "ready-checked fixed block wrapper",
+    "0x30080890": "64-frame A2-Lite network processing",
+    "0x3008033a": "first layer",
+    "0x30080000": "remaining layer setup",
+    "0x30080aa8": "eight-time-sample unrolled kernel"
+  },
+  "official_reference_urls": [
+    "https://github.com/sdatkinson/NeuralAmpModelerCore/blob/d3189ed482ded880c128bf312941266c4fa5ceec/NAM/wavenet/a2_fast.h",
+    "https://github.com/sdatkinson/NeuralAmpModelerCore/blob/d3189ed482ded880c128bf312941266c4fa5ceec/NAM/wavenet/a2_fast.cpp"
+  ],
+  "evidence_type": "Static firmware disassembly, REA seeded pseudocode, bounded native-validator emulation and primary-source architectural comparison. No hardware timing or numerical model-audio validation.",
+  "rea_evidence": {
+    "0x400777a6": "ev_ef9e7ec3dd8589aef772ae3963f11d854d134f257489cf8c504de36c4781d663",
+    "0x40077948": "ev_183908329a96f96171b8a5fe7b19ae49633d9d824c4fd22342d8390a9af502e9",
+    "0x40077880": "ev_af04ffcab39cfce82e2f9542aa596a3dfec28b5fb9bf0fff5b96078b6cb5375e",
+    "0x400772b4": "ev_96fed405ac947f874a09c07e8b3bdafc2f430a596d260cbbe8b92e9b62e1bd8e",
+    "0x30080aa8": "ev_a15e50056caea0684ebf2094c219eb880964e3eb1308dee305d558860a28bd9d",
+    "0x30080890": "ev_cd014edf5563e91d8a581a5dde9e90e672b849e7da61cfd541d87b71c9b4e04f",
+    "0x400778d8": "ev_975938335a1aee274e8869abbc7b600e3c45e9f1db6773f36bff8b57e1e6b0e0",
+    "0x30080000": "ev_285451ea06f1553a90869ad5610d09fba058aa90e3bc5c880681a8f040c34ed1",
+    "0x3008033a": "ev_d474d792e9cfc8fd8d185cba62721a07e73ae340c1e1ebd4d98fa45e63323f42",
+    "0x40077658": "ev_f637b03cd9a3cb50addda13185c7d0988f4f631a1cd99c0aff0ba9ce52cea363"
+  },
+  "leaky_relu_slope": 0.009999999776482582,
+  "state_allocation": {
+    "startup": "0x40010bcc",
+    "aligned_allocator": "0x400428e6",
+    "heap_allocator": "0x400429b8",
+    "allocation_alignment": 64,
+    "heap_id": 2,
+    "descriptor_address": "0x400a1e08",
+    "name": "heap_model",
+    "start": "0x30061860",
+    "end_exclusive": "0x30080000",
+    "bytes": 124832,
+    "pointer_storage": "0x400a1f88",
+    "single_owner_callback": "0x4000f146",
+    "basis": "Native startup arguments, initialized descriptor and heap-ID dispatcher, not live runtime observation"
+  }
+}

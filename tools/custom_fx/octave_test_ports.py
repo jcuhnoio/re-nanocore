@@ -8,6 +8,12 @@ def run_ported(path,build,namespace):
     version=json.loads((Path(build)/'build.json').read_text()).get('firmware_version','1.12')
     if version=='1.12':return
     source=Path(path).read_text()
+    if version=='1.2':
+        from octave_120 import port_test_source
+        source=port_test_source(source)
+        scope=dict(namespace,_OCTAVE_PORTED=True,_PORT_VERSION=version,port_source=port_source)
+        exec(compile(source,str(path),'exec'),scope)
+        raise SystemExit(0)
     source=source.replace("s=s[s.index(' def run('):s.index(' counts=0')]", "s=s[s.index(' def run('):s.index(' counts=0')];s=port_source(s,_PORT_VERSION)")
     source=source.replace('nanocore-1.12/firmware.bin',f'nanocore-{version}/firmware.bin')
     source=source.replace('0xd000', '0xc000' if version=='1.11' else '0x9000')

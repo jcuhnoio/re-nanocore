@@ -15,7 +15,7 @@ FLAGS = ['-march=rv32imafdcpzpsfoperand_xtheade', '-mabi=ilp32d',
          '-Os', '-std=c11', '-ffreestanding', '-fno-builtin',
          '-ffunction-sections', '-fdata-sections', '-msmall-data-limit=0',
          '-mno-relax', '-ffp-contract=off', '-Wall', '-Wextra', '-Werror']
-SITES = {'1.10': 0x400720ae, '1.11': 0x400747ee, '1.12': 0x40074e5e}
+SITES = {'1.10': 0x400720ae, '1.11': 0x400747ee, '1.12': 0x40074e5e, '1.2': 0x400738ea}
 
 
 def build(out, version):
@@ -34,7 +34,7 @@ def build(out, version):
                'header_sha256': hashlib.sha256((ROOT/'firmware/custom-fx/include/nc_fx.h').read_bytes()).hexdigest(),
                'artifacts': {}}
     for effect, address, entry, limit in [
-        ('gain', SITES[version], 'nc_fx_velvet_gain', 1392),
+        ('gain', SITES[version], 'nc_fx_velvet_gain', 1366 if version == '1.2' else 1392),
         ('univibe', SITES[version], 'nc_fx_univibe', 1298),
         ('chorus', 0x40080000, 'nc_fx_chorus', 0x10000)]:
         # Chorus address is a REVIEW address only, not a proven injection site.

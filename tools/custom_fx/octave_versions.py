@@ -14,6 +14,9 @@ def map_address(address,version):
 def port_source(source,version,strict=False):
     p=profile(version)
     if version=='1.12':return source
+    if version=='1.2':
+        from octave_120 import port_source as port120
+        return port120(source,strict=strict)
     if version=='1.10':
         from octave_110 import port_source as port110
         source=port110(source)

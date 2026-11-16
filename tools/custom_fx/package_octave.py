@@ -53,6 +53,10 @@ def elf_payload(blob, code_base=CODE_BASE):
 
 def package(original, elf, hooks):
     require(len(original)==OS_SIZE,'Complete physical OS backup required')
+    from firmware_identity import identify_firmware
+    if identify_firmware(original) == '1.2':
+        from package_octave_120 import package as package120
+        return package120(original, elf, hooks)
     fit=extract_fit(original);locations=property_offsets(original)
     version={'1.10':'1.10','1.11b':'1.11','1.12':'1.12'}.get(fit['image_version'])
     require(version is not None,'Unsupported octave firmware version')

@@ -19,7 +19,7 @@ def check(build, shared):
     lib=c.CDLL(str(Path(shared).resolve()));fn=lib.nc_fx_univibe
     fn.argtypes=[c.c_void_p]*5+[c.c_uint32,c.c_void_p,c.c_uint32,c.c_void_p]
     cases=[]
-    for stereo,inplace,fs in [(0,False,44100),(1,False,44100),(1,True,44100),(1,False,8000),(1,False,96000)]:
+    for stereo,inplace,fs in [(0,False,44100),(1,False,44100),(1,True,44100),(0,False,48000),(1,False,48000),(1,True,48000),(1,False,8000),(1,False,96000)]:
         u=Uc(UC_ARCH_RISCV,UC_MODE_RISCV32);u.mem_map(0x40000000,0x100000);u.mem_map(0x30000000,0x100000);u.mem_write(entry,code)
         state=0x30010000;left=0x30020000;right=0x30021000;ol=left if inplace else 0x30022000;orr=right if inplace else 0x30023000
         param=0x30024000;mode=0x30025000;stack=0x300f0000;stop=0x400ffff0

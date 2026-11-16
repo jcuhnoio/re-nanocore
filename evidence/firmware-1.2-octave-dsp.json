@@ -1,0 +1,43 @@
+{
+  "firmware_version": "1.2",
+  "firmware_sha256": "c45b9d874c051a861bbec6765a288f923e5afe766fcac50d45bf56b95b2a954a",
+  "evidence_kind": "retained vendor assembly plus offline native-code execution",
+  "assembly": "analysis/version-1.2/audio/firmware.asm",
+  "address_profile": "tools/custom_fx/octave_versions.json#1.2",
+  "native_sample_rate": 48000,
+  "algorithm": "accepted multirate sub / half-rate upper unchanged",
+  "state_bytes": 52388,
+  "ring_bytes_per_family": 65536,
+  "heap_id": 3,
+  "nam_heap_id": 2,
+  "stereo_processing": "sum L/R to mono, duplicated output; bypass preserves stereo",
+  "checks": [
+    {
+      "elf_sha256": "925c35ee77503c1656ffc07cc23db7a8f7c9123dc0b3ea4ec5cf25e64c75e593",
+      "compared_samples": 4096,
+      "attack_ms": 0.0,
+      "max_host_reference_error": 2.2351741790771484e-08,
+      "callee_saved_registers_and_canaries": true,
+      "overload_latch_checks": true
+    },
+    {
+      "elf_sha256": "925c35ee77503c1656ffc07cc23db7a8f7c9123dc0b3ea4ec5cf25e64c75e593",
+      "compared_samples": 2048,
+      "attack_ms": 650.0,
+      "max_host_reference_error": 6.984919309616089e-10,
+      "callee_saved_registers_and_canaries": true,
+      "overload_latch_checks": true
+    }
+  ],
+  "limitations": [
+    "No physical operations or timing measurement",
+    "Native heap statistics snapshot15..17 unresolved, reported as zero placeholders",
+    "Hardware boot and NAM coexistence not validated"
+  ],
+  "build": "analysis/compat-1.2/octave-dsp/build-c/build.json",
+  "hook_guards": {
+    "count": 14,
+    "all_byte_mutations_rejected": true,
+    "report": "analysis/compat-1.2/octave-dsp/guard-check.json"
+  }
+}

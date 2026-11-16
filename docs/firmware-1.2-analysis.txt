@@ -1,0 +1,98 @@
+NanoCore 1.2: what changed and how 48 kHz + NAM fit
+=================================================
+
+Analyzed 2026-11-13. The user-provided package was moved from Downloads to
+firmware-archive/nanocore-1.2.fmu. Its SHA256 matches the publisher's release:
+0bf64603acca9d68167f3d9e5f4ebc2568c748101350008d1e6619ea4d2b103d.
+The decoder verifies both publisher signatures, payload CRC and all segment
+hashes. Decoded image/analysis ELF: analysis/decoder-capture/validated-releases/
+nanocore-1.2/. No device operations were performed.
+
+Main answer
+-----------
+They did not simply turn up the sample-rate constant and add a generic NAM
+interpreter. The build selects the existing 48 kHz clock family, adds explicit
+codec clock programming/readback and asynchronous USB playback feedback,
+enables instruction/data tightly coupled memory, moves the DMA-half processor
+into instruction TCM, and adds a specialized three-channel NAM A2-Lite engine.
+The exact contribution of each optimization to CPU headroom is not measured.
+
+48 kHz
+------
+- Engine initialization sets both integer and float sample rates to 48000.
+- I2S requests 256 * 48000 MCLK and64 * 48000 BCLK: 12.288 and 3.072 MHz respectively.
+  The driver already supported the 24.576 MHz source-clock family in 1.12.
+- New codec programming derives clock fields, writes registers and checks
+  readback. FLL interpretation is strongly supported; physical codec identity
+  and register naming were not independently confirmed in this pass.
+- USB stereo 16-bit PCM playback and recording advertise 48000, replacing 44100.
+  Playback changes adaptive→asynchronous and adds an explicit feedback endpoint.
+- Callback remains 64 frames: 1.333 ms deadline rather than 1.451 ms. The change
+  increases work per second by 8.84%; larger buffering is not the explanation.
+
+NAM
+---
+The firmware accepts a fixed NA2L binary: 32-byte header + 1871 float32 weights,
+7516 bytes total, 48000 Hz required, CRC32 and finite-value checks. Native-code
+emulation passed seven acceptance/rejection cases, including rejection of
+44100 Hz, wrong weight count, NaN, incorrect CRC, incorrect size and NULL.
+
+Its architecture matches A2-Lite: 23 layers, 3 channels, kernel widths 6/15,
+LeakyReLU 0.01 and a 16-tap output head. This is a convolutional WaveNet path,
+separate from the retained DDPB model path. It is not support for arbitrary
+NAM architectures, A2-Full or LSTM captures.
+
+The implementation repacks weights on load, uses 64-sample blocks and unrolls
+convolution across 8 time samples with scalar float32 fused multiply-adds.
+It prewarms with 6400 zero-input samples. Weights are small, but state/history/
+scratch consumes 115916 bytes, plus 31 bytes of allocation alignment slack.
+No weight quantization was found in this path. The host conversion workflow
+and numerical/audio equivalence to upstream NAM have not been tested.
+
+Memory layout and custom-effect implications
+--------------------------------------------
+New FIT initialized regions:
+  0x30040000   34160 bytes  startup enables instruction TCM here
+  0x30060000    6240 bytes  startup enables data TCM here
+  0x30080000   50220 bytes  additional code/data including NAM kernels
+  0x40000000  663416 bytes  main code/data
+
+The audio DMA-half routine moves from 0x40009d20 to 0x30044580, in enabled ITCM.
+NAM kernels at 0x30080000 are a separate region: do not call them ITCM merely
+because both addresses begin 0x300. The kernel region's exact physical/cache
+behavior remains unresolved. The model allocator uses
+heap ID 2, named heap_model, at 0x30061860..0x30080000 inside enabled data TCM.
+Its 124832-byte span holds the NAM allocation and alignment overhead. This
+places the model's weights, histories and scratch in DTCM. FIT sizes exclude
+BSS and dynamically allocated state.
+
+This is a useful direction for optimizing our Octaver: reproduce the new
+memory-placement/ABI understanding before considering a 1.2 port. Current
+UniVibe/Octaver patches do not support 1.2. An offline check confirms the current
+browser engine rejects this new image, even though its internal FIT version
+still says 1.12; the signed package correctly says 1.2. No patch was flashed.
+
+Other release changes
+---------------------
+Official notes also describe stereo effects, ping-pong on all delays, ten synth
+voices, and Peak Comp, Parallel Comp, Classic Wah, Retro Wah and Bass Wah.
+New labels for these features are present in the binary; their complete signal paths and
+behavior have not been independently verified in this pass. ToneCommand 1.3.5
+is the published companion; the local 1.3.3 app was left untouched.
+
+Detailed findings and evidence
+-------------------------------
+- docs/firmware-1.2-audio.txt and evidence/firmware-1.2-audio.json
+- docs/firmware-1.2-nam.txt and evidence/firmware-1.2-nam.json
+- docs/firmware-1.2-release.txt: official claims and sources
+- evidence/firmware-1.2-package.json: identity, layout, decoder checks,
+  analysis language hashes and limitations
+- analysis/version-1.2/: retained disassembly, REA records/bundles, selected
+  pseudocode, release snapshots and executable validator probe
+
+Evidence boundary: firmware machine code/data, parsed USB descriptors and bounded
+validator emulation establish the claims above. No 1.2 physical timing, power,
+clock-pin, uploaded-model or listening test was performed. Some decompiler
+exports truncate at compiler save helpers falsely marked noreturn; affected
+claims rely on vendor assembly, not the incomplete pseudocode. Exact runtime
+headroom, stereo-chain cost and potential Octaver performance remain unknown.

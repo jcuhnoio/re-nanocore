@@ -1,0 +1,98 @@
+{
+  "firmware_release": "1.2",
+  "internal_fit_label": "1.12",
+  "status": "hardware flash/readback, active Octaver timing and user listening confirmation; released as work in progress",
+  "device_tested": true,
+  "pages_enabled": true,
+  "candidate": "analysis/compat-1.2/packaging/combined-c/os-partition.bin",
+  "candidate_sha256": "7c2656e9a65ddc204424f881b3f2f47b427d6ad63c6050b5e50cff2172284511",
+  "octaver_elf_sha256": "925c35ee77503c1656ffc07cc23db7a8f7c9123dc0b3ea4ec5cf25e64c75e593",
+  "source": {
+    "stock_fit_sha256": "c45b9d874c051a861bbec6765a288f923e5afe766fcac50d45bf56b95b2a954a",
+    "tail_source": "analysis/custom-fx/stock-1.12-session/backup/os-partition.bin",
+    "tail_source_sha256": "8d2fdbb5ccc9694a4dcf07dd79226493e75629ef9ef66898e850b837afa7b85d",
+    "offline_only": true,
+    "note": "Retained physical backup tail, not a fresh device read. Revalidate before any flash."
+  },
+  "packaging": {
+    "source_kind": "univibe",
+    "code_base": "0x400cb880",
+    "old_heap_start": "0x400cb868",
+    "new_heap_start": "0x400d4d00",
+    "old_seg3_size": 663416,
+    "new_seg3_size": 701504,
+    "appended_file_range": [
+      759672,
+      797760
+    ],
+    "all_fit_hashes_verified": true,
+    "bytes_after_appended_region_preserved": true,
+    "protected_final_sector_preserved": true
+  },
+  "boot_emulation": {
+    "image_sha256": "7c2656e9a65ddc204424f881b3f2f47b427d6ad63c6050b5e50cff2172284511",
+    "elf_sha256": "925c35ee77503c1656ffc07cc23db7a8f7c9123dc0b3ea4ec5cf25e64c75e593",
+    "payload_sha256": "98cb806310fc345182112847af767cc29fefbe084707a65c1754ebe4c5e8f068",
+    "payload_bytes": 38016,
+    "reset_jump_and_relocation_executed": true,
+    "native_entry_executed": true,
+    "startup_registers_preserved": true,
+    "modeled_native_bss_clear_preserves_payload": true,
+    "heap3_start": "0x400d4d00",
+    "model_heap2_unchanged": true,
+    "elf_sections": [
+      {
+        "name": ".text",
+        "address": 1074575488,
+        "size": 36588,
+        "type": 1,
+        "flags": 6
+      },
+      {
+        "name": ".data",
+        "address": 1074612080,
+        "size": 1080,
+        "type": 1,
+        "flags": 3
+      },
+      {
+        "name": ".bss",
+        "address": 1074613160,
+        "size": 324,
+        "type": 8,
+        "flags": 3
+      }
+    ],
+    "device_tested": false,
+    "limitations": [
+      "SPL loading modeled from parsed FIT, not executed",
+      "BSS memset modeled from statically observed bounds",
+      "No hardware cache/peripheral or real-time validation"
+    ]
+  },
+  "ui_evidence": "evidence/firmware-1.2-octave-ui.json",
+  "dsp_evidence": "evidence/firmware-1.2-octave-dsp.json",
+  "univibe_evidence": "evidence/firmware-1.2-univibe.json",
+  "regression": {
+    "custom_fx_unittest_count": 33,
+    "custom_fx_unittest_passed": true,
+    "accepted_1_12_elf_rebuilt_identically": true,
+    "accepted_1_12_elf_sha256": "3719a351911c18e841ac8fbc28a485a129cad27fb596fc119f71c9b0d5848fe5"
+  },
+  "limitations": [
+    "Octaver folds stereo to mono; UniVibe preserves separate stereo state",
+    "Custom Octaver code remains outside ITCM",
+    "Native heap telemetry fields15..17 are zero placeholders, not measurements",
+    "Exact stored physical backup tail used offline; fresh backup/readback required before flash",
+    "Exact user audition chain and NAM coexistence not established; no worst-case CPU guarantee"
+  ],
+  "next_step": "Fresh explicit audio-disconnected/ToneCommand-closed confirmation before each DFU transition; stock1.2 baseline first, custom candidate next; never overwrite presets",
+  "device_evidence": "evidence/firmware-1.2-custom-device.json",
+  "active_octave_processing_tested": true,
+  "active_octave_evidence": "evidence/firmware-1.2-octave-active-device.json",
+  "user_confirmation": {
+    "date": "2026-11-16",
+    "quote": "works great, distribute this patch for 1.2 on the github site",
+    "scope": "User confirms current combined installation; exact audition chain and NAM use not specified"
+  }
+}

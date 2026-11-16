@@ -12,10 +12,11 @@ def build(output, version="1.10"):
  source='vibe_ui.S'; linker='/work/tools/custom_fx/vibe_ui.ld'; defines=[]
  if version != '1.10':
   config=json.loads((ROOT/'tools/custom_fx/vibe_ui_versions.json').read_text())[version]
-  source='vibe_ui_multi.S'; linker='/out/vibe_ui.ld'
+  source='vibe_ui_120.S' if version=='1.2' else 'vibe_ui_multi.S'; linker='/out/vibe_ui.ld'
   symbols=['count_continue','count_return','format_return','native_snprintf','native_percentage','enum_continue']
+  if version=='1.2': symbols.append('enum_save')
   layout='\n'.join(f'{name} = {config[name]};' for name in symbols)+'\nSECTIONS {\n'
-  for section,address,capacity in [('defaults','defaults',120),('format','format',config['format_capacity']),('enum','enum_tail',94)]:
+  for section,address,capacity in [('defaults','defaults',120),('format','format',config['format_capacity']),('enum','enum_tail',config.get('enum_capacity',94))]:
    layout+=f' .vibe_{section} {config[address]} : SUBALIGN(2) {{ *(.vibe_{section}) }}\n ASSERT(SIZEOF(.vibe_{section}) <= {capacity}, "{section} overflow")\n'
   layout+=' /DISCARD/ : { *(.comment) *(.note*) }\n}\n'
   (out/'vibe_ui.ld').write_text(layout)
@@ -39,4 +40,4 @@ def build(output, version="1.10"):
      if nm.startswith('vibe_') or nm=='defaults':result['symbols'][nm]=hex(v)
  (out/'vibe_ui_code.json').write_text(json.dumps(result,indent=2)+'\n');print(json.dumps({k:v['size'] for k,v in result['sections'].items()}))
 if __name__=='__main__':
- p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True);p.add_argument('--version',choices=['1.10','1.11','1.12'],default='1.10');a=p.parse_args();build(a.output,a.version)
+ p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',required=True);p.add_argument('--version',choices=['1.10','1.11','1.12','1.2'],default='1.10');a=p.parse_args();build(a.output,a.version)

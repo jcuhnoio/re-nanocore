@@ -1,0 +1,127 @@
+NanoCore 1.2: NAM A2-Lite runtime
+================================
+
+Scope: offline native-code inspection of the signed nanocore-1.2.fmu package,
+SHA256 0bf64603acca9d68167f3d9e5f4ebc2568c748101350008d1e6619ea4d2b103d.
+No device execution, uploaded model, audio equivalence or timing measurement.
+The native model validator was executed offline against synthetic blobs.
+The package says 1.2 while its FIT image-version field still says 1.12.
+
+Finding
+-------
+This adds a specialized NAM A2-Lite WaveNet path, not a generic .nam JSON
+interpreter and not the previous model engine merely renamed. The architecture
+is identifiable from code and constant tables: 23 layers, three channels,
+kernels 6 and 15, the A2 dilation sequence, and exactly 1,871 float32 weights.
+These independently match the official A2-Lite architecture. General NAM
+A1/WaveNet sizes, LSTM models and A2-Full support are NOT established by this
+path; its fixed checks specifically reject other shapes/rates/weight counts.
+
+Native packed model format
+--------------------------
+0x40077658 validates a fixed 7,516-byte blob before loading. All fields are LE:
+
+ offset  size  required value / meaning
+ 0       4     ASCII NA2L
+ 4       2     1 (format version)
+ 6       2     32 (header size)
+ 8       4     48000 (model sample rate)
+ 12      4     1871 (float32 weight count)
+ 16      4     7484 (payload bytes = 1871*4)
+ 20      4     CRC32 of the 7484-byte weight payload
+ 24      4     1 (checked field; exact semantic name not recovered)
+ 28      4     0 (reserved/checked field)
+ 32      7484  finite float32 weights in the supported model's weight order
+
+Bounded Unicorn execution confirms a valid synthetic model is accepted; 44.1k,
+wrong weight count, wrong blob size, bad CRC and NaN weights are rejected with
+the expected distinct error returns. Stack, callee-saved registers and output
+guard bytes survive all seven cases. Only two Xuantie instruction sites are
+emulated by the harness; the actual validator and CRC routines execute.
+The validator rejects NaN/infinite weight encodings. CRC helper 0x4007761c uses
+reflected polynomial 0xedb88320, initial all-ones and final complement.
+0x4007e7fa identifies NA2L as a separate accepted model kind and delegates to
+this validator; legacy DDPB versions 3, 5 and 7 remain another branch.
+0x4007bd0c chooses NA2L vs DDPB and installs the appropriate runtime state.
+The NA2L path stores runtime kind 4 at model context +117. This internal kind
+is different from the storage/protocol kind returned by other classifiers.
+
+Consequently host-side .nam parsing/conversion is required somewhere before
+this firmware loader. The firmware evidence alone does not locate the host
+converter or establish whether it extracts the Lite member from an A2 container.
+
+Fixed architecture and memory
+-----------------------------
+0x400917d8 contains these 23 uint16 dilations:
+  1,3,7,17,41,101,239, 1,3,7,17,41,101,239, 1,13,
+  1,3,7,17,41,101,239
+0x40091808 contains kernel sizes: fourteen 6s, two 15s, seven 6s.
+0x400772b4 loads/reorders weights for three-channel matrices. The native layer
+kernels use LeakyReLU-style max(x,0.01*x), matching A2. The final head uses a
+16-tap three-input convolution and a scalar output scale.
+
+0x4007779e returns 0x1c4eb = 115,947 bytes for a runtime allocation including
+alignment slack. 0x400777a6 aligns to 32 bytes and initializes a 0x1c4cc =
+115,916-byte state, including convolution histories and working blocks. The
+model weights themselves are only 7,484 bytes; history/scratch dominates RAM.
+The startup allocation at0x40010bcc calls400428e6(size,64,2,400429b8):
+heap ID2,64-byte allocation alignment. Descriptor400a1e08 is explicitly
+{2,"heap_model",0x30061860,0x30080000}, a124,832-byte DTCM region. The allocator
+400429b8 selects this descriptor by ID. Its returned pointer is stored at
+400a1f88 and provided through single-owner allocation callback4000f146.
+Thus the native A2-Lite state (including weights/history) occupies reserved
+DTCM space, while its hot instruction code occupies the next SRAM region.
+0x400778d8 validates, loads weights, marks state ready and prewarms it via
+0x40077880, which processes 100 zero-input blocks of 64 samples (6,400 samples).
+
+How it is made practical
+-----------------------
+- Fixed three-channel architecture: no arbitrary network executor in this path.
+- Fixed 64-sample processing blocks. Wrapper 0x40077948 dispatches to 0x30080890;
+  the model audio dispatcher calls it in 64-sample chunks at 0x300849cc.
+- DSP routines reside in the new executable segment at 0x30080000:
+  0x3008033a first-layer routine; 0x30080000 other-layer setup;
+  0x30080aa8 an aggressively unrolled convolution/activation/mixing kernel.
+- The latter explicitly computes eight successive time samples per iteration,
+  uses scalar float32 fused multiply-add instructions and retains accumulators
+  in FP registers. Loop tail increments time by eight and compares against64.
+- Load-time coefficient reordering and special first-layer preparation reduce
+  work needed inside the callback; finite checks/CRC/loading occur outside it.
+- LeakyReLU uses multiplication and max rather than recurrent sigmoid/tanh gates.
+
+These are static implementation facts, not measured CPU savings. The hot loop
+at0x30080000 is distinct from configured ITCM at0x30040000 and DTCM at0x30060000;
+it must not be called ITCM merely because its address begins0x300. The reserved model-state
+allocation is in DTCM; actual SRAM/cache cycle costs are not measured here.
+
+Comparison with 1.12
+--------------------
+The earlier traced 1.12 AMP/drive path uses a DDPB loader and coefficient-driven
+recurrent/nonlinear routines (including a GRU-style branch) as documented in
+dsp-drive.txt. The new firmware retains a DDPB branch alongside a distinct,
+fixed A2-Lite state/validator/processor. NAM support here should therefore be
+described as NAM A2-Lite at48k, not support for every model carrying .nam.
+
+Evidence and limits
+-------------------
+REA validator evidence:
+ ev_f637b03cd9a3cb50addda13185c7d0988f4f631a1cd99c0aff0ba9ce52cea363
+ analysis/version-1.2/rea-seeded/results/00100-pseudo-0x40077658.json
+Its decompiler confuses compiler save/restore helper boundaries; native vendor
+objdump instructions establish arguments/field reads used above.
+The other address observations above derive from vendor objdump, not fabricated
+REA records. Full local assembly: analysis/version-1.2/audio/firmware.asm.
+Local bounded extracts/reference sources: analysis/version-1.2/nam/.
+Curated record: evidence/firmware-1.2-nam.json.
+Native-validator script/receipt: analysis/version-1.2/nam/check_validator.py and
+validator-tests.json.
+
+Primary architecture reference, fetched and pinned to commit
+ d3189ed482ded880c128bf312941266c4fa5ceec:
+https://github.com/sdatkinson/NeuralAmpModelerCore/blob/d3189ed482ded880c128bf312941266c4fa5ceec/NAM/wavenet/a2_fast.h
+https://github.com/sdatkinson/NeuralAmpModelerCore/blob/d3189ed482ded880c128bf312941266c4fa5ceec/NAM/wavenet/a2_fast.cpp
+The architecture match does not by itself prove shared source provenance.
+
+Not established: exact host import/conversion workflow; supported user model
+container variants; numerical equivalence to official NAM; audible quality;
+physical48k timing/CPU headroom; behavior with a real uploaded A2-Lite model.

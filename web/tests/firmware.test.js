@@ -87,13 +87,13 @@ test('automatic detection rejects unknown and ambiguous matches', async () => {
   await assert.rejects(identifyImage(bad,[patch]),/Unknown/);
   await assert.rejects(validateImage(stock,{...patch,firmwareVersion:'1.09'}),/Unsupported/);
 });
-for (const version of ['1.10','1.11','1.12']) test(`local ${version} full partition detection, install, same-version restore and cross-version rejection`, async t => {
+for (const version of ['1.10','1.11','1.12','1.2']) test(`local ${version} full partition detection, install, same-version restore and cross-version rejection`, async t => {
   const root = new URL('../../',import.meta.url);
-  const patches=await Promise.all(['patch.json','patch-1.11.json','patch-1.12.json'].map(async file=>JSON.parse(await readFile(new URL('../'+file,import.meta.url),'utf8'))));
+  const patches=await Promise.all(['patch.json','patch-1.11.json','patch-1.12.json','patch-1.2.json'].map(async file=>JSON.parse(await readFile(new URL('../'+file,import.meta.url),'utf8'))));
   let stock,installed;
   try {
     stock=await readFile(new URL(`analysis/decoder-capture/validated-releases/nanocore-${version}/firmware.bin`,root));
-    installed=await readFile(new URL(`analysis/custom-fx/univibe-mxr-${version}/firmware.bin`,root));
+    installed=await readFile(new URL(version==='1.2'?'analysis/compat-1.2/univibe/package-v2/firmware.bin':`analysis/custom-fx/univibe-mxr-${version}/firmware.bin`,root));
   }catch(e){if(e.code==='ENOENT')return t.skip('Vendor images intentionally remain local.');throw e;}
   const patch=patches.find(p=>p.firmwareVersion===version);
   const full=Uint8Array.from({length:patch.osSize},(_,i)=>(i*37)&255);full.set(stock);
@@ -114,7 +114,7 @@ for (const version of ['1.10','1.11','1.12']) test(`local ${version} full partit
 });
 
 test('all supported versions auto-select without cross-version install or restore', async () => {
-  const fixtures=await Promise.all(['1.10','1.11','1.12'].map(fixture));
+  const fixtures=await Promise.all(['1.10','1.11','1.12','1.2'].map(fixture));
   const patches=fixtures.map(f=>f.patch);
   for(const {stock,patch} of fixtures){
     const detected=await identifyImage(stock,patches);

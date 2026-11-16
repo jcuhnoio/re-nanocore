@@ -46,6 +46,12 @@ def check(output,version="1.10"):
    if op==0x100b:value=address
    elif op==0x4000400b:value=int.from_bytes(uc.mem_read(address,4),'little')
    elif op==0x8000400b:value=int.from_bytes(uc.mem_read(address,1),'little')
+   elif w&0x0200707f==0x0000300b:
+    hi,lo=(w>>26)&31,(w>>20)&31
+    value=(uc.reg_read(r.UC_RISCV_REG_X0+rs1)>>lo)&((1<<(hi-lo+1))-1)
+   elif op in (0x4000100b,0x4000500b):
+    cond=uc.reg_read(r.UC_RISCV_REG_X0+rs2)!=0
+    value=uc.reg_read(r.UC_RISCV_REG_X0+rs1) if cond==(op==0x4000100b) else uc.reg_read(r.UC_RISCV_REG_X0+rd)
    else:raise RuntimeError(f'Unsupported vendor {w:08x} at {pc:08x}')
    if rd:uc.reg_write(r.UC_RISCV_REG_X0+rd,value)
    uc.reg_write(r.UC_RISCV_REG_PC,pc+4)
@@ -77,6 +83,15 @@ def check(output,version="1.10"):
    expected=('CHORUS' if val<.5 else 'VIBRATO') if idx==3 else ('%ld',int(val*100+.5))
    assert rendered==[expected],(idx,val,rendered,expected)
    format_cases.append({'index':idx,'value':val,'rendered':rendered})
+ non_target_formats=0
+ if version=='1.2':
+  for block,subtype in [(b,0) for b in range(10) if b!=5]+[(5,s) for s in (8,9,11)]:
+   for idx in range(4):
+    args=[block,subtype,idx,0x30020000,64,0]
+    a,ar,_=run(original,mapped("format_entry",0x400265a0),args,.35)
+    b,br,_=run(new,mapped("format_entry",0x400265a0),args,.35)
+    assert ar==br and a.reg_read(r.UC_RISCV_REG_A0)==b.reg_read(r.UC_RISCV_REG_A0),(block,subtype,idx)
+    non_target_formats+=1
  enum_cases=0
  for block in range(8):
   for subtype in range(19):
@@ -97,6 +112,6 @@ def check(output,version="1.10"):
   u,_,_=run(new,mapped("enum_value",0x40019fb0),[0x30010000,index],memory=descriptor);assert u.reg_read(r.UC_RISCV_REG_A0)==value
  for value,index in [(0,0),(499,0),(500,1),(1000,1)]:
   u,_,_=run(new,mapped("enum_index",0x40019eee),[0x30010000,value],memory=descriptor);assert u.reg_read(r.UC_RISCV_REG_A0)==index
- report={'firmware_version':version,'source_fit_sha256':hashlib.sha256(raw).hexdigest(),'address_map':c,'retained_code_file':'tools/custom_fx/vibe_ui_code.json' if version=='1.10' else f'tools/custom_fx/vibe_ui_code-{version}.json','enum_cases':enum_cases,'enum_states':2,'enum_output_values':[0,1000],'count_cases':counts,'label_cases':len(labels),'default_lengths_tested':13,'format_cases':format_cases,'scope':'Native patched code, enum conversions and branches execute; memset/strcmp/printf boundaries emulated; no display device observed','physical_ui_verified':False}
+ report={'firmware_version':version,'source_fit_sha256':hashlib.sha256(raw).hexdigest(),'address_map':c,'retained_code_file':'tools/custom_fx/vibe_ui_code.json' if version=='1.10' else f'tools/custom_fx/vibe_ui_code-{version}.json','non_target_format_cases':non_target_formats,'enum_cases':enum_cases,'enum_states':2,'enum_output_values':[0,1000],'count_cases':counts,'label_cases':len(labels),'default_lengths_tested':13,'format_cases':format_cases,'scope':'Native patched code, enum conversions and branches execute; memset/strcmp/printf boundaries emulated; no display device observed','physical_ui_verified':False}
  Path(output).write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
 if __name__=='__main__':check(sys.argv[1],sys.argv[2] if len(sys.argv)>2 else '1.10')

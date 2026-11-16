@@ -66,5 +66,41 @@
     "enum_value": "0x4001ab50",
     "enum_index": "0x4001aa8e",
     "segment_offset": "0xd000"
+  },
+  "1.2": {
+    "defaults": "0x4007386a",
+    "format": "0x4002d196",
+    "enum_tail": "0x40073dfc",
+    "count_hook": "0x4002ba6e",
+    "count_continue": "0x4002ba72",
+    "count_return": "0x4002ba14",
+    "format_return": "0x4002bcca",
+    "enum_hook": "0x40021576",
+    "enum_continue": "0x4002157a",
+    "enum_save": "0x4000c3ba",
+    "native_snprintf": "0x4000d3de",
+    "native_percentage": "0x4002a1ba",
+    "chorus": "0x40089de4",
+    "vibrato": "0x4008a268",
+    "format_string": "0x40088420",
+    "subtypes": "0x400b0ec0",
+    "depth": "0x4008a604",
+    "level": "0x4008a5a0",
+    "count_entry": "0x4002b93a",
+    "label_entry": "0x4002a8bc",
+    "format_entry": "0x4002bc20",
+    "memset": "0x4000ce76",
+    "strcmp": "0x4000d046",
+    "enum_count": "0x4001f0ee",
+    "enum_value": "0x4001f1e2",
+    "enum_index": "0x4001f12a",
+    "segment_offset": "0x17800",
+    "source_sha256": "c45b9d874c051a861bbec6765a288f923e5afe766fcac50d45bf56b95b2a954a",
+    "format_capacity": 68,
+    "enum_capacity": 68,
+    "label_tables": [
+      "0x4008b46c",
+      "0x4008b17c"
+    ]
   }
 }

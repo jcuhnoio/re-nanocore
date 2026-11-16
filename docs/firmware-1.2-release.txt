@@ -1,0 +1,47 @@
+NanoCore 1.2 — official release claims
+=====================================
+
+Scope: official published information, independently retrieved on 2026-11-13.
+These claims must be checked against the decoded binary; they do not establish
+actual execution, performance, model compatibility, or audio quality.
+
+Official page: https://www.livtramusic.com/downloads
+The page initially shows another product. NanoCore's entry is in its shared
+client data asset:
+https://www.livtramusic.com/_next/static/chunks/9178-f362cd58ac3011f4.js
+
+Published release date: 2026-11-11.
+Published NanoCore package SHA256:
+0bf64603acca9d68167f3d9e5f4ebc2568c748101350008d1e6619ea4d2b103d
+This matches the user's archived nanocore-1.2.fmu.
+Publisher file: https://openparcelbox.com/firmware/nanocore-1.2.fmu
+
+The 1.2 notes claim:
+- A 48 kHz engine and corresponding USB recording/playback changes.
+- Stereo processing throughout the effects chain.
+- A left/right ping-pong option for every delay algorithm.
+- NAM A2 Lite amp inference at native 48 kHz. This is narrower than arbitrary
+  NAM compatibility; the notes do not promise A1, A2 Full or arbitrary networks.
+- Ten guitar-driven synth voices, enabled in Settings and stored per preset.
+- Peak Comp, Parallel Comp, Classic Wah, Retro Wah and Bass Wah in FX1 and FX2.
+
+The latest listed desktop editor is ToneCommand 1.3.5, whose notes explicitly
+add NanoCore/Mosaic 1.2 support. The local inspected app's Info.plist reports
+1.3.3 build49; it was not launched or updated during this investigation.
+
+Independent upstream architecture reference
+-------------------------------------------
+https://github.com/tone-3000/embedded
+
+TONE3000's A2 reference describes A2 Lite as a fixed 3-channel WaveNet with
+23 layers, 1,871 float32 weights, kernel widths 6 and15, dilations through239,
+LeakyReLU slope0.01 and a16-tap output head at48kHz. These are useful binary
+fingerprints. They are not evidence that Livtra uses that repository's code.
+Its ARM hardware benchmarks cannot establish NanoCore/RISC-V performance.
+
+Local retained material
+-----------------------
+analysis/version-1.2/release/official-release.json contains extracted notes,
+published package identity and the source-asset hash.
+downloads.html, downloads.js and9178-f362cd58ac3011f4.js retain the page/data
+as fetched. No hardware or device USB operations were performed.

@@ -11,6 +11,8 @@ import json
 from pathlib import Path
 from patch_image import extract_fit, property_offsets, verify_manifest
 
+from firmware_identity import identify_firmware
+
 ROOT = Path(__file__).resolve().parents[2]
 
 def digest(data):
@@ -35,7 +37,7 @@ def export(stock, installed, manifest):
             data[r['offset']:r['offset']+r['size']] = bytes(r['size'])
         return digest(data)
     assert normalized(stock) == normalized(installed)
-    version = {'1.10': '1.10', '1.11b': '1.11', '1.12': '1.12'}.get(before['image_version'])
+    version = identify_firmware(stock)
     if version is None or after['image_version'] != before['image_version']:
         raise ValueError('Unsupported or changed firmware version')
     return {'schemaVersion': 1, 'firmwareVersion': version,

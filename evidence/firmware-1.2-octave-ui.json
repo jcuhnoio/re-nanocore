@@ -1,0 +1,74 @@
+{
+  "firmware": "1.2",
+  "baseline_sha256": "fac0d102da1c13d2d25a6bbc684275bd520a94228de93faf3e3554d63ebce920",
+  "package_sha256": "7c2656e9a65ddc204424f881b3f2f47b427d6ad63c6050b5e50cff2172284511",
+  "source_sha256": "c45b9d874c051a861bbec6765a288f923e5afe766fcac50d45bf56b95b2a954a",
+  "elf_sha256": "925c35ee77503c1656ffc07cc23db7a8f7c9123dc0b3ea4ec5cf25e64c75e593",
+  "cases": {
+    "native_count": 22,
+    "metadata_count": 968,
+    "labels": 36,
+    "names": 3,
+    "defaults": 308,
+    "format": 44,
+    "buffer_bounds": 9,
+    "enum": 2904,
+    "native_setter": 308,
+    "label_fallbacks": 8676,
+    "format_fallbacks": 723,
+    "name_fallbacks": 723,
+    "native_formatter_caller": 11,
+    "native_parameter_service": 11,
+    "univibe_coexistence": 8,
+    "native_fault_display": 22,
+    "enum_conversions": 8,
+    "diagnostic": 8
+  },
+  "stack_and_callee_saved_preserved": true,
+  "physical_operations": false,
+  "limits": "Native code execution; libc and mutex boundaries emulated. Physical UI, audio and CPU timing untested.",
+  "status": "offline validated; physical UI/audio/timing untested",
+  "documentation": "docs/firmware-1.2-octave-ui.txt",
+  "source_artifacts": {
+    "firmware/custom-fx/octave/device_ui_120.S": "ed5174394ea1d840242eaf4575bfe85e5f1a8e210976b5daaf1e7a6dd8a3af3b",
+    "tools/custom_fx/octave_ui_120.py": "a8f1737a4cf66130ab01fc6aeaaec26ab0055b4a26be930cf408929a848b4e30",
+    "tools/custom_fx/check_octave_ui_120.py": "e8e8c34c8f51d94ab3e46a3b547967d45183e4014a4c64a2d489074ba5c51c46"
+  },
+  "native_entries": {
+    "name": "0x4002a55e",
+    "labels": "0x4002a8bc",
+    "metadata_count": "0x4002b93a",
+    "format": "0x4002bc20",
+    "native_count": "0x4006adba",
+    "defaults": "0x4006ae0c",
+    "enum_entry": "0x40021576",
+    "enum_internal_hook": "0x4002166c",
+    "setter": "0x40011f56",
+    "display_formatter_caller": "0x40020836",
+    "parameter_service": "0x40027afe",
+    "diagnostic": "0x4007fb52"
+  },
+  "runtime_slot_names": [
+    "fx1",
+    "fx2",
+    "amp",
+    "cab",
+    "delay",
+    "mod",
+    "reverb",
+    "eq",
+    "gate",
+    "exp",
+    "synth"
+  ],
+  "validation_reports": [
+    "analysis/compat-1.2/octave-ui/native-ui.json",
+    "analysis/compat-1.2/octave-ui/combined-ui.json"
+  ],
+  "limitations": [
+    "Native code runs in Unicorn with vendor instruction emulation.",
+    "Runtime ELF section loading models the separately tested boot relocation.",
+    "Mutex/libc, localization, MMIO timers and native storage read boundaries are emulated.",
+    "No physical display, audio, CPU headroom or NAM-chain validation."
+  ]
+}

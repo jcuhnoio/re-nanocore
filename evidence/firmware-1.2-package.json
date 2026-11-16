@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "source": "user-provided ~/Downloads/nanocore-1.2.fmu; moved without modification",
+  "archive_path": "firmware-archive/nanocore-1.2.fmu",
+  "package_sha256": "0bf64603acca9d68167f3d9e5f4ebc2568c748101350008d1e6619ea4d2b103d",
+  "signed_display_version": "1.2",
+  "internal_fit_version": "1.12",
+  "version_mismatch": "Publisher package metadata says1.2 but FIT retains1.12. Identify by authenticated bytes, not FIT version alone.",
+  "core_signature_verified": true,
+  "footer_signature_verified": true,
+  "payload_crc32_verified": true,
+  "segments": [
+    {
+      "name": "seg0",
+      "offset": 2048,
+      "size": 34160,
+      "load_address": 805568512,
+      "entry_address": 1073741824,
+      "hashes_verified": {
+        "crc32": "de5fadd6",
+        "md5": "a2d270e0ac9bef21f4a8e0a975567c07"
+      }
+    },
+    {
+      "name": "seg1",
+      "offset": 36864,
+      "size": 6240,
+      "load_address": 805699584,
+      "entry_address": 1073741824,
+      "hashes_verified": {
+        "crc32": "53a638d3",
+        "md5": "52516e93b987c6d831c8d13b7f15804c"
+      }
+    },
+    {
+      "name": "seg2",
+      "offset": 45056,
+      "size": 50220,
+      "load_address": 805830656,
+      "entry_address": 1073741824,
+      "hashes_verified": {
+        "crc32": "70cabc94",
+        "md5": "53453acf725676945b54c8749b668972"
+      }
+    },
+    {
+      "name": "seg3",
+      "offset": 96256,
+      "size": 663416,
+      "load_address": 1073741824,
+      "entry_address": 1073741824,
+      "hashes_verified": {
+        "crc32": "164bca2b",
+        "md5": "2c59d5b3200a68c8989b592f6d664c1b"
+      }
+    }
+  ],
+  "previous_segments": [
+    {
+      "name": "seg0",
+      "offset": 2048,
+      "size": 50692,
+      "load_address": 805568512,
+      "entry_address": 1073741824,
+      "hashes_verified": {
+        "crc32": "439efb66",
+        "md5": "39d756b5ddf02ff1564473de6289e8a1"
+      }
+    },
+    {
+      "name": "seg1",
+      "offset": 53248,
+      "size": 673088,
+      "load_address": 1073741824,
+      "entry_address": 1073741824,
+      "hashes_verified": {
+        "crc32": "5eef65f1",
+        "md5": "1d3b8531e3dc0882aeaffbcbbb4a4af9"
+      }
+    }
+  ],
+  "decoded_payload_size": 759808,
+  "previous_decoded_payload_size": 727040,
+  "official_release": {
+    "page": "https://www.livtramusic.com/downloads",
+    "data_asset": "https://www.livtramusic.com/_next/static/chunks/9178-f362cd58ac3011f4.js",
+    "release_date": "2026-11-11",
+    "published_hash_matches": true
+  },
+  "device_operations": false,
+  "custom_patch_compatibility": "Existing1.12 patches match exact code hashes and do not support this1.2 build. No1.2port attempted.",
+  "analysis_limitations": [
+    "Static disassembly and decompilation, not physical runtime/timing validation.",
+    "Synthetic ELF analyst function seeds and inferred ilp32d ABI; original segment bytes unchanged.",
+    "REA default discovery misses indirect functions; seeded functions expand coverage. Some GCC save/restore helpers are misidentified as noreturn; assembly used when pseudocode truncates.",
+    "Locally modified Ghidra RISC-V language models T-Head and legacy P instructions; this is not stock Ghidra."
+  ],
+  "language_sha256": {
+    "riscv.ilp32d.slaspec": "4bef8b375f1dfe53452d5413715925ded5a6ae8e267b91e63a0a6a8c27dd5430",
+    "riscv.ilp32d.sla": "77b481bd10c527182cf12a64ba400e24f56476f37e36b89bf3a0afc279d34edd"
+  }
+}
